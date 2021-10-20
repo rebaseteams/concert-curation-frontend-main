@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - "**"
+    
 
 jobs:
   lint:
@@ -23,8 +23,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Linting Starts
-      run: npm install 
+    - name: Pre linting
+      run: npm install    
+    - name: Linting Starts 
       run: npm run lint
 
   # docker:
