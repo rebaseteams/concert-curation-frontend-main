@@ -1,4 +1,4 @@
 # Concert Curation Frontend
 ```
-Happy Hacking...
+Happy Hacking..
 ```
