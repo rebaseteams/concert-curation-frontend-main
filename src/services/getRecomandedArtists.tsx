@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 
-const baseURL = 'http://localhost:4000'
+const baseURL = 'http://localhost:4000';
 
-const getRecomendedArtists = async (data: any) => {
-    const response = await axios.post( `${baseURL}/recommender/api/getMatchData/`, data)
-    return response.data;
+async function getRecomendedArtists(data: any) {
+  const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
+  return response.data;
 }
 
-export {getRecomendedArtists}
+export default getRecomendedArtists;
