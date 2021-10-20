@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+.layout-workspace {
+    width: 100%;
+    height: 90vh;
+    background-color: #666;
+
+    .content-box {
+        padding: 10px 20px;
+        box-sizing: border-box;
+        min-height: 200px;
+        background-color: #222;
+        color: #fff;
+    }
+
+    .summary-container{
+        width: 80%;
+        padding: 20px;
+        background-color: #000;
+        border-radius: 10px;
+        color: #cff;
+        margin: 30px auto;
+
+        h3 {
+            color: #fff;
+        }
+
+        p {
+            font-family: 'Indie Flower', cursive;
+            font-size: large;
+        }
+    }
+
+    .card-container{
+        width: 100%;
+        background-color: #4b0bcc;
+        color: white;
+        padding: 20px;
+        .card {
+            width: 100%;
+
+            .inner-card {
+                position: absolute; 
+                bottom: 0px; 
+                padding: 10px;
+                background: rgb(28, 29, 39);
+                width: 95%;
+
+                .card-heading {
+                    display: flex;
+                    justify-content: space-between;
+
+                    h3 {
+                        color: #cff;
+                        font-size: large;
+                    }
+
+                    p{
+                        font-size: large;
+                        color: #12df90;
+                    }
+                }
+        
+                .vanue {
+                    background-color: rgb(125, 149, 177);
+                    padding: 5px;
+                    h6 {
+                        text-align: center;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+
+}
