@@ -28,22 +28,22 @@ jobs:
     - name: Linting Starts 
       run: npm run lint
 
-  # docker:
-  #   if: github.ref == 'refs/heads/main'
-  #   name: Publish - Docker Hub
-  #   runs-on: ubuntu-18.04
-  #   needs: [build]
-  #   env:
-  #     REPO: ${{ secrets.DOCKER_REPO }}
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v1
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #   - name: Login to Docker Hub
-  #     run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
-  #   - name: Build Docker image
-  #     run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-  #   - name: Publish Docker image
-  #     run: docker push $REPO
+  docker:
+    if: github.ref == 'refs/heads/main'
+    name: Publish - Docker Hub
+    runs-on: ubuntu-18.04
+    needs: [lint]
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build Docker image
+      run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
+    - name: Publish Docker image
+      run: docker push $REPO
