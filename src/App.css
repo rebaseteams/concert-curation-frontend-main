@@ -1,3 +1,6 @@
-.app-logo{
-  color: #fff;
+.app-container {
+  background: radial-gradient(#fff, rgb(212, 13, 230));
+  background-position: center;
+  background-clip: border-box;
+  background-attachment: fixed;
 }

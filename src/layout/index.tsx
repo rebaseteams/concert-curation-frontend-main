@@ -29,7 +29,7 @@ const LayoutComponent = ():any => {
   }, []);
 
   return (
-    <Layout>
+    <Layout style={{ background: 'none' }} className="layout-container">
       <HeaderComponet />
       <Content>
         <div className="layout-workspace">

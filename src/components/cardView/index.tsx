@@ -6,6 +6,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Col } from 'antd';
+import './card-scopped.scss';
 
 interface CardViewProps {
     data: {
@@ -34,7 +35,9 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
       key={artistIndex}
       className="card"
       style={{ height: (artistIndex * 10 + 450) }}
-      span={span}
+      sm={{ span: 24 }}
+      md={{ span }}
+      onClick={() => console.log('hello world')}
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <div className="card-heading">

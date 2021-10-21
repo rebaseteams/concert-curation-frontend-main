@@ -6,7 +6,9 @@ import LayoutComponent from './layout';
 
 function App():any {
   return (
-    <LayoutComponent />
+    <div className="app-container">
+      <LayoutComponent />
+    </div>
   );
 }
 
