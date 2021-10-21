@@ -9,7 +9,9 @@ const { Header } = Layout;
 const HeaderComponet = ():any => (
   <Header style={{ background: 'none' }} className="header-container">
     <nav>
-      <h3 className="app-logo">Concert Recomandator</h3>
+      <a href={window.location.origin}>
+        <h3 className="app-logo">Cuttime</h3>
+      </a>
     </nav>
   </Header>
 );

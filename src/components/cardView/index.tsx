@@ -41,60 +41,63 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
       onMouseEnter={() => artistClicked(artist.summary)}
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
-        <div className="card-heading">
-          <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
-          <p>
-            {String(artist.match_percentage)}
-            %
-          </p>
-        </div>
-        <div className="vanue">
-          <div>
-            <span className="material-icons" style={{ fontSize: '35px', color: '#f32' }}>location_on</span>
+        <img className="profile-pic" src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80" alt="profile" />
+        <div className="card-body">
+          <div className="card-heading">
+            <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
+            <p>
+              {String(artist.match_percentage)}
+              %
+            </p>
           </div>
-          <ul>
-            {artist.match_attributes.venues.map((vanue: any, index:any) => (
-              <li key={index}>
-                {vanue.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="affinity">
-          <h6>Affinities</h6>
-          <div className="field">
-            <h5>
-              Age
-              {' '}
-              <span>{artist.match_attributes.age}</span>
-              {' '}
-            </h5>
+          <div className="vanue">
+            <div>
+              <span className="material-icons" style={{ fontSize: '35px', color: '#f32' }}>location_on</span>
+            </div>
+            <ul>
+              {artist.match_attributes.venues.map((vanue: any, index:any) => (
+                <li key={index}>
+                  {vanue.name}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="field">
-            <h5>
-              Gender
-              {' '}
-              <span>{artist.match_attributes.gender}</span>
-              {' '}
-            </h5>
+          <div className="affinity">
+            <h6>Affinities</h6>
+            <div className="field">
+              <h5>
+                Age
+                {' '}
+                <span>{artist.match_attributes.age}</span>
+                {' '}
+              </h5>
+            </div>
+
+            <div className="field">
+              <h5>
+                Gender
+                {' '}
+                <span>{artist.match_attributes.gender}</span>
+                {' '}
+              </h5>
+            </div>
+
+            <div className="field">
+              <h5>
+                Genre
+                {' '}
+                <span>{artist.match_attributes.genre}</span>
+                {' '}
+              </h5>
+            </div>
           </div>
 
-          <div className="field">
-            <h5>
-              Genre
-              {' '}
-              <span>{artist.match_attributes.genre}</span>
-              {' '}
-            </h5>
-          </div>
-        </div>
-
-        {/* <div className="vanue">
+          {/* <div className="vanue">
             <h6>Associated Brands</h6>
             <ul />
           </div> */}
+        </div>
       </div>
     </Col>
   );

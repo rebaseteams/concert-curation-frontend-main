@@ -3,4 +3,5 @@
   background-position: center;
   background-clip: border-box;
   background-attachment: fixed;
+  min-height: 100vh;
 }
