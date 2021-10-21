@@ -3,8 +3,7 @@
 .layout-workspace {
     width: 100%;
     padding-bottom: 50px;
-    height: 90vh;
-    background: #4b0bcc;
+    background: radial-gradient(#fff, rgb(212, 13, 230));
 
     .content-box {
         padding: 10px 20px;
@@ -42,11 +41,12 @@
             .inner-card {
                 position: absolute; 
                 bottom: 0px; 
-                padding: 10px;
-                background: rgba(0, 0, 0, 0.185);
+                border-radius: 50px;
+                padding: 20px;
+                background: rgba(2, 6, 253, 0.514);
                 box-shadow: 1px 1px 8px #222;
-
                 width: 95%;
+                transition: all 0.3s;
 
                 .card-heading {
                     display: flex;
@@ -99,6 +99,10 @@
                         }
                     }
                 }
+            }
+
+            .inner-card:hover {
+                transform: scale(1.1)
             }
         }
     }

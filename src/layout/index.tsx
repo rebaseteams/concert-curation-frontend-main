@@ -13,6 +13,8 @@ import HeaderComponet from './header';
 
 import getRecomendedArtists from '../services/getRecomandedArtists';
 
+import CardView from '../components/cardView';
+
 const { Content } = Layout;
 
 const LayoutComponent = ():any => {
@@ -39,7 +41,7 @@ const LayoutComponent = ():any => {
 
           <Row className="card-container" align="bottom">
             <Col span={2} />
-            {artists && renderCards(artists)}
+            { artists && <CardView data={artists} /> }
             <Col span={2} />
           </Row>
           <Row>
@@ -61,69 +63,5 @@ const LayoutComponent = ():any => {
     </Layout>
   );
 };
-
-function renderCards(data: any): any {
-  const span = 20 / data.artists_data.length;
-  return data.artists_data.map((artist: any, artistIndex: any) => (
-    <Col key={artistIndex} className="card" style={{ height: (artistIndex * 10 + 450) }} span={span}>
-      <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
-        <div className="card-heading">
-          <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
-          <p>
-            {String(artist.match_percentage)}
-            %
-          </p>
-        </div>
-        <div className="vanue">
-          <div>
-            <span className="material-icons" style={{ fontSize: '35px', color: '#f32' }}>location_on</span>
-          </div>
-          <ul>
-            {artist.match_attributes.venues.map((vanue: any, index:any) => (
-              <li key={index}>
-                {vanue.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="affinity">
-          <h6>Affinities</h6>
-          <div className="field">
-            <h5>
-              Age
-              {' '}
-              <span>{artist.match_attributes.age}</span>
-              {' '}
-            </h5>
-          </div>
-
-          <div className="field">
-            <h5>
-              Gender
-              {' '}
-              <span>{artist.match_attributes.gender}</span>
-              {' '}
-            </h5>
-          </div>
-
-          <div className="field">
-            <h5>
-              Genre
-              {' '}
-              <span>{artist.match_attributes.genre}</span>
-              {' '}
-            </h5>
-          </div>
-        </div>
-
-        {/* <div className="vanue">
-          <h6>Associated Brands</h6>
-          <ul />
-        </div> */}
-      </div>
-    </Col>
-  ));
-}
 
 export default LayoutComponent;
