@@ -19,6 +19,7 @@ const { Content } = Layout;
 
 const LayoutComponent = ():any => {
   const [artists, setArtists] = useState();
+  const [summary, setSummary] = useState('');
 
   const getData = async () => {
     const data: any = await getRecomendedArtists({ age: '10-29' });
@@ -27,6 +28,10 @@ const LayoutComponent = ():any => {
   useEffect(() => {
     getData();
   }, []);
+
+  const artistClicked = (artistSummary: string) => {
+    setSummary(artistSummary);
+  };
 
   return (
     <Layout style={{ background: 'none' }} className="layout-container">
@@ -41,27 +46,27 @@ const LayoutComponent = ():any => {
 
           <Row className="card-container" align="bottom">
             <Col span={2} />
-            { artists && <CardView data={artists} /> }
+            { artists && <CardView data={artists} artistClicked={artistClicked} /> }
             <Col span={2} />
           </Row>
-          <Row>
-            <Col span={24}>
-              <div className="summary-container">
-                <h3>Summary</h3>
-                <p>
-                  Artist 1 is the best sutable option according
-                  to your search beacuse he has
-                  good popularity at the location Surat
-                  and also the Milk products are very related
-                  to the artist as he is a Fittest among all other.
-                </p>
-              </div>
-            </Col>
-          </Row>
+          { summary && showSummary(summary) }
         </div>
       </Content>
     </Layout>
   );
 };
+
+function showSummary(summary:any):any {
+  return (
+    <Row>
+      <Col span={24}>
+        <div className="summary-container">
+          <h3>Summary</h3>
+          <p>{summary}</p>
+        </div>
+      </Col>
+    </Row>
+  );
+}
 
 export default LayoutComponent;

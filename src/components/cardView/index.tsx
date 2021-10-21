@@ -11,17 +11,18 @@ import './card-scopped.scss';
 interface CardViewProps {
     data: {
         artists_data: Array<any>;
-    }
+      }
+    artistClicked: any;
 }
 
-const CardView = ({ data }: CardViewProps) => {
+const CardView = ({ data, artistClicked }: CardViewProps) => {
   const span = 20 / data.artists_data.length;
 
   return (
     <>
       {
            // eslint-disable-next-line max-len
-           data.artists_data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span))
+           data.artists_data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
     }
     </>
   );
@@ -29,7 +30,7 @@ const CardView = ({ data }: CardViewProps) => {
 
 export default CardView;
 
-function renderCards(artist: any, artistIndex:any, span:any): any {
+function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any): any {
   return (
     <Col
       key={artistIndex}
@@ -37,7 +38,7 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
       style={{ height: (artistIndex * 10 + 450) }}
       sm={{ span: 24 }}
       md={{ span }}
-      onClick={() => console.log('hello world')}
+      onMouseEnter={() => artistClicked(artist.summary)}
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <div className="card-heading">
