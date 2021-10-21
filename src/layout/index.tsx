@@ -65,7 +65,7 @@ const LayoutComponent = ():any => {
 function renderCards(data: any): any {
   const span = 20 / data.artists_data.length;
   return data.artists_data.map((artist: any, artistIndex: any) => (
-    <Col className="card" style={{ height: (artistIndex * 10 + 450) }} span={span}>
+    <Col key={artistIndex} className="card" style={{ height: (artistIndex * 10 + 450) }} span={span}>
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <div className="card-heading">
           <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
