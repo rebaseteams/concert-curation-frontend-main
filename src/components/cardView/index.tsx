@@ -9,20 +9,18 @@ import { Col } from 'antd';
 import './card-scopped.scss';
 
 interface CardViewProps {
-    data: {
-        artists_data: Array<any>;
-      }
+    data: Array<any>
     artistClicked: any;
 }
 
 const CardView = ({ data, artistClicked }: CardViewProps) => {
-  const span = 20 / data.artists_data.length;
+  const span = 8;
 
   return (
     <>
       {
            // eslint-disable-next-line max-len
-           data.artists_data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
+           data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
     }
     </>
   );
@@ -31,6 +29,18 @@ const CardView = ({ data, artistClicked }: CardViewProps) => {
 export default CardView;
 
 function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any): any {
+  let order;
+  switch (artistIndex) {
+    case 0:
+      order = 1;
+      break;
+    case 1:
+      order = 0;
+      break;
+    default:
+      order = artistIndex;
+  }
+
   return (
     <Col
       key={artistIndex}
@@ -38,10 +48,11 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
       style={{ height: (artistIndex * 10 + 450) }}
       sm={{ span: 24 }}
       md={{ span }}
+      order={order}
       onMouseEnter={() => artistClicked(artist.summary)}
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
-        <img className="profile-pic" src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80" alt="profile" />
+        <img className="profile-pic" src={artist.artist_image} alt="xprofile pic" />
         <div className="card-body">
           <div className="card-heading">
             <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
@@ -52,7 +63,12 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
           </div>
           <div className="vanue">
             <div>
-              <span className="material-icons" style={{ fontSize: '35px', color: '#f32' }}>location_on</span>
+              <span
+                className="material-icons"
+                style={{ fontSize: '35px', color: '#f32' }}
+              >
+                location_on
+              </span>
             </div>
             <ul>
               {artist.match_attributes.venues.map((vanue: any, index:any) => (
@@ -69,7 +85,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 Age
                 {' '}
-                <span>{artist.match_attributes.age}</span>
+                {/* <span>{artist.match_attributes.age}</span> */}
                 {' '}
               </h5>
             </div>
@@ -78,7 +94,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 Gender
                 {' '}
-                <span>{artist.match_attributes.gender}</span>
+                {/* <span>{artist.match_attributes.gender}</span> */}
                 {' '}
               </h5>
             </div>
@@ -87,16 +103,16 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 Genre
                 {' '}
-                <span>{artist.match_attributes.genre}</span>
+                {/* <span>{artist.match_attributes.genre}</span> */}
                 {' '}
               </h5>
             </div>
           </div>
 
-          {/* <div className="vanue">
+          <div className="vanue">
             <h6>Associated Brands</h6>
             <ul />
-          </div> */}
+          </div>
         </div>
       </div>
     </Col>
