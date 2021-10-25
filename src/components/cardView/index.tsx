@@ -15,7 +15,6 @@ interface CardViewProps {
 
 const CardView = ({ data, artistClicked }: CardViewProps) => {
   const span = 8;
-  console.log(data, span);
 
   return (
     <>
