@@ -43,24 +43,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 4,
         female: 96,
@@ -113,24 +99,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 10,
         female: 90,
@@ -183,24 +155,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 10,
         female: 90,
@@ -253,24 +211,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 10,
         female: 90,
@@ -323,24 +267,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 10,
         female: 90,
@@ -393,24 +323,10 @@ const mockData = [
           match_percentage: 80,
         },
       ],
-      age: [
-        {
-          age_group: '18-30',
-          match_percentage: 90,
-        },
-        {
-          age_group: '31-45',
-          match_percentage: 50,
-        },
-        {
-          age_group: '46-60',
-          match_percentage: 10,
-        },
-        {
-          age_group: '60+',
-          match_percentage: 2,
-        },
-      ],
+      age: {
+        age_group: '18-30',
+        match_percentage: 90,
+      },
       gender: {
         male: 10,
         female: 90,
@@ -442,7 +358,7 @@ const mockData = [
   },
 ];
 
-async function getRecomendedArtists(data : any) {
+async function getRecomendedArtists(data: any) {
   // const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
   // return response.data;
 

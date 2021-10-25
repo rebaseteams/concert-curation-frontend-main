@@ -19,9 +19,9 @@ const CardView = ({ data, artistClicked }: CardViewProps) => {
   return (
     <>
       {
-           // eslint-disable-next-line max-len
-           data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
-    }
+        // eslint-disable-next-line max-len
+        data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
+      }
     </>
   );
 };
@@ -41,6 +41,14 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
       order = artistIndex;
   }
 
+  // eslint-disable-next-line max-len
+  let gender;
+  if (artist.match_attributes.gender.male > artist.match_attributes.gender.female) {
+    gender = 'male';
+  } else {
+    gender = 'female';
+  }
+
   return (
     <Col
       key={artistIndex}
@@ -55,13 +63,13 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
         <img className="profile-pic" src={artist.artist_image} alt="xprofile pic" />
         <div className="card-body">
           <div className="card-heading">
-            <h3 style={{ color: '#fff' }}>{artist.artist_name}</h3>
+            <h3>{artist.artist_name}</h3>
             <p>
               {String(artist.match_percentage)}
               %
             </p>
           </div>
-          <div className="vanue">
+          <div className="venue">
             <div>
               <span
                 className="material-icons"
@@ -85,36 +93,56 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 Age
                 {' '}
-                {/* <span>{artist.match_attributes.age}</span> */}
+                {artist.match_attributes.age.age_group}
                 {' '}
+                {artist.match_attributes.age.match_percentage}
+                %
               </h5>
             </div>
 
             <div className="field">
               <h5>
-                Gender
+                {gender.toUpperCase()}
                 {' '}
-                {/* <span>{artist.match_attributes.gender}</span> */}
-                {' '}
+                <span>{artist.match_attributes.gender[gender]}</span>
+                {'% '}
               </h5>
             </div>
 
             <div className="field">
               <h5>
                 Genre
-                {' '}
-                {/* <span>{artist.match_attributes.genre}</span> */}
-                {' '}
+                { artist.match_attributes.genre.length > 0
+                && displayGenre(artist.match_attributes.genre) }
               </h5>
             </div>
           </div>
 
-          <div className="vanue">
-            <h6>Associated Brands</h6>
-            <ul />
+          <h6>Associated Brands</h6>
+          <div className="venue">
+            {
+              artist.match_attributes.associated_brands.length > 0
+              && displayBrands(artist.match_attributes.associated_brands)
+            }
           </div>
         </div>
       </div>
     </Col>
   );
+}
+
+function displayGenre(genre: any) {
+  return genre.map((genre_item: any, index: any) => (
+    <h4 key={genre_item.genre_name + index}>
+      {genre_item.genre_name}
+    </h4>
+  ));
+}
+
+function displayBrands(brand: any) {
+  return brand.map((brand_item: any, index: any) => (
+    <div key={index}>
+      <a href={brand_item.website}><img className="brand_logo" src={brand_item.logo_url} alt={brand_item.name} /></a>
+    </div>
+  ));
 }
