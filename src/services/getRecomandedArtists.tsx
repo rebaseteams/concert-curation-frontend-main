@@ -442,7 +442,7 @@ const mockData = [
   },
 ];
 
-async function getRecomendedArtists(data: any) {
+async function getRecomendedArtists(data : any) {
   // const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
   // return response.data;
 
