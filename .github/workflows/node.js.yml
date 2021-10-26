@@ -65,7 +65,7 @@ jobs:
           ls
           npm install
           npm run build
-          cd dist
+          cd build
           ls
 
   docker:
