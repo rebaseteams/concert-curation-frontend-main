@@ -359,11 +359,11 @@ const mockData = [
   },
 ];
 
-async function getRecomendedArtists(data: { age: string }): Promise<any> {
+async function getRecommendedArtists(data: { age: string }): Promise<any> {
   const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
   // return response.data;
 
   return mockData;
 }
 
-export default getRecomendedArtists;
+export default getRecommendedArtists;

@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 
 import HeaderComponet from './header';
 
-import getRecomendedArtists from '../services/getRecomandedArtists';
+import getRecommendedArtists from '../services/getRecommendedArtists';
 
 // import CardView from '../components/cardView';
 import QuestionsForm from '../components/question/index';
@@ -79,7 +79,7 @@ const LayoutComponent = ():JSX.Element => {
   const [visible, setVisible] = useState(false);
 
   const getData = async () => {
-    const data:any = await getRecomendedArtists({ age: '10-29' });
+    const data:any = await getRecommendedArtists({ age: '10-29' });
     setArtists(data);
   };
   useEffect(() => {
