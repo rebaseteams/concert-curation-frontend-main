@@ -46,7 +46,9 @@ jobs:
       run: npm run test
 
 
-  build: 
+  build:
+    if: github.ref == 'refs/heads/master' 
+    name: Build static html files
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -60,7 +62,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Build react app
         run: |
-          npm i
+          npm install
           npm run build
           cd dist
           ls
