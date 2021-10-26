@@ -1,9 +1,12 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable prefer-template */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Layout, Row, Col } from 'antd';
+import {
+  Layout, Modal, Button,
+} from 'antd';
 
 import './layout.scss';
 
@@ -13,7 +16,8 @@ import HeaderComponet from './header';
 
 import getRecomendedArtists from '../services/getRecomandedArtists';
 
-import CardView from '../components/cardView';
+// import CardView from '../components/cardView';
+import QuestionsForm from '../components/qustions.tsx';
 
 // interface ArtistData {
 //     'artist_name': string;
@@ -69,9 +73,10 @@ import CardView from '../components/cardView';
 
 const { Content } = Layout;
 
-const LayoutComponent = ():any => {
+const LayoutComponent = ():JSX.Element => {
   const [artists, setArtists] = useState([]);
   const [summary, setSummary] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const getData = async () => {
     const data:any = await getRecomendedArtists({ age: '10-29' });
@@ -85,22 +90,19 @@ const LayoutComponent = ():any => {
     setSummary(artistSummary);
   };
 
+  // const showQuestions = (state: boolean) => {
+  //   setPopQuestions(state);
+  // };
+
   return (
     <Layout style={{ background: 'none' }} className="layout-container">
       <HeaderComponet />
-      <Content>
+      {/* <Content>
         <div className="layout-workspace">
-          {/* <Row>
-               <Col className="content-box graph-box" span={24}>
-                   <PieChart/>
-               </Col>
-            </Row> */}
           <Row align="middle">
             <Col span={14} style={{ border: '0px solid black' }}>
               <Row className="card-container" align="bottom">
-                {/* <Col span={3} /> */}
                 { artists && <CardView data={artists.slice(0, 3)} artistClicked={artistClicked} /> }
-                {/* <Col span={3} /> */}
               </Row>
             </Col>
             <Col span={10} style={{ padding: '20px', border: '0px solid black' }}>
@@ -108,6 +110,23 @@ const LayoutComponent = ():any => {
             </Col>
           </Row>
         </div>
+      </Content> */}
+
+      <Content>
+        <Button type="primary" onClick={() => setVisible(true)}>
+          Open Modal of 1000px width
+        </Button>
+        <Modal
+          title="Modal 1000px width"
+          centered
+          visible={visible}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          width={1000}
+        >
+          <QuestionsForm />
+        </Modal>
+        {/* { popQuestions && <QuestionsCard closeQuestion={() => showQuestions(false)} /> } */}
       </Content>
     </Layout>
   );
