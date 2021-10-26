@@ -65,8 +65,15 @@ jobs:
           ls
           npm install
           npm run build
-          cd build
-          ls
+      - name: Copy files to the server
+        uses: appleboy/scp-action@master
+        with:
+          host : ${{secrets.REMOTE_HOST}}
+          username : ${{secrets.REMOTE_USER}}
+          key: ${{ secrets.SSH_KEY }}
+          rm: true
+          source: "build/"
+          target: "${{ secrets.REMOTE_DIR }}"
 
   docker:
     if: github.ref == 'refs/heads/master'
