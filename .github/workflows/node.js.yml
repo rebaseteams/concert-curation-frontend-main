@@ -77,9 +77,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
     name: Trigger webhook on AWS instance 
     runs-on: ubuntu-18.04
-    needs: [docker]
+    needs: [build]
     steps:
-      - name: Deploy docker container webhook
+      - name: Deploy the copied html files
         uses: joelwmale/webhook-action@master
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL  }}
