@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
@@ -10,31 +11,7 @@ import {
   Slider,
 } from 'antd';
 import './question.scss';
-// import myForm from './myForm.json';
-
-// function renderFormFields(formData: any) {
-//   return formData.map((field: any) => {
-//     switch (field.type) {
-//       case 'select':
-//         return (
-//           <Form.Item name="genre" label="Targeted genre">
-//             <Select
-//               showSearch
-//               mode="multiple"
-//             >
-//               <Select.Option value="male">Hollywood</Select.Option>
-//               <Select.Option value="female">POP</Select.Option>
-//               <Select.Option value="both">Rock</Select.Option>
-//               <Select.Option value="both">Classic</Select.Option>
-//             </Select>
-//           </Form.Item>
-//         );
-
-//       default:
-//         return <span>None</span>;
-//     }
-//   });
-// }
+import myForm from './myForm.json';
 
 const QuestionsForm = (): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
@@ -68,56 +45,7 @@ const QuestionsForm = (): JSX.Element => {
         initialValues={{ size: 1000 }}
         onFinish={onFormSumbmit}
       >
-        {/* {myForm && renderFormFields(myForm)} */}
-        <Form.Item name="event_type" label="What type of event is it">
-          <Select
-            showSearch
-          >
-            <Select.Option value="music concert">Music Concert</Select.Option>
-            <Select.Option value="music festival">Music Concert</Select.Option>
-            <Select.Option value="Listning parti">Listning Part</Select.Option>
-            <Select.Option value="community center">Community Center</Select.Option>
-            <Select.Option value="college and university">College and University</Select.Option>
-            <Select.Option value="corporate events">Corporate Events</Select.Option>
-            <Select.Option value="stadium">Stadium</Select.Option>
-            <Select.Option value="concert hall">Concert Hall</Select.Option>
-
-          </Select>
-        </Form.Item>
-        <Form.Item name="venue" label="Select Venue">
-          <Select
-            showSearch
-            mode="multiple"
-          >
-            <Select.Option value="delhi">Delhi</Select.Option>
-            <Select.Option value="mumbai">Mumbai</Select.Option>
-            <Select.Option value="london">London</Select.Option>
-            <Select.Option value="kolkata">Kolkata</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="artist_budget" label="Budget">
-          <Slider
-            range
-            min={1000}
-            max={100000}
-            step={1000}
-            onChange={(value) => onBudgetChange(value)}
-            defaultValue={[20000, 50000]}
-          />
-          <span>
-            From
-            {' '}
-            {budget.min}
-            $
-          </span>
-          {'     '}
-          <span>
-            To
-            {' '}
-            {budget.max}
-            $
-          </span>
-        </Form.Item>
+        { myForm && renderFormFields(myForm, budget, onBudgetChange) }
         <Form.Item name="sponsorship_type" label="Type of sponsorship sought">
           <Select>
             <Select.Option value="brand awareness">Brand awareness</Select.Option>
@@ -183,5 +111,78 @@ const QuestionsForm = (): JSX.Element => {
     </div>
   );
 };
+
+function renderOptions(options: any) {
+  return options.map((option: string) => {
+    return <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>;
+  });
+}
+
+function renderSelect(feild: any) {
+  if (feild.multiple) {
+    return (
+      <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+        <Select
+          showSearch
+          mode="multiple"
+        >
+          { feild.options.length > 0 && renderOptions(feild.options) }
+        </Select>
+      </Form.Item>
+    );
+  }
+  return (
+    <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+      <Select
+        showSearch
+      >
+        { feild.options.length > 0 && renderOptions(feild.options) }
+      </Select>
+    </Form.Item>
+  );
+}
+
+function renderFormFields(formData: any, budget: any, onBudgetChange:any) {
+  return formData.map((feild: any) => {
+    switch (feild.type) {
+      case 'select':
+        return renderSelect(feild);
+
+      case 'slider':
+        return renderSlider(feild, budget, onBudgetChange);
+
+      default:
+        return <span>None</span>;
+    }
+  });
+}
+
+function renderSlider(feild: any, budget: any, onBudgetChange: any): any {
+  return (
+    <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+      <Slider
+        range
+        min={feild.min}
+        max={feild.max}
+        step={feild.step}
+        onChange={(value) => onBudgetChange(value)}
+        defaultValue={feild.default}
+      />
+      <span>
+        From
+        {' '}
+        {budget.min}
+        $
+      </span>
+      {'     '}
+      <span>
+        To
+        {' '}
+        {budget.max}
+        $
+      </span>
+    </Form.Item>
+  );
+}
 
 export default QuestionsForm;

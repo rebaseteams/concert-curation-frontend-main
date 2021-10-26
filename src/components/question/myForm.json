@@ -1,0 +1,39 @@
+[
+  {
+    "name": "event_type",
+    "label": "Which type of event is it?",
+    "type": "select",
+    "options": [
+      "Music Concert",
+      "Music Listning",
+      "Listning Party",
+      "Community center",
+      "Colleges and Universities",
+      "Corporate events",
+      "Stadium",
+      "Concert hall"
+    ],
+    "multiple": false
+  },
+  {
+    "name": "venue",
+    "label": "Select Venue",
+    "type": "select",
+    "options": [
+      "Delhi",
+      "Mumbai",
+      "London",
+      "San On"
+    ],
+    "multiple": true
+  },
+  {
+    "name": "artist_budget",
+    "label": "Set budget",
+    "type": "slider",
+    "min": 2000,
+    "max": 100000,
+    "step": 1000,
+    "default": [20000, 50000]
+  }
+]
