@@ -45,6 +45,25 @@ jobs:
     - name: Unit Testing Starts
       run: npm run test
 
+
+  build: 
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with: 
+          node-version: ${{ matrix.node-version }}
+      - name: Build react app
+        run: |
+          npm run build
+          cd dist
+          ls
+
   docker:
     if: github.ref == 'refs/heads/master'
     name: Publish - Docker Hub
