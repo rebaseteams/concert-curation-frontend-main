@@ -17,7 +17,7 @@ import HeaderComponet from './header';
 import getRecomendedArtists from '../services/getRecomandedArtists';
 
 // import CardView from '../components/cardView';
-import QuestionsForm from '../components/qustions.tsx';
+import QuestionsForm from '../components/qustions';
 
 // interface ArtistData {
 //     'artist_name': string;
@@ -114,15 +114,20 @@ const LayoutComponent = ():JSX.Element => {
 
       <Content>
         <Button type="primary" onClick={() => setVisible(true)}>
-          Open Modal of 1000px width
+          Curate Concert
         </Button>
         <Modal
-          title="Modal 1000px width"
+          title="Choose your prefrences"
           centered
           visible={visible}
           onOk={() => setVisible(false)}
           onCancel={() => setVisible(false)}
           width={1000}
+          footer={[
+            <Button form="myForm" key="submit" htmlType="submit">
+              Submit
+            </Button>,
+          ]}
         >
           <QuestionsForm />
         </Modal>
