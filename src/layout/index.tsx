@@ -17,7 +17,7 @@ import HeaderComponet from './header';
 import getRecomendedArtists from '../services/getRecomandedArtists';
 
 // import CardView from '../components/cardView';
-import QuestionsForm from '../components/qustions';
+import QuestionsForm from '../components/question/index';
 
 // interface ArtistData {
 //     'artist_name': string;
