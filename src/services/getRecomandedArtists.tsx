@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 
@@ -358,8 +359,8 @@ const mockData = [
   },
 ];
 
-async function getRecomendedArtists(data: any) {
-  // const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
+async function getRecomendedArtists(data: { age: string }): Promise<any> {
+  const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
   // return response.data;
 
   return mockData;

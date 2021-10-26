@@ -6,7 +6,7 @@ import './header.scss';
 
 const { Header } = Layout;
 
-const HeaderComponet = ():any => (
+const HeaderComponet = ():JSX.Element => (
   <Header style={{ background: 'none' }} className="header-container">
     <nav>
       <a href={window.location.origin}>
