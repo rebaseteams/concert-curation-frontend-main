@@ -104,7 +104,7 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
 const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
 
-  const onFormSubmit = (values: any) => {
+  const onFormSubmit = async (values: any) => {
     const result = {
       ...values,
       artist_budget: budget,
@@ -118,7 +118,12 @@ const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
     deleteProp.map((prop: string) => {
       return delete result[prop];
     });
-    submitQuestionsForm(result);
+    const response = await submitQuestionsForm(result);
+    if (!response.error) {
+      const forms: Array<any> | any = localStorage.getItem('forms') || [];
+      forms.push(response);
+      localStorage.setItem('forms', forms);
+    }
     setVisible(false);
   };
 
