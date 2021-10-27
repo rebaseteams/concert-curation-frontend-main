@@ -13,7 +13,9 @@
       "Stadium",
       "Concert hall"
     ],
-    "multiple": false
+    "multiple": false,
+    "required": true,
+    "message": "Please select event type"
   },
   {
     "name": "venue",
@@ -25,7 +27,9 @@
       "London",
       "San On"
     ],
-    "multiple": true
+    "multiple": true,
+    "required": true,
+    "message": "Please select any one venue"
   },
   {
     "name": "artist_budget",
@@ -35,5 +39,86 @@
     "max": 100000,
     "step": 1000,
     "default": [20000, 50000]
+  },
+  {
+    "name": "sponsorship_type",
+    "label": "Type of sponsorship sought",
+    "type": "select",
+    "options": [
+      "Brand awareness",
+      "Direct sales",
+      "Customer Engagement"
+    ],
+    "multiple": false,
+    "required": true,
+    "message": "Please select sponsorship type"
+  },
+  {
+    "name": "wanted_brands",
+    "label": "Specific brand you want",
+    "type": "select",
+    "options": [
+      "Coca Cola",
+      "Pepsi",
+      "Mirenda",
+      "Limca",
+      "Sprite"
+    ],
+    "multiple": true
+  },
+  {
+    "name": "unwanted_brands",
+    "label": "Brand you don't want",
+    "type": "select",
+    "options": [
+      "Coca Cola",
+      "Pepsi",
+      "Mirenda",
+      "Limca",
+      "Sprite"
+    ],
+    "multiple": true
+  },
+  {
+    "name": "age",
+    "label": "Targeted age",
+    "type": "select",
+    "options": [
+      "18-25",
+      "26-35",
+      "36-60",
+      "60+"
+    ],
+    "multiple": true,
+    "required": true,
+    "message": "Please select targeted age groups"
+  },
+  {
+    "name": "gender",
+    "label": "Targeted gender",
+    "type": "select",
+    "options": [
+      "male",
+      "female"
+    ],
+    "multiple": true,
+    "required": true,
+    "message": "Please select targeted gender"
+  },
+  {
+    "name": "genre",
+    "label": "Targeted genre",
+    "type": "select",
+    "options": [
+      "Hollywood",
+      "Pop",
+      "Classic",
+      "Rock",
+      "DJ",
+      "Traditional"
+    ],
+    "multiple": true,
+    "required": true,
+    "message": "Please targeted genre type"
   }
 ]
