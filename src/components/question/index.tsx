@@ -104,7 +104,7 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
 const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
 
-  const onFormSumbmit = (values: any) => {
+  const onFormSubmit = (values: any) => {
     const result = {
       ...values,
       artist_budget: budget,
@@ -133,7 +133,7 @@ const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         initialValues={{ size: 1000 }}
-        onFinish={onFormSumbmit}
+        onFinish={onFormSubmit}
       >
         { myForm && renderFormFields(myForm, budget, onBudgetChange) }
         <Button htmlType="submit">Submit</Button>
