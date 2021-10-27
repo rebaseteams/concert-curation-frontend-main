@@ -19,58 +19,6 @@ import getRecommendedArtists from '../services/getRecommendedArtists';
 // import CardView from '../components/cardView';
 import QuestionsForm from '../components/question/index';
 
-// interface ArtistData {
-//     'artist_name': string;
-//     'artist_id': string;
-//     'artist_image': string;
-//     'match_percentage': number;
-//     'match_attributes': {
-//       'venues': [
-//         {
-//           'id': string;
-//           'name': string;
-//           'address': {
-//             'pincode': number;
-//             'country': string;
-//             'city': string;
-//             'geo_location': {
-//               'lat': number;
-//               'lag': number;
-//             }
-//           },
-//           'venue_capacity': number;
-//           'match_percentage': number;
-//         }
-//       ];
-//       'age': [
-//         {
-//           'age_group':string;
-//           'match_percentage': number;
-//         }
-//       ];
-//       'gender': {
-//         'male': number;
-//         'female': number;
-//       };
-//       'genre': [
-//         {
-//           'genre_name':string;
-//           'value': number;
-//         }
-//       ];
-//       'associated_brands': [
-//         {
-//           'id': string;
-//           'name': string;
-//           'contact': string;
-//           'website': string;
-//           'logo_url': string;
-//         }
-//       ]
-//     };
-//     'summary': string;
-// }
-
 const { Content } = Layout;
 
 const LayoutComponent = ():JSX.Element => {
@@ -91,10 +39,6 @@ const LayoutComponent = ():JSX.Element => {
   const artistClicked = (artistSummary: string) => {
     setSummary(artistSummary);
   };
-
-  // const showQuestions = (state: boolean) => {
-  //   setPopQuestions(state);
-  // };
 
   return (
     <Layout style={{ background: 'none' }} className="layout-container">
@@ -125,15 +69,11 @@ const LayoutComponent = ():JSX.Element => {
           onOk={() => setVisible(false)}
           onCancel={() => setVisible(false)}
           width={1000}
-          footer={[
-            <Button form="myForm" key="submit" htmlType="submit">
-              Submit
-            </Button>,
-          ]}
+          className="questionsModal"
+          footer={false}
         >
-          <QuestionsForm />
+          <QuestionsForm setVisible={setVisible} />
         </Modal>
-        {/* { popQuestions && <QuestionsCard closeQuestion={() => showQuestions(false)} /> } */}
       </Content>
     </Layout>
   );
