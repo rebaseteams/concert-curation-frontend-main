@@ -360,7 +360,11 @@ const mockData = [
 ];
 
 async function getRecommendedArtists(data: { age: string }): Promise<any> {
-  const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
+  try {
+    const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, data);
+  } catch (error) {
+    const response = { error: true, error_message: error };
+  }
   // return response.data;
 
   return mockData;

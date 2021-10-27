@@ -80,7 +80,9 @@ const LayoutComponent = ():JSX.Element => {
 
   const getData = async () => {
     const data:any = await getRecommendedArtists({ age: '10-29' });
-    setArtists(data);
+    if (!data.error) {
+      setArtists(data);
+    }
   };
   useEffect(() => {
     getData();
