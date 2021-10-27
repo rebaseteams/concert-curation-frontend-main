@@ -118,38 +118,38 @@ function renderOptions(options: any) {
   });
 }
 
-function renderSelect(feild: any) {
-  if (feild.multiple) {
+function renderSelect(field: any) {
+  if (field.multiple) {
     return (
-      <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+      <Form.Item key={`field${field.name}`} name={field.name} label={field.label}>
         <Select
           showSearch
           mode="multiple"
         >
-          { feild.options.length > 0 && renderOptions(feild.options) }
+          { field.options.length > 0 && renderOptions(field.options) }
         </Select>
       </Form.Item>
     );
   }
   return (
-    <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+    <Form.Item key={`field${field.name}`} name={field.name} label={field.label}>
       <Select
         showSearch
       >
-        { feild.options.length > 0 && renderOptions(feild.options) }
+        { field.options.length > 0 && renderOptions(field.options) }
       </Select>
     </Form.Item>
   );
 }
 
 function renderFormFields(formData: any, budget: any, onBudgetChange:any) {
-  return formData.map((feild: any) => {
-    switch (feild.type) {
+  return formData.map((field: any) => {
+    switch (field.type) {
       case 'select':
-        return renderSelect(feild);
+        return renderSelect(field);
 
       case 'slider':
-        return renderSlider(feild, budget, onBudgetChange);
+        return renderSlider(field, budget, onBudgetChange);
 
       default:
         return <span>None</span>;
@@ -157,16 +157,16 @@ function renderFormFields(formData: any, budget: any, onBudgetChange:any) {
   });
 }
 
-function renderSlider(feild: any, budget: any, onBudgetChange: any): any {
+function renderSlider(field: any, budget: any, onBudgetChange: any): any {
   return (
-    <Form.Item key={`feild${feild.name}`} name={feild.name} label={feild.label}>
+    <Form.Item key={`field${field.name}`} name={field.name} label={field.label}>
       <Slider
         range
-        min={feild.min}
-        max={feild.max}
-        step={feild.step}
+        min={field.min}
+        max={field.max}
+        step={field.step}
         onChange={(value) => onBudgetChange(value)}
-        defaultValue={feild.default}
+        defaultValue={field.default}
       />
       <span>
         From
