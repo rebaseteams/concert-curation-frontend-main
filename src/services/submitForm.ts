@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-import config from '../config/backend.json';
+import config from './backend.json';
 
 const { baseURL } = config;
 
