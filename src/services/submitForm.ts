@@ -40,7 +40,7 @@ const submitQuestionsForm = async (data: QuestionFormData): Promise<any> => {
     await axios.post(`${baseURL}/recommender/api/submitForm/`, data);
     return returnMockData;
   } catch (error) {
-    return 0;
+    return { error: true, message: error };
   }
 };
 
