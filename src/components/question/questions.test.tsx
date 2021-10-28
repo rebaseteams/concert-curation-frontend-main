@@ -21,11 +21,11 @@ describe('Questions Component', () => {
     });
   });
   test('should render Questions component', () => {
-    render(<QuestionsForm setVisible />);
+    render(<QuestionsForm setVisible setForms />);
     expect(screen.getByText('Which type of event is it?')).toBeInTheDocument();
   });
   test('should render budget field', () => {
-    render(<QuestionsForm setVisible />);
+    render(<QuestionsForm setVisible setForms />);
     expect(screen.getByText('Set budget')).toBeInTheDocument();
   });
 });
