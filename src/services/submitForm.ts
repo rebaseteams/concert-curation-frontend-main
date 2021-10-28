@@ -21,7 +21,7 @@ interface QuestionFormData {
 }
 
 export const returnMockData = {
-  _id: '63878378973',
+  id: '63878378973',
   form_name: 'Friday Night Rock',
   event_type: 'Colleges and Universities',
   venue: ['London', 'Mumbai'],

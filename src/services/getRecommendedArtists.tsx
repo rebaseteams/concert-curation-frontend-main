@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import axios from 'axios';
 
-import config from '../configs/config.json';
+import config from './config.json';
 
 // const { baseURL } = config;
 

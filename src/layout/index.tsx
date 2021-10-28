@@ -36,7 +36,7 @@ const renderForm = (form: any) => (
 const LayoutComponent = ():JSX.Element => {
   const [artists, setArtists] = useState([]);
   const [summary, setSummary] = useState('');
-  const [visible, setVisible] = useState(false);
+  const [displayFormModal, setDisplayFormModal] = useState(false);
   const [forms, setForms] = useState([returnMockData]);
 
   const getData = async () => {
@@ -73,7 +73,7 @@ const LayoutComponent = ():JSX.Element => {
       </Content> */}
 
       <Content>
-        <Button type="primary" onClick={() => setVisible(true)}>
+        <Button type="primary" onClick={() => setDisplayFormModal(true)}>
           Curate Concert
         </Button>
         <Modal
@@ -86,14 +86,14 @@ const LayoutComponent = ():JSX.Element => {
               padding: '0',
             }
           }
-          visible={visible}
-          onOk={() => setVisible(false)}
-          onCancel={() => setVisible(false)}
+          visible={displayFormModal}
+          onOk={() => setDisplayFormModal(false)}
+          onCancel={() => setDisplayFormModal(false)}
           width={800}
           className="questionsModal"
           footer={false}
         >
-          <QuestionsForm setVisible={setVisible} setForms={setForms} forms={forms} />
+          <QuestionsForm setVisible={setDisplayFormModal} setForms={setForms} forms={forms} />
         </Modal>
         <h4 style={{ textAlign: 'center' }}>My Forms</h4>
         {forms.length > 0 ? (

@@ -152,7 +152,7 @@ const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX
         onFinish={onFormSubmit}
       >
         { myForm && renderFormFields(myForm, budget, onBudgetChange) }
-        <Button htmlType="submit">Submit</Button>
+        <Button className="submit" htmlType="submit" type="primary">Submit</Button>
       </Form>
     </div>
   );
