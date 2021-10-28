@@ -1,5 +1,13 @@
 [
   {
+    "name": "form_name",
+    "label": "Event Name",
+    "type": "input",
+    "placeholder": "Enter form name",
+    "required": true,
+    "message": "Please select event type"
+  },
+  {
     "name": "event_type",
     "label": "Which type of event is it?",
     "type": "select",

@@ -8,6 +8,7 @@ import {
   Button,
   Select,
   Slider,
+  Input,
 } from 'antd';
 import './question.scss';
 import myForm from './myForm.json';
@@ -86,6 +87,18 @@ const renderSlider = (field: any, budget: any, onBudgetChange: any): any => {
   );
 };
 
+const renderInput = (field: any) => {
+  return (
+    <Form.Item
+      label={field.label}
+      name={field.name}
+      rules={[{ required: field.required, message: field.message }]}
+    >
+      <Input placeholder={field.placeholder} />
+    </Form.Item>
+  );
+};
+
 const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
   return formData.map((field: any) => {
     switch (field.type) {
@@ -95,13 +108,16 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
       case 'slider':
         return renderSlider(field, budget, onBudgetChange);
 
+      case 'input':
+        return renderInput(field);
+
       default:
         return <span>None</span>;
     }
   });
 };
 
-const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
+const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
 
   const onFormSubmit = async (values: any) => {
@@ -119,11 +135,8 @@ const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
       return delete result[prop];
     });
     const response = await submitQuestionsForm(result);
-    if (!response.error) {
-      const forms: Array<any> | any = localStorage.getItem('forms') || [];
-      forms.push(response);
-      localStorage.setItem('forms', forms);
-    }
+    forms?.push(response);
+    setForms(forms);
     setVisible(false);
   };
 
@@ -134,9 +147,7 @@ const QuestionsForm = ({ setVisible } : QuestionsFormProp): JSX.Element => {
     <div className="questions-container">
       <Form
         id="qustionsForm"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
-        layout="horizontal"
+        layout="vertical"
         initialValues={{ size: 1000 }}
         onFinish={onFormSubmit}
       >

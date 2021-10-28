@@ -1,11 +1,11 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import axios from 'axios';
+// import axios from 'axios';
 
-import config from './config.json';
+// import config from './config.json';
 
-const { baseURL } = config;
+// const { baseURL } = config;
 
 interface QuestionFormData {
     'event_type': string;
@@ -20,8 +20,9 @@ interface QuestionFormData {
   }
 }
 
-const returnMockData = {
-  _id: '876875656745',
+export const returnMockData = {
+  _id: '63878378973',
+  form_name: 'Friday Night Rock',
   event_type: 'Colleges and Universities',
   venue: ['London', 'Mumbai'],
   artist_budget: { min: 20000, max: 50000 },
@@ -37,8 +38,13 @@ const returnMockData = {
 
 const submitQuestionsForm = async (data: QuestionFormData): Promise<any> => {
   try {
-    await axios.post(`${baseURL}/recommender/api/submitForm/`, data);
-    return returnMockData;
+    // await axios.post(`${baseURL}/recommender/api/submitForm/`, data);
+
+    // For now Returning mock data
+    return {
+      ...data,
+      _id: String(Math.random() * 7676763),
+    };
   } catch (error) {
     return { error: true, message: error };
   }

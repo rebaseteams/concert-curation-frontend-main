@@ -5,7 +5,7 @@
 /* eslint-disable prefer-template */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import {
-  Layout, Modal, Button,
+  Layout, Modal, Button, Row, Col, Card,
 } from 'antd';
 
 import './layout.scss';
@@ -19,15 +19,28 @@ import getRecommendedArtists from '../services/getRecommendedArtists';
 // import CardView from '../components/cardView';
 import QuestionsForm from '../components/question/index';
 
+import SubmittedCard from '../components/submittedCard';
+
+import { returnMockData } from '../services/submitForm';
+
 const { Content } = Layout;
+
+const renderForm = (form: any) => (
+  <Col span={24}>
+    <Card title={form.event_type}>
+      Card content
+    </Card>
+  </Col>
+);
 
 const LayoutComponent = ():JSX.Element => {
   const [artists, setArtists] = useState([]);
   const [summary, setSummary] = useState('');
   const [visible, setVisible] = useState(false);
+  const [forms, setForms] = useState([returnMockData]);
 
   const getData = async () => {
-    const data:any = await getRecommendedArtists({ age: '10-29' });
+    const data:any = await getRecommendedArtists('8787383');
     if (!data.error) {
       setArtists(data);
     }
@@ -43,6 +56,7 @@ const LayoutComponent = ():JSX.Element => {
   return (
     <Layout style={{ background: 'none' }} className="layout-container">
       <HeaderComponet />
+      {/* Commenting this for now later will be utilized for displaying recomended artist */}
       {/* <Content>
         <div className="layout-workspace">
           <Row align="middle">
@@ -65,15 +79,33 @@ const LayoutComponent = ():JSX.Element => {
         <Modal
           title="Choose your prefrences"
           centered
+          style={
+            {
+              height: 'calc(100vh - 100px)',
+              overflowY: 'scroll',
+              padding: '0',
+            }
+          }
           visible={visible}
           onOk={() => setVisible(false)}
           onCancel={() => setVisible(false)}
-          width={1000}
+          width={800}
           className="questionsModal"
           footer={false}
         >
-          <QuestionsForm setVisible={setVisible} />
+          <QuestionsForm setVisible={setVisible} setForms={setForms} forms={forms} />
         </Modal>
+        <h4 style={{ textAlign: 'center' }}>My Forms</h4>
+        {forms.length > 0 ? (
+          <Row>
+            { forms.map((form:any, index:any) => (
+              <SubmittedCard
+                key={form.id + index}
+                form={form}
+              />
+            ))}
+          </Row>
+        ) : (<span>No Foms available yet</span>)}
       </Content>
     </Layout>
   );
