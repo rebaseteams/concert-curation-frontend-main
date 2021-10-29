@@ -1,6 +1,6 @@
 [
   {
-    "name": "form_name",
+    "name": "formName",
     "label": "Event Name",
     "type": "input",
     "placeholder": "Enter form name",
@@ -8,7 +8,7 @@
     "message": "Please select event type"
   },
   {
-    "name": "event_type",
+    "name": "eventType",
     "label": "Which type of event is it?",
     "type": "select",
     "options": [
@@ -40,7 +40,7 @@
     "message": "Please select any one venue"
   },
   {
-    "name": "artist_budget",
+    "name": "artistBudget",
     "label": "Set budget",
     "type": "slider",
     "min": 2000,
@@ -49,7 +49,7 @@
     "default": [20000, 50000]
   },
   {
-    "name": "sponsorship_type",
+    "name": "sponsorshipType",
     "label": "Type of sponsorship sought",
     "type": "select",
     "options": [
@@ -62,7 +62,7 @@
     "message": "Please select sponsorship type"
   },
   {
-    "name": "wanted_brands",
+    "name": "wantedBrands",
     "label": "Specific brand you want",
     "type": "select",
     "options": [
@@ -75,7 +75,7 @@
     "multiple": true
   },
   {
-    "name": "unwanted_brands",
+    "name": "unwantedBrands",
     "label": "Brand you don't want",
     "type": "select",
     "options": [

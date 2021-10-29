@@ -1,355 +1,373 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/prefer-default-export */
-export const recommendedArtistsMockData = [
-  {
-    artist_name: 'Justin',
-    artist_id: '0001',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 95,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
-            },
-          },
-          venue_capacity: 12000,
-          match_percentage: 80,
-        },
-        {
-          id: '11112',
-          name: 'Lonaly Location',
-          address: {
-            pincode: 111032,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 60,
-              lag: 80,
-            },
-          },
-          venue_capacity: 12000,
-          match_percentage: 80,
-        },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
-      },
-      gender: {
-        male: 4,
-        female: 96,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 98,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
+export const recommendedArtistsMockData = {
+  id: 'form101',
+  concertdata: {
+    id: 'form101',
+    concertName: 'Friday Night Rock',
+    eventType: 'Colleges and Universities',
+    venue: ['London', 'Mumbai'],
+    artistBudget: { min: 20000, max: 50000 },
+    sponsorshipType: 'Direct sales',
+    wantedBrands: ['Limca'],
+    unwantedBrands: ['Mirenda', 'Pepsi'],
+    targetAudience: {
+      ageGroup: ['26-35', '36-60'],
+      gender: ['female', 'both'],
+      genre: ['DJ', 'Classic'],
     },
-    summary: 'Justin have a good fanbase in the selected venue location',
   },
-  {
-    artist_name: 'Kuber',
-    artist_id: '0002',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 90,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
+  artists: [
+    {
+      artistName: 'Justin',
+      artistId: '0001',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 95,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
             },
+            venueCapacity: 12000,
+            matchPercentage: 80,
           },
-          venue_capacity: 12000,
-          match_percentage: 80,
-        },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
-      },
-      gender: {
-        male: 10,
-        female: 90,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 94,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
-    },
-    summary: 'Kuber is most respected artist and has rich fanbase',
-  },
-  {
-    artist_name: 'Rocky',
-    artist_id: '0003',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 95,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
+          {
+            id: '11112',
+            name: 'Lonaly Location',
+            address: {
+              pincode: 111032,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 60,
+                long: 80,
+              },
             },
+            venueCapacity: 12000,
+            matchPercentage: 80,
           },
-          venue_capacity: 12000,
-          match_percentage: 80,
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
         },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
+        gender: {
+          male: 4,
+          female: 96,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 98,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
       },
-      gender: {
-        male: 10,
-        female: 90,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 94,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
+      summary: 'Justin have a good fanbase in the selected venue location',
     },
-    summary: 'Rocky is a young pop singer liked by many youth',
-  },
-  {
-    artist_name: 'Honey Singh',
-    artist_id: '0004',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 95,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
+    {
+      artistName: 'Kuber',
+      artistId: '0002',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 90,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
             },
+            venueCapacity: 12000,
+            matchPercentage: 80,
           },
-          venue_capacity: 12000,
-          match_percentage: 80,
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
         },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
+        gender: {
+          male: 10,
+          female: 90,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 94,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
       },
-      gender: {
-        male: 10,
-        female: 90,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 94,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
+      summary: 'Kuber is most respected artist and has rich fanbase',
     },
-    summary: 'Justin have a good fanbase in the selected venue location',
-  },
-  {
-    artist_name: 'Mika singh',
-    artist_id: '0005',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 95,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
+    {
+      artistName: 'Rocky',
+      artistId: '0003',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 95,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
             },
+            venueCapacity: 12000,
+            matchPercentage: 80,
           },
-          venue_capacity: 12000,
-          match_percentage: 80,
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
         },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
+        gender: {
+          male: 10,
+          female: 90,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 94,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
       },
-      gender: {
-        male: 10,
-        female: 90,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 94,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
+      summary: 'Rocky is a young pop singer liked by many youth',
     },
-    summary: 'Justin have a good fanbase in the selected venue location',
-  },
-  {
-    artist_name: 'Mical',
-    artist_id: '0006',
-    artist_image: 'https://source.unsplash.com/200x200/?avatar',
-    match_percentage: 95,
-    match_attributes: {
-      venues: [
-        {
-          id: '11111',
-          name: 'Parade Hall',
-          address: {
-            pincode: 111022,
-            country: 'USA',
-            city: 'london',
-            geo_location: {
-              lat: 40,
-              lag: 80,
+    {
+      artistName: 'Honey Singh',
+      artistId: '0004',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 95,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
             },
+            venueCapacity: 12000,
+            matchPercentage: 80,
           },
-          venue_capacity: 12000,
-          match_percentage: 80,
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
         },
-      ],
-      age: {
-        age_group: '18-30',
-        match_percentage: 90,
+        gender: {
+          male: 10,
+          female: 90,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 94,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
       },
-      gender: {
-        male: 10,
-        female: 90,
-      },
-      genre: [
-        {
-          genre_name: 'Hollywood',
-          match_percentage: 94,
-        },
-      ],
-      associated_brands: [
-        {
-          id: '22222',
-          name: 'Apple',
-          contact: '002233',
-          website: 'https://apple.com',
-          logo_url: '//logo.clearbit.com/apple.com',
-        },
-        {
-          id: '22223',
-          name: 'Google',
-          contact: '0022643',
-          website: 'https://google.com',
-          logo_url: '//logo.clearbit.com/google.com',
-        },
-      ],
+      summary: 'Justin have a good fanbase in the selected venue location',
     },
-    summary: 'Justin have a good fanbase in the selected venue location',
-  },
-];
+    {
+      artistName: 'Mika singh',
+      artistId: '0005',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 95,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
+            },
+            venueCapacity: 12000,
+            matchPercentage: 80,
+          },
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
+        },
+        gender: {
+          male: 10,
+          female: 90,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 94,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
+      },
+      summary: 'Justin have a good fanbase in the selected venue location',
+    },
+    {
+      artistName: 'Mical',
+      artistId: '0006',
+      artistImage: 'https://source.unsplash.com/200x200/?avatar',
+      matchPercentage: 95,
+      matchAttributes: {
+        venues: [
+          {
+            id: '11111',
+            name: 'Parade Hall',
+            address: {
+              pincode: 111022,
+              country: 'USA',
+              city: 'london',
+              geoLocation: {
+                lat: 40,
+                long: 80,
+              },
+            },
+            venueCapacity: 12000,
+            matchPercentage: 80,
+          },
+        ],
+        age: {
+          ageGroup: '18-30',
+          matchPercentage: 90,
+        },
+        gender: {
+          male: 10,
+          female: 90,
+        },
+        genre: [
+          {
+            genreName: 'Hollywood',
+            matchPercentage: 94,
+          },
+        ],
+        associatedBrands: [
+          {
+            id: '22222',
+            name: 'Apple',
+            contact: '002233',
+            website: 'https://apple.com',
+            logoUrl: '//logo.clearbit.com/apple.com',
+          },
+          {
+            id: '22223',
+            name: 'Google',
+            contact: '0022643',
+            website: 'https://google.com',
+            logoUrl: '//logo.clearbit.com/google.com',
+          },
+        ],
+      },
+      summary: 'Justin have a good fanbase in the selected venue location',
+    },
+  ],
+};

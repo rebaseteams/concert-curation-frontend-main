@@ -13,14 +13,16 @@ interface CardViewProps {
     artistClicked: any;
 }
 
-const CardView = ({ data, artistClicked }: CardViewProps) => {
+const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
   const span = 8;
 
   return (
     <>
       {
-        // eslint-disable-next-line max-len
-        data.map((artist: any, artistIndex: any) => renderCards(artist, artistIndex, span, artistClicked))
+        // eslint-disable-next-line arrow-body-style
+        data.map((artist: any, artistIndex: any) => {
+          return renderCards(artist, artistIndex, span, artistClicked);
+        })
       }
     </>
   );
@@ -43,7 +45,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
 
   // eslint-disable-next-line max-len
   let gender;
-  if (artist.match_attributes.gender.male > artist.match_attributes.gender.female) {
+  if (artist.matchAttributes.gender.male > artist.matchAttributes.gender.female) {
     gender = 'male';
   } else {
     gender = 'female';
@@ -60,12 +62,12 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
       onMouseEnter={() => artistClicked(artist.summary)}
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
-        <img className="profile-pic" src={artist.artist_image} alt="xprofile pic" />
+        <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
         <div className="card-body">
           <div className="card-heading">
             <h3>{artist.artist_name}</h3>
             <p>
-              {String(artist.match_percentage)}
+              {String(artist.matchPercentage)}
               %
             </p>
           </div>
@@ -79,7 +81,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               </span>
             </div>
             <ul>
-              {artist.match_attributes.venues.map((vanue: any, index:any) => (
+              {artist.matchAttributes.venues.map((vanue: any, index:any) => (
                 <li key={index}>
                   {vanue.name}
                 </li>
@@ -93,9 +95,9 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 Age
                 {' '}
-                {artist.match_attributes.age.age_group}
+                {artist.matchAttributes.age.ageGroup}
                 {' '}
-                {artist.match_attributes.age.match_percentage}
+                {artist.matchAttributes.age.matchPercentage}
                 %
               </h5>
             </div>
@@ -104,7 +106,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
               <h5>
                 {gender.toUpperCase()}
                 {' '}
-                <span>{artist.match_attributes.gender[gender]}</span>
+                <span>{artist.matchAttributes.gender[gender]}</span>
                 {'% '}
               </h5>
             </div>
@@ -112,8 +114,8 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
             <div className="field">
               <h5>
                 Genre
-                { artist.match_attributes.genre.length > 0
-                && displayGenre(artist.match_attributes.genre) }
+                { artist.matchAttributes.genre.length > 0
+                && displayGenre(artist.matchAttributes.genre) }
               </h5>
             </div>
           </div>
@@ -121,8 +123,8 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
           <h6>Associated Brands</h6>
           <div className="venue">
             {
-              artist.match_attributes.associated_brands.length > 0
-              && displayBrands(artist.match_attributes.associated_brands)
+              artist.matchAttributes.associatedBrands.length > 0
+              && displayBrands(artist.matchAttributes.associatedBrands)
             }
           </div>
         </div>
@@ -133,8 +135,8 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
 
 function displayGenre(genre: any) {
   return genre.map((genre_item: any, index: any) => (
-    <h4 key={genre_item.genre_name + index}>
-      {genre_item.genre_name}
+    <h4 key={genre_item.genreName + index}>
+      {genre_item.genreName}
     </h4>
   ));
 }
@@ -142,7 +144,7 @@ function displayGenre(genre: any) {
 function displayBrands(brand: any) {
   return brand.map((brand_item: any, index: any) => (
     <div key={index}>
-      <a href={brand_item.website}><img className="brand_logo" src={brand_item.logo_url} alt={brand_item.name} /></a>
+      <a href={brand_item.website}><img className="brand_logo" src={brand_item.logoUrl} alt={brand_item.name} /></a>
     </div>
   ));
 }
