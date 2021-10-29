@@ -2,26 +2,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import SubmittedCard from './index';
 
 describe('Submitted Form Card Component', () => {
   const formData = {
-    id: '63878378973',
-    form_name: 'Friday Night Rock',
-    event_type: 'Colleges and Universities',
-    venue: ['London', 'Mumbai'],
-    artist_budget: { min: 20000, max: 50000 },
-    sponsorship_type: 'Direct sales',
-    wanted_brands: ['Limca'],
-    unwanted_brands: ['Mirenda', 'Pepsi'],
-    target_audience: {
-      age_group: ['26-35', '36-60'],
-      gender: ['female', 'both'],
-      genre: ['DJ', 'Classic'],
-    },
+    id: 'form101',
+    dateCreated: '2021-10-30',
+    concertName: 'Friday Night Rock',
+    status: 'pending',
   };
   test('should render Submitted Card component', () => {
-    render(<SubmittedCard form={formData} />);
+    render(<Router><SubmittedCard form={formData} /></Router>);
     expect(screen.getByText('Friday Night Rock')).toBeInTheDocument();
   });
 });

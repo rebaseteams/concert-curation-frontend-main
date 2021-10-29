@@ -10,10 +10,10 @@ import {
   Slider,
   Input,
 } from 'antd';
-import './question.scss';
+import './concert.scss';
 import myForm from './myForm.json';
-import { QuestionsFormProp } from './util';
-import submitQuestionsForm from '../../services/submitForm';
+import { ConcertFormProp } from './util';
+import submitConcertForm from '../../services/submitForm';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -117,7 +117,7 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
   });
 };
 
-const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX.Element => {
+const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
 
   const onFormSubmit = async (values: any) => {
@@ -125,7 +125,7 @@ const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX
       ...values,
       artist_budget: budget,
       target_audience: {
-        age_group: values.age,
+        ageGroup: values.age,
         gender: values.gender,
         genre: values.genre,
       },
@@ -134,7 +134,7 @@ const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX
     deleteProp.map((prop: string) => {
       return delete result[prop];
     });
-    const response = await submitQuestionsForm(result);
+    const response = await submitConcertForm(result);
     forms?.push(response);
     setForms(forms);
     setVisible(false);
@@ -144,7 +144,7 @@ const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX
     setBudget({ min: event[0], max: event[1] });
   };
   return (
-    <div className="questions-container">
+    <div className="Concert-container">
       <Form
         id="qustionsForm"
         layout="vertical"
@@ -158,4 +158,4 @@ const QuestionsForm = ({ setVisible, setForms, forms } : QuestionsFormProp): JSX
   );
 };
 
-export default QuestionsForm;
+export default ConcertForm;
