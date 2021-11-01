@@ -5,8 +5,9 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { Col } from 'antd';
+import { Col, Modal } from 'antd';
 import './card-scopped.scss';
+// import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 interface CardViewProps {
     data: Array<any>
@@ -63,10 +64,10 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
-        <button className="card-button" type="button" onClick={() => cancelButton()}>X</button>
+        <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
         <div className="card-body">
           <div className="card-heading">
-            <h3>{artist.artist_name}</h3>
+            <h3>{artist.artistName}</h3>
             <p>
               {String(artist.matchPercentage)}
               %
@@ -150,7 +151,12 @@ function displayBrands(brand: any) {
   ));
 }
 
-function cancelButton() {
-  // eslint-disable-next-line
-  alert('Button Clicked!');
+function cancelButton(artistName: any) {
+  Modal.confirm({
+    title: 'Confirm',
+    // icon: <ExclamationCircleOutlined />,
+    content: `Are you sure you want to remove ${artistName}`,
+    okText: 'Remove',
+    cancelText: 'Cancel',
+  });
 }
