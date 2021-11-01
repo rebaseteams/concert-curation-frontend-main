@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable max-len */
 import React from 'react';
 import { Col, Modal } from 'antd';
 import './card-scopped.scss';
@@ -12,9 +13,10 @@ import './card-scopped.scss';
 interface CardViewProps {
     data: Array<any>
     artistClicked: any;
+    onRemoveArtist: any;
 }
 
-const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
+const CardView = ({ data, artistClicked, onRemoveArtist }: CardViewProps): JSX.Element => {
   const span = 8;
 
   return (
@@ -22,7 +24,7 @@ const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
       {
         // eslint-disable-next-line arrow-body-style
         data.map((artist: any, artistIndex: any) => {
-          return renderCards(artist, artistIndex, span, artistClicked);
+          return renderCards(artist, artistIndex, span, artistClicked, onRemoveArtist);
         })
       }
     </>
@@ -31,7 +33,7 @@ const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
 
 export default CardView;
 
-function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any): any {
+function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any, onRemoveArtist: any): any {
   let order;
   switch (artistIndex) {
     case 0:
@@ -64,7 +66,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
-        <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
+        <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName, onRemoveArtist)}>X</button>
         <div className="card-body">
           <div className="card-heading">
             <h3>{artist.artistName}</h3>
@@ -151,12 +153,13 @@ function displayBrands(brand: any) {
   ));
 }
 
-function cancelButton(artistName: any) {
+function cancelButton(artistName: any, onRemoveArtist:any) {
   Modal.confirm({
     title: 'Confirm',
     // icon: <ExclamationCircleOutlined />,
     content: `Are you sure you want to remove ${artistName}`,
     okText: 'Remove',
+    onOk: () => onRemoveArtist(artistName),
     cancelText: 'Cancel',
   });
 }

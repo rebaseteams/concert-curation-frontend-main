@@ -8,8 +8,10 @@ import { Layout, Row, Col } from 'antd';
 import CardView from '../cardView';
 
 import getRecommendedArtists from '../../services/getRecommendedArtists';
+import userRecommendationChoice from '../../services/userRecommendationChoice';
 
 const Content = Layout;
+const discardedArtistList: any[] = [];
 
 function showSummary(summary:string):JSX.Element {
   return (
@@ -22,7 +24,8 @@ function showSummary(summary:string):JSX.Element {
 
 const RecommendationComponent = (): JSX.Element => {
   const [summary, setSummary] = useState('');
-  const [artists, setArtists] = useState([]);
+  const [artists, setArtists] = useState<any[]>([]);
+  const [discardedArtists, setDiscardedArtists] = useState<any[]>([]);
   const [concertData, setConcertData] = useState({ concertName: null });
 
   const getData = async () => {
@@ -36,6 +39,18 @@ const RecommendationComponent = (): JSX.Element => {
   const artistClicked = (artistSummary: string) => {
     setSummary(artistSummary);
   };
+  const onRemoveArtist = (removedArtistName: any) => {
+    let artistList: any[];
+    const userId = '1234';
+    const artistToRemove = artists.find((a) => a.artistName === removedArtistName);
+    if (artistToRemove) {
+      discardedArtistList.push(artistToRemove);
+      setDiscardedArtists(discardedArtists);
+      artistList = artists.filter((value) => value !== artistToRemove);
+      setArtists(artistList);
+    }
+    userRecommendationChoice(userId, discardedArtists, artists);
+  };
   return (
     <Content className="layout-workspace">
       <Row align="middle" style={{ background: '#FFF00' }}>
@@ -45,6 +60,7 @@ const RecommendationComponent = (): JSX.Element => {
             <CardView
               data={artists.slice(0, 3)}
               artistClicked={artistClicked}
+              onRemoveArtist={onRemoveArtist}
             />
             ) }
           </Row>
