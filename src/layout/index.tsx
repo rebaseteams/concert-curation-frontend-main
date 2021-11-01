@@ -23,6 +23,7 @@ import getRecommendedArtists from '../services/getRecommendedArtists';
 import DashboardComponent from '../components/dashboard';
 import CardView from '../components/cardView';
 import RecommendationComponent from '../components/RecomendationComponent';
+import ArtistPieChart from '../components/ArtistPieChart/ArtistPieChart';
 
 // import CardView from '../components/cardView';
 const { Content } = Layout;
@@ -60,7 +61,8 @@ const LayoutComponent = ():JSX.Element => (
           <DashboardComponent />
         </Route>
         <Route path="/recommendations/:id" exact>
-          <RecommendationComponent />
+          {/* <RecommendationComponent /> */}
+          <ArtistPieChart />
         </Route>
       </Switch>
     </Router>
