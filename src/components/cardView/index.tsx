@@ -63,6 +63,7 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
     >
       <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
         <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
+        <button className="card-button" type="button" onClick={() => cancelButton()}>X</button>
         <div className="card-body">
           <div className="card-heading">
             <h3>{artist.artist_name}</h3>
@@ -147,4 +148,9 @@ function displayBrands(brand: any) {
       <a href={brand_item.website}><img className="brand_logo" src={brand_item.logoUrl} alt={brand_item.name} /></a>
     </div>
   ));
+}
+
+function cancelButton() {
+  // eslint-disable-next-line
+  alert('Button Clicked!');
 }
