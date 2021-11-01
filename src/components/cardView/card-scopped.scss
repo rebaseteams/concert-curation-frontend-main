@@ -81,12 +81,21 @@
     box-shadow: 3px 3px 12px #000;
     background: rgba(2, 6, 253, 0.795);
   }
+
+  .card-button{
+    cursor: pointer;
+    float: right;
+    top: 1%;
+    background-color: transparent;
+    border: transparent;
+}
 }
 
 .card-body{
     position:relative;
     width: 100%;
     top: 30px;
+    
 }
 
 .brand_logo {
