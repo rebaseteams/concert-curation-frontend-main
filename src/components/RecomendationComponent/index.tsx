@@ -9,6 +9,8 @@ import CardView from '../cardView';
 
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 
+import { RecommendedData, ArtistsDataInterface, ConcertDataInterface } from './recomendedDataInterface';
+
 const Content = Layout;
 
 function showSummary(summary:string):JSX.Element {
@@ -22,11 +24,11 @@ function showSummary(summary:string):JSX.Element {
 
 const RecommendationComponent = (): JSX.Element => {
   const [summary, setSummary] = useState('');
-  const [artists, setArtists] = useState([]);
-  const [concertData, setConcertData] = useState({ concertName: null });
+  const [artists, setArtists] = useState<Array<ArtistsDataInterface>>();
+  const [concertData, setConcertData] = useState<ConcertDataInterface>();
 
   const getData = async () => {
-    const recommendedData: any = await getRecommendedArtists('8787383');
+    const recommendedData: RecommendedData = await getRecommendedArtists('8787383');
     setArtists(recommendedData.artists);
     setConcertData(recommendedData.concertData);
   };
