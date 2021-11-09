@@ -3,7 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 
-import { Layout, Row, Col } from 'antd';
+import {
+  Layout, Row, Col, Button,
+  Modal,
+} from 'antd';
+
+import SendEamilForm from '../sendEamilForm';
 
 import CardView from '../cardView';
 
@@ -26,6 +31,7 @@ const RecommendationComponent = (): JSX.Element => {
   const [summary, setSummary] = useState('');
   const [artists, setArtists] = useState<Array<ArtistsDataInterface>>();
   const [concertData, setConcertData] = useState<ConcertDataInterface>();
+  const [sendEmailModal, setSendEmailModal] = useState(false);
 
   const getData = async () => {
     const recommendedData: RecommendedData = await getRecommendedArtists('8787383');
@@ -35,13 +41,32 @@ const RecommendationComponent = (): JSX.Element => {
   useEffect(() => {
     getData();
   }, []);
+
   const artistClicked = (artistSummary: string) => {
     setSummary(artistSummary);
   };
+
   return (
     <Content className="layout-workspace">
       <Row align="middle" style={{ background: '#FFF00' }}>
         <Col span={14} style={{ border: '0px solid black' }}>
+          <Button
+            onClick={() => setSendEmailModal(true)}
+          >
+            <span className="material-icons">
+              share
+            </span>
+          </Button>
+          <Modal
+            title="Enter eamil"
+            centered
+            visible={sendEmailModal}
+            onOk={() => setSendEmailModal(false)}
+            onCancel={() => setSendEmailModal(false)}
+            footer={false}
+          >
+            <SendEamilForm setSendEmailModal={setSendEmailModal} />
+          </Modal>
           <Row className="card-container" align="bottom">
             { artists && (
             <CardView
