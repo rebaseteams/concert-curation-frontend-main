@@ -58,7 +58,7 @@ const RecommendationComponent = (): JSX.Element => {
             </span>
           </Button>
           <Modal
-            title="Enter eamil"
+            title="Enter email"
             centered
             visible={sendEmailModal}
             onOk={() => setSendEmailModal(false)}
