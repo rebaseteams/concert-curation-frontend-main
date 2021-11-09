@@ -4,37 +4,26 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable prefer-template */
 /* eslint-disable @typescript-eslint/no-use-before-define */
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
 import {
-  Layout, Modal, Button, Row, Col, Card,
+  Layout, Col, Card,
 } from 'antd';
 
 import './layout.scss';
 
-import React, { useEffect, useState } from 'react';
-
 import HeaderComponet from './header';
 
-import getRecommendedArtists from '../services/getRecommendedArtists';
 import DashboardComponent from '../components/dashboard';
-import CardView from '../components/cardView';
 import RecommendationComponent from '../components/RecomendationComponent';
 import ArtistPieChart from '../components/ArtistPieChart/ArtistPieChart';
 
 // import CardView from '../components/cardView';
 const { Content } = Layout;
-
-const renderForm = (form: any) => (
-  <Col span={24}>
-    <Card title={form.event_type}>
-      Card content
-    </Card>
-  </Col>
-);
 
 const LayoutComponent = ():JSX.Element => (
   <Layout style={{ background: 'none' }} className="layout-container">
