@@ -11,7 +11,7 @@ import {
   Route,
 } from 'react-router-dom';
 import {
-  Layout, Col, Card,
+  Layout, Col, Row,
 } from 'antd';
 
 // Styles
@@ -53,8 +53,19 @@ const LayoutComponent = ():JSX.Element => (
         </Route>
         <Route path="/recommendations/:id" exact>
           {/* <RecommendationComponent /> */}
-          <ConcertData />
-          <ArtistPieChart />
+          <Row>
+            <Col span={6}>
+              <ConcertData />
+            </Col>
+            <Col span={12}>
+              <ArtistPieChart />
+            </Col>
+            <Col
+              span={6}
+            >
+              Summary
+            </Col>
+          </Row>
         </Route>
       </Switch>
     </Router>
