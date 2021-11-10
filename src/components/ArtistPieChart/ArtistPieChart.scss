@@ -1,5 +1,5 @@
-$data-container-bg: rgba(152, 56, 165, 0.514);
-$container-bg: rgba(0, 0, 0, 0.24);
+$data-container-bg: rgba(0, 96, 240, 0.808);
+$container-bg: rgba(255, 255, 255, 0.24);
 $font-color: black;
 $artist1-bg : #a01599;
 $artist2-bg : #91128a;
@@ -17,6 +17,7 @@ $artist4-bg : #720D6D;
     color: $font-color;
     border-color: black;
     box-shadow: 1px 1px 12px black;
+    text-align: center;
 }
 
 .column {
@@ -129,6 +130,7 @@ $artist4-bg : #720D6D;
     margin-top: 30%;
     margin-left: 30%;
     overflow: hidden;
+    text-align: center;
 }
 
 .matchcontainer-2 {

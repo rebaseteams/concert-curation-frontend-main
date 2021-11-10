@@ -14,13 +14,15 @@ import {
   Layout, Col, Card,
 } from 'antd';
 
+// Styles
 import './layout.scss';
 
+// Components
 import HeaderComponet from './header';
-
 import DashboardComponent from '../components/dashboard';
 import RecommendationComponent from '../components/RecomendationComponent';
 import ArtistPieChart from '../components/ArtistPieChart/ArtistPieChart';
+import ConcertData from '../components/concertData';
 
 // import CardView from '../components/cardView';
 const { Content } = Layout;
@@ -51,6 +53,7 @@ const LayoutComponent = ():JSX.Element => (
         </Route>
         <Route path="/recommendations/:id" exact>
           {/* <RecommendationComponent /> */}
+          <ConcertData />
           <ArtistPieChart />
         </Route>
       </Switch>
