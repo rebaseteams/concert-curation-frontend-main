@@ -65,6 +65,5 @@ export interface ConcertDataInterface {
 export interface RecommendedData {
   id: string;
   concertData: ConcertDataInterface;
-
   artists: Array<ArtistsDataInterface>;
 }

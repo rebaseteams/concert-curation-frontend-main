@@ -214,7 +214,10 @@ img {
 }
 
 .close{
-    color: red;
+    color: rgb(255, 255, 255);
     font-size: 20px;
     cursor: pointer;
+    &:hover {
+        color: #F00;
+    }
 }

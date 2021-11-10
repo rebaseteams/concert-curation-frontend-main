@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 export const recommendedArtistsMockData = {
   id: 'form101',
-  concertdata: {
+  concertData: {
     id: 'form101',
     concertName: 'Friday Night Rock',
     eventType: 'Colleges and Universities',
