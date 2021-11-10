@@ -16,12 +16,12 @@ const ConcertData = (): JSX.Element => {
 
   const getConcertData = async () => {
     const data = await getRecommendedArtists(id);
-    setConcertData(data.concertData);
+    setConcertData(data.data.concertData);
   };
 
   useEffect(() => {
     getConcertData();
-  });
+  }, []);
 
   // concert Id extracted from url
   // eslint-disable-next-line no-console

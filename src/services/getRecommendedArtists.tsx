@@ -11,7 +11,8 @@ const { baseURL } = config;
 
 async function getRecommendedArtists(formId: string): Promise<any> {
   try {
-    const response = await axios.post(`${baseURL}/recommender/api/getMatchData/`, { formId });
+    const response: any = await axios.get(`${baseURL}/artists/recommendations/${formId}`);
+    return response.data;
   } catch (error) {
     const response = { error: true, error_message: error };
   }

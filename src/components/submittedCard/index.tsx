@@ -27,7 +27,7 @@ const SubmittedCard = ({ form }: SubmittedCardInterface): JSX.Element => {
   };
   return (
     <Col span={24}>
-      <Link to={`recommendations/${'form101'}`}>
+      <Link to={`recommendations/${form.id}`}>
         <div className="submmitedFormsCard">
           <div className="displayFlex">
             <h3>{form.concertName}</h3>
