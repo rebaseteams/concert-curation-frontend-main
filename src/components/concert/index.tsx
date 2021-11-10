@@ -13,7 +13,7 @@ import {
 import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
-import submitConcertForm from '../../services/submitForm';
+import submitConcertForm, { QuestionsFormDataInterface } from '../../services/submitForm';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -121,19 +121,27 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
 
   const onFormSubmit = async (values: any) => {
-    const result = {
+    const result: QuestionsFormDataInterface = {
       ...values,
-      artist_budget: budget,
-      target_audience: {
+      artistBudget: budget,
+      targetAudience: {
         ageGroup: values.age,
         gender: values.gender,
-        genre: values.genre,
+        genre: values.genre.map((genre: string) => {
+          return {
+            genreId: '886863',
+            genreName: genre,
+          };
+        }),
       },
+      wantedBrands: values.wantedBrands.map((brand: string) => {
+        return { brandId: '65265373', brandName: brand };
+      }),
+      unwantedBrands: values.unwantedBrands.map((brand: string) => {
+        return { brandId: '65265373', brandName: brand };
+      }),
     };
-    const deleteProp: Array<string> = ['age', 'gender', 'genre'];
-    deleteProp.map((prop: string) => {
-      return delete result[prop];
-    });
+
     const response = await submitConcertForm(result);
     forms?.push(response);
     setForms(forms);

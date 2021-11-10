@@ -1,35 +1,67 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// import axios from 'axios';
+import axios from 'axios';
 
-// import config from './config.json';
+import config from './config.json';
 
-// const { baseURL } = config;
+const { baseURL } = config;
 
-interface QuestionsFormDataInterface {
-    'event_type': string;
-    'venue': Array<string>,
-    'artist_budget':{'min': number, 'max':number},
-    'sponsorship_type':string,
-    'wanted_brands':Array<string>,
-    'target_audience': {
-      'age_group': Array<string>,
-      'gender': Array<string>,
-      'genre':Array<string>
-  }
+export type Brand = {
+  brandName : string;
+  brandId : string;
+}
+
+export type Genre = {
+  genreId: string;
+  genreName: string;
+}
+
+export type TargetAudience = {
+  ageGroup: Array<string>;
+  genre: Array<Genre>;
+  gender: Array<string>;
+}
+
+export type WhatSellsMost = {
+  beer:Array<Brand>;
+  liquor: Array<Brand>;
+  softDrinks: Array<Brand>;
+}
+
+export type QuestionsFormDataInterface = {
+  userId: string;
+  concertName: string;
+  eventType: string;
+  venue: Array<string>;
+  artistBudget:{'min': number, 'max':number};
+  sponsorshipType :string;
+  wantedBrands: Array<Brand>;
+  unwantedBrands: Array<Brand>;
+  targetAudience: TargetAudience;
+  whatSellsMost: WhatSellsMost;
 }
 
 export const returnMockData = {
   id: '63878378973',
   concertName: 'Friday Night Rock',
   status: 'pending',
-  dateCreated: '2021-10-30',
+  dateCreated: '',
 };
 
-const submitQuestionsForm = async (data: QuestionsFormDataInterface): Promise<any> => {
+export type ConcertCreationResponse = {
+  id: string;
+  concertName: string;
+  status: boolean;
+  dateCreated: string;
+}
+
+const submitQuestionsForm = async (data: QuestionsFormDataInterface | any): Promise<any> => {
   try {
-    // await axios.post(`${baseURL}/recommender/api/submitForm/`, data);
+    const response = await axios.post(`${baseURL}/artists/concert`, data);
+    // eslint-disable-next-line no-console
+    console.log(response.data);
+    return (response.data);
 
     // For now Returning mock data
     return {

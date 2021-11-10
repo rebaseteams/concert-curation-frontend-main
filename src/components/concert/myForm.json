@@ -1,6 +1,6 @@
 [
   {
-    "name": "formName",
+    "name": "concertName",
     "label": "Event Name",
     "type": "input",
     "placeholder": "Enter form name",
