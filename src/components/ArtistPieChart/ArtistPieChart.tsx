@@ -127,9 +127,9 @@ const ArtistPieChart = () : JSX.Element => {
                   %
                 </div>
                 <div className="data-container">
+                  %
                   Gender:
                   {artist2.gender}
-                  %
                 </div>
                 <div className="data-container">Affinity Score : 87%</div>
               </div>
@@ -143,6 +143,7 @@ const ArtistPieChart = () : JSX.Element => {
           </div>
           <div className="quarter-circle-bottom-right quarter-circle">
             <div className="matchcontainer-1 flex-match-content">
+              <span className="close">&times;</span>
               <div className="circle-img">
                 <img src={artist2.img} alt="" />
               </div>
@@ -171,6 +172,7 @@ const ArtistPieChart = () : JSX.Element => {
                 {artist1.match}
                 %
               </div>
+              <span className="close">&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
@@ -225,6 +227,7 @@ const ArtistPieChart = () : JSX.Element => {
           </div>
           <div className="quarter-circle-bottom-left quarter-circle">
             <div className="matchcontainer-2 flex-match-content">
+              <span className="close">&times;</span>
               <div className="circle-img">
                 <img src={artist3.img} alt="" />
               </div>
@@ -253,6 +256,7 @@ const ArtistPieChart = () : JSX.Element => {
                 {artist4.match}
                 %
               </div>
+              <span className="close">&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
