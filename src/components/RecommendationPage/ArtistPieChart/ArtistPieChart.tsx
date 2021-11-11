@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
+import { Modal } from 'antd';
 import './ArtistPieChart.scss';
 import { ArtistsDataInterface, AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
 
@@ -83,9 +84,19 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
       locations: getLocations(a4.matchAttributes.venues),
     }));
   };
+
+  const cancelbutton = (artistName: string, artistId: string) => {
+    Modal.confirm({
+      title: 'Confirm',
+      content: `Are you sure you want to remove ${artistName}`,
+      okText: 'Remove',
+      onOk: () => patchConcertData(artistId),
+      cancelText: 'Cancel',
+    });
+  };
   useEffect(() => {
     getData();
-  }, []);
+  }, [data]);
   return (
     <div className="container">
       <div className="left-top-data-line">
@@ -155,7 +166,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
           </div>
           <div className="quarter-circle-bottom-right quarter-circle">
             <div className="matchcontainer-1 flex-match-content">
-              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist2.id)}>&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist2.name, artist2.id)}>&times;</span>
               <div className="circle-img">
                 <img src={artist2.img} alt="" />
               </div>
@@ -184,7 +195,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 {artist1.match}
                 %
               </div>
-              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist1.id)}>&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist1.name, artist1.id)}>&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
@@ -239,7 +250,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
           </div>
           <div className="quarter-circle-bottom-left quarter-circle">
             <div className="matchcontainer-2 flex-match-content">
-              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist3.id)}>&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist3.name, artist3.id)}>&times;</span>
               <div className="circle-img">
                 <img src={artist3.img} alt="" />
               </div>
@@ -268,7 +279,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 {artist4.match}
                 %
               </div>
-              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist4.id)}>&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist4.name, artist4.id)}>&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
