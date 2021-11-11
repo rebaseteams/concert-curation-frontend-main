@@ -51,15 +51,13 @@ const RecommendationPage = (): JSX.Element => {
   }
   return (
     <Row>
-      <Col span={6}>
+      <Col xs={{ span: 24 }} lg={{ span: 4 }}>
         { concertData && <ConcertData data={concertData} /> }
       </Col>
-      <Col span={10}>
+      <Col xs={{ span: 24 }} lg={{ span: 12 }}>
         { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
       </Col>
-      <Col
-        span={8}
-      >
+      <Col xs={{ span: 24 }} lg={{ span: 8 }}>
         <div className="summary-container">
           <h3>Summary</h3>
           <div>
