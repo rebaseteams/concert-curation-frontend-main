@@ -9,6 +9,7 @@ import {
   Select,
   Slider,
   Input,
+  notification,
 } from 'antd';
 import './concert.scss';
 import myForm from './myForm.json';
@@ -147,6 +148,10 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
     forms?.push(response);
     setForms(forms);
     setVisible(false);
+    notification.success({
+      message: 'Success',
+      description: 'Concert Successfully created',
+    });
   };
 
   const onBudgetChange = (event: any) => {
