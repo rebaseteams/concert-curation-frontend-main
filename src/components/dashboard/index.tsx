@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Layout, Button, Modal, Row,
@@ -8,15 +8,35 @@ import {
 
 import ConcertForm from '../concert/index';
 
-import { returnMockData } from '../../services/submitForm';
+import getMyAllConcerts from '../../services/getMyAllConcerts';
 
 import SubmittedCard from '../submittedCard';
+import ErrorPage from '../ErrorPage';
 
 const { Content } = Layout;
 
+const renderError = (setDisplayFormModal: any): JSX.Element => (
+  <div>
+    <ErrorPage error={{ status: 'Opps', message: 'You havn\'t created concerts created yet' }} />
+    <Button type="link" onClick={() => setDisplayFormModal(true)}>
+      Curate Concert Now
+    </Button>
+  </div>
+);
+
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
-  const [forms, setForms] = useState([returnMockData]);
+  const [forms, setForms] = useState([]);
+  const userId = 'TODO: When authentication will stablished';
+
+  const getConcerts = async () => {
+    const allConcerts = await getMyAllConcerts(userId);
+    setForms(allConcerts);
+  };
+
+  useEffect(() => {
+    getConcerts();
+  }, []);
 
   return (
     <Content>
@@ -27,10 +47,16 @@ const DashboardComponent = (): JSX.Element => {
         title="Choose your prefrences"
         centered
         style={
+          {
+            padding: '0',
+          }
+        }
+        bodyStyle={
             {
-              height: 'calc(100vh - 100px)',
-              overflowY: 'scroll',
+              height: 'calc(100vh - 200px)',
               padding: '0',
+              overflowY: 'scroll',
+              margin: '0',
             }
           }
         visible={displayFormModal}
@@ -52,7 +78,7 @@ const DashboardComponent = (): JSX.Element => {
             />
           ))}
         </Row>
-      ) : (<span>No Foms available yet</span>)}
+      ) : renderError(setDisplayFormModal) }
     </Content>
   );
 };
