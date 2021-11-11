@@ -90,6 +90,7 @@ const renderSlider = (field: any, budget: any, onBudgetChange: any): any => {
 const renderInput = (field: any) => {
   return (
     <Form.Item
+      key={field.name}
       label={field.label}
       name={field.name}
       rules={[{ required: field.required, message: field.message }]}
@@ -152,7 +153,7 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
     setBudget({ min: event[0], max: event[1] });
   };
   return (
-    <div className="Concert-container">
+    <div className="concert-container">
       <Form
         id="qustionsForm"
         layout="vertical"
