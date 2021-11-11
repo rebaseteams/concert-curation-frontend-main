@@ -6,6 +6,11 @@ export interface AssociatedBrands {
   logoUrl: string;
 }
 
+export interface Genre {
+  genreName: string,
+  matchPercentage: number,
+}
+
 export interface Venue {
   id: string,
   name: string,
@@ -37,12 +42,7 @@ export interface ArtistsDataInterface {
       male: number,
       female: number,
     },
-    genre: [
-      {
-        genreName: string,
-        matchPercentage: number,
-      },
-    ],
+    genre: Array<Genre>,
     associatedBrands: Array<AssociatedBrands>;
   };
   summary: string,

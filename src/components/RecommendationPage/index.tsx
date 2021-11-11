@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
-import ConcertData from '../concertData';
-import ArtistPieChart from '../ArtistPieChart/ArtistPieChart';
+import ConcertData from './concertData';
+import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
 import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
 import ErrorPage from '../ErrorPage';
 
