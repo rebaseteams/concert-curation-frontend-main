@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Row, Col } from 'antd';
+import * as _ from 'lodash';
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 import ConcertData from './concertData';
@@ -10,6 +11,13 @@ import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
 import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
 import ErrorPage from '../ErrorPage';
 import patchRecommendationArtist from '../../services/patchRecommendationArtist';
+import ArtistsSummary from './ArtistsSummary';
+
+// styles
+import './recommendationPage.scss';
+
+const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
+  <ArtistsSummary summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
@@ -46,13 +54,18 @@ const RecommendationPage = (): JSX.Element => {
       <Col span={6}>
         { concertData && <ConcertData data={concertData} /> }
       </Col>
-      <Col span={12}>
+      <Col span={10}>
         { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
       </Col>
       <Col
-        span={6}
+        span={8}
       >
-        Summary To be added
+        <div className="summary-container">
+          <h3>Summary</h3>
+          <div>
+            { artistsData.length > 0 && renderSummary(artistsData) }
+          </div>
+        </div>
       </Col>
     </Row>
   );

@@ -31,6 +31,7 @@ const SubmittedCard = ({ form }: SubmittedCardInterface): JSX.Element => {
         <div className="submmitedFormsCard">
           <div className="displayFlex">
             <h3>{form.concertName}</h3>
+            <h3>{form.dateCreated}</h3>
             <div>
               <Button
                 onClick={async () => getRecomendation(form.id)}
