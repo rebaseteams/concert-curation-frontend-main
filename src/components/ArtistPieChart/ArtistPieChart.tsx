@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import getRecommendedArtists from '../../services/getRecommendedArtists';
 import './ArtistPieChart.scss';
 
 const getBrands = (brands : []) : string => brands.map((val : {name : string}) => val.name).join(', ');
@@ -10,7 +9,8 @@ const getGender = (gender : {male : number, female : number}) : string => {
   return 'Both, 50';
 };
 const getLocations = (locations : []) : string => locations.map((val : {name : string}) => val.name).join(', ');
-const ArtistPieChart = () : JSX.Element => {
+
+const ArtistPieChart = ({ data }: any) : JSX.Element => {
   const artist = {
     brand: '',
     name: '',
@@ -27,8 +27,7 @@ const ArtistPieChart = () : JSX.Element => {
   const [artist4, setArtist4] = useState(artist);
 
   const getData = async () => {
-    const data = await getRecommendedArtists('871717');
-    const { artists } = data;
+    const artists = data;
     const [a1, a2, a3, a4] = artists;
     setArtist1((prevState) => ({
       ...prevState,
