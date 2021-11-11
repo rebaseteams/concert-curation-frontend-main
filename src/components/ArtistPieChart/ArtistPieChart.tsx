@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import './ArtistPieChart.scss';
+import { ArtistsDataInterface, AssociatedBrands, Venue } from '../RecomendationComponent/recomendedDataInterface';
 
-const getBrands = (brands : []) : string => brands.map((val : {name : string}) => val.name).join(', ');
+const getBrands = (brands: Array<AssociatedBrands>) : string => brands.map((val : {name : string}) => val.name).join(', ');
 const getAge = (age : {ageGroup : string, matchPercentage : number}) : string => `${age.ageGroup}, ${age.matchPercentage}`;
 const getGender = (gender : {male : number, female : number}) : string => {
   if (gender.male > gender.female) return `Male, ${gender.male}`;
   if (gender.female > gender.male) return `Female, ${gender.female}`;
   return 'Both, 50';
 };
-const getLocations = (locations : []) : string => locations.map((val : {name : string}) => val.name).join(', ');
+const getLocations = (locations : Venue[]) : string => locations.map((val : {name : string}) => val.name).join(', ');
 
-const ArtistPieChart = ({ data }: any) : JSX.Element => {
+interface ArtistsPieChartProp {
+  data: Array<ArtistsDataInterface>;
+}
+
+const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
   const artist = {
     brand: '',
     name: '',
-    match: '',
+    match: 0,
     img: '',
     age: '',
     gender: '',
