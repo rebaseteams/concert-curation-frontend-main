@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import './ArtistPieChart.scss';
 import { ArtistsDataInterface, AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
@@ -13,10 +14,13 @@ const getLocations = (locations : Venue[]) : string => locations.map((val : {nam
 
 interface ArtistsPieChartProp {
   data: Array<ArtistsDataInterface>;
+  patchConcertData: (discardedArtistId: string) => void
 }
 
-const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
+// eslint-disable-next-line
+const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.Element => {
   const artist = {
+    id: '',
     brand: '',
     name: '',
     match: 0,
@@ -36,6 +40,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
     const [a1, a2, a3, a4] = artists;
     setArtist1((prevState) => ({
       ...prevState,
+      id: a1.artistId,
       name: a1.artistName,
       brand: getBrands(a1.matchAttributes.associatedBrands),
       match: a1.matchPercentage,
@@ -46,6 +51,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
     }));
     setArtist2((prevState) => ({
       ...prevState,
+      id: a2.artistId,
       name: a2.artistName,
       brand: getBrands(a2.matchAttributes.associatedBrands),
       match: a2.matchPercentage,
@@ -56,6 +62,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
     }));
     setArtist3((prevState) => ({
       ...prevState,
+      id: a3.artistId,
       name: a3.artistName,
       brand: getBrands(a3.matchAttributes.associatedBrands),
       match: a3.matchPercentage,
@@ -66,6 +73,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
     }));
     setArtist4((prevState) => ({
       ...prevState,
+      id: a4.artistId,
       name: a4.artistName,
       brand: getBrands(a4.matchAttributes.associatedBrands),
       match: a4.matchPercentage,
@@ -147,7 +155,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
           </div>
           <div className="quarter-circle-bottom-right quarter-circle">
             <div className="matchcontainer-1 flex-match-content">
-              <span className="close">&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist2.id)}>&times;</span>
               <div className="circle-img">
                 <img src={artist2.img} alt="" />
               </div>
@@ -176,7 +184,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
                 {artist1.match}
                 %
               </div>
-              <span className="close">&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist1.id)}>&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
@@ -231,7 +239,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
           </div>
           <div className="quarter-circle-bottom-left quarter-circle">
             <div className="matchcontainer-2 flex-match-content">
-              <span className="close">&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist3.id)}>&times;</span>
               <div className="circle-img">
                 <img src={artist3.img} alt="" />
               </div>
@@ -260,7 +268,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
                 {artist4.match}
                 %
               </div>
-              <span className="close">&times;</span>
+              <span role="button" tabIndex={0} className="close" onClick={() => patchConcertData(artist4.id)}>&times;</span>
             </div>
           </div>
           <div className="bottom-data-line">
