@@ -1,25 +1,34 @@
+export interface AssociatedBrands {
+  id: string,
+  name: string,
+  contact: string,
+  website: string,
+  logoUrl: string;
+}
+
+export interface Venue {
+  id: string,
+  name: string,
+  address: {
+    pincode: number,
+    country: string,
+    city: string,
+    geoLocation: {
+      lat: number,
+      long: number,
+    },
+  },
+  venueCapacity: number,
+  matchPercentage: number,
+}
+
 export interface ArtistsDataInterface {
   artistName: string,
   artistId: string,
   artistImage: string,
   matchPercentage: number,
   matchAttributes: {
-    venues: Array<
-      {
-        id: string,
-        name: string,
-        address: {
-          pincode: number,
-          country: string,
-          city: string,
-          geoLocation: {
-            lat: number,
-            long: number,
-          },
-        },
-        venueCapacity: number,
-        matchPercentage: number,
-      }>;
+    venues: Array<Venue>;
     age: {
       ageGroup: string,
       matchPercentage: number,
@@ -34,14 +43,7 @@ export interface ArtistsDataInterface {
         matchPercentage: number,
       },
     ],
-    associatedBrands: Array<
-      {
-        id: string,
-        name: string,
-        contact: string,
-        website: string,
-        logoUrl: string,
-      }>;
+    associatedBrands: Array<AssociatedBrands>;
   };
   summary: string,
 }
