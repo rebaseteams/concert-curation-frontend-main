@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Row, Col } from 'antd';
@@ -7,6 +9,7 @@ import ConcertData from './concertData';
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
 import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
 import ErrorPage from '../ErrorPage';
+import patchRecommendationArtist from '../../services/patchRecommendationArtist';
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
@@ -23,9 +26,15 @@ const RecommendationPage = (): JSX.Element => {
     setArtistsData(data.data.artists);
   };
 
+  // eslint-disable-next-line react/jsx-no-bind
+  async function patchConcertData(discardedArtistId: string) {
+    const res = await patchRecommendationArtist(id, discardedArtistId);
+    setArtistsData(res.data);
+  }
+
   useEffect(() => {
     getConcertData();
-  }, []);
+  }, [artistsData]);
 
   if (error) {
     return (
@@ -38,7 +47,7 @@ const RecommendationPage = (): JSX.Element => {
         { concertData && <ConcertData data={concertData} /> }
       </Col>
       <Col span={12}>
-        { artistsData.length > 0 && <ArtistPieChart data={artistsData} />}
+        { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
       </Col>
       <Col
         span={6}
