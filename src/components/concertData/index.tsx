@@ -1,31 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Row, Col } from 'antd';
-
-import { useParams } from 'react-router-dom';
-import getRecommendedArtists from '../../services/getRecommendedArtists';
 
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 
 // styles
 import './concertData.scss';
 
-const ConcertData = (): JSX.Element => {
-  const { id }: { id: string } = useParams();
-  const [concertData, setConcertData] = useState<ConcertDataResponse>();
+interface ConcertDataProp {
+  data: ConcertDataResponse;
+}
 
-  const getConcertData = async () => {
-    const data = await getRecommendedArtists(id);
-    setConcertData(data.data.concertData);
-  };
-
-  useEffect(() => {
-    getConcertData();
-  }, []);
+const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
+  const concertData = data;
 
   // concert Id extracted from url
-  // eslint-disable-next-line no-console
-  console.log(id);
   if (concertData) {
     return (
       <Row className="concertDataContainer">

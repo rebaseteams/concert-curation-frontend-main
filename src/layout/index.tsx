@@ -10,9 +10,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import {
-  Layout, Col, Row,
-} from 'antd';
+import { Layout } from 'antd';
 
 // Styles
 import './layout.scss';
@@ -20,31 +18,11 @@ import './layout.scss';
 // Components
 import HeaderComponet from './header';
 import DashboardComponent from '../components/dashboard';
-import RecommendationComponent from '../components/RecomendationComponent';
-import ArtistPieChart from '../components/ArtistPieChart/ArtistPieChart';
-import ConcertData from '../components/concertData';
-
-// import CardView from '../components/cardView';
-const { Content } = Layout;
+import RecommendationPage from '../components/RecommendationPage';
 
 const LayoutComponent = ():JSX.Element => (
   <Layout style={{ background: 'none' }} className="layout-container">
     <HeaderComponet />
-    {/* Commenting this for now later will be utilized for displaying recomended artist */}
-    {/* <Content>
-        <div className="layout-workspace">
-          <Row align="middle">
-            <Col span={14} style={{ border: '0px solid black' }}>
-              <Row className="card-container" align="bottom">
-                { artists && <CardView data={artists.slice(0, 3)} artistClicked={artistClicked} /> }
-              </Row>
-            </Col>
-            <Col span={10} style={{ padding: '20px', border: '0px solid black' }}>
-              { summary && showSummary(summary) }
-            </Col>
-          </Row>
-        </div>
-      </Content> */}
 
     <Router>
       <Switch>
@@ -52,20 +30,9 @@ const LayoutComponent = ():JSX.Element => (
           <DashboardComponent />
         </Route>
         <Route path="/recommendations/:id" exact>
+          {/* emable this for card View */}
           {/* <RecommendationComponent /> */}
-          <Row>
-            <Col span={6}>
-              <ConcertData />
-            </Col>
-            <Col span={12}>
-              <ArtistPieChart />
-            </Col>
-            <Col
-              span={6}
-            >
-              Summary
-            </Col>
-          </Row>
+          <RecommendationPage />
         </Route>
       </Switch>
     </Router>
