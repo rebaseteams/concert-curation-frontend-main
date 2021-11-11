@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Row, Col } from 'antd';
 
-import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
+import { ConcertDataResponse } from '../../../interfaces/concertDataResponse';
 
 // styles
 import './concertData.scss';

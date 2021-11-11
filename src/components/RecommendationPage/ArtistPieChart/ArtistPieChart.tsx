@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ArtistPieChart.scss';
-import { ArtistsDataInterface, AssociatedBrands, Venue } from '../RecomendationComponent/recomendedDataInterface';
+import { ArtistsDataInterface, AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
 
 const getBrands = (brands: Array<AssociatedBrands>) : string => brands.map((val : {name : string}) => val.name).join(', ');
 const getAge = (age : {ageGroup : string, matchPercentage : number}) : string => `${age.ageGroup}, ${age.matchPercentage}`;
@@ -83,7 +83,7 @@ const ArtistPieChart = ({ data }: ArtistsPieChartProp) : JSX.Element => {
       <div className="left-top-data-line">
         <div className="h-data-container">
           <div className="v-data-container">
-            <div className="data-container">
+            <div className="data-container" data-testid="matchingBrands">
               Matching Brands :
               {artist2.brand}
             </div>
