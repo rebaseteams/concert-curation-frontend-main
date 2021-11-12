@@ -15,6 +15,8 @@ import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
 import submitConcertForm, { QuestionsFormDataInterface } from '../../services/submitForm';
+import createConcertFormData from '../../services/createConcertFormData';
+import { onSubmitFormDataType } from '../../interfaces/concertForm';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -121,37 +123,28 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
 
 const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
+  const [loading, setLoading] = useState(false);
 
-  const onFormSubmit = async (values: any) => {
-    const result: QuestionsFormDataInterface = {
-      ...values,
-      artistBudget: budget,
-      targetAudience: {
-        ageGroup: values.age,
-        gender: values.gender,
-        genre: values.genre.map((genre: string) => {
-          return {
-            genreId: '886863',
-            genreName: genre,
-          };
-        }),
-      },
-      wantedBrands: values.wantedBrands.map((brand: string) => {
-        return { brandId: '65265373', brandName: brand };
-      }),
-      unwantedBrands: values.unwantedBrands.map((brand: string) => {
-        return { brandId: '65265373', brandName: brand };
-      }),
-    };
+  const onFormSubmit = async (values: onSubmitFormDataType) => {
+    setLoading(true);
+    const result: QuestionsFormDataInterface = createConcertFormData(values, budget);
 
     const response = await submitConcertForm(result);
-    forms?.push(response);
-    setForms(forms);
-    setVisible(false);
-    notification.success({
-      message: 'Success',
-      description: 'Concert Successfully created',
+    if (response && 'id' in response) {
+      forms?.push(response);
+      setForms(forms);
+      setVisible(false);
+      notification.success({
+        message: 'Success',
+        description: 'Concert Successfully created',
+      });
+    }
+    notification.error({
+      message: 'Error',
+      description: 'Could not create concert',
     });
+    setLoading(false);
+    setVisible(false);
   };
 
   const onBudgetChange = (event: any) => {
@@ -166,7 +159,8 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
         onFinish={onFormSubmit}
       >
         { myForm && renderFormFields(myForm, budget, onBudgetChange) }
-        <Button className="submit" htmlType="submit" type="primary">Submit</Button>
+        { loading && <Button disabled className="submit" htmlType="submit" type="primary">Submiting</Button> }
+        { !loading && <Button className="submit" htmlType="submit" type="primary">Submit</Button> }
       </Form>
     </div>
   );

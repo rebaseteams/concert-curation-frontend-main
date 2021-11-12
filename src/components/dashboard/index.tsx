@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  Layout, Button, Modal, Row,
+  Layout, Button, Modal, Row, Spin,
 } from 'antd';
 
 import ConcertForm from '../concert/index';
@@ -27,16 +27,45 @@ const renderError = (setDisplayFormModal: any): JSX.Element => (
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
   const [forms, setForms] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<{status: string, message: string}>();
+
   const userId = 'TODO: When authentication will stablished';
 
   const getConcerts = async () => {
-    const allConcerts = await getMyAllConcerts(userId);
-    setForms(allConcerts);
+    const response = await getMyAllConcerts(userId);
+    if (response.error) {
+      setError({ status: 'Oops', message: 'Network Error:' });
+    }
+    setForms(response);
+    setLoading(false);
   };
 
   useEffect(() => {
+    setLoading(true);
     getConcerts();
   }, []);
+
+  const renderLoading = (): JSX.Element => <Spin>Loading...</Spin>;
+
+  const renderConcerts = (): JSX.Element => {
+    if (error) {
+      return <ErrorPage error={error} />;
+    }
+    if (forms.length > 0) {
+      return (
+        <Row>
+          { forms.map((form:any) => (
+            <SubmittedCard
+              key={form.id + Math.random()}
+              form={form}
+            />
+          ))}
+        </Row>
+      );
+    }
+    return renderError(setDisplayFormModal);
+  };
 
   return (
     <Content>
@@ -69,16 +98,7 @@ const DashboardComponent = (): JSX.Element => {
         <ConcertForm setVisible={setDisplayFormModal} setForms={setForms} forms={forms} />
       </Modal>
       <h4 style={{ textAlign: 'center' }}>My Forms</h4>
-      {forms.length > 0 ? (
-        <Row>
-          { forms.map((form:any) => (
-            <SubmittedCard
-              key={form.id + Math.random()}
-              form={form}
-            />
-          ))}
-        </Row>
-      ) : renderError(setDisplayFormModal) }
+      { loading ? renderLoading() : renderConcerts() }
     </Content>
   );
 };
