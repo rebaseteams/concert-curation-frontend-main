@@ -6,6 +6,7 @@ import {
   Button, Col,
 } from 'antd';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
+import deleteConcertForm from '../../services/deleteConcertForm';
 
 interface SubmittedCardInterface {
   form: {
@@ -52,7 +53,10 @@ const SubmittedCard = ({ form }: SubmittedCardInterface): JSX.Element => {
           </div>
         </div>
       </Link>
-      <Button>
+      <Button
+        onClick={async () => deleteConcertForm(form.id)}
+        type="link"
+      >
         <span
           className="material-icons"
           style={{ color: '#F00', fontSize: '25px' }}
