@@ -32,11 +32,11 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         </Col>
         <Col span={24} className="information">
           <h4>Wanted Brands</h4>
-          {concertData.wantedBrands.map((value) => (<span>{`${value}, `}</span>))}
+          {concertData.wantedBrands.map((value) => (<span>{`${value.brandName}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Unwanted Brands</h4>
-          {concertData.unwantedBrands.map((value) => (<span>{`${value}, `}</span>))}
+          {concertData.unwantedBrands.map((value) => (<span>{`${value.brandName}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Event Type</h4>
@@ -56,7 +56,7 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         </Col>
         <Col span={24} className="information">
           <h4>Genre</h4>
-          {concertData.targetAudience.genre.map((genre) => (<span>{`${genre}, `}</span>))}
+          {concertData.targetAudience.genre.map((genre) => (<span>{`${genre.genreName}, `}</span>))}
         </Col>
       </Row>
     );

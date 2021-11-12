@@ -14,6 +14,7 @@ import { Layout } from 'antd';
 
 // Styles
 import './layout.scss';
+import { Content } from 'antd/lib/layout/layout';
 
 // Components
 import HeaderComponet from './header';
@@ -24,18 +25,28 @@ const LayoutComponent = ():JSX.Element => (
   <Layout style={{ background: 'none' }} className="layout-container">
     <HeaderComponet />
 
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <DashboardComponent />
-        </Route>
-        <Route path="/recommendations/:id" exact>
-          {/* emable this for card View */}
-          {/* <RecommendationComponent /> */}
-          <RecommendationPage />
-        </Route>
-      </Switch>
-    </Router>
+    <Layout>
+      <Content
+        style={{
+          maxHeight: '90vh',
+          overflow: 'auto',
+          background: 'rgb(27, 27, 27)',
+        }}
+      >
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              <DashboardComponent />
+            </Route>
+            <Route path="/recommendations/:id" exact>
+              {/* emable this for card View */}
+              {/* <RecommendationComponent /> */}
+              <RecommendationPage />
+            </Route>
+          </Switch>
+        </Router>
+      </Content>
+    </Layout>
   </Layout>
 );
 
