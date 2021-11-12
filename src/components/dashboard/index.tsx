@@ -110,7 +110,15 @@ const DashboardComponent = (): JSX.Element => {
       >
         <ConcertForm setVisible={setDisplayFormModal} setForms={setForms} forms={forms} />
       </Modal>
-      <h4 style={{ textAlign: 'center' }}>My Forms</h4>
+      <h4 style={{
+        textAlign: 'center',
+        color: '#FFF',
+        fontSize: '25px',
+      }}
+      >
+        {' '}
+        My Forms
+      </h4>
       { loading ? renderLoading() : renderConcerts() }
     </Content>
   );
