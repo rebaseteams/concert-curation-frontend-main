@@ -7,7 +7,7 @@ import config from './config.json';
 
 const { baseURL } = config;
 
-async function deleteConcertForm(formId: string): Promise<any> {
+const deleteConcertForm = async (formId: string): Promise<any> => {
   try {
     const response: any = await axios.delete(`${baseURL}/artists/concert/${formId}`);
     return response.data;
@@ -15,6 +15,6 @@ async function deleteConcertForm(formId: string): Promise<any> {
     const response = { error: true, error_message: error };
     return response;
   }
-}
+};
 
 export default deleteConcertForm;
