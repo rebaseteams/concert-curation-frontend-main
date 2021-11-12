@@ -31,6 +31,8 @@ const renderSelect = (field: any) => {
         key={`field${field.name}`}
         name={field.name}
         label={field.label}
+        style={{ color: '#FFF' }}
+        className="formLabel"
         rules={[{ required: field.required || false, message: field.message || 'Not required' }]}
       >
         <Select
@@ -47,6 +49,8 @@ const renderSelect = (field: any) => {
       key={`field${field.name}`}
       name={field.name}
       label={field.label}
+      style={{ color: '#FFF' }}
+      className="formLabel"
       rules={[{ required: field.required || true, message: field.message || 'Not required' }]}
     >
       <Select

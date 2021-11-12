@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  Layout, Button, Modal, Row, Spin,
+  Layout, Button, Modal, Row, Spin, Col,
 } from 'antd';
 
 import ConcertForm from '../concert/index';
@@ -12,6 +12,9 @@ import getMyAllConcerts from '../../services/getMyAllConcerts';
 
 import SubmittedCard from '../submittedCard';
 import ErrorPage from '../ErrorPage';
+
+// styles
+import './dashboard.style.scss';
 
 const { Content } = Layout;
 
@@ -55,6 +58,16 @@ const DashboardComponent = (): JSX.Element => {
     if (forms.length > 0) {
       return (
         <Row>
+          <Col span={24}>
+            <div className="submmitedFormsCard headingForms">
+              <div className="displayFlex">
+                <h3>Concert name</h3>
+                <h3>Created date</h3>
+                <div> </div>
+                <div> </div>
+              </div>
+            </div>
+          </Col>
           { forms.map((form:any) => (
             <SubmittedCard
               key={form.id + Math.random()}

@@ -1,13 +1,18 @@
+*{
+  color: #FFF;
+}
+
 .submmitedFormsCard {
-  padding: 20px;
-  margin: 20px;
-  background-color: rgba(0, 0, 0, 0.322);
+  padding: 5px 20px;
+  margin: 10px;
   transition: all 0.2s;
+  width: 90%;
+  border-top: 1px solid gray;
   .displayFlex {
     display: flex;
     justify-content: space-between;
     h3{
-      color: rgb(0, 0, 0);
+      color: rgb(250, 229, 184);
     }
     div {
       display: flex;
@@ -22,4 +27,12 @@
 .submmitedFormsCard:hover {
   transform: scale(1.01);
   box-shadow: 2px 2px 6px #000;
+}
+
+.headingForms {
+  border-top: none;
+  &:hover {
+    transform: scale(1);
+    box-shadow: none;
+  }
 }
