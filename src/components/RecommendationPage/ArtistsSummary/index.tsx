@@ -8,7 +8,7 @@ interface ArtistsSummaryProp {
 }
 
 const ArtistsSummary = ({ summary, artistName }: ArtistsSummaryProp): JSX.Element => (
-  <div className="summary">
+  <div className="summary" key={artistName}>
     <h4>{_.upperFirst(artistName)}</h4>
     <p>{_.upperFirst(summary)}</p>
   </div>

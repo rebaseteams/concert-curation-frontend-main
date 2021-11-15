@@ -28,15 +28,15 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         </Col>
         <Col span={24} className="information">
           <h4>Venues</h4>
-          {concertData.venue.map((venue) => (<span>{`${venue}, `}</span>))}
+          {concertData.venue.map((venue) => (<span key={venue}>{`${venue}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Wanted Brands</h4>
-          {concertData.wantedBrands.map((value) => (<span>{`${value.brandName}, `}</span>))}
+          {concertData.wantedBrands.map((value) => (<span key={value.brandId}>{`${value.brandName}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Unwanted Brands</h4>
-          {concertData.unwantedBrands.map((value) => (<span>{`${value.brandName}, `}</span>))}
+          {concertData.unwantedBrands.map((value) => (<span key={value.brandId}>{`${value.brandName}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Event Type</h4>
@@ -48,15 +48,15 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         </Col>
         <Col span={24} className="information">
           <h4>Age group</h4>
-          {concertData.targetAudience.ageGroup.map((group) => (<span>{`${group}, `}</span>))}
+          {concertData.targetAudience.ageGroup.map((group) => (<span key={group}>{`${group}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Gender</h4>
-          {concertData.targetAudience.gender.map((gender) => (<span>{`${gender.toLocaleUpperCase()}, `}</span>))}
+          {concertData.targetAudience.gender.map((gender) => (<span key={gender}>{`${gender.toLocaleUpperCase()}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Genre</h4>
-          {concertData.targetAudience.genre.map((genre) => (<span>{`${genre.genreName}, `}</span>))}
+          {concertData.targetAudience.genre.map((genre) => (<span key={genre.genreId}>{`${genre.genreName}, `}</span>))}
         </Col>
       </Row>
     );

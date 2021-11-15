@@ -20,7 +20,7 @@ const { Content } = Layout;
 
 const renderError = (setDisplayFormModal: any): JSX.Element => (
   <div>
-    <ErrorPage error={{ status: 'Opps', message: 'You havn\'t created concerts created yet' }} />
+    <ErrorPage error={{ status: 'No data', message: 'You have not created concerts yet' }} />
     <Button type="link" onClick={() => setDisplayFormModal(true)}>
       Curate Concert Now
     </Button>
@@ -117,7 +117,7 @@ const DashboardComponent = (): JSX.Element => {
       }}
       >
         {' '}
-        My Forms
+        Concert List
       </h4>
       { loading ? renderLoading() : renderConcerts() }
     </Content>
