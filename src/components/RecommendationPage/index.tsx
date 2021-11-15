@@ -5,8 +5,6 @@ import { useParams } from 'react-router-dom';
 import {
   Row,
   Col,
-  Button,
-  Tooltip,
   notification,
 } from 'antd';
 import * as _ from 'lodash';
@@ -24,7 +22,7 @@ import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
 import './recommendationPage.scss';
 
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
-  <ArtistsSummary summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
+  <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
