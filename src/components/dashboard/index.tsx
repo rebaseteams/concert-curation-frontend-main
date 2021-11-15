@@ -82,7 +82,7 @@ const DashboardComponent = (): JSX.Element => {
 
   return (
     <Content>
-      <Button type="primary" onClick={() => setDisplayFormModal(true)}>
+      <Button data-testid="curate-concert" type="primary" onClick={() => setDisplayFormModal(true)}>
         Curate Concert
       </Button>
       <Modal
