@@ -29,6 +29,7 @@ const RecommendationPage = (): JSX.Element => {
   const [concertData, setConcertData] = useState<ConcertDataResponse>();
   const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>([]);
   const [error, setError] = useState<{status: string, message: string}>();
+  const userID = '1234589';
 
   const getConcertData = async () => {
     const data = await getRecommendedArtists(id);
@@ -41,8 +42,9 @@ const RecommendationPage = (): JSX.Element => {
 
   // eslint-disable-next-line react/jsx-no-bind
   async function patchConcertData(discardedArtistId: string) {
-    const res = await patchRecommendationArtist(id, discardedArtistId);
-    setArtistsData(res.data);
+    const res = await patchRecommendationArtist(id, discardedArtistId, userID);
+    // setArtistsData(res.data);
+    getConcertData();
   }
 
   useEffect(() => {
