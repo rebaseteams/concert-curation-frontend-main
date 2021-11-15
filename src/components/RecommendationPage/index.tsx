@@ -18,6 +18,7 @@ import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataIn
 import ErrorPage from '../ErrorPage';
 import patchRecommendationArtist from '../../services/patchRecommendationArtist';
 import ArtistsSummary from './ArtistsSummary';
+import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
 
 // styles
 import './recommendationPage.scss';
@@ -66,25 +67,7 @@ const RecommendationPage = (): JSX.Element => {
   return (
     <div>
       <div className="recommendation-page-header">
-        <Tooltip
-          placement="top"
-          title="Download Image"
-          color="orange"
-        >
-          <Button
-            type="text"
-            onClick={() => downloadImage()}
-          >
-            <span
-              className="material-icons"
-              style={{
-                color: 'aqua',
-              }}
-            >
-              image
-            </span>
-          </Button>
-        </Tooltip>
+        <DownloadAsImageButton downloadImage={downloadImage} />
       </div>
       <Row>
         <Col xs={{ span: 24 }} lg={{ span: 4 }}>
