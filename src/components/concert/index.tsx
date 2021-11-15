@@ -132,20 +132,22 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
     const result: QuestionsFormDataInterface = createConcertFormData(values, budget);
     const response = await submitConcertForm(result);
     if (response && !('id' in response)) {
+      setLoading(false);
+      setVisible(false);
       notification.error({
         message: 'Error',
         description: 'Could not create concert',
       });
     }
-    forms?.push(response);
-    setForms(forms);
-    setVisible(false);
-    notification.success({
-      message: 'Success',
-      description: 'Concert Successfully created',
-    });
-    setLoading(false);
-    setVisible(false);
+    if (response && ('id' in response)) {
+      forms?.push(response);
+      setForms(forms);
+      setVisible(false);
+      notification.success({
+        message: 'Success',
+        description: 'Concert Successfully created',
+      });
+    }
   };
 
   const onBudgetChange = (event: any) => {
