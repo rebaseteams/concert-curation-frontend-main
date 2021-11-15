@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button, Col,
+  Checkbox,
 } from 'antd';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 import deleteConcertForm from '../../services/deleteConcertForm';
@@ -23,6 +24,11 @@ const SubmittedCard = ({ form }: SubmittedCardInterface): JSX.Element => {
     // will return recommended artist data
     await getRecommendedArtists(formId);
   };
+  const concertSelected = (concertId: string) => {
+    // Todo: have a list of selected concerts
+    // Amd implement multiple delete feature
+    return concertId;
+  };
   return (
     <Col
       span={24}
@@ -32,38 +38,39 @@ const SubmittedCard = ({ form }: SubmittedCardInterface): JSX.Element => {
         alignItems: 'center',
       }}
     >
-      <Link
-        style={{
-          width: '90%',
-        }}
-        to={`recommendations/${form.id}`}
-      >
-        <div className="submmitedFormsCard">
-          <div className="displayFlex">
-            <h3>{form.concertName}</h3>
-            <h3>{form.dateCreated}</h3>
-            <div>
+
+      <div className="submmitedFormsCard">
+        <div className="displayFlex">
+          <Checkbox onChange={() => concertSelected(form.id)}><h3>{form.concertName}</h3></Checkbox>
+          <p>{form.dateCreated.slice(0, 24)}</p>
+          <div>
+            <Link
+              style={{
+                width: '90%',
+              }}
+              to={`recommendations/${form.id}`}
+            >
               <Button
                 type="link"
                 onClick={async () => getRecomendation(form.id)}
               >
-                View Recommended Artist
+                View Recommendation
               </Button>
-            </div>
+            </Link>
+            <Button
+              onClick={async () => deleteConcertForm(form.id)}
+              type="link"
+            >
+              <span
+                className="material-icons"
+                style={{ color: '#F00', fontSize: '25px' }}
+              >
+                remove_circle
+              </span>
+            </Button>
           </div>
         </div>
-      </Link>
-      <Button
-        onClick={async () => deleteConcertForm(form.id)}
-        type="link"
-      >
-        <span
-          className="material-icons"
-          style={{ color: '#F00', fontSize: '25px' }}
-        >
-          remove_circle
-        </span>
-      </Button>
+      </div>
     </Col>
   );
 };
