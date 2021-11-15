@@ -7,6 +7,7 @@ import {
   Col,
   notification,
 } from 'antd';
+import { PDFExport } from '@progress/kendo-react-pdf';
 import * as _ from 'lodash';
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
@@ -20,6 +21,7 @@ import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
 
 // styles
 import './recommendationPage.scss';
+import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
 
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
   <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
@@ -30,6 +32,14 @@ const RecommendationPage = (): JSX.Element => {
   const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>([]);
   const [error, setError] = useState<{status: string, message: string}>();
   const userID = '1234589';
+
+  const pdfExportComponent = React.useRef<PDFExport>(null);
+
+  const downloadPdf = () => {
+    if (pdfExportComponent.current) {
+      pdfExportComponent.current.save();
+    }
+  };
 
   const getConcertData = async () => {
     const data = await getRecommendedArtists(id);
@@ -42,8 +52,7 @@ const RecommendationPage = (): JSX.Element => {
 
   // eslint-disable-next-line react/jsx-no-bind
   async function patchConcertData(discardedArtistId: string) {
-    const res = await patchRecommendationArtist(id, discardedArtistId, userID);
-    // setArtistsData(res.data);
+    await patchRecommendationArtist(id, discardedArtistId, userID);
     getConcertData();
   }
 
@@ -68,23 +77,32 @@ const RecommendationPage = (): JSX.Element => {
     <div>
       <div className="recommendation-page-header">
         <DownloadAsImageButton downloadImage={downloadImage} />
+        <DownloadAsPdfButton downloadPdf={downloadPdf} />
       </div>
-      <Row>
-        <Col xs={{ span: 24 }} lg={{ span: 4 }}>
-          { concertData && <ConcertData data={concertData} /> }
-        </Col>
-        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-          { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
-        </Col>
-        <Col xs={{ span: 24 }} lg={{ span: 8 }}>
-          <div className="summary-container">
-            <h3>Summary</h3>
-            <div>
-              { artistsData.length > 0 && renderSummary(artistsData) }
+      <PDFExport
+        ref={pdfExportComponent}
+        scale={0.4}
+        paperSize="auto"
+        margin={20}
+        fileName={`ReccomendationFor${id}`}
+      >
+        <Row>
+          <Col xs={{ span: 24 }} lg={{ span: 4 }}>
+            { concertData && <ConcertData data={concertData} /> }
+          </Col>
+          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+            { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
+          </Col>
+          <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+            <div className="summary-container">
+              <h3>Summary</h3>
+              <div>
+                { artistsData.length > 0 && renderSummary(artistsData) }
+              </div>
             </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </PDFExport>
     </div>
   );
 };
