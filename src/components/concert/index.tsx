@@ -31,7 +31,6 @@ const renderSelect = (field: any) => {
         key={`field${field.name}`}
         name={field.name}
         label={field.label}
-        style={{ color: '#FFF' }}
         className="formLabel"
         rules={[{ required: field.required || false, message: field.message || 'Not required' }]}
       >
@@ -49,7 +48,6 @@ const renderSelect = (field: any) => {
       key={`field${field.name}`}
       name={field.name}
       label={field.label}
-      style={{ color: '#FFF' }}
       className="formLabel"
       rules={[{ required: field.required || true, message: field.message || 'Not required' }]}
     >
@@ -132,20 +130,19 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
     const result: QuestionsFormDataInterface = createConcertFormData(values, budget);
-
     const response = await submitConcertForm(result);
-    if (response && 'id' in response) {
-      forms?.push(response);
-      setForms(forms);
-      setVisible(false);
-      notification.success({
-        message: 'Success',
-        description: 'Concert Successfully created',
+    if (response && !('id' in response)) {
+      notification.error({
+        message: 'Error',
+        description: 'Could not create concert',
       });
     }
-    notification.error({
-      message: 'Error',
-      description: 'Could not create concert',
+    forms?.push(response);
+    setForms(forms);
+    setVisible(false);
+    notification.success({
+      message: 'Success',
+      description: 'Concert Successfully created',
     });
     setLoading(false);
     setVisible(false);
