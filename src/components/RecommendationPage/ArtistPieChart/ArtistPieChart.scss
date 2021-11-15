@@ -1,14 +1,17 @@
-$data-container-bg: rgba(0, 96, 240, 0.808);
-$container-bg: rgba(255, 255, 255, 0.24);
+$container-bg: rgb(26, 26, 26);;
 $font-color: black;
-$artist1-bg : #a01599;
-$artist2-bg : #91128a;
-$artist3-bg : #810f7c;
-$artist4-bg : #720D6D;
+$artist1-bg : #54EEFF;
+$artist1-data-bg :  #bff4fa;
+$artist2-bg : #4FFFC2;
+$artist2-data-bg :  #cdfced;
+$artist3-bg :  #fff41d;
+$artist3-data-bg :  #fdf77b;
+$artist4-bg : #FBB823;
+$artist4-data-bg :   #ffd476;
 
 .container {
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 700px;
     background-color: $container-bg;
     display: flex;
     flex-direction: row;
@@ -18,6 +21,27 @@ $artist4-bg : #720D6D;
     box-shadow: 1px 1px 12px black;
     text-align: center;
     margin: auto;
+
+    *{
+        color: black;
+    }
+
+    .artist1-data {
+        background-color: $artist1-data-bg;
+    }
+    .artist2-data {
+        background-color: $artist2-data-bg;
+    }
+    .artist3-data {
+        background-color: $artist3-data-bg;
+    }
+    .artist4-data {
+        background-color: $artist4-data-bg;
+    }
+}
+
+.name {
+    text-shadow: 1px 1px 5px #444;
 }
 
 .column {
@@ -165,8 +189,8 @@ $artist4-bg : #720D6D;
 }
 
 .circle-img{
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     margin-left: 25%;
 }
 
@@ -193,7 +217,6 @@ img {
     flex-direction: column;
     border: white solid 1px;
     border-radius: 5%;
-    background-color: $data-container-bg;
     width: 40%;
 }
 
@@ -204,7 +227,6 @@ img {
     flex-direction: column;
     border: white solid 1px;
     border-radius: 5%;
-    background-color: $data-container-bg;
     width: 40%;
 }
 

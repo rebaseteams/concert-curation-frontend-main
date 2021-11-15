@@ -1,3 +1,30 @@
+$line-color: #fff41d;
+
+.concertDataContainer {
+  margin: 5px;
+  padding: 10px;
+  color: #FFF;
+
+  h3, h5, h4 {
+    color: rgb(231, 228, 228);
+    text-shadow: 0px 1px 2px rgb(0, 0, 0);
+  }
+
+  h3 {
+    color: rgb(231, 228, 228);
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+  }
+
+  span {
+    color: rgb(231, 228, 228);
+  }
+
+  .information {
+    border-top: 1px solid $line-color;
+    margin: 2px;
+    padding: 2px;
+  }
+}
 
 .recommendation-page-header {
   display: flex;

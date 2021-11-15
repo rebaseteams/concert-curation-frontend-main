@@ -45,9 +45,10 @@ const RecommendationPage = (): JSX.Element => {
     const data = await getRecommendedArtists(id);
     if (!data.success) {
       setError({ status: '404', message: data.data.error });
+    } else {
+      setConcertData(data.data.concertData);
+      setArtistsData(data.data.artists);
     }
-    setConcertData(data.data.concertData);
-    setArtistsData(data.data.artists);
   };
 
   // eslint-disable-next-line react/jsx-no-bind
@@ -79,30 +80,32 @@ const RecommendationPage = (): JSX.Element => {
         <DownloadAsImageButton downloadImage={downloadImage} />
         <DownloadAsPdfButton downloadPdf={downloadPdf} />
       </div>
-      <PDFExport
-        ref={pdfExportComponent}
-        scale={0.4}
-        paperSize="auto"
-        margin={20}
-        fileName={`ReccomendationFor${id}`}
-      >
-        <Row>
-          <Col xs={{ span: 24 }} lg={{ span: 4 }}>
-            { concertData && <ConcertData data={concertData} /> }
-          </Col>
-          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-            { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
-          </Col>
-          <Col xs={{ span: 24 }} lg={{ span: 8 }}>
-            <div className="summary-container">
-              <h3>Summary</h3>
-              <div>
-                { artistsData.length > 0 && renderSummary(artistsData) }
+      <div>
+        <PDFExport
+          ref={pdfExportComponent}
+          scale={0.4}
+          paperSize="auto"
+          margin={20}
+          fileName={`ReccomendationFor${id}`}
+        >
+          <Row>
+            <Col xs={{ span: 24 }} lg={{ span: 4 }}>
+              { concertData && <ConcertData data={concertData} /> }
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+              { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+              <div className="summary-container">
+                <h3>Summary</h3>
+                <div>
+                  { artistsData.length > 0 && renderSummary(artistsData) }
+                </div>
               </div>
-            </div>
-          </Col>
-        </Row>
-      </PDFExport>
+            </Col>
+          </Row>
+        </PDFExport>
+      </div>
     </div>
   );
 };
