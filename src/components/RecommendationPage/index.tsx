@@ -2,7 +2,13 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col } from 'antd';
+import {
+  Row,
+  Col,
+  Button,
+  Tooltip,
+  notification,
+} from 'antd';
 import * as _ from 'lodash';
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
@@ -44,28 +50,59 @@ const RecommendationPage = (): JSX.Element => {
     getConcertData();
   }, [artistsData]);
 
+  const downloadImage = () => {
+    notification.info({
+      message: 'Under Developement',
+      description: 'This feature is under developement',
+      placement: 'bottomRight',
+    });
+  };
+
   if (error) {
     return (
       <ErrorPage error={error} />
     );
   }
   return (
-    <Row>
-      <Col xs={{ span: 24 }} lg={{ span: 4 }}>
-        { concertData && <ConcertData data={concertData} /> }
-      </Col>
-      <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-        { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
-      </Col>
-      <Col xs={{ span: 24 }} lg={{ span: 8 }}>
-        <div className="summary-container">
-          <h3>Summary</h3>
-          <div>
-            { artistsData.length > 0 && renderSummary(artistsData) }
+    <div>
+      <div className="recommendation-page-header">
+        <Tooltip
+          placement="top"
+          title="Download Image"
+          color="orange"
+        >
+          <Button
+            type="text"
+            onClick={() => downloadImage()}
+          >
+            <span
+              className="material-icons"
+              style={{
+                color: 'aqua',
+              }}
+            >
+              image
+            </span>
+          </Button>
+        </Tooltip>
+      </div>
+      <Row>
+        <Col xs={{ span: 24 }} lg={{ span: 4 }}>
+          { concertData && <ConcertData data={concertData} /> }
+        </Col>
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
+        </Col>
+        <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+          <div className="summary-container">
+            <h3>Summary</h3>
+            <div>
+              { artistsData.length > 0 && renderSummary(artistsData) }
+            </div>
           </div>
-        </div>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
