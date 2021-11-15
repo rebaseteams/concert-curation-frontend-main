@@ -1,8 +1,18 @@
 
+.recommendation-page-header {
+  display: flex;
+  justify-content: end;
+
+  Button {
+    margin-right: 10px;
+  }
+}
+
 
 .summary-container {
   margin: 10px;
   padding: 10px 5px;
+  color: #FFF;
   h3, h4 {
     color: #FFF;
   }
