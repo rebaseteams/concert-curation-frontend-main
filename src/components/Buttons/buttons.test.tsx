@@ -6,6 +6,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import DownloadAsImageButton from './downloadAsImageButton';
+import DownloadAsPdfButton from './pdfCreateButton';
 
 describe('Reusable Buttons', () => {
   beforeEach(() => {
@@ -33,5 +34,17 @@ describe('Reusable Buttons', () => {
     fireEvent.mouseOver(screen.getByTestId('download-image'));
     await waitFor(() => screen.getByText('Download image'));
     expect(screen.getByText('Download image')).toBeInTheDocument();
+  });
+
+  it('Should render download pdf button icon', () => {
+    render(<DownloadAsPdfButton downloadPdf />);
+    expect(screen.getByTestId('download-pdf')).toBeInTheDocument();
+  });
+
+  it('Should render download pdf tooltip after mouse hover', async () => {
+    render(<DownloadAsPdfButton downloadPdf />);
+    fireEvent.mouseOver(screen.getByTestId('download-pdf'));
+    await waitFor(() => screen.getByText('Download Pdf'));
+    expect(screen.getByText('Download Pdf')).toBeInTheDocument();
   });
 });
