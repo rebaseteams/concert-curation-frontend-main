@@ -8,20 +8,26 @@ import {
   notification,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
+import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
 import * as _ from 'lodash';
+
+// Importing Services and utils
 import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 import ConcertData from './concertData';
-import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
-import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
-import ErrorPage from '../ErrorPage';
 import patchRecommendationArtist from '../../services/patchRecommendationArtist';
+import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
+
+// Importing Components and Pages
+import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
+import ErrorPage from '../ErrorPage';
 import ArtistsSummary from './ArtistsSummary';
 import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
-
-// styles
-import './recommendationPage.scss';
 import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
+
+// Importing styles
+import './recommendationPage.scss';
 
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
   <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
@@ -62,11 +68,24 @@ const RecommendationPage = (): JSX.Element => {
   }, [artistsData]);
 
   const downloadImage = () => {
-    notification.info({
-      message: 'Under Developement',
-      description: 'This feature is under developement',
-      placement: 'bottomRight',
-    });
+    const node: HTMLElement | null = document.getElementById('recommendation-page-container');
+    if (node) {
+      htmlToImage.toPng(node)
+        .then((dataUrl) => {
+          download(dataUrl, 'Concert-Curation.png');
+        });
+      notification.success({
+        message: 'File Downloading started',
+        description: 'Image will be downloaded withing few minutes.',
+        placement: 'bottomRight',
+      });
+    } else {
+      notification.error({
+        message: 'File Downloading Failed',
+        description: 'Something went wrong',
+        placement: 'bottomRight',
+      });
+    }
   };
 
   if (error) {
@@ -88,7 +107,9 @@ const RecommendationPage = (): JSX.Element => {
           margin={20}
           fileName={`ReccomendationFor${id}`}
         >
-          <Row>
+          <Row
+            id="recommendation-page-container"
+          >
             <Col xs={{ span: 24 }} lg={{ span: 4 }}>
               { concertData && <ConcertData data={concertData} /> }
             </Col>
