@@ -13,13 +13,9 @@ const getRecommendedArtists = async (formId: string): Promise<any> => {
   try {
     const response: any = await axios.get(`${baseURL}/artists/recommendations/${formId}`);
     return response.data;
-  } catch (error) {
-    const response = { error: true, error_message: error };
+  } catch (error: any) {
+    return { data: { success: false, error: error.message } };
   }
-
-  // For now we are returning mock data
-  // Later we will uncomment the abouve code when backend is set
-  return recommendedArtistsMockData;
 };
 
 export default getRecommendedArtists;
