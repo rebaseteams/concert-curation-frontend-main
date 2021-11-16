@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
+import * as _ from 'lodash';
 import './ArtistPieChart.scss';
 import { ArtistsDataInterface } from '../../RecomendationComponent/recomendedDataInterface';
 import {
@@ -9,7 +10,6 @@ import {
   getBrands,
   getGender,
   getLocations,
-  formatName,
 } from './utils';
 
 interface ArtistsPieChartProp {
@@ -171,7 +171,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist2.img} alt="" />
               </div>
               <div className="name">
-                { formatName(artist2.name) }
+                { _.upperFirst(artist2.name) }
               </div>
               <div className="match">
                 {artist2.match}
@@ -187,7 +187,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist1.img} alt="" />
               </div>
               <div className="name">
-                {formatName(artist1.name)}
+                { _.upperFirst(artist1.name)}
               </div>
               <div className="match">
                 {artist1.match}
@@ -253,7 +253,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist3.img} alt="" />
               </div>
               <div className="name">
-                {formatName(artist3.name)}
+                {_.upperFirst(artist3.name)}
               </div>
               <div className="match">
                 {artist3.match}
@@ -269,7 +269,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist4.img} alt="" />
               </div>
               <div className="name">
-                {formatName(artist4.name)}
+                {_.upperFirst(artist4.name)}
               </div>
               <div className="match">
                 {artist4.match}
