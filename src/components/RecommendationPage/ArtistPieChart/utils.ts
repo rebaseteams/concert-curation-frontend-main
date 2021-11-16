@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+
 import { AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
 
 export const formatName = (name: string): string => (_.upperFirst(name.replace(/_/g, ' '))).split(' ').slice(0, 2).join(' ');
