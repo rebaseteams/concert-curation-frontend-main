@@ -8,6 +8,14 @@
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.514);
             cursor: pointer;
             width: fit-content;
+            a{
+                color: #FFF;
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 0px;
+                }
+            }
         }
         margin: 0;
         padding: 0;
@@ -20,7 +28,10 @@
     .header-container {
         nav {
             h3{
-                font-size: 16px;
+                width: fit-content;
+                a{
+                    font-size: 16px;
+                }
             }
         }
     }
