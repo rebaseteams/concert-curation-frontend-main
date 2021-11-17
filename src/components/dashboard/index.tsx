@@ -3,29 +3,20 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  Layout, Button, Modal, Row, Spin, Col,
+  Layout, Button, Modal, Spin,
 } from 'antd';
 
 import ConcertForm from '../concert/index';
 
 import getMyAllConcerts from '../../services/getMyAllConcerts';
 
-import SubmittedCard from '../submittedCard';
+import ConcertsTable from '../ConcertsTable';
 import ErrorPage from '../ErrorPage';
 
 // styles
 import './dashboard.style.scss';
 
 const { Content } = Layout;
-
-const renderError = (setDisplayFormModal: any): JSX.Element => (
-  <div>
-    <ErrorPage error={{ status: 'No data', message: 'You have not created concerts yet' }} />
-    <Button type="link" onClick={() => setDisplayFormModal(true)}>
-      Curate Concert Now
-    </Button>
-  </div>
-);
 
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
@@ -55,29 +46,7 @@ const DashboardComponent = (): JSX.Element => {
     if (error) {
       return <ErrorPage error={error} />;
     }
-    if (forms.length > 0) {
-      return (
-        <Row>
-          <Col span={24}>
-            <div className="submmitedFormsCard headingForms">
-              <div className="displayFlex">
-                <h3>Concert name</h3>
-                <h3>Created date</h3>
-                <div> </div>
-                <div> </div>
-              </div>
-            </div>
-          </Col>
-          { forms.map((form:any) => (
-            <SubmittedCard
-              key={form.id + Math.random()}
-              form={form}
-            />
-          ))}
-        </Row>
-      );
-    }
-    return renderError(setDisplayFormModal);
+    return <ConcertsTable forms={forms} updateForms={getConcerts} />;
   };
 
   return (
@@ -108,7 +77,11 @@ const DashboardComponent = (): JSX.Element => {
         className="questionsModal"
         footer={false}
       >
-        <ConcertForm setVisible={setDisplayFormModal} setForms={setForms} forms={forms} />
+        <ConcertForm
+          setVisible={setDisplayFormModal}
+          forms={forms}
+          getConcerts={getConcerts}
+        />
       </Modal>
       <h4 style={{
         textAlign: 'center',

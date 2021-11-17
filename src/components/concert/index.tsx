@@ -123,7 +123,9 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
   });
 };
 
-const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Element => {
+const ConcertForm = ({
+  setVisible, forms, getConcerts,
+} : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
 
@@ -141,13 +143,15 @@ const ConcertForm = ({ setVisible, setForms, forms } : ConcertFormProp): JSX.Ele
     }
     if (response && ('id' in response)) {
       forms?.push(response);
-      setForms(forms);
+      getConcerts();
+      setLoading(false);
       setVisible(false);
       notification.success({
         message: 'Success',
         description: 'Concert Successfully created',
       });
     }
+    setLoading(false);
   };
 
   const onBudgetChange = (event: any) => {
