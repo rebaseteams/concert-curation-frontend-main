@@ -3,15 +3,18 @@
 import React from 'react';
 import { Layout } from 'antd';
 import './header.scss';
+import cuttimelogo from '../../assests/cuttimelogo.png';
 
 const { Header } = Layout;
 
 const HeaderComponet = ():JSX.Element => (
   <Header style={{ background: 'none' }} className="header-container">
     <nav>
-      <a href={window.location.origin}>
-        <h3 className="app-logo">Cuttime</h3>
-      </a>
+      <h3 className="app-logo">
+        <a href={window.location.origin}>
+          <img src={cuttimelogo} alt="cuttimelogo" />
+        </a>
+      </h3>
     </nav>
   </Header>
 );
