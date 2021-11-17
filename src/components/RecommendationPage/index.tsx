@@ -65,7 +65,7 @@ const RecommendationPage = (): JSX.Element => {
 
   useEffect(() => {
     getConcertData();
-  }, [artistsData]);
+  }, []);
 
   const downloadImage = () => {
     const node: HTMLElement | null = document.getElementById('recommendation-page-container');

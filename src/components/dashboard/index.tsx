@@ -46,7 +46,7 @@ const DashboardComponent = (): JSX.Element => {
     if (error) {
       return <ErrorPage error={error} />;
     }
-    return <ConcertsTable forms={forms} updateForms={getConcerts} />;
+    return <ConcertsTable forms={forms} getConcerts={getConcerts} />;
   };
 
   return (

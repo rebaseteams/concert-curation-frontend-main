@@ -10,3 +10,10 @@ export type onSubmitFormDataType = {
   venue: Array<string>;
   wantedBrands: Array<string>;
 }
+
+export type ConcertsListData = {
+  id: string;
+  concertName: string;
+  dateCreated: string;
+  status: boolean;
+}

@@ -22,7 +22,10 @@ import DashboardComponent from '../components/dashboard';
 import RecommendationPage from '../components/RecommendationPage';
 
 const LayoutComponent = ():JSX.Element => (
-  <Layout style={{ background: 'none' }} className="layout-container">
+  <Layout
+    style={{ background: 'none' }}
+    className="layout-container"
+  >
     <HeaderComponet />
 
     <Layout>
