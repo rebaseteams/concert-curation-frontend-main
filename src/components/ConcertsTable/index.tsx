@@ -13,24 +13,19 @@ import { Link } from 'react-router-dom';
 // Importing Services and utils
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 import deleteConcertForm from '../../services/deleteConcertForm';
-
-interface Forms {
-  id: string,
-  dateCreated: string,
-  concertName: string,
-  status: string
-}
+import { ConcertsListData } from '../../interfaces/concertForm';
 
 interface ConcertsTableProp {
-  forms: Array<Forms>;
+  forms: Array<ConcertsListData>;
   // TODO: find proper datatype for functions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  updateForms: any;
+  getConcerts: any;
 }
 
-const ConcertsTable = ({ forms, updateForms }: ConcertsTableProp): JSX.Element => {
-  const data: Array<Forms> = _.map(forms, (form) => ({
+const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element => {
+  const data: Array<ConcertsListData> = _.map(forms, (form) => ({
     ...form,
+    key: form.id,
     dateCreated: form.dateCreated.slice(0, 25),
     actions: form.id,
   }));
@@ -42,7 +37,7 @@ const ConcertsTable = ({ forms, updateForms }: ConcertsTableProp): JSX.Element =
 
   const deleteNow = async (id: string) => {
     await deleteConcertForm(id);
-    updateForms();
+    getConcerts();
   };
 
   const deleteConcertModal = (id: string) => {
