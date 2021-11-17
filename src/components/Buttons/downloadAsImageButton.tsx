@@ -13,7 +13,7 @@ const DownloadAsImageButton = ({ downloadImage }: DownloadAsImageButtonProp): JS
   <Tooltip
     placement="top"
     title="Download image"
-    color="orange"
+    color="aqua"
   >
     <Button
       type="text"
