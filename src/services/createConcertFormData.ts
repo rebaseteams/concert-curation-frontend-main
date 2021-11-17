@@ -6,7 +6,7 @@ const createConcertFormData = (
   values: onSubmitFormDataType, budget: { min: number, max: number },
 ): QuestionsFormDataInterface => ({
   ...values,
-  userId: 'TODO: get user id after login',
+  userId: 'Mical001', // TODO: send proper user info through bearer tocken
   artistBudget: budget,
   targetAudience: {
     ageGroup: values.age,
