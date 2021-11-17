@@ -23,10 +23,10 @@ const DownloadAsPdfButton = ({ downloadPdf }: DownloadAsPdfButtonProp): JSX.Elem
       <span
         className="material-icons"
         style={{
-          color: 'aqua',
+          color: 'orange',
         }}
       >
-        Pdf
+        picture_as_pdf
       </span>
     </Button>
   </Tooltip>

@@ -71,7 +71,6 @@ const RecommendationComponent = (): JSX.Element => {
             { artists && (
             <CardView
               data={artists.slice(0, 3)}
-              artistClicked={artistClicked}
             />
             ) }
           </Row>

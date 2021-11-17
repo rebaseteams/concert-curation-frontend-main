@@ -7,14 +7,14 @@
 import React from 'react';
 import { Col, Modal } from 'antd';
 import './card-scopped.scss';
-// import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 interface CardViewProps {
     data: Array<any>
-    artistClicked: any;
 }
 
-const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
+const colorsPallate = ['#4FFFC2', '#fff41d', '#FBB823'];
+
+const CardView = ({ data }: CardViewProps): JSX.Element => {
   const span = 8;
 
   return (
@@ -22,7 +22,7 @@ const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
       {
         // eslint-disable-next-line arrow-body-style
         data.map((artist: any, artistIndex: any) => {
-          return renderCards(artist, artistIndex, span, artistClicked);
+          return renderCards(artist, artistIndex, span);
         })
       }
     </>
@@ -31,7 +31,7 @@ const CardView = ({ data, artistClicked }: CardViewProps): JSX.Element => {
 
 export default CardView;
 
-function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any): any {
+function renderCards(artist: any, artistIndex:any, span:any): any {
   let order;
   switch (artistIndex) {
     case 0:
@@ -56,13 +56,20 @@ function renderCards(artist: any, artistIndex:any, span:any, artistClicked:any):
     <Col
       key={artistIndex}
       className="card"
-      style={{ height: (artistIndex * 10 + 450) }}
+      style={{
+        height: (artistIndex * 10 + 450),
+      }}
       sm={{ span: 24 }}
       md={{ span }}
       order={order}
-      onMouseEnter={() => artistClicked(artist.summary)}
     >
-      <div className="inner-card" style={{ height: (artistIndex * -30 + 450) }}>
+      <div
+        className="inner-card"
+        style={{
+          height: (artistIndex * -30 + 450),
+          background: colorsPallate[artistIndex],
+        }}
+      >
         <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
         <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
         <div className="card-body">
@@ -154,7 +161,6 @@ function displayBrands(brand: any) {
 function cancelButton(artistName: any) {
   Modal.confirm({
     title: 'Confirm',
-    // icon: <ExclamationCircleOutlined />,
     content: `Are you sure you want to remove ${artistName}`,
     okText: 'Remove',
     cancelText: 'Cancel',

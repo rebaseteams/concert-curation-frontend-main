@@ -6,6 +6,7 @@ import {
   Row,
   Col,
   notification,
+  Switch,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -28,6 +29,7 @@ import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
 
 // Importing styles
 import './recommendationPage.scss';
+import CardView from '../cardView';
 
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
   <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
@@ -36,6 +38,10 @@ const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
   const [concertData, setConcertData] = useState<ConcertDataResponse>();
   const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>([]);
+  const [artistsView, setArtistsView] = useState<{name: string, toggleBtn: boolean}>({
+    name: 'pie',
+    toggleBtn: true,
+  });
   const [error, setError] = useState<{status: string, message: string}>();
   const userID = '1234589';
 
@@ -63,7 +69,24 @@ const RecommendationPage = (): JSX.Element => {
     getConcertData();
   }
 
+  const updateView = (view: boolean) => {
+    if (view) {
+      setArtistsView({ name: 'pie', toggleBtn: true });
+      localStorage.setItem('view', 'pie');
+    } else {
+      setArtistsView({ name: 'card', toggleBtn: false });
+      localStorage.setItem('view', 'card');
+    }
+  };
+
   useEffect(() => {
+    const view: string | null = String(localStorage.getItem('view'));
+    if (view === 'pie') {
+      setArtistsView({ name: 'pie', toggleBtn: true });
+    }
+    if (view === 'card') {
+      setArtistsView({ name: 'card', toggleBtn: false });
+    }
     getConcertData();
   }, []);
 
@@ -96,6 +119,12 @@ const RecommendationPage = (): JSX.Element => {
   return (
     <div>
       <div className="recommendation-page-header">
+        <Switch
+          checkedChildren="Pie"
+          unCheckedChildren="Card"
+          checked={artistsView.toggleBtn}
+          onChange={updateView}
+        />
         <DownloadAsImageButton downloadImage={downloadImage} />
         <DownloadAsPdfButton downloadPdf={downloadPdf} />
       </div>
@@ -113,9 +142,17 @@ const RecommendationPage = (): JSX.Element => {
             <Col xs={{ span: 24 }} lg={{ span: 4 }}>
               { concertData && <ConcertData data={concertData} /> }
             </Col>
-            <Col xs={{ span: 24 }} lg={{ span: 14 }}>
-              { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
-            </Col>
+            { artistsView.name === 'pie' ? (
+              <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+                { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
+              </Col>
+            ) : (
+              <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+                <Row className="card-container" align="bottom">
+                  { artistsData.length > 0 && <CardView data={artistsData.slice(0, 3)} />}
+                </Row>
+              </Col>
+            )}
             <Col xs={{ span: 24 }} lg={{ span: 6 }}>
               <div className="summary-container">
                 <h3>Summary</h3>

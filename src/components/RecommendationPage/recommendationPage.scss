@@ -29,6 +29,7 @@ $line-color: #fff41d;
 .recommendation-page-header {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
   Button {
     margin-right: 10px;
@@ -51,4 +52,9 @@ $line-color: #fff41d;
     border-left: 2px solid rgb(255, 123, 0);
   }
 
+}
+
+.card-container {
+  width: 90%;
+  margin: auto;
 }

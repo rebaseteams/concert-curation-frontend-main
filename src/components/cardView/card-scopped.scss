@@ -1,5 +1,9 @@
+$font-color: #000;
+
 .card {
-  width: 100%;
+  width: 80%;
+  transition: all 1s;
+  margin-top: 40px;
   .inner-card {
     position: absolute; 
     bottom: 0px; 
@@ -13,6 +17,7 @@
 
     .profile-pic {
         width: 30%;
+        height: auto;
         border-radius: 50%;
         position: absolute;
         top:-10%;
@@ -26,11 +31,11 @@
         justify-content: space-between;
 
         h3 {
-            color: #cff;
+            color: $font-color;
         }
 
         p{
-            color: #12df90;
+            color: $font-color;
         }
     }
 
@@ -50,7 +55,7 @@
     }
 
     .affinity {
-        background-color: rgb(255, 72, 0);
+        background-color: rgba(255, 255, 255, 0.493);
         padding: 10px;
         margin: 6px 0px;
         border-radius: 10px;
