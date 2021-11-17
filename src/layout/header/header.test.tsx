@@ -5,8 +5,8 @@ import { render, screen } from '@testing-library/react';
 import HeaderComponet from '.';
 
 describe('Header Componet', () => {
-  test('renders Header component', () => {
+  test('renders cuttime logo in Header component', () => {
     render(<HeaderComponet />);
-    expect(screen.getByText('Cuttime')).toBeInTheDocument();
+    expect(screen.getByTestId('cuttime-logo')).toBeInTheDocument();
   });
 });
