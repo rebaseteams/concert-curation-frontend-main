@@ -142,7 +142,7 @@ const RecommendationPage = (): JSX.Element => {
   }
 
   return (
-    <Layout>
+    <Layout className="recommendation-page">
       <Content className="recommendation-page-header concert-data">
         <Space className="recommendation-page-header">
           <Title level={2}>{concertData.concertName}</Title>
@@ -176,12 +176,6 @@ const RecommendationPage = (): JSX.Element => {
           </Tooltip>
         </Space>
         <div className="recommendation-page-header">
-          <Switch
-            checkedChildren="Pie"
-            unCheckedChildren="Card"
-            checked={artistsView.toggleBtn}
-            onChange={updateView}
-          />
           <DownloadAsImageButton downloadImage={downloadImage} />
           <DownloadAsPdfButton downloadPdf={downloadPdf} />
         </div>
@@ -198,24 +192,38 @@ const RecommendationPage = (): JSX.Element => {
             <Col xs={{ span: 24 }} lg={{ span: 4 }}>
               {concertData && <ConcertData data={concertData} />}
             </Col>
-            {artistsView.name === 'pie' ? (
-              <Col xs={{ span: 24 }} lg={{ span: 14 }}>
-                {artistsData.length > 0 && (
+
+            <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+              <Switch
+                checkedChildren={IconRenderer('pie')}
+                unCheckedChildren={IconRenderer('card')}
+                checked={artistsView.toggleBtn}
+                onChange={updateView}
+                style={{
+                  position: 'absolute',
+                  top: '0px',
+                  right: '0px',
+                  zIndex: 100,
+                }}
+              />
+              {artistsView.name === 'pie' ? (
+                <div>
+                  {artistsData.length > 0 && (
                   <ArtistPieChart
                     data={artistsData}
                     patchConcertData={patchConcertData}
                   />
-                )}
-              </Col>
-            ) : (
-              <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+                  )}
+                </div>
+              ) : (
                 <Row className="card-container" align="bottom">
                   {artistsData.length > 0 && (
-                    <CardView data={artistsData.slice(0, 3)} />
+                  <CardView data={artistsData.slice(0, 3)} />
                   )}
                 </Row>
-              </Col>
-            )}
+              )}
+            </Col>
+
             <Col xs={{ span: 24 }} lg={{ span: 6 }}>
               <div className="summary-container">
                 <h3>Summary</h3>
