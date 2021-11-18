@@ -9,10 +9,10 @@ import extractUserToken from './services/userToken';
 axios.interceptors.request.use(
   (req: AxiosRequestConfig) => {
     // Add configurations here
-    const whitlistedEndpoints: Array<string> = [
+    const whiteListedEndpoints: Array<string> = [
       // TODO: Add list of endpoits which are public
     ];
-    if (req.url && whitlistedEndpoints.includes(req.url)) {
+    if (req.url && whiteListedEndpoints.includes(req.url)) {
       return req;
     }
     if (req) {
