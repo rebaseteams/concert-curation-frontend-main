@@ -67,7 +67,7 @@ const DashboardComponent = (): JSX.Element => {
           Concert List
         </h4>
         <Button data-testid="curate-concert" type="primary" onClick={() => setDisplayFormModal(true)}>
-          Curate Concert
+          New Concert
         </Button>
       </div>
       { loading ? renderLoading() : renderConcerts() }

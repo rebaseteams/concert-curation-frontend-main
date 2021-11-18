@@ -25,6 +25,8 @@ export type ArtistBudget = {
   max: number;
 }
 
+export type SponsorshipType ='Brand awareness' | 'Direct sales' | 'Customer Engagement'
+
 export type ConcertDataResponse = {
   id: string;
   userId: string;
@@ -32,7 +34,7 @@ export type ConcertDataResponse = {
   eventType: string;
   venue: Array<string>;
   artistBudget: ArtistBudget;
-  sponsorshipType: string,
+  sponsorshipType: SponsorshipType;
   wantedBrands: Array<Brand>;
   unwantedBrands: Array<Brand>;
   targetAudience: TargetAudience;
