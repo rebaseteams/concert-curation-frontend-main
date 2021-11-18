@@ -6,6 +6,8 @@ const iconMapper: any = {
   'Brand awareness': 'campaign',
   'Customer Engagement': 'volunteer_activism',
   'Direct sales': 'rocket_launch',
+  card: 'dashboard',
+  pie: 'pie_chart',
 };
 
 const IconRenderer = (value: string): JSX.Element => {
