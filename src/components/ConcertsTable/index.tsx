@@ -6,6 +6,7 @@ import {
   Tag,
   Button,
   Modal,
+  Result,
 } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -16,14 +17,24 @@ import deleteConcertForm from '../../services/deleteConcertForm';
 import { ConcertsListData } from '../../interfaces/concertForm';
 
 interface ConcertsTableProp {
-  forms: Array<ConcertsListData>;
+  forms: Array<ConcertsListData> | { message: string};
   // TODO: find proper datatype for functions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getConcerts: any;
 }
 
 const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element => {
-  const data: Array<ConcertsListData> = _.map(forms, (form) => ({
+  if (typeof (forms) === 'object') {
+    return (
+      <Result
+        status="500"
+        title="500"
+        subTitle="not found"
+        extra={<Button type="primary">Back Home</Button>}
+      />
+    );
+  }
+  const data: Array<ConcertsListData> = _.map(forms, (form: ConcertsListData) => ({
     ...form,
     key: form.id,
     dateCreated: form.dateCreated.slice(0, 25),
