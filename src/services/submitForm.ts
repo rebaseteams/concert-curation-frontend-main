@@ -58,7 +58,7 @@ export type ConcertCreationResponse = {
 
 const submitQuestionsForm = async (data: QuestionsFormDataInterface | any): Promise<any> => {
   try {
-    const response = await axios.post(`${baseURL}/artists/concert`, data, config.HEADER);
+    const response = await axios.post(`${baseURL}/artists/concert`, data);
     // eslint-disable-next-line no-console
     console.log(response.data);
     return (response.data);
