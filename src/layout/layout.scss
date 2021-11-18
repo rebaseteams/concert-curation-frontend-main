@@ -53,3 +53,16 @@
 .questionsModal {
     box-shadow: 2px 2px 12px rgb(75, 71, 71);
 }
+
+.row-flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.width-md {
+    max-width: 1200px;
+    margin: auto;
+}
