@@ -7,6 +7,9 @@ import {
   Col,
   notification,
   Switch,
+  Layout,
+  Space,
+  Tag,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -30,6 +33,8 @@ import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
 // Importing styles
 import './recommendationPage.scss';
 import CardView from '../cardView';
+
+const { Content } = Layout;
 
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
   <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
@@ -117,18 +122,28 @@ const RecommendationPage = (): JSX.Element => {
     );
   }
   return (
-    <div>
-      <div className="recommendation-page-header">
-        <Switch
-          checkedChildren="Pie"
-          unCheckedChildren="Card"
-          checked={artistsView.toggleBtn}
-          onChange={updateView}
-        />
-        <DownloadAsImageButton downloadImage={downloadImage} />
-        <DownloadAsPdfButton downloadPdf={downloadPdf} />
-      </div>
-      <div>
+    <Layout>
+      <Content className="recommendation-page-header concert-data">
+        <Space className="recommendation-page-header">
+          <Tag>{`Concert Name: ${concertData?.concertName}`}</Tag>
+          <Tag>{`Sponsorship type: ${concertData?.sponsorshipType}`}</Tag>
+          <Tag>{`Event type: ${concertData?.eventType}`}</Tag>
+          <Tag>{`Budget: ${concertData?.artistBudget.min} to ${concertData?.artistBudget.max}`}</Tag>
+        </Space>
+        <div className="recommendation-page-header">
+          <Switch
+            checkedChildren="Pie"
+            unCheckedChildren="Card"
+            checked={artistsView.toggleBtn}
+            onChange={updateView}
+          />
+          <DownloadAsImageButton downloadImage={downloadImage} />
+          <DownloadAsPdfButton downloadPdf={downloadPdf} />
+        </div>
+      </Content>
+      <Content
+        className="recommendation-page-body"
+      >
         <PDFExport
           ref={pdfExportComponent}
           scale={0.4}
@@ -163,8 +178,8 @@ const RecommendationPage = (): JSX.Element => {
             </Col>
           </Row>
         </PDFExport>
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 };
 

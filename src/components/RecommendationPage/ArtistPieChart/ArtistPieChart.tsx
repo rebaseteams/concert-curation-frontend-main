@@ -21,12 +21,12 @@ interface ArtistsPieChartProp {
 const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.Element => {
   const artist = {
     id: '',
-    brand: '',
+    brand: [''],
     name: '',
     match: 0,
     img: '',
     age: '',
-    gender: '',
+    gender: { icon: 'male', percentage: 50 },
     locations: '',
   };
 
@@ -97,14 +97,34 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
     getData();
   }, [data]);
 
+  const renderBrandsLogo = (brand: Array<string>) => brand.map((brandItem: string) => (
+    <div key={brandItem}>
+      <img className="brand_logo" src={brandItem} alt={brandItem} />
+    </div>
+  ));
+
+  const renderGender = (gender: {icon: string; percentage: number}) => (
+    <div className="row-flex">
+      <span className="material-icons">
+        {gender.icon}
+      </span>
+      <h2>
+        {gender.percentage}
+        %
+      </h2>
+    </div>
+  );
+
   return (
     <div className="container">
       <div className="left-top-data-line">
         <div className="h-data-container">
           <div className="v-data-container artist2-data">
             <div className="data-container" data-testid="matchingBrands">
-              Matching Brands :
-              {artist2.brand}
+              <h4>Matching Brands</h4>
+              <div className="row-flex">
+                {artist2.brand && renderBrandsLogo(artist2.brand)}
+              </div>
             </div>
           </div>
         </div>
@@ -113,8 +133,10 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container">
           <div className="v-data-container">
             <div className="data-container artist1-data">
-              Matching Brands :
-              {artist1.brand}
+              <h4>Matching Brands</h4>
+              <div className="row-flex">
+                {artist1.brand && renderBrandsLogo(artist1.brand)}
+              </div>
             </div>
           </div>
         </div>
@@ -123,8 +145,10 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container-right">
           <div className="v-data-container">
             <div className="data-container artist3-data">
-              Matching Brands :
-              {artist3.brand}
+              <h4>Matching Brands</h4>
+              <div className="row-flex">
+                {artist3.brand && renderBrandsLogo(artist3.brand)}
+              </div>
             </div>
           </div>
         </div>
@@ -133,8 +157,10 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container-right">
           <div className="v-data-container">
             <div className="data-container artist4-data">
-              Matching Brands :
-              {artist4.brand}
+              <h4>Matching Brands</h4>
+              <div className="row-flex">
+                {artist4.brand && renderBrandsLogo(artist4.brand)}
+              </div>
             </div>
           </div>
         </div>
@@ -150,9 +176,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                   %
                 </div>
                 <div className="data-container artist2-data">
-                  %
-                  Gender:
-                  {artist2.gender}
+                  {artist2.gender && renderGender(artist2.gender)}
                 </div>
                 <div className="data-container">Affinity Score : 87%</div>
               </div>
@@ -205,9 +229,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                   %
                 </div>
                 <div className="data-container artist1-data">
-                  Gender:
-                  {artist1.gender}
-                  %
+                  {artist1.gender && renderGender(artist1.gender)}
                 </div>
                 <div className="data-container">Affinity Score : 87%</div>
               </div>
@@ -232,9 +254,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                   %
                 </div>
                 <div className="data-container artist3-data">
-                  Gender:
-                  {artist3.gender}
-                  %
+                  {artist3.gender && renderGender(artist3.gender)}
                 </div>
                 <div className="data-container">Affinity Score : 87%</div>
               </div>
@@ -287,9 +307,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                   %
                 </div>
                 <div className="data-container artist4-data">
-                  Gender:
-                  {artist4.gender}
-                  %
+                  {artist4.gender && renderGender(artist4.gender)}
                 </div>
                 <div className="data-container ">Affinity Score : 87%</div>
               </div>

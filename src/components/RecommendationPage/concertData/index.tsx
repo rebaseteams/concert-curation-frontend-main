@@ -18,16 +18,10 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
   if (concertData) {
     return (
       <Row className="concertDataContainer">
-        <Col span={24}>
-          <h5>Concert Name</h5>
-          <h3>{concertData.concertName}</h3>
-        </Col>
         <Col span={24} className="information">
-          <h4>Sponsorship Type</h4>
-          <span>{concertData.sponsorshipType}</span>
-        </Col>
-        <Col span={24} className="information">
-          <h4>Venues</h4>
+          <span className="material-icons">
+            location_on
+          </span>
           {concertData.venue.map((venue) => (<span key={venue}>{`${venue}, `}</span>))}
         </Col>
         <Col span={24} className="information">
@@ -37,14 +31,6 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         <Col span={24} className="information">
           <h4>Unwanted Brands</h4>
           {concertData.unwantedBrands.map((value) => (<span key={value.brandId}>{`${value.brandName}, `}</span>))}
-        </Col>
-        <Col span={24} className="information">
-          <h4>Event Type</h4>
-          <span>{concertData.eventType}</span>
-        </Col>
-        <Col span={24} className="information">
-          <h4>Artist Budget</h4>
-          <span>{`${concertData.artistBudget.min} to ${concertData.artistBudget.min}`}</span>
         </Col>
         <Col span={24} className="information">
           <h4>Age group</h4>

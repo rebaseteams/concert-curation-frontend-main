@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 .layout-container {
-  background-image: radial-gradient(#fff, rgb(212, 13, 230));
+    height: 100vh;
+
+    .layout-body {
+        max-height: 90vh;
+        overflow: auto;
+        background: rgb(0, 0, 0);
+    }
 }
 
 .layout-workspace {
