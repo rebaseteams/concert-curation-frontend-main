@@ -30,11 +30,7 @@ const LayoutComponent = ():JSX.Element => (
 
     <Layout>
       <Content
-        style={{
-          maxHeight: '90vh',
-          overflow: 'auto',
-          background: 'rgb(27, 27, 27)',
-        }}
+        className="layout-body"
       >
         <Router>
           <Switch>

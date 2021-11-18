@@ -1,4 +1,4 @@
-$line-color: #fff41d;
+$line-color: #474744;
 
 .concertDataContainer {
   margin: 5px;
@@ -23,6 +23,7 @@ $line-color: #fff41d;
     border-top: 1px solid $line-color;
     margin: 2px;
     padding: 2px;
+    align-items: center;
   }
 }
 
@@ -34,6 +35,17 @@ $line-color: #fff41d;
   Button {
     margin-right: 10px;
   }
+}
+
+.concert-data {
+  justify-content: space-between;
+}
+
+.recommendation-page-body {
+  background-image: $line-color;
+  max-height: 84vh;
+  overflow: auto;
+  padding: 30px;
 }
 
 
@@ -57,4 +69,8 @@ $line-color: #fff41d;
 .card-container {
   width: 90%;
   margin: auto;
+}
+
+.row-flex {
+  display: flex;
 }
