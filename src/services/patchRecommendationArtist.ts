@@ -10,7 +10,7 @@ const { baseURL } = config;
 
 const patchRecommendationArtist = async (formId: string, discardedArtistId: string, userId: string): Promise<any> => {
   try {
-    const response: any = await axios.patch(`${baseURL}/artists/recommendations/`, { formId, discardedArtistId, userId }, config.HEADER);
+    const response: any = await axios.patch(`${baseURL}/artists/recommendations/`, { formId, discardedArtistId, userId });
     return response.data;
   } catch (error) {
     const response = { error: true, error_message: error };

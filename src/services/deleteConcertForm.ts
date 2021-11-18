@@ -9,7 +9,7 @@ const { baseURL } = config;
 
 const deleteConcertForm = async (formId: string): Promise<any> => {
   try {
-    const response: any = await axios.delete(`${baseURL}/artists/concert/${formId}`, config.HEADER);
+    const response: any = await axios.delete(`${baseURL}/artists/concert/${formId}`);
     return response.data;
   } catch (error) {
     const response = { error: true, error_message: error };
