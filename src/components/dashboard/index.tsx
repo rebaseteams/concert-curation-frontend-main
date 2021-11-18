@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  Layout, Button, Modal, Spin,
+  Layout, Button, Spin,
 } from 'antd';
-
-import ConcertForm from '../concert/index';
 
 import getMyAllConcerts from '../../services/getMyAllConcerts';
 
@@ -15,6 +13,7 @@ import ErrorPage from '../ErrorPage';
 
 // styles
 import './dashboard.style.scss';
+import CurateConcertModal from '../CurateConcertModal';
 
 const { Content } = Layout;
 
@@ -51,47 +50,26 @@ const DashboardComponent = (): JSX.Element => {
 
   return (
     <Content>
-      <Button data-testid="curate-concert" type="primary" onClick={() => setDisplayFormModal(true)}>
-        Curate Concert
-      </Button>
-      <Modal
-        title="Choose your prefrences"
-        centered
-        style={
-          {
-            padding: '0',
-          }
-        }
-        bodyStyle={
-            {
-              height: 'calc(100vh - 200px)',
-              padding: '0',
-              overflowY: 'scroll',
-              margin: '0',
-            }
-          }
-        visible={displayFormModal}
-        onOk={() => setDisplayFormModal(false)}
-        onCancel={() => setDisplayFormModal(false)}
-        width={800}
-        className="questionsModal"
-        footer={false}
-      >
-        <ConcertForm
-          setVisible={setDisplayFormModal}
-          forms={forms}
-          getConcerts={getConcerts}
-        />
-      </Modal>
-      <h4 style={{
-        textAlign: 'center',
-        color: '#FFF',
-        fontSize: '25px',
-      }}
-      >
-        {' '}
-        Concert List
-      </h4>
+      <CurateConcertModal
+        setDisplayFormModal={setDisplayFormModal}
+        displayFormModal={displayFormModal}
+        forms={forms}
+        getConcerts={getConcerts}
+      />
+      <div className="row-flex justify-between width-md">
+        <h4 style={{
+          textAlign: 'center',
+          color: '#FFF',
+          fontSize: '25px',
+        }}
+        >
+          {' '}
+          Concert List
+        </h4>
+        <Button data-testid="curate-concert" type="primary" onClick={() => setDisplayFormModal(true)}>
+          Curate Concert
+        </Button>
+      </div>
       { loading ? renderLoading() : renderConcerts() }
     </Content>
   );
