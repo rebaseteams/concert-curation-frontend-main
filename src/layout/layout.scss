@@ -59,7 +59,21 @@
 }
 
 .justify-between {
+    display: flex;
     justify-content: space-between;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.text-size-4 {
+    font-size: 18px;
+}
+
+.text-size-3 {
+    font-size: 22px;
 }
 
 .width-md {

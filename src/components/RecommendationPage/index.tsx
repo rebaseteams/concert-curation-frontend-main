@@ -10,6 +10,9 @@ import {
   Layout,
   Space,
   Tag,
+  Typography,
+  Tooltip,
+  Empty,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -33,21 +36,34 @@ import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
 // Importing styles
 import './recommendationPage.scss';
 import CardView from '../cardView';
+import IconRenderer from '../IconRenderer';
 
 const { Content } = Layout;
 
+const { Title } = Typography;
+
 const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
-  <ArtistsSummary key={n} summary={artistsData[n].summary} artistName={artistsData[n].artistName} />));
+  <ArtistsSummary
+    key={n}
+    summary={artistsData[n].summary}
+    artistName={artistsData[n].artistName}
+  />
+));
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
   const [concertData, setConcertData] = useState<ConcertDataResponse>();
-  const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>([]);
-  const [artistsView, setArtistsView] = useState<{name: string, toggleBtn: boolean}>({
+  const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>(
+    [],
+  );
+  const [artistsView, setArtistsView] = useState<{
+    name: string;
+    toggleBtn: boolean;
+  }>({
     name: 'pie',
     toggleBtn: true,
   });
-  const [error, setError] = useState<{status: string, message: string}>();
+  const [error, setError] = useState<{ status: string; message: string }>();
   const userID = '1234589';
 
   const pdfExportComponent = React.useRef<PDFExport>(null);
@@ -96,12 +112,13 @@ const RecommendationPage = (): JSX.Element => {
   }, []);
 
   const downloadImage = () => {
-    const node: HTMLElement | null = document.getElementById('recommendation-page-container');
+    const node: HTMLElement | null = document.getElementById(
+      'recommendation-page-container',
+    );
     if (node) {
-      htmlToImage.toPng(node)
-        .then((dataUrl) => {
-          download(dataUrl, 'Concert-Curation.png');
-        });
+      htmlToImage.toPng(node).then((dataUrl) => {
+        download(dataUrl, 'Concert-Curation.png');
+      });
       notification.success({
         message: 'File Downloading started',
         description: 'Image will be downloaded withing few minutes.',
@@ -117,18 +134,46 @@ const RecommendationPage = (): JSX.Element => {
   };
 
   if (error) {
-    return (
-      <ErrorPage error={error} />
-    );
+    return <ErrorPage error={error} />;
   }
+
+  if (!concertData) {
+    return <Empty />;
+  }
+
   return (
     <Layout>
       <Content className="recommendation-page-header concert-data">
         <Space className="recommendation-page-header">
-          <Tag>{`Concert Name: ${concertData?.concertName}`}</Tag>
-          <Tag>{`Sponsorship type: ${concertData?.sponsorshipType}`}</Tag>
-          <Tag>{`Event type: ${concertData?.eventType}`}</Tag>
-          <Tag>{`Budget: ${concertData?.artistBudget.min} to ${concertData?.artistBudget.max}`}</Tag>
+          <Title level={2}>{concertData.concertName}</Title>
+          <Tooltip
+            title={`Sponsorship: ${concertData.sponsorshipType}`}
+            color="orange"
+          >
+            <Tag color="orange">
+              <span className="text-size-4">
+                {IconRenderer(concertData.sponsorshipType)}
+              </span>
+            </Tag>
+          </Tooltip>
+          <Tooltip
+            title={`Event type: ${concertData.eventType}`}
+            color="magenta"
+          >
+            <Tag color="magenta">
+              <span className="text-size-4">{concertData.eventType}</span>
+            </Tag>
+          </Tooltip>
+          <Tooltip
+            title={`Budget: $${concertData.artistBudget.min} to $${concertData.artistBudget.max}`}
+            color="green"
+          >
+            <Tag color="green">
+              <span className="text-size-4">
+                {`$${concertData.artistBudget.min} to $${concertData.artistBudget.max}`}
+              </span>
+            </Tag>
+          </Tooltip>
         </Space>
         <div className="recommendation-page-header">
           <Switch
@@ -141,9 +186,7 @@ const RecommendationPage = (): JSX.Element => {
           <DownloadAsPdfButton downloadPdf={downloadPdf} />
         </div>
       </Content>
-      <Content
-        className="recommendation-page-body"
-      >
+      <Content className="recommendation-page-body">
         <PDFExport
           ref={pdfExportComponent}
           scale={0.4}
@@ -151,20 +194,25 @@ const RecommendationPage = (): JSX.Element => {
           margin={20}
           fileName={`ReccomendationFor${id}`}
         >
-          <Row
-            id="recommendation-page-container"
-          >
+          <Row id="recommendation-page-container">
             <Col xs={{ span: 24 }} lg={{ span: 4 }}>
-              { concertData && <ConcertData data={concertData} /> }
+              {concertData && <ConcertData data={concertData} />}
             </Col>
-            { artistsView.name === 'pie' ? (
+            {artistsView.name === 'pie' ? (
               <Col xs={{ span: 24 }} lg={{ span: 14 }}>
-                { artistsData.length > 0 && <ArtistPieChart data={artistsData} patchConcertData={patchConcertData} />}
+                {artistsData.length > 0 && (
+                  <ArtistPieChart
+                    data={artistsData}
+                    patchConcertData={patchConcertData}
+                  />
+                )}
               </Col>
             ) : (
               <Col xs={{ span: 24 }} lg={{ span: 14 }}>
                 <Row className="card-container" align="bottom">
-                  { artistsData.length > 0 && <CardView data={artistsData.slice(0, 3)} />}
+                  {artistsData.length > 0 && (
+                    <CardView data={artistsData.slice(0, 3)} />
+                  )}
                 </Row>
               </Col>
             )}
@@ -172,7 +220,7 @@ const RecommendationPage = (): JSX.Element => {
               <div className="summary-container">
                 <h3>Summary</h3>
                 <div>
-                  { artistsData.length > 0 && renderSummary(artistsData) }
+                  {artistsData.length > 0 && renderSummary(artistsData)}
                 </div>
               </div>
             </Col>

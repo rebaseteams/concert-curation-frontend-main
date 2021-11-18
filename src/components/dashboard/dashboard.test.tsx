@@ -23,7 +23,7 @@ describe('Dashboard Page', () => {
   });
   it('Should render dashboard', () => {
     render(<DashboardComponent />);
-    expect(screen.getByText('Curate Concert')).toBeInTheDocument();
+    expect(screen.getByText('New Concert')).toBeInTheDocument();
   });
 
   // TODO: complete this test I wast adding this test but was facing some issues
