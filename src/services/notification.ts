@@ -8,7 +8,7 @@ const baseUrl = config.baseURL;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const sendNotification = async (data: SendGridEmailData): Promise<any> => {
   try {
-    const response = await axios.post(`${baseUrl}/notification`, data);
+    const response = await axios.post(`${baseUrl}/notification`, data, config.HEADER);
     return response.data;
   } catch (err) {
     return (err);
