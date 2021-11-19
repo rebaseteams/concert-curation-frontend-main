@@ -7,13 +7,12 @@ import {
 } from 'antd';
 import { ResultStatusType } from 'antd/lib/result';
 
-import getMyAllConcerts from '../../services/getMyAllConcerts';
-
 import ConcertsTable from '../ConcertsTable';
 
 // styles
 import './dashboard.style.scss';
 import CurateConcertModal from '../CurateConcertModal';
+import { getMyAllConcerts } from '../../services/recommendations';
 
 const { Content } = Layout;
 

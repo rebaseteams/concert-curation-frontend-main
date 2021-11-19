@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { QuestionsFormDataInterface } from './submitForm';
-import { onSubmitFormDataType } from '../interfaces/concertForm';
+import { onSubmitFormDataType, QuestionsFormDataInterface } from '../interfaces/concertForm';
 
 const createConcertFormData = (
   values: onSubmitFormDataType, budget: { min: number, max: number },
