@@ -3,7 +3,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import './header.scss';
-import cuttimelogo from './cuttimelogo.png';
+import cuttimelogo from './cuttime.png';
 
 const { Header } = Layout;
 

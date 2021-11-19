@@ -11,6 +11,7 @@ import {
   getGender,
   getLocations,
 } from './utils';
+import IconRenderer from '../../IconRenderer';
 
 interface ArtistsPieChartProp {
   data: Array<ArtistsDataInterface>;
@@ -130,7 +131,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         </div>
       </div>
       <div className="left-bottom-data-line">
-        <div className="h-data-container">
+        <div className="h-data-container bottom-matching-brands">
           <div className="v-data-container">
             <div className="data-container artist1-data">
               <h4>Matching Brands</h4>
@@ -154,7 +155,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         </div>
       </div>
       <div className="right-bottom-data-line">
-        <div className="h-data-container-right">
+        <div className="h-data-container-right bottom-matching-brands">
           <div className="v-data-container">
             <div className="data-container artist4-data">
               <h4>Matching Brands</h4>
@@ -182,7 +183,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               </div>
               <div className="v-data-container artist2-data">
                 <div className="data-container artist2-data">
-                  Location :
+                  {IconRenderer('location')}
                   {artist2.locations}
                 </div>
               </div>
@@ -233,9 +234,9 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 </div>
                 <div className="data-container">Affinity Score : 87%</div>
               </div>
-              <div className="v-data-container-bottom artist1-data">
+              <div className="v-data-container-bottom bottom-location-box artist1-data">
                 <div className="data-container artist1-data">
-                  Location :
+                  {IconRenderer('location')}
                   {artist1.locations}
                 </div>
               </div>
@@ -260,7 +261,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               </div>
               <div className="v-data-container artist3-data">
                 <div className="data-container artist3-data">
-                  Location :
+                  {IconRenderer('location')}
                   {artist3.locations}
                 </div>
               </div>
@@ -311,9 +312,9 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 </div>
                 <div className="data-container ">Affinity Score : 87%</div>
               </div>
-              <div className="v-data-container-bottom artist4-data">
+              <div className="v-data-container-bottom bottom-location-box artist4-data">
                 <div className="data-container artist4-data">
-                  Location :
+                  {IconRenderer('location')}
                   {artist4.locations}
                 </div>
               </div>

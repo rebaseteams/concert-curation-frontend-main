@@ -572,8 +572,23 @@ describe('Artist Pie Chart Component', () => {
   //   render(<Router><ArtistPieChart data={mockArtistsData} /></Router>);
   //   expect(screen.getAllByText('Parade Hall').toBeInTheDocument());
   // });
+  beforeEach(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(), // deprecated
+        removeListener: jest.fn(), // deprecated
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+  });
 
-  test('should render Questions component', () => {
+  it('should render Questions component', () => {
     render(<ArtistPieChart data={mockArtistsData} />);
     expect(screen.getByTestId('matchingBrands')).toBeInTheDocument();
   });

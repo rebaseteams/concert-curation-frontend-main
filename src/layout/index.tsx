@@ -26,7 +26,6 @@ const LayoutComponent = ():JSX.Element => (
     style={{ background: 'none' }}
     className="layout-container"
   >
-    <HeaderComponet />
 
     <Layout>
       <Content
@@ -35,6 +34,7 @@ const LayoutComponent = ():JSX.Element => (
         <Router>
           <Switch>
             <Route path="/" exact>
+              <HeaderComponet />
               <DashboardComponent />
             </Route>
             <Route path="/recommendations/:id" exact>

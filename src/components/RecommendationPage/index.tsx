@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,6 +13,7 @@ import {
   Typography,
   Tooltip,
   Empty,
+  Result,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -28,7 +29,6 @@ import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataIn
 
 // Importing Components and Pages
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
-import ErrorPage from '../ErrorPage';
 import ArtistsSummary from './ArtistsSummary';
 import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
 import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
@@ -42,13 +42,19 @@ const { Content } = Layout;
 
 const { Title } = Typography;
 
-const renderSummary = (artistsData: Array<ArtistsDataInterface>) => _.times(4, (n) => (
-  <ArtistsSummary
-    key={n}
-    summary={artistsData[n].summary}
-    artistName={artistsData[n].artistName}
-  />
-));
+const renderSummary = (artistsData: Array<ArtistsDataInterface>, view: string) => {
+  let count = 4;
+  if (view === 'card') {
+    count = 3;
+  }
+  return (_.times(count, (n) => (
+    <ArtistsSummary
+      key={n}
+      summary={artistsData[n].summary}
+      artistName={artistsData[n].artistName}
+    />
+  )));
+};
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
@@ -134,7 +140,14 @@ const RecommendationPage = (): JSX.Element => {
   };
 
   if (error) {
-    return <ErrorPage error={error} />;
+    return (
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+        extra={<Link to="/" type="primary">Back Home</Link>}
+      />
+    );
   }
 
   if (!concertData) {
@@ -143,8 +156,9 @@ const RecommendationPage = (): JSX.Element => {
 
   return (
     <Layout className="recommendation-page">
-      <Content className="recommendation-page-header concert-data">
-        <Space className="recommendation-page-header">
+      <Content className="recommendation-page-header justify-between">
+        <Space>
+          <Link color="#FFF" to="/">{IconRenderer('back')}</Link>
           <Title level={2}>{concertData.concertName}</Title>
           <Tooltip
             title={`Sponsorship: ${concertData.sponsorshipType}`}
@@ -175,7 +189,7 @@ const RecommendationPage = (): JSX.Element => {
             </Tag>
           </Tooltip>
         </Space>
-        <div className="recommendation-page-header">
+        <div>
           <DownloadAsImageButton downloadImage={downloadImage} />
           <DownloadAsPdfButton downloadPdf={downloadPdf} />
         </div>
@@ -228,7 +242,7 @@ const RecommendationPage = (): JSX.Element => {
               <div className="summary-container">
                 <h3>Summary</h3>
                 <div>
-                  {artistsData.length > 0 && renderSummary(artistsData)}
+                  {artistsData.length > 0 && renderSummary(artistsData, artistsView.name)}
                 </div>
               </div>
             </Col>

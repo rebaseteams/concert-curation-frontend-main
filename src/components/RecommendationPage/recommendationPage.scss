@@ -37,19 +37,20 @@ $line-color: #474744;
   align-items: center;
   padding: 0px 20px;
   padding-top: 10px;
-
+  box-shadow: 1px 1px 10px rgb(100, 99, 99);
+  z-index: 1000;
   Button {
     margin-right: 10px;
   }
 }
 
-.concert-data {
+.justify-between {
   justify-content: space-between;
 }
 
 .recommendation-page-body {
-  background-image: $line-color;
-  max-height: 90%;
+  height: 95%;
+  background-color: #111;
   overflow: auto;
   padding: 30px;
 }
