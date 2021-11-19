@@ -6,7 +6,6 @@ import {
   Tag,
   Button,
   Modal,
-  Result,
 } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -24,16 +23,6 @@ interface ConcertsTableProp {
 }
 
 const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element => {
-  if (typeof (forms) === 'object') {
-    return (
-      <Result
-        status="500"
-        title="500"
-        subTitle="not found"
-        extra={<Button type="primary">Back Home</Button>}
-      />
-    );
-  }
   const data: Array<ConcertsListData> = _.map(forms, (form: ConcertsListData) => ({
     ...form,
     key: form.id,
