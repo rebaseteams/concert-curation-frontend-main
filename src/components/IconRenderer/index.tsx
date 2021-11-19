@@ -8,6 +8,8 @@ const iconMapper: any = {
   'Direct sales': 'rocket_launch',
   card: 'dashboard',
   pie: 'pie_chart',
+  back: 'arrow_back',
+  location: 'place',
 };
 
 const IconRenderer = (value: string): JSX.Element => {
