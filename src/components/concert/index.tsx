@@ -14,9 +14,9 @@ import {
 import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
-import submitConcertForm, { QuestionsFormDataInterface } from '../../services/submitForm';
 import createConcertFormData from '../../services/createConcertFormData';
-import { onSubmitFormDataType } from '../../interfaces/concertForm';
+import { onSubmitFormDataType, QuestionsFormDataInterface } from '../../interfaces/concertForm';
+import { submitQuestionsForm } from '../../services/recommendations';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -132,8 +132,8 @@ const ConcertForm = ({
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
     const result: QuestionsFormDataInterface = createConcertFormData(values, budget);
-    const response = await submitConcertForm(result);
-    if (response && !('id' in response)) {
+    const response = await submitQuestionsForm(result);
+    if (response.data && !('id' in response.data)) {
       setLoading(false);
       setVisible(false);
       notification.error({
@@ -141,8 +141,8 @@ const ConcertForm = ({
         description: 'Could not create concert',
       });
     }
-    if (response && ('id' in response)) {
-      forms?.push(response);
+    if (response && ('id' in response.data)) {
+      forms?.push(response.data);
       getConcerts();
       setLoading(false);
       setVisible(false);
