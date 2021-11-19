@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  Layout, Button, Spin,
+  Layout, Button, Spin, Result,
 } from 'antd';
+import { ResultStatusType } from 'antd/lib/result';
 
 import getMyAllConcerts from '../../services/getMyAllConcerts';
 
 import ConcertsTable from '../ConcertsTable';
-import ErrorPage from '../ErrorPage';
 
 // styles
 import './dashboard.style.scss';
@@ -17,20 +17,26 @@ import CurateConcertModal from '../CurateConcertModal';
 
 const { Content } = Layout;
 
+interface Error {
+  status: ResultStatusType | undefined;
+  message: string | undefined;
+}
+
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<{status: string, message: string}>();
+  const [error, setError] = useState<Error>();
 
   const userId = 'TODO: When authentication will stablished';
 
   const getConcerts = async () => {
     const response = await getMyAllConcerts(userId);
     if (response.error) {
-      setError({ status: 'Oops', message: 'Network Error:' });
+      setError({ status: response.status, message: response.message });
+    } else {
+      setForms(response.data);
     }
-    setForms(response);
     setLoading(false);
   };
 
@@ -43,7 +49,13 @@ const DashboardComponent = (): JSX.Element => {
 
   const renderConcerts = (): JSX.Element => {
     if (error) {
-      return <ErrorPage error={error} />;
+      return (
+        <Result
+          status={404}
+          title={error.status}
+          subTitle={error.message}
+        />
+      );
     }
     return <ConcertsTable forms={forms} getConcerts={getConcerts} />;
   };
