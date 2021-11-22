@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@auth0/auth0-react": "^1.8.0",
     "@progress/kendo-drawing": "^1.16.0",
     "@progress/kendo-licensing": "^1.2.1",
     "@progress/kendo-react-pdf": "^4.10.0",
