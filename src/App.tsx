@@ -20,7 +20,7 @@ axios.interceptors.request.use(
         req.headers = {};
       }
       // Extract the userid from the token
-      req.headers.userid = extractUserToken();
+      req.headers.userId = extractUserToken();
     }
     return req;
   },
