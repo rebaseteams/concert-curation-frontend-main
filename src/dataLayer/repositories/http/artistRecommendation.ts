@@ -12,9 +12,18 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     console.log('add new recommendation : ', resp);
   };
 
-  getAllRecommendations = async () => {
-    const resp = await axios.get(`${server}/api/artists/concerts`);
-    console.log('get all recommendations : ', resp);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getAllRecommendations = async (): Promise<any> => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await axios.get(`${server}/api/artists/recommendations/`);
+      if (response.status !== 200) {
+        return { error: true, status: response.status, message: 'unknown error' };
+      }
+      return { error: false, data: response.data, message: 'success' };
+    } catch (error) {
+      return { error: true, status: 501, message: 'Unknown' };
+    }
   };
 
   getRecommendation = async (recommendationId : string) => {

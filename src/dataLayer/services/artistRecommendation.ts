@@ -1,6 +1,7 @@
 import ArtistRecommendationInterface from '../../model/interfaces/artistRecommendation';
 import { PatchRequest } from '../../model/types/patch-request';
 import { QuestionsUI } from '../../model/types/questions';
+import { ServiceResponse } from '../../model/types/service-response';
 
 export default class ArtistRecommendation implements ArtistRecommendationInterface {
     private artistRecommendationRepo : ArtistRecommendationInterface;
@@ -13,9 +14,11 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
       this.artistRecommendationRepo.addNewRecommendation(concertData);
     };
 
-    getAllRecommendations = () => {
-      this.artistRecommendationRepo.getAllRecommendations();
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getAllRecommendations = async (): Promise<any> => {
+      const data: ServiceResponse = await this.artistRecommendationRepo.getAllRecommendations();
+      return data;
+    }
 
     getRecommendation = (recommendationId : string) => {
       this.artistRecommendationRepo.getRecommendation(recommendationId);
