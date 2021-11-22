@@ -5,19 +5,19 @@ import React, { useEffect, useState } from 'react';
 import {
   Layout, Button, Spin, Result,
 } from 'antd';
-import { ResultStatusType } from 'antd/lib/result';
 
 import ConcertsTable from '../ConcertsTable';
 
 // styles
 import './dashboard.style.scss';
 import CurateConcertModal from '../CurateConcertModal';
-import { getMyAllConcerts } from '../../services/recommendations';
+// import { getMyAllConcerts } from '../../services/recommendations';
+import services from '../../visualLayer/services';
 
 const { Content } = Layout;
 
 interface Error {
-  status: ResultStatusType | undefined;
+  status: string | number;
   message: string | undefined;
 }
 
@@ -27,10 +27,8 @@ const DashboardComponent = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const userId = 'TODO: When authentication will stablished';
-
   const getConcerts = async () => {
-    const response = await getMyAllConcerts(userId);
+    const response = await services.ArtistRecommendation.getAllRecommendations();
     if (response.error) {
       setError({ status: response.status, message: response.message });
     } else {
