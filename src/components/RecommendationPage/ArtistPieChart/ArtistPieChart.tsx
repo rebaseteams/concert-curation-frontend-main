@@ -122,7 +122,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container">
           <div className="v-data-container artist2-data">
             <div className="data-container" data-testid="matchingBrands">
-              <h4>Matching Brands</h4>
+              <h4 className="bold-16">Matching Brands</h4>
               <div className="row-flex">
                 {artist2.brand && renderBrandsLogo(artist2.brand)}
               </div>
@@ -134,7 +134,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container bottom-matching-brands">
           <div className="v-data-container">
             <div className="data-container artist1-data">
-              <h4>Matching Brands</h4>
+              <h4 className="bold-16">Matching Brands</h4>
               <div className="row-flex">
                 {artist1.brand && renderBrandsLogo(artist1.brand)}
               </div>
@@ -146,7 +146,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container-right">
           <div className="v-data-container">
             <div className="data-container artist3-data">
-              <h4>Matching Brands</h4>
+              <h4 className="bold-16">Matching Brands</h4>
               <div className="row-flex">
                 {artist3.brand && renderBrandsLogo(artist3.brand)}
               </div>
@@ -158,7 +158,7 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
         <div className="h-data-container-right bottom-matching-brands">
           <div className="v-data-container">
             <div className="data-container artist4-data">
-              <h4>Matching Brands</h4>
+              <h4 className="bold-16">Matching Brands</h4>
               <div className="row-flex">
                 {artist4.brand && renderBrandsLogo(artist4.brand)}
               </div>
@@ -172,19 +172,30 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
             <div className="h-data-container">
               <div className="v-data-container artist2-data">
                 <div className="data-container artist2-data">
-                  Age :
-                  {artist2.age}
-                  %
+                  <span className="bold-16">
+                    Age
+                    <span>
+                      {artist2.age}
+                      %
+                    </span>
+                  </span>
                 </div>
                 <div className="data-container artist2-data">
                   {artist2.gender && renderGender(artist2.gender)}
                 </div>
-                <div className="data-container">Affinity Score : 87%</div>
+                <span className="bold-16">
+                  Affinity
+                  <span className="bold-18">
+                    87%
+                  </span>
+                </span>
               </div>
               <div className="v-data-container artist2-data">
-                <div className="data-container artist2-data">
+                <div className="data-container artist2-data locations">
                   {IconRenderer('location')}
-                  {artist2.locations}
+                  <h4>
+                    {artist2.locations}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -195,13 +206,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               <div className="circle-img">
                 <img src={artist2.img} alt="" />
               </div>
-              <div className="name">
+              <h4 className="name">
                 { _.upperFirst(artist2.name) }
-              </div>
-              <div className="match">
+              </h4>
+              <span className="match">
                 {artist2.match}
-                %
-              </div>
+                <span>%</span>
+              </span>
             </div>
           </div>
         </div>
@@ -211,13 +222,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               <div className="circle-img">
                 <img src={artist1.img} alt="" />
               </div>
-              <div className="name">
+              <h4 className="name">
                 { _.upperFirst(artist1.name)}
-              </div>
-              <div className="match">
+              </h4>
+              <span className="match">
                 {artist1.match}
-                %
-              </div>
+                <span>%</span>
+              </span>
               <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist1.name, artist1.id)}>&times;</span>
             </div>
           </div>
@@ -225,19 +236,30 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
             <div className="h-data-container">
               <div className="v-data-container-bottom artist1-data">
                 <div className="data-container artist1-data">
-                  Age :
-                  {artist1.age}
-                  %
+                  <span className="bold-16">
+                    Age
+                    <span>
+                      {artist1.age}
+                      %
+                    </span>
+                  </span>
                 </div>
                 <div className="data-container artist1-data">
                   {artist1.gender && renderGender(artist1.gender)}
                 </div>
-                <div className="data-container">Affinity Score : 87%</div>
+                <span className="bold-16">
+                  Affinity
+                  <span className="bold-18">
+                    87%
+                  </span>
+                </span>
               </div>
-              <div className="v-data-container-bottom bottom-location-box artist1-data">
-                <div className="data-container artist1-data">
+              <div className="v-data-container-bottom bottom-location-box-1 artist1-data">
+                <div className="data-container artist1-data locations">
                   {IconRenderer('location')}
-                  {artist1.locations}
+                  <h4>
+                    {artist1.locations}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -250,19 +272,30 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
             <div className="h-data-container-right">
               <div className="v-data-container artist3-data">
                 <div className="data-container artist3-data">
-                  Age :
-                  {artist3.age}
-                  %
+                  <span className="bold-16">
+                    Age
+                    <span>
+                      {artist3.age}
+                      %
+                    </span>
+                  </span>
                 </div>
                 <div className="data-container artist3-data">
                   {artist3.gender && renderGender(artist3.gender)}
                 </div>
-                <div className="data-container">Affinity Score : 87%</div>
+                <span className="bold-16">
+                  Affinity
+                  <span className="bold-18">
+                    87%
+                  </span>
+                </span>
               </div>
               <div className="v-data-container artist3-data">
-                <div className="data-container artist3-data">
+                <div className="data-container artist3-data locations">
                   {IconRenderer('location')}
-                  {artist3.locations}
+                  <h4>
+                    {artist3.locations}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -273,13 +306,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               <div className="circle-img">
                 <img src={artist3.img} alt="" />
               </div>
-              <div className="name">
+              <h4 className="name">
                 {_.upperFirst(artist3.name)}
-              </div>
-              <div className="match">
+              </h4>
+              <span className="match">
                 {artist3.match}
-                %
-              </div>
+                <span>%</span>
+              </span>
             </div>
           </div>
         </div>
@@ -289,13 +322,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
               <div className="circle-img">
                 <img src={artist4.img} alt="" />
               </div>
-              <div className="name">
+              <h4 className="name">
                 {_.upperFirst(artist4.name)}
-              </div>
-              <div className="match">
+              </h4>
+              <span className="match">
                 {artist4.match}
-                %
-              </div>
+                <span>%</span>
+              </span>
               <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist4.name, artist4.id)}>&times;</span>
             </div>
           </div>
@@ -303,19 +336,30 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
             <div className="h-data-container-right">
               <div className="v-data-container-bottom artist4-data">
                 <div className="data-container artist4-data">
-                  Age :
-                  {artist4.age}
-                  %
+                  <span className="bold-16">
+                    Age
+                    <span>
+                      {artist4.age}
+                      %
+                    </span>
+                  </span>
                 </div>
                 <div className="data-container artist4-data">
                   {artist4.gender && renderGender(artist4.gender)}
                 </div>
-                <div className="data-container ">Affinity Score : 87%</div>
+                <span className="bold-16">
+                  Affinity
+                  <span className="bold-18">
+                    87%
+                  </span>
+                </span>
               </div>
-              <div className="v-data-container-bottom bottom-location-box artist4-data">
-                <div className="data-container artist4-data">
+              <div className="v-data-container-bottom bottom-location-box-2 artist4-data">
+                <div className="data-container artist4-data locations">
                   {IconRenderer('location')}
-                  {artist4.locations}
+                  <h4>
+                    {artist4.locations}
+                  </h4>
                 </div>
               </div>
             </div>
