@@ -53,6 +53,12 @@ $line-color: #474744;
   background-color: #111;
   overflow: auto;
   padding: 30px;
+
+  .pie-container {
+    transform-origin: top;
+    transform: scale(1.1);
+    height: fit-content;
+  }
 }
 
 
@@ -76,4 +82,61 @@ $line-color: #474744;
 .card-container {
   width: 90%;
   margin: auto;
+}
+
+
+// Screen breakpoint max-width 1650px
+@media  screen and (max-width: 1650px) {
+    .container {
+        transform: scale(0.8);
+    }
+}
+
+// Screen breakpoint max-width 1450px
+@media  screen and (max-width: 1450px) {
+  .container {
+      transform: scale(0.7);
+  }
+}
+
+// Screen breakpoint max-width 1350px
+@media  screen and (max-width: 1350px) {
+  .container {
+      transform: scale(0.65);
+  }
+}
+
+// Screen breakpoint max-width 1250px
+@media  screen and (max-width: 1250px) {
+  .container {
+      transform: scale(0.6);
+  }
+}
+
+// Screen breakpoint max-width 1150px
+@media  screen and (max-width: 1150px) {
+  .container {
+      transform: scale(0.5);
+  }
+}
+
+// Screen breakpoint max-width 950px
+@media  screen and (max-width: 950px) {
+  .container {
+      transform: scale(0.9);
+  }
+}
+
+// Screen breakpoint max-width 850px
+@media  screen and (max-width: 850px) {
+  .container {
+      transform: scale(0.8);
+  }
+}
+
+// Screen breakpoint max-width 700px
+@media  screen and (max-width: 700px) {
+  .container {
+      transform: scale(0.7);
+  }
 }

@@ -80,3 +80,11 @@
     max-width: 1200px;
     margin: auto;
 }
+
+.scroll {
+    overflow-x: auto;
+}
+
+.height-100 {
+    height: min-content;
+}

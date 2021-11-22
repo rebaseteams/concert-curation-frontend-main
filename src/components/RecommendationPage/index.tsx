@@ -118,13 +118,15 @@ const RecommendationPage = (): JSX.Element => {
   }, []);
 
   const downloadImage = () => {
-    const node: HTMLElement | null = document.getElementById(
-      'recommendation-page-container',
-    );
-    if (node) {
-      htmlToImage.toPng(node).then((dataUrl) => {
+    const root = document.getElementById('recommendation-page');
+    if (root) {
+      // Setting background black to not have transprent
+      root.style.background = '#000';
+      htmlToImage.toPng(root).then((dataUrl) => {
         download(dataUrl, 'Concert-Curation.png');
       });
+      // setting background back to null
+      root.style.background = 'null';
       notification.success({
         message: 'File Downloading started',
         description: 'Image will be downloaded withing few minutes.',
@@ -155,8 +157,8 @@ const RecommendationPage = (): JSX.Element => {
   }
 
   return (
-    <Layout className="recommendation-page">
-      <Content className="recommendation-page-header justify-between">
+    <Layout id="recommendation-page" className="recommendation-page">
+      <Content id="recommendation-page-header" className="recommendation-page-header justify-between">
         <Space>
           <Link color="#FFF" to="/">{IconRenderer('back')}</Link>
           <Title level={2}>{concertData.concertName}</Title>
@@ -221,7 +223,7 @@ const RecommendationPage = (): JSX.Element => {
                 }}
               />
               {artistsView.name === 'pie' ? (
-                <div>
+                <div className="pie-container scroll height=100">
                   {artistsData.length > 0 && (
                   <ArtistPieChart
                     data={artistsData}
