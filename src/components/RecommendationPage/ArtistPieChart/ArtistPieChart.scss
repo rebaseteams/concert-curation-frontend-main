@@ -10,8 +10,8 @@ $artist4-bg : #FBB823;
 $artist4-data-bg :   #ffd476;
 
 .container {
-    width: 700px;
-    aspect-ratio: 1;
+    width: 800px;
+    aspect-ratio: 1.2;
     background-color: $container-bg;
     display: flex;
     flex-direction: row;
@@ -42,9 +42,26 @@ $artist4-data-bg :   #ffd476;
 }
 
 .name {
-    text-shadow: 1px 1px 5px #444;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.match {
+    color: #222;
+    font-weight: bolder;
+    font-size: 18px;
+    span {
+        font-size: 24px;
+    }
+}
+
+.locations {
+    h4 {
+        font-size: 18px;
+    }
+
 }
 
 .column {
@@ -59,7 +76,7 @@ $artist4-data-bg :   #ffd476;
 }
 
 .quarter-circle {
-    width: 60%;
+    width: 50%;
     height: 60%;
     overflow: hidden;
     transition: all 0.2s;
@@ -78,6 +95,7 @@ $artist4-data-bg :   #ffd476;
     border-radius: 0 0 100% 0;
     -moz-border-radius: 0 0 100% 0;
     -webkit-border-radius: 0 0 100% 0;
+    text-align: right;
 }
 
 .quarter-circle-top-right{
@@ -160,16 +178,15 @@ $artist4-data-bg :   #ffd476;
     height: 55%;
     width: 55%;
     margin-top: 30%;
-    margin-left: 30%;
+    margin-left: 25%;
     // overflow: hidden;
-    text-align: center;
 }
 
 .matchcontainer-2 {
     height: 55%;
     width: 55%;
     margin-top: 30%;
-    margin-left: 10%;
+    margin-left: 5%;
     // overflow: hidden;
 }
 
@@ -177,7 +194,7 @@ $artist4-data-bg :   #ffd476;
     height: 55%;
     width: 55%;
     margin-top: 10%;
-    margin-left: 10%;
+    margin-left: 5%;
     // overflow: hidden;
 }
 
@@ -185,7 +202,7 @@ $artist4-data-bg :   #ffd476;
     height: 55%;
     width: 55%;
     margin-top: 10%;
-    margin-left: 30%;
+    margin-left: 25%;
     // overflow: hidden;
 }
 
@@ -198,16 +215,18 @@ $artist4-data-bg :   #ffd476;
 }
 
 .circle-img{
-    width: 50%;
-    height: 50%;
+    width: 60%;
+    height: 60%;
     margin-left: 25%;
+    transition: all 0.5s;
+    img {
+        width: 100%;
+        height: 100%;
+        transition: all 0.5s;
+        border-radius: 50%;
+    }
 }
 
-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-}
 
 .h-data-container {
     display: flex;
@@ -215,7 +234,7 @@ img {
 }
 
 .bottom-matching-brands {
-    margin-top: 35%;
+    margin-top: 25%;
 }
 
 .h-data-container-right {
@@ -232,25 +251,50 @@ img {
     align-items: center;
     justify-content: center;
     border-radius: 5%;
-    width: 35%;
+    width: 40%;
     height: fit-content;
 }
 
 .v-data-container-bottom {
     margin: 10px;
-    margin-top: 13%;
+    position: absolute;
+    bottom: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border: white solid 1px;
     border-radius: 5%;
-    width: 35%;
-    height: fit-content;
+    width: 20%;
+    min-height: 15%;
 }
 
-.bottom-location-box {
-    margin-top: 27%;
+.bold-16, .bold-18 {
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+.bold-16 {
+    font-size: 16px;
+}
+
+.bold-18 {
+    font-size: 18px;
+}
+
+.bottom-location-box-1, .bottom-location-box-2 {
+    position: absolute;
+    bottom: 0px;
+    width: min-content;
+    padding: 0 20px;
+}
+
+.bottom-location-box-2 {
+    margin-right: 25%;
+}
+
+.bottom-location-box-1 {
+    margin-left: 25%;
 }
 
 .data-container {
@@ -270,6 +314,10 @@ img {
     &:hover {
         color: #F00;
     }
+}
+
+.bold {
+    font-weight: bold;
 }
 
 // .container-2 {
