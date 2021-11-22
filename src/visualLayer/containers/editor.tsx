@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Button } from 'antd';
+import config from '../../services/config.json';
 
 const EditorComponent = (): JSX.Element => {
   const editorRef = useRef('');
@@ -19,7 +20,7 @@ const EditorComponent = (): JSX.Element => {
       <Editor
         // eslint-disable-next-line no-return-assign
         onInit={(evt, editor) => editorRef.current = editor.getContent()}
-        apiKey="lyilqay38n6k0gmjp8crc6fn9s4qj1t5mv2gloon11lz0n0s"
+        apiKey={config.TINY_API}
         initialValue={initialContent}
         init={{
           height: 500,
