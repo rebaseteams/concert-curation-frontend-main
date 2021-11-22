@@ -10,7 +10,7 @@ $artist4-bg : #FBB823;
 $artist4-data-bg :   #ffd476;
 
 .container {
-    width: 70%;
+    width: 700px;
     aspect-ratio: 1;
     background-color: $container-bg;
     display: flex;
@@ -20,7 +20,8 @@ $artist4-data-bg :   #ffd476;
     border-color: black;
     box-shadow: 1px 1px 12px black;
     text-align: center;
-    margin: auto;
+    margin: 5px auto;
+    transform-origin: top;
 
     *{
         color: black;
