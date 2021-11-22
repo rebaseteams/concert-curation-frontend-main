@@ -5,12 +5,13 @@ import './App.scss';
 import axios, { AxiosRequestConfig } from 'axios';
 import LayoutComponent from './layout';
 import extractUserToken from './services/userToken';
+import config from './config';
 // For GET requests
 axios.interceptors.request.use(
   (req: AxiosRequestConfig) => {
     // Add configurations here
     const whiteListedEndpoints: Array<string> = [
-      // TODO: Add list of endpoits which are public
+      `${config.AUTH_DOMAIN}/dbconnections/signup`,
     ];
     if (req.url && whiteListedEndpoints.includes(req.url)) {
       return req;
