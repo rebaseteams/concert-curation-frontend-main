@@ -20,6 +20,7 @@ import { Content } from 'antd/lib/layout/layout';
 import HeaderComponet from './header';
 import DashboardComponent from '../components/dashboard';
 import RecommendationPage from '../components/RecommendationPage';
+import EditorComponent from '../visualLayer/containers/editor';
 
 const LayoutComponent = ():JSX.Element => (
   <Layout
@@ -41,6 +42,9 @@ const LayoutComponent = ():JSX.Element => (
               {/* emable this for card View */}
               {/* <RecommendationComponent /> */}
               <RecommendationPage />
+            </Route>
+            <Route path="/editor/:id" exact>
+              <EditorComponent />
             </Route>
           </Switch>
         </Router>
