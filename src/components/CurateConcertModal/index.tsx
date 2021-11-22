@@ -4,14 +4,13 @@ import {
   Modal,
 } from 'antd';
 
-import { ConcertsListData } from '../../interfaces/concertForm';
-
 import ConcertForm from '../concert';
+import { ConcertCreationResponse } from '../../model/types/questions';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   displayFormModal: boolean;
-  forms: Array<ConcertsListData>;
+  forms: Array<ConcertCreationResponse> | undefined;
   getConcerts: () => Promise<void>;
 }
 

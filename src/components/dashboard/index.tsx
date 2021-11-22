@@ -13,17 +13,18 @@ import './dashboard.style.scss';
 import CurateConcertModal from '../CurateConcertModal';
 // import { getMyAllConcerts } from '../../services/recommendations';
 import services from '../../visualLayer/services';
+import { ConcertCreationResponse } from '../../model/types/questions';
 
 const { Content } = Layout;
 
 interface Error {
-  status: string | number;
+  status: string | number | undefined;
   message: string | undefined;
 }
 
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
-  const [forms, setForms] = useState([]);
+  const [forms, setForms] = useState<Array<ConcertCreationResponse>>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
