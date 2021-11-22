@@ -14,9 +14,10 @@ import { Link } from 'react-router-dom';
 import getRecommendedArtists from '../../services/getRecommendedArtists';
 import deleteConcertForm from '../../services/deleteConcertForm';
 import { ConcertsListData } from '../../interfaces/concertForm';
+import { ConcertCreationResponse } from '../../model/types/questions';
 
 interface ConcertsTableProp {
-  forms: Array<ConcertsListData> | { message: string};
+  forms: Array<ConcertCreationResponse> | { message: string} | undefined;
   // TODO: find proper datatype for functions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getConcerts: any;

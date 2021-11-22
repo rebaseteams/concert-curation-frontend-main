@@ -15,10 +15,9 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getAllRecommendations = async (): Promise<any> => {
-      const data: ServiceResponse = await this.artistRecommendationRepo.getAllRecommendations();
-      return data;
-    }
+    getAllRecommendations = async (): Promise<ServiceResponse> => new Promise((resolve) => {
+      this.artistRecommendationRepo.getAllRecommendations().then((data) => resolve(data));
+    })
 
     getRecommendation = (recommendationId : string) => {
       this.artistRecommendationRepo.getRecommendation(recommendationId);
