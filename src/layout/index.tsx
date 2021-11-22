@@ -9,8 +9,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link,
 } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, Result } from 'antd';
 
 // Styles
 import './layout.scss';
@@ -49,6 +50,14 @@ const LayoutComponent = ():JSX.Element => (
             </Route>
             <Route path="/editor/:id" exact>
               <EditorComponent />
+            </Route>
+            <Route path="/*" exact>
+              <Result
+                status="404"
+                title="404"
+                subTitle="Sorry, the page you visited does not exist."
+                extra={<Link to="/">Back Home</Link>}
+              />
             </Route>
           </Switch>
         </Router>
