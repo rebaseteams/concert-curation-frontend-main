@@ -2,13 +2,12 @@ import React from 'react';
 
 import { Row, Col } from 'antd';
 
-import { ConcertDataResponse } from '../../../interfaces/concertDataResponse';
-
+import { Questions } from '../../../model/types/questions';
 // styles
 import './concertData.scss';
 
 interface ConcertDataProp {
-  data: ConcertDataResponse;
+  data: Questions;
 }
 
 const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
