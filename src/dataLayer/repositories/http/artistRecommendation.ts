@@ -4,7 +4,7 @@ import ArtistRecommendationInterface from '../../../model/interfaces/artistRecom
 import config from '../../../config';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
-import { ServiceResponse } from '../../../model/types/service-response';
+import { GetRecommendationResponse, ServiceResponse } from '../../../model/types/service-response';
 
 const server = config.PROD_SERVER;
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
@@ -15,21 +15,28 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
 
   getAllRecommendations = async (): Promise<ServiceResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(`${server}/api/artists/recommendationss/`).then((val: any) => {
+    axios.get(`${server}/api/artists/recommendations/`).then((val: any) => {
       if (val.status !== 200) {
         resolve({ error: true, status: val.status, message: val.message });
       }
       resolve({ error: false, data: val.data, message: 'success' });
-    }).catch((err) => {
-      const error: { message: string, status: number } = JSON.parse(JSON.stringify(err));
-      resolve({ error: true, status: error.status, message: error.message });
+    }).catch((err: { message: string, status: number }) => {
+      resolve({ error: true, status: err.status, message: err.message });
     });
   });
 
-  getRecommendation = async (recommendationId : string) => {
-    const resp = await axios.get(`${server}/api/artists/recommendations/${recommendationId}`);
-    console.log('get recommendation : ', resp);
-  };
+  getRecommendation = async (recommendationId : string):
+    Promise<GetRecommendationResponse> => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    axios.get(`${server}/api/artists/recommendations/${recommendationId}`).then((val: any) => {
+      if (val.status !== 200) {
+        resolve({ error: true, status: val.status, message: val.message });
+      }
+      resolve({ error: false, data: val.data.data, message: 'success' });
+    }).catch((err: { message: string, status: number }) => {
+      resolve({ error: true, status: err.status, message: err.message });
+    });
+  })
 
   discardArtist = async (data : PatchRequest) => {
     const resp = await axios.patch(`${server}/api/artists/recommendations`, data);

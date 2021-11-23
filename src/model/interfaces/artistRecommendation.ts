@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable semi */
 /* eslint-disable @typescript-eslint/no-extra-semi */
 import { PatchRequest } from '../types/patch-request';
 import { QuestionsUI } from '../types/questions';
-import { ServiceResponse } from '../types/service-response';
+import { GetRecommendationResponse, ServiceResponse } from '../types/service-response';
 
 export default interface ArtistRecommendationInterface {
   addNewRecommendation(concertData : QuestionsUI): void;
   getAllRecommendations(): Promise<ServiceResponse>;
-  getRecommendation(recommendationId : string): void;
+  getRecommendation(recommendationId : string): Promise<GetRecommendationResponse>;
   discardArtist(data : PatchRequest): void;
   deleteRecommendation(recommendationId : string): void;
 };

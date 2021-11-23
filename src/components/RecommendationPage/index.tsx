@@ -21,11 +21,11 @@ import download from 'downloadjs';
 import * as _ from 'lodash';
 
 // Importing Services and utils
-import { ConcertDataResponse } from '../../interfaces/concertDataResponse';
-import getRecommendedArtists from '../../services/getRecommendedArtists';
 import ConcertData from './concertData';
 import patchRecommendationArtist from '../../services/patchRecommendationArtist';
 import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
+import services from '../../visualLayer/services';
+import { Questions } from '../../model/types/questions';
 
 // Importing Components and Pages
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
@@ -58,7 +58,7 @@ const renderSummary = (artistsData: Array<ArtistsDataInterface>, view: string) =
 
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
-  const [concertData, setConcertData] = useState<ConcertDataResponse>();
+  const [concertData, setConcertData] = useState<Questions>();
   const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>(
     [],
   );
@@ -81,12 +81,18 @@ const RecommendationPage = (): JSX.Element => {
   };
 
   const getConcertData = async () => {
-    const data = await getRecommendedArtists(id);
-    if (!data.success) {
-      setError({ status: '404', message: data.data.error });
-    } else {
-      setConcertData(data.data.concertData);
-      setArtistsData(data.data.artists);
+    const response = await services.ArtistRecommendation.getRecommendation(id);
+    if (!response) {
+      setError({ status: '404', message: 'Internal Error' });
+      return;
+    }
+    if (response.error) {
+      setError({ status: String(response.status), message: response.message });
+      return;
+    }
+    if (response.data) {
+      setConcertData(response.data.concertData);
+      setArtistsData(response.data.artists);
     }
   };
 

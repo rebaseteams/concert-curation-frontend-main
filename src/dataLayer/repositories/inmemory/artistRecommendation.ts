@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
-import { ServiceResponse } from '../../../model/types/service-response';
-import allConcertMockData from './allConcertMockData';
+import { GetRecommendationResponse, ServiceResponse } from '../../../model/types/service-response';
+import allConcertMockData, { getRecommendationMockData } from './allConcertMockData';
 
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
   addNewRecommendation = () => {
@@ -15,8 +15,11 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     });
   };
 
-  getRecommendation = (recommendationId : string) => {
+  getRecommendation = (recommendationId : string): Promise<GetRecommendationResponse> => {
     console.log('get recommendation : ', recommendationId);
+    return new Promise((resolve) => {
+      resolve(getRecommendationMockData);
+    });
   };
 
   discardArtist = () => {
