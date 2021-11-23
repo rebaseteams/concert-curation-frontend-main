@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
-import { GetRecommendationResponse, ServiceResponse } from '../../../model/types/service-response';
+import { DeleteRecommendationResponse, GetRecommendationResponse, ServiceResponse } from '../../../model/types/service-response';
 import allConcertMockData, { getRecommendationMockData } from './allConcertMockData';
 
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
@@ -26,7 +26,18 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     console.log('discard artist');
   };
 
-  deleteRecommendation = () => {
+  deleteRecommendation = (recommendationId : string): Promise<DeleteRecommendationResponse> => {
     console.log('delete recommendation');
+    return new Promise((resolve) => {
+      resolve({
+        error: false,
+        data: {
+          formId: recommendationId,
+          success: true,
+        },
+        status: 404,
+        message: 'ok',
+      });
+    });
   };
 }

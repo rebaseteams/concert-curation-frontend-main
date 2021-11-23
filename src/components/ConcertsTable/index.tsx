@@ -6,15 +6,16 @@ import {
   Tag,
   Button,
   Modal,
+  message,
 } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Importing Services and utils
 import getRecommendedArtists from '../../services/getRecommendedArtists';
-import deleteConcertForm from '../../services/deleteConcertForm';
 import { ConcertsListData } from '../../interfaces/concertForm';
 import { ConcertCreationResponse } from '../../model/types/questions';
+import services from '../../visualLayer/services';
 
 interface ConcertsTableProp {
   forms: Array<ConcertCreationResponse> | { message: string} | undefined;
@@ -37,7 +38,16 @@ const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element =
   };
 
   const deleteNow = async (id: string) => {
-    await deleteConcertForm(id);
+    const response = await services.ArtistRecommendation.deleteRecommendation(id);
+    if (response && response.error) {
+      message.error('Deletion Failed');
+      return;
+    }
+    if (response.data && !response.data.success) {
+      message.error('Concert not available');
+      return;
+    }
+    message.success('Deleted Successfully');
     getConcerts();
   };
 
