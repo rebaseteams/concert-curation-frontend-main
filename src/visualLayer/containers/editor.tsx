@@ -3,11 +3,17 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Button } from 'antd';
 import config from '../../services/config.json';
 
+const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey ${name},</span></h2>
+<h3>We <span style="color: #2dc26b;">liked</span> your profile on <span style="color: #f1c40f;">Cuttime.</span></h3>
+<p>We are planning to have a Concert at <strong><span style="color: #3598db;">London, Imperial Collge,</span></strong></p>
+<p>and what you to collaborate with us.</p>
+<p><strong>Regards Imperial College.</strong></p>`;
+
 const EditorComponent = (): JSX.Element => {
   const editorRef = useRef('');
-  const name = 'Elon';
+  const name = 'Nick';
 
-  const initialContent = `<h3>Hello.. ${name}</h3>`;
+  const initialContent = getStaticHtml(name);
   const log = () => {
     if (editorRef.current) {
       // For Testing purpose
@@ -22,6 +28,8 @@ const EditorComponent = (): JSX.Element => {
         onInit={(evt, editor) => editorRef.current = editor.getContent()}
         apiKey={config.TINY_API}
         initialValue={initialContent}
+        // eslint-disable-next-line no-return-assign
+        onChange={(evt, editor) => editorRef.current = editor.getContent()}
         init={{
           height: 500,
           menubar: false,
