@@ -13,14 +13,16 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     console.log('add new recommendation : ', resp);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getAllRecommendations = async (): Promise<ServiceResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(`${server}/api/artists/recommendations/`).then((val: any) => {
+    axios.get(`${server}/api/artists/recommendationss/`).then((val: any) => {
       if (val.status !== 200) {
-        resolve({ error: true, status: val.status, message: 'unknown error' });
+        resolve({ error: true, status: val.status, message: val.message });
       }
       resolve({ error: false, data: val.data, message: 'success' });
+    }).catch((err) => {
+      const error: { message: string, status: number } = JSON.parse(JSON.stringify(err));
+      resolve({ error: true, status: error.status, message: error.message });
     });
   });
 
