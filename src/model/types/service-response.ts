@@ -15,3 +15,17 @@ export type GetRecommendationResponse = {
   data?: ArtistRecommendation,
   status?: number | string;
 }
+
+export type AfterDeleteRecommendation = {
+  formId: string,
+  success: boolean,
+}
+
+export type DeleteRecommendationResponse = {
+  error: boolean,
+  message: string,
+  data?: AfterDeleteRecommendation,
+  status?: number | string;
+}
+
+export type CatchError = { message: string, status: number }

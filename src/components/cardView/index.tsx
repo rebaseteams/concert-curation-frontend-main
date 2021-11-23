@@ -123,9 +123,9 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
             <div className="field">
               <h5>
                 Genre
-                { artist.matchAttributes.genre.length > 0
-                && displayGenre(artist.matchAttributes.genre) }
               </h5>
+              { artist.matchAttributes.genre.length > 0
+                && displayGenre(artist.matchAttributes.genre) }
             </div>
           </div>
 
