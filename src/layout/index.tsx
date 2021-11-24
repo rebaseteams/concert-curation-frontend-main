@@ -10,6 +10,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
 } from 'react-router-dom';
 import { Layout, Result } from 'antd';
 
@@ -25,12 +26,11 @@ import EditorComponent from '../visualLayer/containers/editor';
 import Signup from '../visualLayer/containers/signup/signup';
 import ArtistPage from '../visualLayer/containers/artists/artist';
 
-const LayoutComponent = ():JSX.Element => (
+const LayoutComponent = ({ auth } : { auth : boolean }):JSX.Element => (
   <Layout
     style={{ background: 'none' }}
     className="layout-container"
   >
-
     <Layout>
       <Content
         className="layout-body"
@@ -38,8 +38,12 @@ const LayoutComponent = ():JSX.Element => (
         <Router>
           <Switch>
             <Route path="/" exact>
-              <HeaderComponet />
-              <DashboardComponent />
+              {auth ? (
+                <div>
+                  <HeaderComponet />
+                  <DashboardComponent />
+                </div>
+              ) : <Redirect push to="signup" />}
             </Route>
             <Route path="/signup" exact>
               <Signup />

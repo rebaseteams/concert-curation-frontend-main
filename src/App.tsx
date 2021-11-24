@@ -1,37 +1,55 @@
+/* eslint-disable no-console */
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import axios, { AxiosRequestConfig } from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import LayoutComponent from './layout';
-import extractUserToken from './services/userToken';
 import config from './config';
-// For GET requests
-axios.interceptors.request.use(
-  (req: AxiosRequestConfig) => {
-    // Add configurations here
-    const whiteListedEndpoints: Array<string> = [
-      `${config.AUTH_DOMAIN}/dbconnections/signup`,
-    ];
-    if (req.url && whiteListedEndpoints.includes(req.url)) {
-      return req;
-    }
-    if (req) {
-      if (!req.headers) {
-        req.headers = {};
-      }
-      // Extract the userid from the token
-      req.headers.userId = extractUserToken();
-    }
-    return req;
-  },
-  (err) => Promise.reject(err),
-);
 
 function App():JSX.Element {
+  const [loaded, setLoaded] = useState(false);
+  const [auth, setAuth] = useState(false);
+  const { getAccessTokenSilently } = useAuth0();
+  // const goToSignup = () => history.push('signup');
+  getAccessTokenSilently().then((token) => {
+    localStorage.setItem('token', `Bearer ${token}`);
+    setLoaded(true);
+    setAuth(true);
+  }).catch(() => {
+    setLoaded(false);
+    setAuth(true);
+  });
+
+  // For GET requests
+  axios.interceptors.request.use(
+    (req: AxiosRequestConfig) => {
+    // Add configurations here
+      const whiteListedEndpoints: Array<string> = [
+        `${config.AUTH_DOMAIN}/dbconnections/signup`,
+      ];
+      if (req.url && whiteListedEndpoints.includes(req.url)) {
+        return req;
+      }
+      if (req) {
+      // Extract the userid from the token
+        if (!req.headers) {
+          req.headers = {};
+        }
+        const userId = localStorage.getItem('userid');
+        if (userId) req.headers.userId = userId;
+        const token = localStorage.getItem('token');
+        if (token) req.headers.authorization = token;
+      }
+      return req;
+    },
+    (err) => Promise.reject(err),
+  );
+
   return (
     <div className="app-container">
-      <LayoutComponent />
+      {auth ? <LayoutComponent auth={loaded} /> : <div>Loading...</div>}
     </div>
   );
 }
