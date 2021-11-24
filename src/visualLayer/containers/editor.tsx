@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { Button } from 'antd';
+import { PageHeader } from 'antd';
+import { useLocation, useHistory } from 'react-router-dom';
 import config from '../../services/config.json';
 
 const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey ${name},</span></h2>
@@ -10,28 +11,38 @@ const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey $
 <p><strong>Regards Imperial College.</strong></p>`;
 
 const EditorComponent = (): JSX.Element => {
-  const editorRef = useRef('');
-  const name = 'Nick';
+  const history = useHistory();
+  const editorRef = useRef<string>('');
+  const data: { state: { prams: string } } = useLocation();
 
-  const initialContent = getStaticHtml(name);
-  const log = () => {
-    if (editorRef.current) {
-      // For Testing purpose
-      // eslint-disable-next-line no-console
-      console.log(editorRef.current);
-    }
+  if (data && data.state && data.state.prams) {
+    editorRef.current = data.state.prams;
+  } else {
+    const name = 'Nick';
+    editorRef.current = getStaticHtml(name);
+  }
+
+  const redirectBack = () => {
+    history.goBack();
   };
+
   return (
     <div>
+      <PageHeader
+        className="site-page-header"
+        onBack={() => redirectBack()}
+        title="Form preview"
+        subTitle="edit your form"
+      />
       <Editor
         // eslint-disable-next-line no-return-assign
         onInit={(evt, editor) => editorRef.current = editor.getContent()}
         apiKey={config.TINY_API}
-        initialValue={initialContent}
+        initialValue={editorRef.current}
         // eslint-disable-next-line no-return-assign
         onChange={(evt, editor) => editorRef.current = editor.getContent()}
         init={{
-          height: 500,
+          height: 550,
           menubar: false,
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
@@ -47,7 +58,6 @@ const EditorComponent = (): JSX.Element => {
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         }}
       />
-      <Button type="primary" onClick={log}>Log editor content</Button>
     </div>
   );
 };

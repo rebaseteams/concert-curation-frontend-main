@@ -2,26 +2,35 @@ import React, { useState } from 'react';
 import {
   PageHeader, Image, Button, Modal,
 } from 'antd';
+import { useHistory } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 import CollaborationForm from '../../components/collaborationForm';
 
 const ArtistPage = (): JSX.Element => {
   // const { id }: {id: string} = useParams();
+  const history = useHistory();
   const [collaborationModal, setCollaborationModal] = useState(false);
+
+  const redirectBack = () => {
+    history.goBack();
+  };
   return (
     <div>
       <PageHeader
         className="site-page-header"
-        onBack={() => null}
+        onBack={() => redirectBack()}
         title="Nick"
-        subTitle="Hip pop singer"
+        subTitle="Hip hop singer"
+        extra={[
+          <Button type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>,
+        ]}
       />
       <Image
-        width={200}
-        src="https://randomuser.me/api/portraits/men/99.jpg"
+        width={300}
+        src="https://randomuser.me/api/portraits/men/15.jpg"
       />
       <Modal
-        title="Collaboration"
+        title="Enter the details"
         centered
         visible={collaborationModal}
         onCancel={() => setCollaborationModal(false)}
@@ -30,7 +39,6 @@ const ArtistPage = (): JSX.Element => {
       >
         <CollaborationForm />
       </Modal>
-      <Button type="default" onClick={() => setCollaborationModal(true)}>collaborate</Button>
     </div>
   );
 };
