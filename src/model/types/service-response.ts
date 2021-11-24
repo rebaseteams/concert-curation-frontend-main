@@ -1,4 +1,5 @@
 import { ArtistRecommendation } from './artist-recommendation';
+import { CollaborationFormValues } from './collaborationForm';
 import { ConcertCreationResponse } from './questions';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -25,6 +26,13 @@ export type DeleteRecommendationResponse = {
   error: boolean,
   message: string,
   data?: AfterDeleteRecommendation,
+  status?: number | string;
+}
+
+export type CollaborationFormResponse = {
+  error: boolean,
+  message: string,
+  data?: CollaborationFormValues,
   status?: number | string;
 }
 

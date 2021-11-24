@@ -7,6 +7,7 @@
 import React from 'react';
 import { Col, Modal } from 'antd';
 import './card-scopped.scss';
+import { Link } from 'react-router-dom';
 
 interface CardViewProps {
     data: Array<any>
@@ -74,7 +75,11 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
         <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
         <div className="card-body">
           <div className="card-heading">
-            <h3>{artist.artistName}</h3>
+            <Link to={`/artist/${artist.artistId}`}>
+              <h3>
+                {artist.artistName}
+              </h3>
+            </Link>
             <p>
               {String(artist.matchPercentage)}
               %
