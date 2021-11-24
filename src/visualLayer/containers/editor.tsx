@@ -26,6 +26,11 @@ const EditorComponent = (): JSX.Element => {
     history.goBack();
   };
 
+  const log = () => {
+    // eslint-disable-next-line no-console
+    console.log(editorRef.current);
+  };
+
   return (
     <div>
       <PageHeader
@@ -34,30 +39,38 @@ const EditorComponent = (): JSX.Element => {
         title="Form preview"
         subTitle="edit your form"
       />
-      <Editor
+      <div
+        style={{
+          maxWidth: '850px',
+          margin: 'auto',
+        }}
+      >
+        <Editor
         // eslint-disable-next-line no-return-assign
-        onInit={(evt, editor) => editorRef.current = editor.getContent()}
-        apiKey={config.TINY_API}
-        initialValue={editorRef.current}
+          onInit={(evt, editor) => editorRef.current = editor.getContent()}
+          apiKey={config.TINY_API}
+          initialValue={editorRef.current}
         // eslint-disable-next-line no-return-assign
-        onChange={(evt, editor) => editorRef.current = editor.getContent()}
-        init={{
-          height: 550,
-          menubar: false,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount',
-          ],
-          toolbar: 'undo redo | formatselect | '
+          onChange={(evt, editor) => editorRef.current = editor.getContent()}
+          init={{
+            height: 850,
+            menubar: false,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount',
+            ],
+            toolbar: 'undo redo | formatselect | '
            + 'bold italic backcolor forecolor | alignleft aligncenter '
            + 'alignright alignjustify | bullist numlist outdent indent | '
            + 'removeformat | help',
-          skin: 'oxide-dark',
-          content_css: 'dark',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-        }}
-      />
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          }}
+        />
+      </div>
+      <button type="button" onClick={log}>Print html</button>
     </div>
   );
 };
