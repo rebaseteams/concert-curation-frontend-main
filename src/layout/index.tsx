@@ -23,6 +23,7 @@ import DashboardComponent from '../components/dashboard';
 import RecommendationPage from '../components/RecommendationPage';
 import EditorComponent from '../visualLayer/containers/editor';
 import Signup from '../visualLayer/containers/signup/signup';
+import ArtistPage from '../visualLayer/containers/artists/artist';
 
 const LayoutComponent = ():JSX.Element => (
   <Layout
@@ -47,6 +48,9 @@ const LayoutComponent = ():JSX.Element => (
               {/* emable this for card View */}
               {/* <RecommendationComponent /> */}
               <RecommendationPage />
+            </Route>
+            <Route path="/artist/:id">
+              <ArtistPage />
             </Route>
             <Route path="/editor/:id" exact>
               <EditorComponent />
