@@ -5,17 +5,18 @@ import {
   Input,
   message,
 } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { CollaborationFormValues } from '../../model/types/collaborationForm';
 import services from '../services';
 
 const CollaborationForm = (): JSX.Element => {
+  const history = useHistory();
   const submitForm = async (value: CollaborationFormValues) => {
     const data = await services.Documents.getHtmlTemplate(value);
     if (data.error) {
       message.error('Somthing went wrong');
     } else {
-      // eslint-disable-next-line no-console
-      console.log(data.data);
+      history.push('/editor/7676', { prams: data.data });
     }
   };
   return (
@@ -44,7 +45,7 @@ const CollaborationForm = (): JSX.Element => {
         </Form.Item>
 
         <Form.Item label="">
-          <Button type="primary" htmlType="submit">Button</Button>
+          <Button type="primary" htmlType="submit">Preview</Button>
         </Form.Item>
       </Form>
     </>
