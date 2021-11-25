@@ -1,4 +1,11 @@
+import { AssociatedBrands } from './associatedBrands';
 import { Questions } from './questions';
+import { Venue } from './venue';
+
+export type GenreRes = {
+  genreName: string,
+  matchPercentage: number,
+};
 
 export type ARec = {
     artistName: string,
@@ -6,22 +13,7 @@ export type ARec = {
     artistImage: string,
     matchPercentage: number,
     matchAttributes: {
-      venues: Array<
-        {
-          id: string,
-          name: string,
-          address: {
-            pincode: number,
-            country: string,
-            city: string,
-            geoLocation: {
-              lat: number,
-              long: number,
-            },
-          },
-          venueCapacity: number,
-          matchPercentage: number,
-        }>;
+      venues: Array<Venue>;
       age: {
         ageGroup: string,
         matchPercentage: number,
@@ -30,20 +22,8 @@ export type ARec = {
         male: number,
         female: number,
       },
-      genre: [
-        {
-          genreName: string,
-          matchPercentage: number,
-        },
-      ],
-      associatedBrands: Array<
-        {
-          id: string,
-          name: string,
-          contact: string,
-          website: string,
-          logoUrl: string,
-        }>;
+      genre: Array<GenreRes>,
+      associatedBrands: Array<AssociatedBrands>;
     };
     summary: string,
 };

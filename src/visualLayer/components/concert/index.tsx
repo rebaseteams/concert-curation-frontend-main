@@ -14,9 +14,9 @@ import {
 import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
-import createConcertFormData from '../../services/createConcertFormData';
-import { onSubmitFormDataType, QuestionsFormDataInterface } from '../../interfaces/concertForm';
-import { submitQuestionsForm } from '../../services/recommendations';
+import createConcertFormData from '../../../services/createConcertFormData';
+import { onSubmitFormDataType, QuestionsFormDataInterface } from '../../../interfaces/concertForm';
+import { submitQuestionsForm } from '../../../services/recommendations';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {

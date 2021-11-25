@@ -6,8 +6,8 @@ import {
   message,
 } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { CollaborationFormValues } from '../../model/types/collaborationForm';
-import services from '../services';
+import { CollaborationFormValues } from '../../../model/types/collaborationForm';
+import services from '../../services';
 
 const CollaborationForm = (): JSX.Element => {
   const history = useHistory();

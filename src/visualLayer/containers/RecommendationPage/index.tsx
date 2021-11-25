@@ -1,19 +1,9 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-  Row,
-  Col,
-  notification,
-  Switch,
-  Layout,
-  Space,
-  Tag,
-  Typography,
-  Tooltip,
-  Empty,
-  Result,
+  Row, Col, notification, Switch,
+  Layout, Space, Tag, Typography,
+  Tooltip, Empty, Result,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -21,28 +11,28 @@ import download from 'downloadjs';
 import * as _ from 'lodash';
 
 // Importing Services and utils
-import ConcertData from './concertData';
-import patchRecommendationArtist from '../../services/patchRecommendationArtist';
-import { ArtistsDataInterface } from '../RecomendationComponent/recomendedDataInterface';
-import services from '../../visualLayer/services';
-import { Questions } from '../../model/types/questions';
+import patchRecommendationArtist from '../../../services/patchRecommendationArtist';
+import services from '../../services';
+import { Questions } from '../../../model/types/questions';
 
 // Importing Components and Pages
+import ConcertData from './concertData';
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
-import ArtistsSummary from './ArtistsSummary';
-import DownloadAsImageButton from '../Buttons/downloadAsImageButton';
-import DownloadAsPdfButton from '../Buttons/pdfCreateButton';
+import ArtistsSummary from '../../components/ArtistsSummary';
+import IconRenderer from '../../components/IconRenderer';
+import DownloadAsImageButton from '../../components/Buttons/downloadAsImageButton';
+import DownloadAsPdfButton from '../../components/Buttons/pdfCreateButton';
+import CardView from './cardView';
+import { ARec } from '../../../model/types/artist-recommendation';
 
 // Importing styles
 import './recommendationPage.scss';
-import CardView from '../cardView';
-import IconRenderer from '../IconRenderer';
 
 const { Content } = Layout;
 
 const { Title } = Typography;
 
-const renderSummary = (artistsData: Array<ArtistsDataInterface>, view: string) => {
+const renderSummary = (artistsData: Array<ARec>, view: string) => {
   let count = 4;
   if (view === 'card') {
     count = 3;
@@ -59,7 +49,7 @@ const renderSummary = (artistsData: Array<ArtistsDataInterface>, view: string) =
 const RecommendationPage = (): JSX.Element => {
   const { id }: { id: string } = useParams();
   const [concertData, setConcertData] = useState<Questions>();
-  const [artistsData, setArtistsData] = useState<Array<ArtistsDataInterface>>(
+  const [artistsData, setArtistsData] = useState<Array<ARec>>(
     [],
   );
   const [artistsView, setArtistsView] = useState<{
@@ -233,6 +223,7 @@ const RecommendationPage = (): JSX.Element => {
                   {artistsData.length > 0 && (
                   <ArtistPieChart
                     data={artistsData}
+                    // eslint-disable-next-line react/jsx-no-bind
                     patchConcertData={patchConcertData}
                   />
                   )}

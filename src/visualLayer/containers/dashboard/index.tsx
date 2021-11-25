@@ -6,14 +6,14 @@ import {
   Layout, Button, Spin, Result,
 } from 'antd';
 
-import ConcertsTable from '../ConcertsTable';
+import ConcertsTable from '../../components/ConcertsTable';
 
 // styles
 import './dashboard.style.scss';
-import CurateConcertModal from '../CurateConcertModal';
+import CurateConcertModal from '../../components/CurateConcertModal';
 // import { getMyAllConcerts } from '../../services/recommendations';
-import services from '../../visualLayer/services';
-import { ConcertCreationResponse } from '../../model/types/questions';
+import services from '../../services';
+import { ConcertCreationResponse } from '../../../model/types/questions';
 
 const { Content } = Layout;
 

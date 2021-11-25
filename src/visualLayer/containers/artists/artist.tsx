@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import { useHistory } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
-import CollaborationForm from '../../components/collaborationForm';
+import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 
 const ArtistPage = (): JSX.Element => {
   // const { id }: {id: string} = useParams();

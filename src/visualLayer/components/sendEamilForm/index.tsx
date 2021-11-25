@@ -3,8 +3,7 @@ import React from 'react';
 import { Form, Button, Input } from 'antd';
 
 import createSendEmailData from './utils';
-
-import sendNotification from '../../services/notification';
+import sendNotification from '../../../services/notification';
 
 interface SendEmailFormProp {
   setSendEmailModal: React.Dispatch<React.SetStateAction<boolean>>;

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { PageHeader } from 'antd';
 import { useLocation, useHistory } from 'react-router-dom';
-import config from '../../services/config.json';
+import config from '../../../services/config.json';
 
 const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey ${name},</span></h2>
 <h3>We <span style="color: #2dc26b;">liked</span> your profile on <span style="color: #f1c40f;">Cuttime.</span></h3>
