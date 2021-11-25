@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { QuestionsFormDataInterface } from '../interfaces/concertForm';
+import { QuestionsUI } from '../model/types/questions';
 
 import config from './config.json';
 
@@ -29,7 +29,7 @@ export const getRecommendedArtists = async (formId: string): Promise<any> => {
   }
 };
 
-export const submitQuestionsForm = async (data: QuestionsFormDataInterface | any): Promise<any> => {
+export const submitQuestionsForm = async (data: QuestionsUI): Promise<any> => {
   try {
     const response = await axios.post(`${baseURL}/artists/recommendations`, data);
     if (response.status === 200) {

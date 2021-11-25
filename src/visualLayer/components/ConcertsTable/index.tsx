@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 // Importing Services and utils
 import services from '../../services';
 import { ConcertCreationResponse } from '../../../model/types/questions';
-import { ConcertsListData } from '../../../interfaces/concertForm';
 import { getRecommendedArtists } from '../../../services/recommendations';
 
 interface ConcertsTableProp {
@@ -25,7 +24,7 @@ interface ConcertsTableProp {
 }
 
 const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element => {
-  const data: Array<ConcertsListData> = _.map(forms, (form: ConcertsListData) => ({
+  const data: Array<ConcertCreationResponse> = _.map(forms, (form: ConcertCreationResponse) => ({
     ...form,
     key: form.id,
     dateCreated: form.dateCreated.slice(0, 25),
