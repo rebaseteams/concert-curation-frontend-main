@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
+import { AssociatedBrands } from '../../../../model/types/associatedBrands';
+import { Venue } from '../../../../model/types/venue';
 
-import { AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
+// import { AssociatedBrands, Venue } from '../../RecomendationComponent/recomendedDataInterface';
 
 export const formatName = (name: string): string => (_.upperFirst(name.replace(/_/g, ' '))).split(' ').slice(0, 2).join(' ');
 
@@ -32,4 +34,4 @@ export const getGender = (
   };
 };
 
-export const getLocations = (locations : Venue[]) : string => locations.map((val : {name : string}) => val.name).join(', ');
+export const getLocations = (locations : Venue[]) : string => locations.map((val : Venue) => val.name).join(', ');

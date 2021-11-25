@@ -12,10 +12,10 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Importing Services and utils
-import getRecommendedArtists from '../../services/getRecommendedArtists';
-import { ConcertsListData } from '../../interfaces/concertForm';
-import { ConcertCreationResponse } from '../../model/types/questions';
-import services from '../../visualLayer/services';
+import services from '../../services';
+import { ConcertCreationResponse } from '../../../model/types/questions';
+import { ConcertsListData } from '../../../interfaces/concertForm';
+import { getRecommendedArtists } from '../../../services/recommendations';
 
 interface ConcertsTableProp {
   forms: Array<ConcertCreationResponse> | { message: string} | undefined;

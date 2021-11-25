@@ -1,16 +1,16 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Col, Modal } from 'antd';
 import './card-scopped.scss';
 import { Link } from 'react-router-dom';
+import { ARec, GenreRes } from '../../../../model/types/artist-recommendation';
+import { AssociatedBrands } from '../../../../model/types/associatedBrands';
+import { Venue } from '../../../../model/types/venue';
 
 interface CardViewProps {
-    data: Array<any>
+    data: Array<ARec>
 }
 
 const colorsPallate = ['#4FFFC2', '#fff41d', '#FBB823'];
@@ -22,7 +22,7 @@ const CardView = ({ data }: CardViewProps): JSX.Element => {
     <>
       {
         // eslint-disable-next-line arrow-body-style
-        data.map((artist: any, artistIndex: any) => {
+        data.map((artist: ARec, artistIndex: number) => {
           return renderCards(artist, artistIndex, span);
         })
       }
@@ -32,7 +32,7 @@ const CardView = ({ data }: CardViewProps): JSX.Element => {
 
 export default CardView;
 
-function renderCards(artist: any, artistIndex:any, span:any): any {
+const renderCards = (artist: ARec, artistIndex: number, span: number): JSX.Element => {
   let order;
   switch (artistIndex) {
     case 0:
@@ -46,7 +46,7 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
   }
 
   // eslint-disable-next-line max-len
-  let gender;
+  let gender: 'male' | 'female';
   if (artist.matchAttributes.gender.male > artist.matchAttributes.gender.female) {
     gender = 'male';
   } else {
@@ -95,7 +95,7 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
               </span>
             </div>
             <ul>
-              {artist.matchAttributes.venues.map((vanue: any, index:any) => (
+              {artist.matchAttributes.venues.map((vanue: Venue, index:number) => (
                 <li key={index}>
                   {vanue.name}
                 </li>
@@ -145,25 +145,25 @@ function renderCards(artist: any, artistIndex:any, span:any): any {
       </div>
     </Col>
   );
-}
+};
 
-function displayGenre(genre: any) {
-  return genre.map((genre_item: any, index: any) => (
-    <h4 key={genre_item.genreName + index}>
-      {genre_item.genreName}
+function displayGenre(genre: Array<GenreRes>) {
+  return genre.map((genreItem: GenreRes, index: number) => (
+    <h4 key={genreItem.genreName + index}>
+      {genreItem.genreName}
     </h4>
   ));
 }
 
-function displayBrands(brand: any) {
-  return brand.map((brand_item: any, index: any) => (
+function displayBrands(brand: Array<AssociatedBrands>) {
+  return brand.map((brandItem: AssociatedBrands, index: number) => (
     <div key={index}>
-      <a href={brand_item.website}><img className="brand_logo" src={brand_item.logoUrl} alt={brand_item.name} /></a>
+      <a href={brandItem.website}><img className="brand_logo" src={brandItem.logoUrl} alt={brandItem.name} /></a>
     </div>
   ));
 }
 
-function cancelButton(artistName: any) {
+function cancelButton(artistName: string) {
   Modal.confirm({
     title: 'Confirm',
     content: `Are you sure you want to remove ${artistName}`,

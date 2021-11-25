@@ -5,7 +5,7 @@ import {
 } from 'antd';
 
 import ConcertForm from '../concert';
-import { ConcertCreationResponse } from '../../model/types/questions';
+import { ConcertCreationResponse } from '../../../model/types/questions';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;

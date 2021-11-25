@@ -4,17 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import * as _ from 'lodash';
 import './ArtistPieChart.scss';
-import { ArtistsDataInterface } from '../../RecomendationComponent/recomendedDataInterface';
 import {
   getAge,
   getBrands,
   getGender,
   getLocations,
 } from './utils';
-import IconRenderer from '../../IconRenderer';
+import { ARec } from '../../../../model/types/artist-recommendation';
+import IconRenderer from '../../../components/IconRenderer';
+// import IconRenderer from '../../IconRenderer';
 
 interface ArtistsPieChartProp {
-  data: Array<ArtistsDataInterface>;
+  data: Array<ARec>;
   patchConcertData: (discardedArtistId: string) => void
 }
 

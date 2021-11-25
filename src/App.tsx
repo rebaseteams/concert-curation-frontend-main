@@ -1,11 +1,34 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import './App.scss';
+
 import axios, { AxiosRequestConfig } from 'axios';
-import LayoutComponent from './layout';
+
+import {
+  BrowserRouter, Link, Route, Switch,
+} from 'react-router-dom';
+
+import { Layout, Result } from 'antd';
+
+// importing services
 import extractUserToken from './services/userToken';
+
 import config from './config';
+
+// importing components
+import HeaderComponet from './visualLayer/containers/header';
+
+import DashboardComponent from './visualLayer/containers/dashboard';
+
+import Signup from './visualLayer/containers/signup/signup';
+
+import RecommendationPage from './visualLayer/containers/RecommendationPage';
+
+import ArtistPage from './visualLayer/containers/artists/artist';
+
+import EditorComponent from './visualLayer/containers/editor/editor';
+
+// styles
+import './App.scss';
+
 // For GET requests
 axios.interceptors.request.use(
   (req: AxiosRequestConfig) => {
@@ -28,10 +51,50 @@ axios.interceptors.request.use(
   (err) => Promise.reject(err),
 );
 
+const { Content } = Layout;
+
 function App():JSX.Element {
   return (
     <div className="app-container">
-      <LayoutComponent />
+      <Layout
+        style={{ background: 'none' }}
+        className="layout-container"
+      >
+        <Layout>
+          <Content className="layout-body">
+            <BrowserRouter>
+              <Switch>
+                <Route path="/" exact>
+                  <HeaderComponet />
+                  <DashboardComponent />
+                </Route>
+                <Route path="/signup" exact>
+                  <Signup />
+                </Route>
+                <Route path="/recommendations/:id" exact>
+                  {/* emable this for card View */}
+                  {/* <RecommendationComponent /> */}
+                  <RecommendationPage />
+                </Route>
+                <Route path="/artist/:id" exact>
+                  <ArtistPage />
+                </Route>
+                <Route path="/editor/:id" exact>
+                  <EditorComponent />
+                </Route>
+                <Route path="/*" exact>
+                  <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Link to="/">Back Home</Link>}
+                  />
+                </Route>
+              </Switch>
+            </BrowserRouter>
+          </Content>
+        </Layout>
+      </Layout>
     </div>
   );
 }

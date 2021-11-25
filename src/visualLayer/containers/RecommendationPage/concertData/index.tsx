@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Row, Col } from 'antd';
 
-import { Questions } from '../../../model/types/questions';
+import { Questions } from '../../../../model/types/questions';
 // styles
 import './concertData.scss';
 
