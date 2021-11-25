@@ -2,10 +2,10 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ConcertsTable from '.';
-import { ConcertsListData } from '../../interfaces/concertForm';
+import { ConcertCreationResponse } from '../../../model/types/questions';
 
 describe('Concert Table', () => {
-  const forms: Array<ConcertsListData> = [
+  const forms: Array<ConcertCreationResponse> = [
     {
       id: '97833-90',
       concertName: 'Facebook',

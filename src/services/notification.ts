@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SendGridEmailData } from '../../dummy/components/sendEamilForm/utils';
+import { SendGridEmailData } from '../visualLayer/components/sendEamilForm/utils';
 
 import config from './config.json';
 
