@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { onSubmitFormDataType, QuestionsFormDataInterface } from '../interfaces/concertForm';
+import { onSubmitFormDataType } from '../model/types/concertForm';
+import { QuestionsUI } from '../model/types/questions';
 
 const createConcertFormData = (
   values: onSubmitFormDataType, budget: { min: number, max: number },
-): QuestionsFormDataInterface => ({
+): QuestionsUI => ({
   ...values,
   userId: 'Mical001', // TODO: send proper user info through bearer tocken
   artistBudget: budget,

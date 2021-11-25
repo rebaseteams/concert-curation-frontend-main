@@ -15,8 +15,9 @@ import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
 import createConcertFormData from '../../../services/createConcertFormData';
-import { onSubmitFormDataType, QuestionsFormDataInterface } from '../../../interfaces/concertForm';
 import { submitQuestionsForm } from '../../../services/recommendations';
+import { onSubmitFormDataType } from '../../../model/types/concertForm';
+import { QuestionsUI } from '../../../model/types/questions';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -131,7 +132,7 @@ const ConcertForm = ({
 
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
-    const result: QuestionsFormDataInterface = createConcertFormData(values, budget);
+    const result: QuestionsUI = createConcertFormData(values, budget);
     const response = await submitQuestionsForm(result);
     if (response.data && !('id' in response.data)) {
       setLoading(false);
