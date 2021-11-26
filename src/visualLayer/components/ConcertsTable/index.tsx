@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 // Importing Services and utils
 import services from '../../services';
 import { ConcertCreationResponse } from '../../../model/types/questions';
-import { getRecommendedArtists } from '../../../services/recommendations';
+// import { getRecommendedArtists } from '../../../services/recommendations';
 
 interface ConcertsTableProp {
   forms: Array<ConcertCreationResponse> | { message: string} | undefined;
@@ -30,11 +30,11 @@ const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element =
     dateCreated: form.dateCreated.slice(0, 25),
     actions: form.id,
   }));
-  const getRecomendation = async (formId: string) => {
-    // below line will fetch artists recomended by form id
-    // will return recommended artist data
-    await getRecommendedArtists(formId);
-  };
+  // const getRecomendation = async (formId: string) => {
+  //   // below line will fetch artists recomended by form id
+  //   // will return recommended artist data
+  //   await getRecommendedArtists(formId);
+  // };
 
   const deleteNow = async (id: string) => {
     const response = await services.ArtistRecommendation.deleteRecommendation(id);
@@ -103,12 +103,7 @@ const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element =
             }}
             to={`recommendations/${id}`}
           >
-            <Button
-              type="link"
-              onClick={async () => getRecomendation(id)}
-            >
-              View Recommendation
-            </Button>
+            View Recommendation
           </Link>
           <Button
             onClick={() => deleteConcertModal(id)}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import * as _ from 'lodash';
 import { QuestionsUI } from '../model/types/questions';
 
 import config from './config.json';
@@ -29,7 +30,19 @@ export const getRecommendedArtists = async (formId: string): Promise<any> => {
   }
 };
 
-export const submitQuestionsForm = async (data: QuestionsUI): Promise<any> => {
+export const submitQuestionsForm = async (questions: QuestionsUI): Promise<any> => {
+  // Insuring data should not have any other fields exept specified below
+  const data = _.pick(questions, ['userId',
+    'concertName',
+    'eventType',
+    'venue',
+    'artistBudget',
+    'sponsorshipType',
+    'wantedBrands',
+    'unwantedBrands',
+    'targetAudience',
+    'whatSellsMost',
+  ]);
   try {
     const response = await axios.post(`${baseURL}/artists/recommendations`, data);
     if (response.status === 200) {

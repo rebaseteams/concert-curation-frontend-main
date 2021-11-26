@@ -134,6 +134,15 @@ const ConcertForm = ({
     setLoading(true);
     const result: QuestionsUI = createConcertFormData(values, budget);
     const response = await submitQuestionsForm(result);
+    if (response.error) {
+      setLoading(false);
+      setVisible(false);
+      notification.error({
+        message: 'Error',
+        description: 'Could not create concert',
+      });
+      return;
+    }
     if (response.data && !('id' in response.data)) {
       setLoading(false);
       setVisible(false);
@@ -141,6 +150,7 @@ const ConcertForm = ({
         message: 'Error',
         description: 'Could not create concert',
       });
+      return;
     }
     if (response && ('id' in response.data)) {
       forms?.push(response.data);
@@ -151,7 +161,9 @@ const ConcertForm = ({
         message: 'Success',
         description: 'Concert Successfully created',
       });
+      return;
     }
+    setVisible(false);
     setLoading(false);
   };
 
