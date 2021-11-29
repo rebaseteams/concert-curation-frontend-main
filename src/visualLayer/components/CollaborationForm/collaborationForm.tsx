@@ -9,7 +9,16 @@ import { useHistory } from 'react-router-dom';
 import { CollaborationFormValues } from '../../../model/types/collaborationForm';
 import services from '../../services';
 
-const CollaborationForm = (): JSX.Element => {
+type CollaborationFormProp = {
+  templateId: string;
+  setSelectedTemplate: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+const CollaborationForm = ({ templateId, setSelectedTemplate }:
+  CollaborationFormProp): JSX.Element => {
+  // TODO: Fetch template questions and field by template id
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const id = templateId;
   const history = useHistory();
   const submitForm = async (value: CollaborationFormValues) => {
     const data = await services.Documents.getHtmlTemplate(value);
@@ -45,6 +54,7 @@ const CollaborationForm = (): JSX.Element => {
         </Form.Item>
 
         <Form.Item label="">
+          <Button type="link" htmlType="button" onClick={() => setSelectedTemplate(null)}>Back</Button>
           <Button type="primary" htmlType="submit">Preview</Button>
         </Form.Item>
       </Form>

@@ -24,7 +24,7 @@ import RecommendationPage from './visualLayer/containers/RecommendationPage';
 
 import ArtistPage from './visualLayer/containers/artists/artist';
 
-import EditorComponent from './visualLayer/containers/editor/editor';
+import EditorContainer from './visualLayer/containers/editor/editor';
 
 // styles
 import './App.scss';
@@ -69,7 +69,7 @@ function App():JSX.Element {
           <ArtistPage />
         </Route>
         <Route path="/editor/:id" exact>
-          <EditorComponent />
+          <EditorContainer />
         </Route>
         <Route path="/*" exact>
           <Result
