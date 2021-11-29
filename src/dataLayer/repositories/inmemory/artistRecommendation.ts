@@ -1,14 +1,23 @@
 /* eslint-disable no-console */
 import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
-import { DeleteRecommendationResponse, GetRecommendationResponse, ServiceResponse } from '../../../model/types/service-response';
-import allConcertMockData, { getRecommendationMockData } from './allConcertMockData';
+import { QuestionsUI } from '../../../model/types/questions';
+import {
+  AddRecommendationResponse,
+  DeleteRecommendationResponse,
+  GetAllRecommendationsResponse,
+  GetRecommendationResponse,
+} from '../../../model/types/service-response';
+import allConcertMockData, { addRecommendationMockData, getRecommendationMockData } from './allConcertMockData';
 
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
-  addNewRecommendation = () => {
-    console.log('add new recommendation');
+  addNewRecommendation = async (concertData : QuestionsUI): Promise<AddRecommendationResponse> => {
+    console.log('add new recommendation', concertData);
+    return new Promise((resolve) => {
+      resolve(addRecommendationMockData);
+    });
   };
 
-  getAllRecommendations = async (): Promise<ServiceResponse> => {
+  getAllRecommendations = async (): Promise<GetAllRecommendationsResponse> => {
     console.log('get all recommendations');
     return new Promise((resolve) => {
       resolve(allConcertMockData);

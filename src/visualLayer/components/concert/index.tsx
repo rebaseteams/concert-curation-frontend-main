@@ -15,9 +15,9 @@ import './concert.scss';
 import myForm from './myForm.json';
 import { ConcertFormProp } from './util';
 import createConcertFormData from '../../../services/createConcertFormData';
-import { submitQuestionsForm } from '../../../services/recommendations';
 import { onSubmitFormDataType } from '../../../model/types/concertForm';
 import { QuestionsUI } from '../../../model/types/questions';
+import services from '../../services';
 
 const renderOptions = (options: any) => {
   return options.map((option: string) => {
@@ -125,7 +125,7 @@ const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
 };
 
 const ConcertForm = ({
-  setVisible, forms, getConcerts,
+  setVisible, forms,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
@@ -133,7 +133,7 @@ const ConcertForm = ({
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
     const result: QuestionsUI = createConcertFormData(values, budget);
-    const response = await submitQuestionsForm(result);
+    const response = await services.ArtistRecommendation.addNewRecommendation(result);
     if (response.error) {
       setLoading(false);
       setVisible(false);
@@ -152,9 +152,8 @@ const ConcertForm = ({
       });
       return;
     }
-    if (response && ('id' in response.data)) {
-      forms?.push(response.data);
-      getConcerts();
+    if (response.data && ('id' in response.data)) {
+      forms.unshift(response.data);
       setLoading(false);
       setVisible(false);
       notification.success({

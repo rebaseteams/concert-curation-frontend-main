@@ -10,12 +10,11 @@ import { ConcertCreationResponse } from '../../../model/types/questions';
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   displayFormModal: boolean;
-  forms: Array<ConcertCreationResponse> | undefined;
-  getConcerts: () => Promise<void>;
+  forms: Array<ConcertCreationResponse>;
 }
 
 const CurateConcertModal = ({
-  setDisplayFormModal, displayFormModal, forms, getConcerts,
+  setDisplayFormModal, displayFormModal, forms,
 }: CurateConcertModalProp): JSX.Element => (
   <Modal
     title="Choose your prefrences"
@@ -43,7 +42,6 @@ const CurateConcertModal = ({
     <ConcertForm
       setVisible={setDisplayFormModal}
       forms={forms}
-      getConcerts={getConcerts}
     />
   </Modal>
 );

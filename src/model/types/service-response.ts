@@ -3,10 +3,10 @@ import { CollaborationFormValues } from './collaborationForm';
 import { ConcertCreationResponse } from './questions';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type ServiceResponse = {
+export type GetAllRecommendationsResponse = {
   error: boolean,
   message: string,
-  data?: Array<ConcertCreationResponse>,
+  data: Array<ConcertCreationResponse>,
   status?: number | string;
 }
 
@@ -33,6 +33,13 @@ export type CollaborationFormResponse = {
   error: boolean,
   message: string,
   data?: CollaborationFormValues,
+  status?: number | string;
+}
+
+export type AddRecommendationResponse = {
+  error: boolean,
+  message: string,
+  data?: ConcertCreationResponse,
   status?: number | string;
 }
 
