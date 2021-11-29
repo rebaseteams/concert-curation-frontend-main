@@ -24,7 +24,7 @@ interface Error {
 
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
-  const [forms, setForms] = useState<Array<ConcertCreationResponse>>();
+  const [forms, setForms] = useState<Array<ConcertCreationResponse>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
@@ -64,7 +64,6 @@ const DashboardComponent = (): JSX.Element => {
         setDisplayFormModal={setDisplayFormModal}
         displayFormModal={displayFormModal}
         forms={forms}
-        getConcerts={getConcerts}
       />
       <div className="row-flex justify-between width-md">
         <h4 style={{

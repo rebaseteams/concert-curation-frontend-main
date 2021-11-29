@@ -1,7 +1,12 @@
 import ArtistRecommendationInterface from '../../model/interfaces/artistRecommendation';
 import { PatchRequest } from '../../model/types/patch-request';
 import { QuestionsUI } from '../../model/types/questions';
-import { DeleteRecommendationResponse, GetRecommendationResponse, ServiceResponse } from '../../model/types/service-response';
+import {
+  AddRecommendationResponse,
+  DeleteRecommendationResponse,
+  GetAllRecommendationsResponse,
+  GetRecommendationResponse,
+} from '../../model/types/service-response';
 
 export default class ArtistRecommendation implements ArtistRecommendationInterface {
     private artistRecommendationRepo : ArtistRecommendationInterface;
@@ -10,11 +15,15 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
       this.artistRecommendationRepo = artistRecommendationRepo;
     }
 
-    addNewRecommendation = (concertData : QuestionsUI) => {
-      this.artistRecommendationRepo.addNewRecommendation(concertData);
-    };
+    addNewRecommendation = (concertData : QuestionsUI):
+      Promise<AddRecommendationResponse> => new Promise((resolve) => {
+      this.artistRecommendationRepo.addNewRecommendation(concertData).then(((response) => {
+        resolve(response);
+      }));
+    });
 
-    getAllRecommendations = async (): Promise<ServiceResponse> => new Promise((resolve) => {
+    getAllRecommendations = async ():
+      Promise<GetAllRecommendationsResponse> => new Promise((resolve) => {
       this.artistRecommendationRepo.getAllRecommendations().then((data) => {
         resolve(data);
       });
