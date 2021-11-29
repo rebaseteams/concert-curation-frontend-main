@@ -10,7 +10,7 @@ const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey $
 <p>and what you to collaborate with us.</p>
 <p><strong>Regards Imperial College.</strong></p>`;
 
-const EditorComponent = (): JSX.Element => {
+const EditorContainer = (): JSX.Element => {
   const history = useHistory();
   const editorRef = useRef<string>('');
   const data: { state: { prams: string } } = useLocation();
@@ -75,4 +75,4 @@ const EditorComponent = (): JSX.Element => {
   );
 };
 
-export default EditorComponent;
+export default EditorContainer;

@@ -1,0 +1,8 @@
+.template-image {
+  width: 100%;
+  aspect-ratio: 0.8;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
