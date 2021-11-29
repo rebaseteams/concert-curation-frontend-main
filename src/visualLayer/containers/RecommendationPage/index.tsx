@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import {
   Row, Col, notification, Switch,
   Layout, Space, Tag, Typography,
-  Tooltip, Empty, Result,
+  Tooltip, Empty, Result, message,
 } from 'antd';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import * as htmlToImage from 'html-to-image';
@@ -11,7 +11,7 @@ import download from 'downloadjs';
 import * as _ from 'lodash';
 
 // Importing Services and utils
-import patchRecommendationArtist from '../../../services/patchRecommendationArtist';
+// import patchRecommendationArtist from '../../../services/patchRecommendationArtist';
 import services from '../../services';
 import { Questions } from '../../../model/types/questions';
 
@@ -88,7 +88,18 @@ const RecommendationPage = (): JSX.Element => {
 
   // eslint-disable-next-line react/jsx-no-bind
   async function patchConcertData(discardedArtistId: string) {
-    await patchRecommendationArtist(id, discardedArtistId, userID);
+    // await patchRecommendationArtist(id, discardedArtistId, userID);
+    const patchData = {
+      formId: id,
+      discardedArtistId,
+      userId: userID,
+    };
+    const response = await services.ArtistRecommendation.discardArtist(patchData);
+    if (response.error) {
+      message.error("Can't delete artist now!");
+      return;
+    }
+    message.success('Artist discarded');
     getConcertData();
   }
 

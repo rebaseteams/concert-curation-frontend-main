@@ -11,6 +11,7 @@ import {
   DeleteRecommendationResponse,
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
+  PatchRecommendationResponse,
 } from '../../../model/types/service-response';
 
 const server = config.PROD_SERVER;
@@ -70,10 +71,17 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     });
   })
 
-  discardArtist = async (data : PatchRequest) => {
-    const resp = await axios.patch(`${server}/artists/recommendations`, data);
-    console.log('discard artist : ', resp);
-  };
+  discardArtist = async (data : PatchRequest):
+    Promise<PatchRecommendationResponse> => new Promise((resolve) => {
+    axios.patch(`${server}/artists/recommendations/`, data).then((val) => {
+      if (val.status !== 200) {
+        resolve({ error: true, status: val.status, message: val.statusText });
+      }
+      resolve({ error: false, data: val.data, message: val.statusText });
+    }).catch((err: CatchError) => {
+      resolve({ error: true, status: err.status, message: err.message });
+    });
+  });
 
   deleteRecommendation = async (recommendationId : string):
     Promise<DeleteRecommendationResponse> => new Promise((resolve) => {

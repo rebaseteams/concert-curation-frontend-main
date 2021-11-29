@@ -6,6 +6,7 @@ import {
   DeleteRecommendationResponse,
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
+  PatchRecommendationResponse,
 } from '../../model/types/service-response';
 
 export default class ArtistRecommendation implements ArtistRecommendationInterface {
@@ -38,9 +39,12 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
       });
     };
 
-    discardArtist = (data : PatchRequest) => {
-      this.artistRecommendationRepo.discardArtist(data);
-    };
+    discardArtist = (data : PatchRequest):
+      Promise<PatchRecommendationResponse> => new Promise((resolve) => {
+      this.artistRecommendationRepo.discardArtist(data).then((val) => {
+        resolve(val);
+      });
+    });
 
     deleteRecommendation = (recommendationId : string):
       Promise<DeleteRecommendationResponse> => new Promise((resolve) => {
