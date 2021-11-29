@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { Form, Button, Input } from 'antd';
+import {
+  Form, Button, Input, message,
+} from 'antd';
 
 import createSendEmailData from './utils';
-import sendNotification from '../../../services/notification';
+import sendNotification from '../../../utils/notification';
 
 interface SendEmailFormProp {
   setSendEmailModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,8 +17,14 @@ const SendEamilForm = ({ setSendEmailModal }: SendEmailFormProp): JSX.Element =>
   const sendConcertEmail = async (values: { email: string }) => {
     const sendEmailData = createSendEmailData(values.email, htmlData);
 
-    await sendNotification(sendEmailData);
-
+    // await sendNotification(sendEmailData);
+    const response = await sendNotification(sendEmailData);
+    if (response.error) {
+      message.error('Somthing went wrong');
+      setSendEmailModal(false);
+      return;
+    }
+    message.success('Email sent successfully');
     setSendEmailModal(false);
   };
   return (

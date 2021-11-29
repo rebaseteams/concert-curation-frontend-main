@@ -1,21 +1,4 @@
-export interface SendGridEmailData {
-  type: string,
-  receiver: {
-    to: string,
-    cc: string,
-  },
-  sender: {
-    vendor: {
-      name: string,
-    },
-  },
-  content: {
-    type: string,
-    html: string,
-    subject: string,
-    values: string,
-  },
-}
+import { SendGridEmailData } from '../../../model/types/sendGridEmailData';
 
 const createSendEmailData = (email: string, htmlData: string): SendGridEmailData => ({
   type: 'email',

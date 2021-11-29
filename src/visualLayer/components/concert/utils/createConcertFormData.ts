@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { onSubmitFormDataType } from '../model/types/concertForm';
-import { QuestionsUI } from '../model/types/questions';
+import { onSubmitFormDataType } from '../../../../model/types/concertForm';
+import { QuestionsUI } from '../../../../model/types/questions';
 
 const createConcertFormData = (
   values: onSubmitFormDataType, budget: { min: number, max: number },

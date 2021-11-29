@@ -26,21 +26,22 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     });
   };
 
-  getRecommendation = (recommendationId : string): Promise<GetRecommendationResponse> => {
+  getRecommendation = async (recommendationId : string): Promise<GetRecommendationResponse> => {
     console.log('get recommendation : ', recommendationId);
     return new Promise((resolve) => {
       resolve(getRecommendationMockData);
     });
   };
 
-  discardArtist = (patchData: PatchRequest): Promise<PatchRecommendationResponse> => {
+  discardArtist = async (patchData: PatchRequest): Promise<PatchRecommendationResponse> => {
     console.log('discard artist', patchData);
     return new Promise((resolve) => {
       resolve(patchRecommendationMockData);
     });
   };
 
-  deleteRecommendation = (recommendationId : string): Promise<DeleteRecommendationResponse> => {
+  deleteRecommendation = async (recommendationId : string):
+    Promise<DeleteRecommendationResponse> => {
     console.log('delete recommendation');
     return new Promise((resolve) => {
       resolve({

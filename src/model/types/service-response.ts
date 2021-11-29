@@ -46,6 +46,13 @@ export type AddRecommendationResponse = {
 export type PatchRecommendationResponse = {
   error: boolean,
   message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+export type SendNotificationResponse = {
+  error: boolean,
+  message: string,
   data?: any,
   status?: number | string;
 }

@@ -73,7 +73,8 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
 
   discardArtist = async (data : PatchRequest):
     Promise<PatchRecommendationResponse> => new Promise((resolve) => {
-    axios.patch(`${server}/artists/recommendations/`, data).then((val) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    axios.patch(`${server}/artists/recommendations/`, data).then((val:any) => {
       if (val.status !== 200) {
         resolve({ error: true, status: val.status, message: val.statusText });
       }
