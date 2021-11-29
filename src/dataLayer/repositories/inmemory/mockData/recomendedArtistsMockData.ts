@@ -1,22 +1,41 @@
 /* eslint-disable linebreak-style */
+
+import { ArtistRecommendation } from '../../../../model/types/artist-recommendation';
+
 /* eslint-disable import/prefer-default-export */
-export const recommendedArtistsMockData = {
-  id: 'form101',
+export const recommendedArtistsMockData: ArtistRecommendation = {
   concertData: {
+    userId: '76376',
+    dateCreated: 'Mon 23-11-2021 12:34:55',
     id: 'form101',
     concertName: 'Friday Night Rock',
     eventType: 'Colleges and Universities',
     venue: ['London', 'Mumbai'],
     artistBudget: { min: 20000, max: 50000 },
     sponsorshipType: 'Direct sales',
-    wantedBrands: ['Limca'],
-    unwantedBrands: ['Mirenda', 'Pepsi'],
+    wantedBrands: [{
+      brandId: '896763',
+      brandName: 'Coca',
+    }],
+    unwantedBrands: [{
+      brandId: '896963',
+      brandName: 'Limca',
+    }],
     targetAudience: {
       ageGroup: ['26-35', '36-60'],
       gender: ['female', 'both'],
-      genre: ['DJ', 'Classic'],
+      genre: [{
+        genreId: '8734',
+        genreName: 'Bollywood',
+      }],
+    },
+    whatSellsMost: {
+      beer: [],
+      liquor: [],
+      softDrinks: [],
     },
   },
+  status: true,
   artists: [
     {
       artistName: 'Justin',

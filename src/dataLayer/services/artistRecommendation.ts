@@ -16,7 +16,7 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
       this.artistRecommendationRepo = artistRecommendationRepo;
     }
 
-    addNewRecommendation = (concertData : QuestionsUI):
+    addNewRecommendation = async (concertData : QuestionsUI):
       Promise<AddRecommendationResponse> => new Promise((resolve) => {
       this.artistRecommendationRepo.addNewRecommendation(concertData).then(((response) => {
         resolve(response);
@@ -39,14 +39,14 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
       });
     };
 
-    discardArtist = (data : PatchRequest):
+    discardArtist = async (data : PatchRequest):
       Promise<PatchRecommendationResponse> => new Promise((resolve) => {
       this.artistRecommendationRepo.discardArtist(data).then((val) => {
         resolve(val);
       });
     });
 
-    deleteRecommendation = (recommendationId : string):
+    deleteRecommendation = async (recommendationId : string):
       Promise<DeleteRecommendationResponse> => new Promise((resolve) => {
       this.artistRecommendationRepo.deleteRecommendation(recommendationId).then((val) => {
         resolve(val);

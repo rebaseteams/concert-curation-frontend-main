@@ -5,7 +5,7 @@ import {
   PatchRecommendationResponse,
 } from '../../../../model/types/service-response';
 
-import { recommendedArtistsMockData } from '../recomendedArtistsMockData';
+import { recommendedArtistsMockData } from './recomendedArtistsMockData';
 
 const allConcertMockData: GetAllRecommendationsResponse = {
   error: false,

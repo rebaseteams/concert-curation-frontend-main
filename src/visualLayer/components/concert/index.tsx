@@ -12,9 +12,9 @@ import {
   notification,
 } from 'antd';
 import './concert.scss';
-import myForm from './myForm.json';
+import myForm from './utils/myForm.json';
 import { ConcertFormProp } from './util';
-import createConcertFormData from '../../../services/createConcertFormData';
+import createConcertFormData from './utils/createConcertFormData';
 import { onSubmitFormDataType } from '../../../model/types/concertForm';
 import { QuestionsUI } from '../../../model/types/questions';
 import services from '../../services';
