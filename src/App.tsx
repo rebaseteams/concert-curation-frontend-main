@@ -53,13 +53,6 @@ axios.interceptors.request.use(
 
 function App():JSX.Element {
   return (
-  // <div className="app-container">
-  //   <Layout
-  //     style={{ background: 'none' }}
-  //     className="layout-container"
-  //   >
-  //     <Layout>
-  //       <Content className="layout-body">
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
@@ -70,8 +63,6 @@ function App():JSX.Element {
           <Signup />
         </Route>
         <Route path="/recommendations/:id" exact>
-          {/* emable this for card View */}
-          {/* <RecommendationComponent /> */}
           <RecommendationPage />
         </Route>
         <Route path="/artist/:id" exact>
@@ -90,10 +81,6 @@ function App():JSX.Element {
         </Route>
       </Switch>
     </BrowserRouter>
-  //       </Content>
-  //     </Layout>
-  //   </Layout>
-  // </div>
   );
 }
 
