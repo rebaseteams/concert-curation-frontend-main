@@ -1,5 +1,11 @@
-import { AddRecommendationResponse, GetAllRecommendationsResponse, GetRecommendationResponse } from '../../../model/types/service-response';
-import { recommendedArtistsMockData } from './recomendedArtistsMockData';
+import {
+  AddRecommendationResponse,
+  GetAllRecommendationsResponse,
+  GetRecommendationResponse,
+  PatchRecommendationResponse,
+} from '../../../../model/types/service-response';
+
+import { recommendedArtistsMockData } from '../recomendedArtistsMockData';
 
 const allConcertMockData: GetAllRecommendationsResponse = {
   error: false,
@@ -31,6 +37,15 @@ export const addRecommendationMockData: AddRecommendationResponse = {
     concertName: 'Ruby the Diamond',
     dateCreated: 'Mon 21-11-2021 23:44:58',
     status: true,
+  },
+};
+
+export const patchRecommendationMockData: PatchRecommendationResponse = {
+  error: false,
+  message: 'no error',
+  status: '200',
+  data: {
+    success: true,
   },
 };
 

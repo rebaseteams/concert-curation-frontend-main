@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
+import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
   AddRecommendationResponse,
   DeleteRecommendationResponse,
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
+  PatchRecommendationResponse,
 } from '../../../model/types/service-response';
-import allConcertMockData, { addRecommendationMockData, getRecommendationMockData } from './allConcertMockData';
+import allConcertMockData, { addRecommendationMockData, getRecommendationMockData, patchRecommendationMockData } from './mockData/allConcertMockData';
 
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
   addNewRecommendation = async (concertData : QuestionsUI): Promise<AddRecommendationResponse> => {
@@ -31,8 +33,11 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     });
   };
 
-  discardArtist = () => {
-    console.log('discard artist');
+  discardArtist = (patchData: PatchRequest): Promise<PatchRecommendationResponse> => {
+    console.log('discard artist', patchData);
+    return new Promise((resolve) => {
+      resolve(patchRecommendationMockData);
+    });
   };
 
   deleteRecommendation = (recommendationId : string): Promise<DeleteRecommendationResponse> => {

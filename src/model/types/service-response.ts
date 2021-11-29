@@ -43,4 +43,11 @@ export type AddRecommendationResponse = {
   status?: number | string;
 }
 
+export type PatchRecommendationResponse = {
+  error: boolean,
+  message: string,
+  data?: any,
+  status?: number | string;
+}
+
 export type CatchError = { message: string, status: number }
