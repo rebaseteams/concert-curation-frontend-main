@@ -1,6 +1,7 @@
 import { ArtistRecommendation } from './artist-recommendation';
 import { CollaborationFormValues } from './collaborationForm';
 import { ConcertCreationResponse } from './questions';
+import { TemplateResponse, Templates } from './templates';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type GetAllRecommendationsResponse = {
@@ -54,6 +55,23 @@ export type SendNotificationResponse = {
   error: boolean,
   message: string,
   data?: any,
+  status?: number | string;
+}
+
+export type GetTemplatesResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: Array<Templates>,
+  },
+  status?: number | string;
+}
+
+export type GetTemplateResponse = {
+  error: boolean,
+  message: string,
+  data?: TemplateResponse,
   status?: number | string;
 }
 
