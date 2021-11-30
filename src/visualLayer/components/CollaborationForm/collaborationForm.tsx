@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Col,
+  Empty,
   Form,
   Input,
   message,
@@ -24,6 +25,7 @@ const renderTemplates = (
   selectTemplate: (templateId: string) => void,
 ) => (_.map(templates, (template) => (
   <Col
+    key={template.id}
     span={6}
     onClick={() => selectTemplate(template.id)}
   >
@@ -45,7 +47,7 @@ const CollaborationForm = (): JSX.Element => {
 
   useEffect(() => {
     setTemplates(getTemplates());
-  });
+  }, []);
 
   const selectTemplate = (template: string) => {
     setSelectedTemplate(template);
@@ -104,7 +106,7 @@ const CollaborationForm = (): JSX.Element => {
       </>
     );
   }
-  return <h2>Nothing</h2>;
+  return <Empty />;
 };
 
 export default CollaborationForm;
