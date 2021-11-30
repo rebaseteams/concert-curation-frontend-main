@@ -6,9 +6,6 @@ import React, { useState } from 'react';
 import {
   Form,
   Button,
-  Select,
-  Slider,
-  Input,
   notification,
 } from 'antd';
 import './concert.scss';
@@ -18,116 +15,13 @@ import createConcertFormData from './utils/createConcertFormData';
 import { onSubmitFormDataType } from '../../../model/types/concertForm';
 import { QuestionsUI } from '../../../model/types/questions';
 import services from '../../services';
-
-const renderOptions = (options: any) => {
-  return options.map((option: string) => {
-    return <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>;
-  });
-};
-
-const renderSelect = (field: any) => {
-  if (field.multiple) {
-    return (
-      <Form.Item
-        key={`field${field.name}`}
-        name={field.name}
-        label={field.label}
-        className="formLabel"
-        rules={[{ required: field.required || false, message: field.message || 'Not required' }]}
-      >
-        <Select
-          showSearch
-          mode="multiple"
-        >
-          { field.options.length > 0 && renderOptions(field.options) }
-        </Select>
-      </Form.Item>
-    );
-  }
-  return (
-    <Form.Item
-      key={`field${field.name}`}
-      name={field.name}
-      label={field.label}
-      className="formLabel"
-      rules={[{ required: field.required || true, message: field.message || 'Not required' }]}
-    >
-      <Select
-        showSearch
-      >
-        { field.options.length > 0 && renderOptions(field.options) }
-      </Select>
-    </Form.Item>
-  );
-};
-
-const renderSlider = (field: any, budget: any, onBudgetChange: any): any => {
-  return (
-    <Form.Item
-      key={`field${field.name}`}
-      name={field.name}
-      label={field.label}
-    >
-      <Slider
-        range
-        min={field.min}
-        max={field.max}
-        step={field.step}
-        onChange={(value) => onBudgetChange(value)}
-        defaultValue={field.default}
-      />
-      <span>
-        From
-        {' '}
-        {budget.min}
-        $
-      </span>
-      {'     '}
-      <span>
-        To
-        {' '}
-        {budget.max}
-        $
-      </span>
-    </Form.Item>
-  );
-};
-
-const renderInput = (field: any) => {
-  return (
-    <Form.Item
-      key={field.name}
-      label={field.label}
-      name={field.name}
-      rules={[{ required: field.required, message: field.message }]}
-    >
-      <Input placeholder={field.placeholder} />
-    </Form.Item>
-  );
-};
-
-const renderFormFields = (formData: any, budget: any, onBudgetChange:any) => {
-  return formData.map((field: any) => {
-    switch (field.type) {
-      case 'select':
-        return renderSelect(field);
-
-      case 'slider':
-        return renderSlider(field, budget, onBudgetChange);
-
-      case 'input':
-        return renderInput(field);
-
-      default:
-        return <span>None</span>;
-    }
-  });
-};
+import renderFormFields from '../FormRenderer';
+import { ArtistBudget } from '../../../model/types/concertDataResponse';
 
 const ConcertForm = ({
   setVisible, forms,
 } : ConcertFormProp): JSX.Element => {
-  const [budget, setBudget] = useState({ min: 20000, max: 50000 });
+  const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
 
   const onFormSubmit = async (values: onSubmitFormDataType) => {

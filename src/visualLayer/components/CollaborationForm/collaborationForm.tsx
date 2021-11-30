@@ -4,19 +4,23 @@ import {
   Col,
   Empty,
   Form,
-  Input,
   message,
+  Result,
   Row,
+  Spin,
   Typography,
 } from 'antd';
 import * as _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { CollaborationFormValues } from '../../../model/types/collaborationForm';
 import services from '../../services';
-import getTemplates from '../../../utils/templates';
+// import getTemplates from '../../../utils/templates';
 
 import './style.scss';
 import { Templates } from '../../../model/types/templates';
+import renderFormFields from '../FormRenderer';
+import { FormFields } from '../../../model/types/formRenderer';
+import templateFormDataMapper from './utils';
 
 const { Text } = Typography;
 
@@ -40,17 +44,38 @@ const renderTemplates = (
 
 const CollaborationForm = (): JSX.Element => {
   const [templateId, setTemplateId] = useState<string | null>(null);
+  const [formData, setFormData] = useState<Array<FormFields>>([]);
   const [templates, setTemplates] = useState<Array<Templates>>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<{status: 403 | 404 | 500 | '403' | '404' | '500', title: string}>();
   // TODO: Fetch template questions and field by template id
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const history = useHistory();
 
   useEffect(() => {
-    setTemplates(getTemplates());
+    setLoading(true);
+    const getTemplates = async () => {
+      const data = await services.Templates.getTemplates();
+      if (data.error) {
+        setError({ status: '404', title: data.message });
+      }
+      if (data.data && data.data.success) {
+        setTemplates(data.data.data);
+      }
+      setLoading(false);
+    };
+    getTemplates();
   }, []);
 
-  const selectTemplate = (template: string) => {
+  const selectTemplate = async (template: string) => {
     setTemplateId(template);
+    const response = await services.Templates.getTemplate('1234');
+    if (response.error) {
+      setError({ status: '404', title: response.message });
+    }
+    if (response.data && response.data.success) {
+      setFormData(templateFormDataMapper(response.data.data.questions));
+    }
   };
 
   const submitForm = async (value: CollaborationFormValues) => {
@@ -61,6 +86,17 @@ const CollaborationForm = (): JSX.Element => {
       history.push('/editor/7676', { prams: data.data });
     }
   };
+  if (loading) {
+    return <Spin />;
+  }
+  if (error) {
+    return (
+      <Result
+        status={error.status}
+        title={error.title}
+      />
+    );
+  }
   if (templateId) {
     return (
       <>
@@ -71,22 +107,7 @@ const CollaborationForm = (): JSX.Element => {
           layout="vertical"
           onFinish={submitForm}
         >
-          <Form.Item
-            label="Artist Name"
-            name="artistName"
-            initialValue="Nick"
-            rules={[{ required: true, message: 'Please input artist Name!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Why you want this artist?"
-            name="reason"
-            rules={[{ required: true, message: 'Please input reason!' }]}
-          >
-            <Input.TextArea />
-          </Form.Item>
+          { formData && renderFormFields(formData, { min: 33, max: 33 }) }
 
           <Form.Item label="">
             <Button type="link" htmlType="button" onClick={() => setTemplateId(null)}>Back</Button>

@@ -5,7 +5,8 @@
     "type": "input",
     "placeholder": "Enter form name",
     "required": true,
-    "message": "Please select event type"
+    "message": "Please select event type",
+    "multiple": false
   },
   {
     "name": "eventType",
@@ -46,6 +47,9 @@
     "min": 2000,
     "max": 100000,
     "step": 1000,
+    "multiple": false,
+    "required": true,
+    "message": "Please selecte range",
     "default": [20000, 50000]
   },
   {
@@ -72,7 +76,8 @@
       "Limca",
       "Sprite"
     ],
-    "multiple": true
+    "multiple": true,
+    "required": false
   },
   {
     "name": "unwantedBrands",
@@ -85,6 +90,7 @@
       "Limca",
       "Sprite"
     ],
+    "required": false,
     "multiple": true
   },
   {
