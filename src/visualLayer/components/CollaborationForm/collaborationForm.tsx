@@ -39,7 +39,7 @@ const renderTemplates = (
 )));
 
 const CollaborationForm = (): JSX.Element => {
-  const [templateId, setSelectedTemplate] = useState<string | null>(null);
+  const [templateId, setTemplateId] = useState<string | null>(null);
   const [templates, setTemplates] = useState<Array<Templates>>();
   // TODO: Fetch template questions and field by template id
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,7 +50,7 @@ const CollaborationForm = (): JSX.Element => {
   }, []);
 
   const selectTemplate = (template: string) => {
-    setSelectedTemplate(template);
+    setTemplateId(template);
   };
 
   const submitForm = async (value: CollaborationFormValues) => {
@@ -89,7 +89,7 @@ const CollaborationForm = (): JSX.Element => {
           </Form.Item>
 
           <Form.Item label="">
-            <Button type="link" htmlType="button" onClick={() => setSelectedTemplate(null)}>Back</Button>
+            <Button type="link" htmlType="button" onClick={() => setTemplateId(null)}>Back</Button>
             <Button type="primary" htmlType="submit">Preview</Button>
           </Form.Item>
         </Form>

@@ -23,6 +23,6 @@ describe('Collaboration Form', () => {
   });
   it('Should render the templates name', () => {
     render(<CollaborationFrom />);
-    expect(screen.getByText('Select Form')).toBeInTheDocument();
+    expect(screen.getByText('Select template')).toBeInTheDocument();
   });
 });
