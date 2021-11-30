@@ -5,17 +5,11 @@ import {
 import { useHistory } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
-import Templates from '../../components/Templates';
 
 const ArtistPage = (): JSX.Element => {
   // const { id }: {id: string} = useParams();
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const history = useHistory();
   const [collaborationModal, setCollaborationModal] = useState(false);
-
-  const selectTemplate = (templateId: string) => {
-    setSelectedTemplate(templateId);
-  };
 
   const redirectBack = () => {
     history.goBack();
@@ -36,24 +30,17 @@ const ArtistPage = (): JSX.Element => {
         src="https://randomuser.me/api/portraits/men/15.jpg"
       />
       <Modal
-        title={selectedTemplate ? 'Template related questions' : 'Select Template'}
         bodyStyle={{
-          height: '300px',
+          height: '500px',
           overflowY: 'auto',
         }}
         centered
         visible={collaborationModal}
         onCancel={() => setCollaborationModal(false)}
-        width={600}
+        width={800}
         footer={false}
       >
-        { selectedTemplate ? (
-          <CollaborationForm
-            templateId={selectedTemplate}
-            setSelectedTemplate={setSelectedTemplate}
-          />
-        ) : <Templates selectTemplate={selectTemplate} />}
-        {/* <CollaborationForm /> */}
+        <CollaborationForm />
       </Modal>
     </div>
   );
