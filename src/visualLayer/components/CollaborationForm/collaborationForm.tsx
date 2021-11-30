@@ -25,16 +25,16 @@ const renderTemplates = (
   selectTemplate: (templateId: string) => void,
 ) => (_.map(templates, (template) => (
   <Col
-    key={template.id}
+    key={template.templateId}
     span={6}
-    onClick={() => selectTemplate(template.id)}
+    onClick={() => selectTemplate(template.templateId)}
   >
     <img
       className="template-image"
-      src={template.image}
-      alt={template.name}
+      src={template.templateImg}
+      alt={template.templateName}
     />
-    <Text type="secondary">{template.name}</Text>
+    <Text type="secondary">{template.templateName}</Text>
   </Col>
 )));
 
@@ -99,7 +99,7 @@ const CollaborationForm = (): JSX.Element => {
   if (templates) {
     return (
       <>
-        <h4>Select Form</h4>
+        <h4>Select template</h4>
         <Row gutter={3}>
           { renderTemplates(templates, selectTemplate) }
         </Row>

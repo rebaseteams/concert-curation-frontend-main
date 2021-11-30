@@ -1,5 +1,5 @@
 export type Templates = {
-  id: string,
-  name: string,
-  image: string,
+  templateId: string,
+  templateName: string,
+  templateImg: string,
 }
