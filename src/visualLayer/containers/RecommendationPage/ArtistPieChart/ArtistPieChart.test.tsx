@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ArtistPieChart from './ArtistPieChart';
 
 const mockArtistsData = [
@@ -567,6 +568,9 @@ const mockArtistsData = [
   },
 ];
 
+// Mock function
+const patchConcertData = (discardedArtistId: string) => discardedArtistId;
+
 describe('Artist Pie Chart Component', () => {
   // test('should display Matching Brands in the component', () => {
   //   render(<Router><ArtistPieChart data={mockArtistsData} /></Router>);
@@ -589,7 +593,7 @@ describe('Artist Pie Chart Component', () => {
   });
 
   it('should render Questions component', () => {
-    render(<ArtistPieChart data={mockArtistsData} />);
+    render(<Router><ArtistPieChart data={mockArtistsData} recommendationId="8767jgj-7675-644" patchConcertData={patchConcertData} /></Router>);
     expect(screen.getByTestId('matchingBrands')).toBeInTheDocument();
   });
 });
