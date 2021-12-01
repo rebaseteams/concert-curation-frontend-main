@@ -17,11 +17,12 @@ import IconRenderer from '../../../components/IconRenderer';
 
 interface ArtistsPieChartProp {
   data: Array<ARec>;
+  recommendationId: string;
   patchConcertData: (discardedArtistId: string) => void
 }
 
 // eslint-disable-next-line
-const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.Element => {
+const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPieChartProp) : JSX.Element => {
   const artist = {
     id: '',
     brand: [''],
@@ -211,7 +212,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist2.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={`/artist/${artist2.id}`}>
+                <Link to={{
+                  pathname: `/artist/${artist2.id}`,
+                  state: {
+                    recommendationId,
+                  },
+                }}
+                >
                   { _.upperFirst(artist2.name) }
                 </Link>
               </h4>
@@ -229,7 +236,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist1.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={`/artist/${artist1.id}`}>
+                <Link to={{
+                  pathname: `/artist/${artist1.id}`,
+                  state: {
+                    recommendationId,
+                  },
+                }}
+                >
                   { _.upperFirst(artist1.name) }
                 </Link>
               </h4>
@@ -319,7 +332,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist3.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={`/artist/${artist3.id}`}>
+                <Link to={{
+                  pathname: `/artist/${artist3.id}`,
+                  state: {
+                    recommendationId,
+                  },
+                }}
+                >
                   { _.upperFirst(artist3.name) }
                 </Link>
               </h4>
@@ -337,7 +356,13 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist4.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={`/artist/${artist4.id}`}>
+                <Link to={{
+                  pathname: `/artist/${artist4.id}`,
+                  state: {
+                    recommendationId,
+                  },
+                }}
+                >
                   { _.upperFirst(artist4.name) }
                 </Link>
               </h4>

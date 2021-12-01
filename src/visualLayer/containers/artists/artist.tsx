@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import {
   PageHeader, Image, Button, Modal,
 } from 'antd';
-import { useHistory } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 
 const ArtistPage = (): JSX.Element => {
-  // const { id }: {id: string} = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id }: {id: string} = useParams(); // TODO: Use this id to sfetch artists information
+  const { state }: { state: { recommendationId: string } } = useLocation();
+  const { recommendationId } = state;
   const history = useHistory();
   const [collaborationModal, setCollaborationModal] = useState(false);
 
@@ -19,8 +21,8 @@ const ArtistPage = (): JSX.Element => {
       <PageHeader
         className="site-page-header"
         onBack={() => redirectBack()}
-        title="Nick"
-        subTitle="Hip hop singer"
+        title="Artist name"
+        subTitle="rock start"
         extra={[
           <Button type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>,
         ]}
@@ -40,7 +42,7 @@ const ArtistPage = (): JSX.Element => {
         width={800}
         footer={false}
       >
-        <CollaborationForm />
+        <CollaborationForm recommendationId={recommendationId} />
       </Modal>
     </div>
   );

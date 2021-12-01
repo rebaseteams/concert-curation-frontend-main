@@ -42,7 +42,7 @@ const renderTemplates = (
   </Col>
 )));
 
-const CollaborationForm = (): JSX.Element => {
+const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JSX.Element => {
   const [templateId, setTemplateId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Array<FormFields>>([]);
   const [templates, setTemplates] = useState<Array<Templates>>();
@@ -82,15 +82,17 @@ const CollaborationForm = (): JSX.Element => {
     const result = {
       templateId: templateId || '1234',
       fields: value,
-      recommendationId: '9749002',
+      recommendationId,
     };
 
     const response = await services.Documents.getHtmlTemplate(result);
     if (response.error) {
       message.error('Somthing went wrong');
+      return;
     }
     if (response.data && response.data.success) {
       history.push('/editor/7676', { prams: response.data.data.document });
+      return;
     }
     message.error('Bad Request');
   };

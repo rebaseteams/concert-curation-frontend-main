@@ -47,7 +47,7 @@ const renderSummary = (artistsData: Array<ARec>, view: string) => {
 };
 
 const RecommendationPage = (): JSX.Element => {
-  const { id }: { id: string } = useParams();
+  const { recommendationId }: { recommendationId: string } = useParams();
   const [concertData, setConcertData] = useState<Questions>();
   const [artistsData, setArtistsData] = useState<Array<ARec>>(
     [],
@@ -71,7 +71,7 @@ const RecommendationPage = (): JSX.Element => {
   };
 
   const getConcertData = async () => {
-    const response = await services.ArtistRecommendation.getRecommendation(id);
+    const response = await services.ArtistRecommendation.getRecommendation(recommendationId);
     if (!response) {
       setError({ status: '404', message: 'Internal Error' });
       return;
@@ -90,7 +90,7 @@ const RecommendationPage = (): JSX.Element => {
   async function patchConcertData(discardedArtistId: string) {
     // await patchRecommendationArtist(id, discardedArtistId, userID);
     const patchData = {
-      formId: id,
+      formId: recommendationId,
       discardedArtistId,
       userId: userID,
     };
@@ -209,7 +209,7 @@ const RecommendationPage = (): JSX.Element => {
           scale={0.4}
           paperSize="auto"
           margin={20}
-          fileName={`ReccomendationFor${id}`}
+          fileName={`ReccomendationFor${recommendationId}`}
         >
           <Row id="recommendation-page-container">
             <Col xs={{ span: 24 }} lg={{ span: 4 }}>
@@ -234,6 +234,7 @@ const RecommendationPage = (): JSX.Element => {
                   {artistsData.length > 0 && (
                   <ArtistPieChart
                     data={artistsData}
+                    recommendationId={recommendationId}
                     // eslint-disable-next-line react/jsx-no-bind
                     patchConcertData={patchConcertData}
                   />

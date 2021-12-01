@@ -15,7 +15,6 @@ const EditorContainer = (): JSX.Element => {
   const history = useHistory();
   const editorRef = useRef<string>('');
   const data: { state: { prams: CollaborationData } } = useLocation();
-
   if (data && data.state && data.state.prams) {
     editorRef.current = data.state.prams.html;
   } else {
