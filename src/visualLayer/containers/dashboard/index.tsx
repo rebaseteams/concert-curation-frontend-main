@@ -70,7 +70,7 @@ const DashboardComponent = (): JSX.Element => {
   };
 
   return (
-    <Content>
+    <Content style={{ height: '88vh', overflowY: 'auto' }}>
       <CurateConcertModal
         setDisplayFormModal={setDisplayFormModal}
         displayFormModal={displayFormModal}

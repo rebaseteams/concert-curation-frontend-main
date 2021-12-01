@@ -26,6 +26,16 @@ describe('Dashboard Page', () => {
     expect(screen.getByText('New Concert')).toBeInTheDocument();
   });
 
+  it('Should render Documents Table', () => {
+    render(<DashboardComponent />);
+    expect(screen.getByText('Documents')).toBeInTheDocument();
+  });
+
+  it('Should render Concerts List', () => {
+    render(<DashboardComponent />);
+    expect(screen.getByText('Concert List')).toBeInTheDocument();
+  });
+
   // TODO: complete this test I wast adding this test but was facing some issues
   // it('should popup concert form modal after clicking curate concert button', async () => {
   //   render(<DashboardComponent />);
