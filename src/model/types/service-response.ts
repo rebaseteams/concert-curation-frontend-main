@@ -1,5 +1,5 @@
 import { ArtistRecommendation } from './artist-recommendation';
-import { CollaborationFormValues } from './collaborationForm';
+import { CreateCollaborationResponseData } from './collaborationForm';
 import { ConcertCreationResponse } from './questions';
 import { TemplateResponse, Templates } from './templates';
 
@@ -33,7 +33,7 @@ export type DeleteRecommendationResponse = {
 export type CollaborationFormResponse = {
   error: boolean,
   message: string,
-  data?: CollaborationFormValues,
+  data?: CreateCollaborationResponseData,
   status?: number | string;
 }
 

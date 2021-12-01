@@ -79,13 +79,22 @@ const CollaborationForm = (): JSX.Element => {
   };
 
   const submitForm = async (value: CollaborationFormValues) => {
-    const data = await services.Documents.getHtmlTemplate(value);
-    if (data.error) {
+    const result = {
+      templateId: templateId || '1234',
+      fields: value,
+      recommendationId: '9749002',
+    };
+
+    const response = await services.Documents.getHtmlTemplate(result);
+    if (response.error) {
       message.error('Somthing went wrong');
-    } else {
-      history.push('/editor/7676', { prams: data.data });
     }
+    if (response.data && response.data.success) {
+      history.push('/editor/7676', { prams: response.data.data.document });
+    }
+    message.error('Bad Request');
   };
+
   if (loading) {
     return <Spin />;
   }

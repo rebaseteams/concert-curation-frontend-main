@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import * as _ from 'lodash';
 import './ArtistPieChart.scss';
+import { Link } from 'react-router-dom';
 import {
   getAge,
   getBrands,
@@ -203,14 +204,18 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
           </div>
           <div className="quarter-circle-bottom-right quarter-circle">
             <div className="matchcontainer-1 flex-match-content">
-              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist2.name, artist2.id)}>&times;</span>
+              <Tooltip overlay={`Remove ${artist2.name}`} color="#f12">
+                <span role="button" tabIndex={0} className="close text-right" onClick={() => cancelbutton(artist2.name, artist2.id)}>&times;</span>
+              </Tooltip>
               <div className="circle-img">
                 <img src={artist2.img} alt="" />
               </div>
               <h4 className="name">
-                { _.upperFirst(artist2.name) }
+                <Link to={`/artist/${artist2.id}`}>
+                  { _.upperFirst(artist2.name) }
+                </Link>
               </h4>
-              <span className="match">
+              <span className="match text-right">
                 {artist2.match}
                 <span>%</span>
               </span>
@@ -224,13 +229,17 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist1.img} alt="" />
               </div>
               <h4 className="name">
-                { _.upperFirst(artist1.name)}
+                <Link to={`/artist/${artist1.id}`}>
+                  { _.upperFirst(artist1.name) }
+                </Link>
               </h4>
-              <span className="match">
+              <span className="match text-right">
                 {artist1.match}
                 <span>%</span>
               </span>
-              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist1.name, artist1.id)}>&times;</span>
+              <Tooltip overlay={`Remove ${artist1.name}`} color="#f12">
+                <span role="button" tabIndex={0} className="close text-right" onClick={() => cancelbutton(artist1.name, artist1.id)}>&times;</span>
+              </Tooltip>
             </div>
           </div>
           <div className="bottom-data-line">
@@ -303,14 +312,18 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
           </div>
           <div className="quarter-circle-bottom-left quarter-circle">
             <div className="matchcontainer-2 flex-match-content">
-              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist3.name, artist3.id)}>&times;</span>
+              <Tooltip overlay={`Remove ${artist3.name}`} color="#f12">
+                <span role="button" tabIndex={0} className="close text-left" onClick={() => cancelbutton(artist3.name, artist3.id)}>&times;</span>
+              </Tooltip>
               <div className="circle-img">
                 <img src={artist3.img} alt="" />
               </div>
               <h4 className="name">
-                {_.upperFirst(artist3.name)}
+                <Link to={`/artist/${artist3.id}`}>
+                  { _.upperFirst(artist3.name) }
+                </Link>
               </h4>
-              <span className="match">
+              <span className="match text-left">
                 {artist3.match}
                 <span>%</span>
               </span>
@@ -324,13 +337,17 @@ const ArtistPieChart = ({ data, patchConcertData }: ArtistsPieChartProp) : JSX.E
                 <img src={artist4.img} alt="" />
               </div>
               <h4 className="name">
-                {_.upperFirst(artist4.name)}
+                <Link to={`/artist/${artist4.id}`}>
+                  { _.upperFirst(artist4.name) }
+                </Link>
               </h4>
-              <span className="match">
+              <span className="match text-left">
                 {artist4.match}
                 <span>%</span>
               </span>
-              <span role="button" tabIndex={0} className="close" onClick={() => cancelbutton(artist4.name, artist4.id)}>&times;</span>
+              <Tooltip overlay={`Remove ${artist4.name}`} color="#f12">
+                <span role="button" tabIndex={0} className="close text-left" onClick={() => cancelbutton(artist4.name, artist4.id)}>&times;</span>
+              </Tooltip>
             </div>
           </div>
           <div className="bottom-data-line">

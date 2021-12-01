@@ -3,6 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { PageHeader } from 'antd';
 import { useLocation, useHistory } from 'react-router-dom';
 import config from '../../../services/config.json';
+import { CollaborationData } from '../../../model/types/collaborationForm';
 
 const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey ${name},</span></h2>
 <h3>We <span style="color: #2dc26b;">liked</span> your profile on <span style="color: #f1c40f;">Cuttime.</span></h3>
@@ -13,10 +14,10 @@ const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey $
 const EditorContainer = (): JSX.Element => {
   const history = useHistory();
   const editorRef = useRef<string>('');
-  const data: { state: { prams: string } } = useLocation();
+  const data: { state: { prams: CollaborationData } } = useLocation();
 
   if (data && data.state && data.state.prams) {
-    editorRef.current = data.state.prams;
+    editorRef.current = data.state.prams.html;
   } else {
     const name = 'Nick';
     editorRef.current = getStaticHtml(name);
