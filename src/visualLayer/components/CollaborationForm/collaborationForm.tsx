@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import * as _ from 'lodash';
 import { useHistory } from 'react-router-dom';
-import { CollaborationFormValues } from '../../../model/types/collaborationForm';
+import { CreateDocumentForm } from '../../../model/types/collaborationForm';
 import services from '../../services';
 // import getTemplates from '../../../utils/templates';
 
@@ -78,14 +78,15 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
     }
   };
 
-  const submitForm = async (value: CollaborationFormValues) => {
+  const submitForm = async (value: CreateDocumentForm) => {
     const result = {
       templateId: templateId || '1234',
       fields: value,
       recommendationId,
+      documentName: 'Document name', // Todo: accept document name from user
     };
 
-    const response = await services.Documents.getHtmlTemplate(result);
+    const response = await services.Documents.createDocument(result);
     if (response.error) {
       message.error('Somthing went wrong');
       return;

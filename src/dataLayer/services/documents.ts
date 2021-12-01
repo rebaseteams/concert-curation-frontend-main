@@ -1,7 +1,7 @@
 import DocumentsInterface from '../../model/interfaces/documents';
-import { CollaborationFormValues } from '../../model/types/collaborationForm';
+import { CreateDocumentForm } from '../../model/types/collaborationForm';
 import {
-  CollaborationFormResponse,
+  CreateDocumentResponse, GetDocumentsResponse,
 } from '../../model/types/service-response';
 
 export default class Documents implements DocumentsInterface {
@@ -11,10 +11,18 @@ export default class Documents implements DocumentsInterface {
       this.documentsRepo = documentsRepo;
     }
 
-    getHtmlTemplate(collaborationFormValues: CollaborationFormValues):
-      Promise<CollaborationFormResponse> {
+    getDocuments(): Promise<GetDocumentsResponse> {
       return new Promise((resolve) => {
-        this.documentsRepo.getHtmlTemplate(collaborationFormValues).then((val) => {
+        this.documentsRepo.getDocuments().then((val) => {
+          resolve(val);
+        });
+      });
+    }
+
+    createDocument(collaborationFormValues: CreateDocumentForm):
+      Promise<CreateDocumentResponse> {
+      return new Promise((resolve) => {
+        this.documentsRepo.createDocument(collaborationFormValues).then((val) => {
           resolve(val);
         });
       });
