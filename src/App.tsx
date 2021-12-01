@@ -62,7 +62,7 @@ function App():JSX.Element {
         <Route path="/signup" exact>
           <Signup />
         </Route>
-        <Route path="/recommendations/:id" exact>
+        <Route path="/recommendations/:recommendationId" exact>
           <RecommendationPage />
         </Route>
         <Route path="/artist/:id" exact>
