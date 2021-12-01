@@ -1,7 +1,8 @@
-export type CollaborationFormValues = {
+export type CreateDocumentForm = {
   templateId: string,
   recommendationId: string,
   fields: object;
+  documentName: string,
 }
 
 export type CreateCollaborationResponseData = {

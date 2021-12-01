@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
+import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
 import { TemplateResponse, Templates } from './templates';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// Recommendations Response
 export type GetAllRecommendationsResponse = {
   error: boolean,
   message: string,
@@ -30,13 +32,6 @@ export type DeleteRecommendationResponse = {
   status?: number | string;
 }
 
-export type CollaborationFormResponse = {
-  error: boolean,
-  message: string,
-  data?: CreateCollaborationResponseData,
-  status?: number | string;
-}
-
 export type AddRecommendationResponse = {
   error: boolean,
   message: string,
@@ -51,6 +46,27 @@ export type PatchRecommendationResponse = {
   status?: number | string;
 }
 
+// Documents response
+export type DocumentsResponseData = {
+  success: boolean,
+  data: Array<Documents>
+}
+
+export type GetDocumentsResponse = {
+  error: boolean,
+  message: string,
+  data?: DocumentsResponseData,
+  status?: number | string,
+}
+
+export type CreateDocumentResponse = {
+  error: boolean,
+  message: string,
+  data?: CreateCollaborationResponseData,
+  status?: number | string;
+}
+
+// Notifications Response
 export type SendNotificationResponse = {
   error: boolean,
   message: string,
@@ -58,6 +74,7 @@ export type SendNotificationResponse = {
   status?: number | string;
 }
 
+// Templates Response
 export type GetTemplatesResponse = {
   error: boolean,
   message: string,

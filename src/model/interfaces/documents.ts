@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable semi */
-import { CollaborationFormValues } from '../types/collaborationForm';
-import { CollaborationFormResponse } from '../types/service-response';
+import { CreateDocumentForm } from '../types/collaborationForm';
+import { CreateDocumentResponse, GetDocumentsResponse } from '../types/service-response';
 
 export default interface DocumentsInterface {
-  getHtmlTemplate (collaborationFormValues: CollaborationFormValues): Promise<CollaborationFormResponse>;
+  createDocument (createDocumentForm: CreateDocumentForm): Promise<CreateDocumentResponse>;
+  getDocuments (): Promise<GetDocumentsResponse>;
 }
