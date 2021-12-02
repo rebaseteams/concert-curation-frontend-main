@@ -2,7 +2,7 @@
   {
     "name": "concertName",
     "label": "Event Name",
-    "type": "input",
+    "type": "text",
     "placeholder": "Enter form name",
     "required": true,
     "message": "Please select event type",

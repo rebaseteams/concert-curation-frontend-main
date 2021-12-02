@@ -75,14 +75,23 @@ JSX.Element => (
   </Form.Item>
 );
 
-const renderInput = (field: any): JSX.Element => (
+export type TextInputFieldProp = {
+  name: string,
+  label: string,
+  required: boolean,
+  message: string,
+  placeholder: string,
+}
+
+type InputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
+export const inputField = (field: TextInputFieldProp, type: InputType): JSX.Element => (
   <Form.Item
     key={field.name}
     label={field.label}
     name={field.name}
     rules={[{ required: field.required, message: field.message }]}
   >
-    <Input placeholder={field.placeholder} />
+    <Input type={type} placeholder={field.placeholder} />
   </Form.Item>
 );
 
@@ -96,14 +105,20 @@ any => formData.map((field: FormFields) => {
     case 'slider':
       return renderSlider(field, budget, onBudgetChange);
 
-    case 'input':
-      return renderInput(field);
+    case 'text':
+      return inputField(field as TextInputFieldProp, 'text');
 
-    case 'string':
-      return renderInput(field);
+    case 'email':
+      return inputField(field as TextInputFieldProp, 'email');
+
+    case 'password':
+      return inputField(field as TextInputFieldProp, 'password');
+
+    case 'date':
+      return inputField(field as TextInputFieldProp, 'date');
 
     default:
-      return <span>None</span>;
+      return inputField(field as TextInputFieldProp, 'text');
   }
 });
 
