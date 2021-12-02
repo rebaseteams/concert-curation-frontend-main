@@ -2,7 +2,7 @@ export type CreateDocumentForm = {
   templateId: string,
   recommendationId: string,
   fields: object;
-  documentName: string,
+  name: string,
 }
 
 export type CreateCollaborationResponseData = {
@@ -13,7 +13,7 @@ export type CreateCollaborationResponseData = {
 }
 
 export type CollaborationData = {
-  documentId: string,
+  id: string,
   html: string,
   recommendationId: string
 }

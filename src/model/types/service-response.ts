@@ -73,6 +73,31 @@ export type DeleteDocumentResponse = {
   status?: number | string;
 }
 
+export type EditDocumentsResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+type DocumentData = {
+  id: string,
+  name: string,
+  createdOn: string,
+  recommendationId: string,
+  html: string
+}
+
+export type GetDocumentResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: true,
+    data: DocumentData
+  },
+  status?: number | string;
+}
+
 // Notifications Response
 export type SendNotificationResponse = {
   error: boolean,

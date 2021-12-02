@@ -1,5 +1,5 @@
 export type Documents = {
-  documentId: string,
-  documentName: string,
+  id: string,
+  name: string,
   createdOn: string,
 }

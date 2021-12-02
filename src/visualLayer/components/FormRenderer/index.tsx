@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import { FormFields } from '../../../model/types/formRenderer';
 import { ArtistBudget } from '../../../model/types/artist-budget';
+import IconRenderer from '../IconRenderer';
 
 const renderOptions = (options: Array<string>) => options.map((option: string) => <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>);
 
@@ -91,7 +92,7 @@ export const inputField = (field: TextInputFieldProp, type: InputType): JSX.Elem
     name={field.name}
     rules={[{ required: field.required, message: field.message }]}
   >
-    <Input type={type} placeholder={field.placeholder} />
+    <Input prefix={IconRenderer(field.name)} type={type} placeholder={field.placeholder} />
   </Form.Item>
 );
 
