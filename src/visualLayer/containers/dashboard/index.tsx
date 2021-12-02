@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import {
-  Layout, Button, Spin, Result, Row, Col, Table, Space, Empty,
+  Layout, Button, Spin, Result, Row, Col, Table, Space, Empty, message, Modal,
 } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -34,13 +34,6 @@ const DashboardComponent = (): JSX.Element => {
 
   const getConcerts = async () => {
     const recommendations = await services.ArtistRecommendation.getAllRecommendations();
-    const documentsResponse = await services.Documents.getDocuments();
-    if (documentsResponse.error) {
-      setError({ status: documentsResponse.status, message: documentsResponse.message });
-    } else if (documentsResponse.data && documentsResponse.data.data) {
-      setDocuments(documentsResponse.data.data);
-    }
-
     if (recommendations.error) {
       setError({ status: recommendations.status, message: recommendations.message });
     } else {
@@ -49,9 +42,20 @@ const DashboardComponent = (): JSX.Element => {
     setLoading(false);
   };
 
+  const getDocuments = async () => {
+    const documentsResponse = await services.Documents.getDocuments();
+    if (documentsResponse.error) {
+      setError({ status: documentsResponse.status, message: documentsResponse.message });
+    } else if (documentsResponse.data && documentsResponse.data.data) {
+      setDocuments(documentsResponse.data.data);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     setLoading(true);
     getConcerts();
+    getDocuments();
   }, []);
 
   const renderLoading = (): JSX.Element => <Spin>Loading...</Spin>;
@@ -91,7 +95,7 @@ const DashboardComponent = (): JSX.Element => {
           <div className="width-md">
             <h4 className="text-size-3">Documents</h4>
             <div>
-              { renderDocuments(documents) }
+              { renderDocuments(documents, getDocuments) }
             </div>
           </div>
         </Col>
@@ -100,8 +104,31 @@ const DashboardComponent = (): JSX.Element => {
   );
 };
 
+const deleteDocument = (documentId: string, getDocuments: () => Promise<void>) => {
+  Modal.confirm({
+    title: 'Delete document',
+    content: 'Are you sure?',
+    okText: 'Yes',
+    onOk: () => confirmDelete(),
+    cancelText: 'No',
+  });
+  const confirmDelete = async () => {
+    const response = await services.Documents.deleteDocument(documentId);
+    if (response.error) {
+      message.error('failed delete document');
+      return;
+    }
+    if (response.data && response.data.success) {
+      message.success('delete success');
+      getDocuments();
+      return;
+    }
+    message.error('something went wrong');
+  };
+};
+
 // eslint-disable-next-line max-len
-const renderDocuments = (document: Array<Documents>): JSX.Element => {
+const renderDocuments = (document: Array<Documents>, getDocuments: () => Promise<void>): JSX.Element => {
   const columns = [
     {
       title: 'Document Name',
@@ -123,7 +150,7 @@ const renderDocuments = (document: Array<Documents>): JSX.Element => {
           <Link to={`/editor/${documentId}`}>
             view document
           </Link>
-          <Button type="link">delete</Button>
+          <Button type="link" onClick={() => deleteDocument(documentId, getDocuments)}>delete</Button>
         </Space>
       ),
     },

@@ -66,6 +66,13 @@ export type CreateDocumentResponse = {
   status?: number | string;
 }
 
+export type DeleteDocumentResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
 // Notifications Response
 export type SendNotificationResponse = {
   error: boolean,

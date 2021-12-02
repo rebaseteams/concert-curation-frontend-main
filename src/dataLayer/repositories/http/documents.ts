@@ -2,7 +2,9 @@ import axios from 'axios';
 import config from '../../../config';
 import DocumentsInterface from '../../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
-import { CatchError, CreateDocumentResponse, GetDocumentsResponse } from '../../../model/types/service-response';
+import {
+  CatchError, CreateDocumentResponse, DeleteDocumentResponse, GetDocumentsResponse,
+} from '../../../model/types/service-response';
 
 const server = config.PROD_SERVER;
 
@@ -30,6 +32,21 @@ export default class DocumentsRepo implements DocumentsInterface {
       }
       resolve({
         error: false, message: val.statusText, data: val.data, status: val.status,
+      });
+    }).catch((err: CatchError) => {
+      resolve({ error: true, message: err.message, status: err.status });
+    });
+  })
+
+  deleteDocument = async (documentId: string):
+  Promise<DeleteDocumentResponse> => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    axios.delete(`${DOCUMENTS_URI}/${documentId}`).then((response: any) => {
+      if (response.status !== 200) {
+        resolve({ error: true, message: response.statusText, status: response.status });
+      }
+      resolve({
+        error: false, message: response.statusText, data: response.data, status: response.status,
       });
     }).catch((err: CatchError) => {
       resolve({ error: true, message: err.message, status: err.status });
