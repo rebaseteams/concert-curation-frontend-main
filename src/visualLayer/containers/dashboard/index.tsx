@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import {
-  Layout, Button, Spin, Result, Row, Col, Table, Space, Empty, message, Modal,
+  Layout, Button, Spin, Result, Row, Col, Table, Space, Empty, message, Modal, Tooltip,
 } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -17,6 +17,8 @@ import { Documents } from '../../../model/types/document/addDocument';
 
 // styles
 import './dashboard.style.scss';
+import IconRenderer from '../../components/IconRenderer';
+import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 
 const { Content } = Layout;
 
@@ -27,6 +29,7 @@ interface Error {
 
 const DashboardComponent = (): JSX.Element => {
   const [displayFormModal, setDisplayFormModal] = useState(false);
+  const [collaborationModal, setCollaborationModal] = useState(false);
   const [forms, setForms] = useState<Array<ConcertCreationResponse>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
@@ -75,6 +78,19 @@ const DashboardComponent = (): JSX.Element => {
 
   return (
     <Content style={{ height: '88vh', overflowY: 'auto' }}>
+      <Modal
+        bodyStyle={{
+          height: '500px',
+          overflowY: 'auto',
+        }}
+        centered
+        visible={collaborationModal}
+        onCancel={() => setCollaborationModal(false)}
+        width={800}
+        footer={false}
+      >
+        <CollaborationForm recommendationId="8636864" />
+      </Modal>
       <CurateConcertModal
         setDisplayFormModal={setDisplayFormModal}
         displayFormModal={displayFormModal}
@@ -82,18 +98,27 @@ const DashboardComponent = (): JSX.Element => {
       />
       <Row>
         <Col md={{ span: 24 }}>
-          <div className="row-flex justify-between width-md">
-            <h4 className="text-size-3">Concert List</h4>
-            <Button data-testid="curate-concert" type="primary" onClick={() => setDisplayFormModal(true)}>
-              New Concert
-            </Button>
+          <div className="row-flex width-md">
+            <h4 className="text-size-3" style={{ marginRight: '20px' }}>Concert List</h4>
+            <Tooltip overlay="New Concert">
+              <Button data-testid="curate-concert" onClick={() => setDisplayFormModal(true)}>
+                { IconRenderer('add') }
+              </Button>
+            </Tooltip>
           </div>
           { loading ? renderLoading() : renderConcerts() }
         </Col>
 
         <Col md={{ span: 24 }}>
           <div className="width-md">
-            <h4 className="text-size-3">Documents</h4>
+            <div className="row-flex">
+              <h4 className="text-size-3" style={{ marginRight: '20px' }}>Documents</h4>
+              <Tooltip overlay="New Document">
+                <Button onClick={() => setCollaborationModal(true)}>
+                  { IconRenderer('add') }
+                </Button>
+              </Tooltip>
+            </div>
             <div>
               { renderDocuments(documents, getDocuments) }
             </div>
@@ -165,10 +190,10 @@ const renderDocuments = (document: Array<Documents>, getDocuments: () => Promise
 
   try {
     const data: Array<TableData> = _.map(document, (doc: Documents) => ({
-      key: doc.documentId,
-      documentName: doc.documentName,
-      date: doc.createdOn.slice(0, 25),
-      action: doc.documentId,
+      key: doc.id,
+      documentName: doc.name,
+      date: doc.createdOn.split('T')[0],
+      action: doc.id,
     }));
     return (<Table columns={columns} dataSource={data} />);
   } catch (err) {

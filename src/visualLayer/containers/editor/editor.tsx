@@ -1,34 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { PageHeader } from 'antd';
-import { useLocation, useHistory } from 'react-router-dom';
+import { Button, message, PageHeader } from 'antd';
+import { useHistory, useParams } from 'react-router-dom';
 import config from '../../../services/config.json';
-import { CollaborationData } from '../../../model/types/collaborationForm';
-
-const getStaticHtml = (name: string) => `<h2><span style="color: #fbeeb8;">Hey ${name},</span></h2>
-<h3>We <span style="color: #2dc26b;">liked</span> your profile on <span style="color: #f1c40f;">Cuttime.</span></h3>
-<p>We are planning to have a Concert at <strong><span style="color: #3598db;">London, Imperial Collge,</span></strong></p>
-<p>and what you to collaborate with us.</p>
-<p><strong>Regards Imperial College.</strong></p>`;
+import services from '../../services';
 
 const EditorContainer = (): JSX.Element => {
   const history = useHistory();
-  const editorRef = useRef<string>('');
-  const data: { state: { prams: CollaborationData } } = useLocation();
-  if (data && data.state && data.state.prams) {
-    editorRef.current = data.state.prams.html;
-  } else {
-    const name = 'Nick';
-    editorRef.current = getStaticHtml(name);
-  }
+  const [html, setHtml] = useState<string>('');
+  const [documentName, setDocumentName] = useState('');
+  const [editorContent, setEditorContent] = useState<string>('');
+  const [createdOn, setCreatedOn] = useState<string>('');
+  const documentId = useRef<string>('');
+
+  const getDocument = async (id: string) => {
+    const response = await services.Documents.getDocument(id);
+    if (response.error) {
+      message.error(response.message);
+      return;
+    }
+    if (response.data && response.data.success) {
+      setDocumentName(response.data.data.name);
+      setHtml(response.data.data.html);
+      setCreatedOn(response.data.data.createdOn.split('T')[0]);
+      documentId.current = response.data.data.id;
+    }
+  };
+
+  const { id }: { id: string } = useParams();
+  getDocument(id);
 
   const redirectBack = () => {
     history.goBack();
   };
 
-  const log = () => {
-    // eslint-disable-next-line no-console
-    console.log(editorRef.current);
+  const saveDocument = async () => {
+    const response = await services.Documents.editDocument(id, editorContent);
+    if (response.error) {
+      message.error(response.message);
+      return;
+    }
+    if (response.data && response.data.success) {
+      message.success('saved successfully');
+      return;
+    }
+    message.error('Somthing went wrong');
   };
 
   return (
@@ -36,8 +52,9 @@ const EditorContainer = (): JSX.Element => {
       <PageHeader
         className="site-page-header"
         onBack={() => redirectBack()}
-        title="Form preview"
-        subTitle="edit your form"
+        title={documentName}
+        subTitle={`created on ${createdOn}`}
+        extra={<Button type="primary" onClick={() => saveDocument()}>Save</Button>}
       />
       <div
         style={{
@@ -47,30 +64,28 @@ const EditorContainer = (): JSX.Element => {
       >
         <Editor
         // eslint-disable-next-line no-return-assign
-          onInit={(evt, editor) => editorRef.current = editor.getContent()}
+          onInit={(evt, editor) => setHtml(editor.getContent())}
           apiKey={config.TINY_API}
-          initialValue={editorRef.current}
+          initialValue={html}
         // eslint-disable-next-line no-return-assign
-          onChange={(evt, editor) => editorRef.current = editor.getContent()}
+          onChange={(evt, editor) => setEditorContent(editor.getContent())}
           init={{
-            height: 850,
+            height: 520,
             menubar: false,
             plugins: [
+              'export pagebreak',
               'advlist autolink lists link image charmap print preview anchor',
               'searchreplace visualblocks code fullscreen',
               'insertdatetime media table paste code help wordcount',
             ],
-            toolbar: 'undo redo | formatselect | '
+            toolbar: 'export code pagebreak | undo redo | formatselect | '
            + 'bold italic backcolor forecolor | alignleft aligncenter '
            + 'alignright alignjustify | bullist numlist outdent indent | '
            + 'removeformat | help',
-            skin: 'oxide-dark',
-            content_css: 'dark',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           }}
         />
       </div>
-      <button type="button" onClick={log}>Print html</button>
     </div>
   );
 };

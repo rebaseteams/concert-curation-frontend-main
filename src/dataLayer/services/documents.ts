@@ -1,7 +1,7 @@
 import DocumentsInterface from '../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../model/types/collaborationForm';
 import {
-  CreateDocumentResponse, DeleteDocumentResponse, GetDocumentsResponse,
+  CreateDocumentResponse, DeleteDocumentResponse, GetDocumentResponse, GetDocumentsResponse,
 } from '../../model/types/service-response';
 
 export default class Documents implements DocumentsInterface {
@@ -14,6 +14,14 @@ export default class Documents implements DocumentsInterface {
     getDocuments(): Promise<GetDocumentsResponse> {
       return new Promise((resolve) => {
         this.documentsRepo.getDocuments().then((val) => {
+          resolve(val);
+        });
+      });
+    }
+
+    getDocument(documentId: string): Promise<GetDocumentResponse> {
+      return new Promise((resolve) => {
+        this.documentsRepo.getDocument(documentId).then((val) => {
           resolve(val);
         });
       });
@@ -32,6 +40,15 @@ export default class Documents implements DocumentsInterface {
       Promise<DeleteDocumentResponse> {
       return new Promise((resolve) => {
         this.documentsRepo.deleteDocument(documentId).then((val) => {
+          resolve(val);
+        });
+      });
+    }
+
+    editDocument(documentId: string, html: string):
+      Promise<DeleteDocumentResponse> {
+      return new Promise((resolve) => {
+        this.documentsRepo.editDocument(documentId, html).then((val) => {
           resolve(val);
         });
       });

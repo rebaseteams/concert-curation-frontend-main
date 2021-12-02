@@ -78,15 +78,15 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
     }
   };
 
-  const submitForm = async (value: { documentName?: string }) => {
-    const { documentName } = value;
+  const submitForm = async (value: { name?: string }) => {
+    const { name } = value;
     // eslint-disable-next-line no-param-reassign
-    delete value.documentName;
+    delete value.name;
     const result: CreateDocumentForm = {
       templateId: templateId || '1234',
       fields: value,
       recommendationId,
-      documentName: documentName || 'Document name',
+      name: name || 'Document name',
     };
 
     const response = await services.Documents.createDocument(result);
@@ -95,7 +95,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
       return;
     }
     if (response.data && response.data.success) {
-      history.push('/editor/7676', { prams: response.data.data.document });
+      history.push(`/editor/${response.data.data.document.id}`);
       return;
     }
     message.error('Bad Request');
@@ -124,9 +124,9 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
         >
           { inputField({
             label: 'Document Name',
-            placeholder: 'document name',
+            placeholder: 'Document name',
             required: true,
-            name: 'documentName',
+            name: 'name',
             message: 'document name is required',
           }, 'text') }
           { formData && renderFormFields(formData, { min: 33, max: 33 }) }
