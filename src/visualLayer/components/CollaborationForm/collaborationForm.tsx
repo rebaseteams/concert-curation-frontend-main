@@ -18,7 +18,7 @@ import services from '../../services';
 
 import './style.scss';
 import { Templates } from '../../../model/types/templates';
-import renderFormFields from '../FormRenderer';
+import renderFormFields, { inputField } from '../FormRenderer';
 import { FormFields } from '../../../model/types/formRenderer';
 import templateFormDataMapper from './utils';
 
@@ -69,7 +69,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
 
   const selectTemplate = async (template: string) => {
     setTemplateId(template);
-    const response = await services.Templates.getTemplate('1234');
+    const response = await services.Templates.getTemplate(template);
     if (response.error) {
       setError({ status: '404', title: response.message });
     }
@@ -78,12 +78,15 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
     }
   };
 
-  const submitForm = async (value: CreateDocumentForm) => {
-    const result = {
+  const submitForm = async (value: { documentName?: string }) => {
+    const { documentName } = value;
+    // eslint-disable-next-line no-param-reassign
+    delete value.documentName;
+    const result: CreateDocumentForm = {
       templateId: templateId || '1234',
       fields: value,
       recommendationId,
-      documentName: 'Document name', // Todo: accept document name from user
+      documentName: documentName || 'Document name',
     };
 
     const response = await services.Documents.createDocument(result);
@@ -119,6 +122,13 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
           layout="vertical"
           onFinish={submitForm}
         >
+          { inputField({
+            label: 'Document Name',
+            placeholder: 'document name',
+            required: true,
+            name: 'documentName',
+            message: 'document name is required',
+          }, 'text') }
           { formData && renderFormFields(formData, { min: 33, max: 33 }) }
 
           <Form.Item label="">
