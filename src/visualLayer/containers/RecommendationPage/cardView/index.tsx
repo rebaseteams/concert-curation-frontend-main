@@ -10,20 +10,141 @@ import { AssociatedBrands } from '../../../../model/types/associatedBrands';
 import { Venue } from '../../../../model/types/venue';
 
 interface CardViewProps {
-    data: Array<ARec>
+    data: Array<ARec>,
+    recommendationId: string
 }
 
 const colorsPallate = ['#4FFFC2', '#fff41d', '#FBB823'];
 
-const CardView = ({ data }: CardViewProps): JSX.Element => {
+const CardView = ({ data, recommendationId }: CardViewProps): JSX.Element => {
   const span = 8;
+
+  const renderCards = (artist: ARec, artistIndex: number): JSX.Element => {
+    let order;
+    switch (artistIndex) {
+      case 0:
+        order = 1;
+        break;
+      case 1:
+        order = 0;
+        break;
+      default:
+        order = artistIndex;
+    }
+
+    // eslint-disable-next-line max-len
+    let gender: 'male' | 'female';
+    if (artist.matchAttributes.gender.male > artist.matchAttributes.gender.female) {
+      gender = 'male';
+    } else {
+      gender = 'female';
+    }
+    return (
+      <Col
+        key={artistIndex}
+        className="card"
+        style={{
+          height: (artistIndex * 10 + 450),
+        }}
+        sm={{ span: 24 }}
+        md={{ span }}
+        order={order}
+      >
+        <div
+          className="inner-card"
+          style={{
+            height: (artistIndex * -30 + 450),
+            background: colorsPallate[artistIndex],
+          }}
+        >
+          <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
+          <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
+          <div className="card-body">
+            <div className="card-heading">
+              <Link to={{
+                pathname: `/artist/${artist.artistId}`,
+                state: {
+                  recommendationId,
+                },
+              }}
+              >
+                <h3>
+                  {artist.artistName}
+                </h3>
+              </Link>
+              <p>
+                {String(artist.matchPercentage)}
+                %
+              </p>
+            </div>
+            <div className="venue">
+              <div>
+                <span
+                  className="material-icons"
+                  style={{ fontSize: '35px', color: '#f32' }}
+                >
+                  location_on
+                </span>
+              </div>
+              <ul>
+                {artist.matchAttributes.venues.map((vanue: Venue, index:number) => (
+                  <li key={index}>
+                    {vanue.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="affinity">
+              <h6>Affinities</h6>
+              <div className="field">
+                <h5>
+                  Age
+                  {' '}
+                  {artist.matchAttributes.age.ageGroup}
+                  {' '}
+                  {artist.matchAttributes.age.matchPercentage}
+                  %
+                </h5>
+              </div>
+
+              <div className="field">
+                <h5>
+                  {gender.toUpperCase()}
+                  {' '}
+                  <span>{artist.matchAttributes.gender[gender]}</span>
+                  {'% '}
+                </h5>
+              </div>
+
+              <div className="field">
+                <h5>
+                  Genre
+                </h5>
+                { artist.matchAttributes.genre.length > 0
+                  && displayGenre(artist.matchAttributes.genre) }
+              </div>
+            </div>
+
+            <h6>Associated Brands</h6>
+            <div className="venue">
+              {
+                artist.matchAttributes.associatedBrands.length > 0
+                && displayBrands(artist.matchAttributes.associatedBrands)
+              }
+            </div>
+          </div>
+        </div>
+      </Col>
+    );
+  };
 
   return (
     <>
       {
         // eslint-disable-next-line arrow-body-style
         data.map((artist: ARec, artistIndex: number) => {
-          return renderCards(artist, artistIndex, span);
+          return renderCards(artist, artistIndex);
         })
       }
     </>
@@ -31,121 +152,6 @@ const CardView = ({ data }: CardViewProps): JSX.Element => {
 };
 
 export default CardView;
-
-const renderCards = (artist: ARec, artistIndex: number, span: number): JSX.Element => {
-  let order;
-  switch (artistIndex) {
-    case 0:
-      order = 1;
-      break;
-    case 1:
-      order = 0;
-      break;
-    default:
-      order = artistIndex;
-  }
-
-  // eslint-disable-next-line max-len
-  let gender: 'male' | 'female';
-  if (artist.matchAttributes.gender.male > artist.matchAttributes.gender.female) {
-    gender = 'male';
-  } else {
-    gender = 'female';
-  }
-
-  return (
-    <Col
-      key={artistIndex}
-      className="card"
-      style={{
-        height: (artistIndex * 10 + 450),
-      }}
-      sm={{ span: 24 }}
-      md={{ span }}
-      order={order}
-    >
-      <div
-        className="inner-card"
-        style={{
-          height: (artistIndex * -30 + 450),
-          background: colorsPallate[artistIndex],
-        }}
-      >
-        <img className="profile-pic" src={artist.artistImage} alt="xprofile pic" />
-        <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
-        <div className="card-body">
-          <div className="card-heading">
-            <Link to={`/artist/${artist.artistId}`}>
-              <h3>
-                {artist.artistName}
-              </h3>
-            </Link>
-            <p>
-              {String(artist.matchPercentage)}
-              %
-            </p>
-          </div>
-          <div className="venue">
-            <div>
-              <span
-                className="material-icons"
-                style={{ fontSize: '35px', color: '#f32' }}
-              >
-                location_on
-              </span>
-            </div>
-            <ul>
-              {artist.matchAttributes.venues.map((vanue: Venue, index:number) => (
-                <li key={index}>
-                  {vanue.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="affinity">
-            <h6>Affinities</h6>
-            <div className="field">
-              <h5>
-                Age
-                {' '}
-                {artist.matchAttributes.age.ageGroup}
-                {' '}
-                {artist.matchAttributes.age.matchPercentage}
-                %
-              </h5>
-            </div>
-
-            <div className="field">
-              <h5>
-                {gender.toUpperCase()}
-                {' '}
-                <span>{artist.matchAttributes.gender[gender]}</span>
-                {'% '}
-              </h5>
-            </div>
-
-            <div className="field">
-              <h5>
-                Genre
-              </h5>
-              { artist.matchAttributes.genre.length > 0
-                && displayGenre(artist.matchAttributes.genre) }
-            </div>
-          </div>
-
-          <h6>Associated Brands</h6>
-          <div className="venue">
-            {
-              artist.matchAttributes.associatedBrands.length > 0
-              && displayBrands(artist.matchAttributes.associatedBrands)
-            }
-          </div>
-        </div>
-      </div>
-    </Col>
-  );
-};
 
 function displayGenre(genre: Array<GenreRes>) {
   return genre.map((genreItem: GenreRes, index: number) => (

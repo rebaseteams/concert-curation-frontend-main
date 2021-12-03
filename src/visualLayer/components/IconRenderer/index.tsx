@@ -20,6 +20,8 @@ const iconMapper: any = {
   managerMobile: 'phone',
   managerAddress: 'home',
   groupName: 'groups',
+  waving_hand: 'waving_hand',
+  refresh: 'refresh',
 };
 
 const IconRenderer = (value: string): JSX.Element => {
