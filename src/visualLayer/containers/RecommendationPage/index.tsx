@@ -243,7 +243,10 @@ const RecommendationPage = (): JSX.Element => {
               ) : (
                 <Row className="card-container" align="bottom">
                   {artistsData.length > 0 && (
-                  <CardView data={artistsData.slice(0, 3)} />
+                  <CardView
+                    data={artistsData.slice(0, 3)}
+                    recommendationId={recommendationId}
+                  />
                   )}
                 </Row>
               )}

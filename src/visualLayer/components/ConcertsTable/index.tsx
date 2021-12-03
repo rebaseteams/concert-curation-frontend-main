@@ -20,10 +20,11 @@ interface ConcertsTableProp {
   forms: Array<ConcertCreationResponse> | { message: string} | undefined;
   // TODO: find proper datatype for functions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getConcerts: any;
+  concertLoading: boolean,
+  getConcerts: () => Promise<void>;
 }
 
-const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element => {
+const ConcertsTable = ({ forms, concertLoading, getConcerts }: ConcertsTableProp): JSX.Element => {
   const data: Array<ConcertCreationResponse> = _.map(forms, (form: ConcertCreationResponse) => ({
     ...form,
     key: form.id,
@@ -138,6 +139,7 @@ const ConcertsTable = ({ forms, getConcerts }: ConcertsTableProp): JSX.Element =
           type: 'checkbox',
           ...rowSelection,
         }}
+        loading={concertLoading}
         columns={columns}
         dataSource={data}
         className="concert-table"
