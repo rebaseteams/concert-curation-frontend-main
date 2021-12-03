@@ -82,6 +82,7 @@ export type TextInputFieldProp = {
   required: boolean,
   message: string,
   placeholder: string,
+  default? : string,
 }
 
 type InputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
@@ -92,7 +93,11 @@ export const inputField = (field: TextInputFieldProp, type: InputType): JSX.Elem
     name={field.name}
     rules={[{ required: field.required, message: field.message }]}
   >
-    <Input prefix={IconRenderer(field.name)} type={type} placeholder={field.placeholder} />
+    <Input
+      prefix={IconRenderer(field.name)}
+      type={type}
+      placeholder={field.placeholder}
+    />
   </Form.Item>
 );
 

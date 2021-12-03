@@ -2,6 +2,7 @@ export type FormFields = {
   type: 'input' | 'select' | 'slider' | 'string' | string,
   name: string,
   label: string,
+  multiple: boolean,
   required: boolean,
   message?: string,
   min?: number,
@@ -9,5 +10,5 @@ export type FormFields = {
   step?: number,
   placeholder?: string,
   options?: Array<string>,
-  multiple: boolean,
+  default?: string | number | Array<string | number>
 }
