@@ -12,9 +12,14 @@ const iconMapper: any = {
   location: 'place',
   add: 'add',
   concertName: 'badge',
-  date: 'todat',
+  date: 'event',
   artistName: 'account_circle',
   avatar: 'account_circle',
+  managerEmail: 'email',
+  managerName: 'manage_accounts',
+  managerMobile: 'phone',
+  managerAddress: 'home',
+  groupName: 'groups',
 };
 
 const IconRenderer = (value: string): JSX.Element => {

@@ -63,18 +63,18 @@ const DashboardComponent = (): JSX.Element => {
 
   const renderLoading = (): JSX.Element => <Spin>Loading...</Spin>;
 
-  const renderConcerts = (): JSX.Element => {
-    if (error) {
-      return (
-        <Result
-          status={404}
-          title={error.status}
-          subTitle={error.message}
-        />
-      );
-    }
-    return <ConcertsTable forms={forms} getConcerts={getConcerts} />;
-  };
+  const renderConcerts = ():
+  JSX.Element => <ConcertsTable forms={forms} getConcerts={getConcerts} />;
+
+  if (error) {
+    return (
+      <Result
+        status={500}
+        title={error.status}
+        subTitle={error.message}
+      />
+    );
+  }
 
   return (
     <Content style={{ height: '88vh', overflowY: 'auto' }}>

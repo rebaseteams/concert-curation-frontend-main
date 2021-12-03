@@ -70,7 +70,7 @@ const EditorContainer = (): JSX.Element => {
         // eslint-disable-next-line no-return-assign
           onChange={(evt, editor) => setEditorContent(editor.getContent())}
           init={{
-            height: 520,
+            height: '88vh',
             menubar: false,
             plugins: [
               'export pagebreak',

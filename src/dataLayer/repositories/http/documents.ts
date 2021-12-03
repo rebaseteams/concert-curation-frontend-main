@@ -11,7 +11,7 @@ import {
   GetDocumentsResponse,
 } from '../../../model/types/service-response';
 
-const server = config.DEV_SERVER;
+const server = config.PROD_SERVER;
 
 const DOCUMENTS_URI = `${server}/artists/recommendations/documents`;
 

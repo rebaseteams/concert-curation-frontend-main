@@ -9,6 +9,8 @@ const templateFormDataMapper = (formsData: Array<TemplateQuestions>): Array<Form
     label: form.question,
     required: true,
     multiple: false,
+    default: form.field || '',
+    placeholder: form.question || '',
   }));
   return result;
 };

@@ -68,14 +68,20 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
   }, []);
 
   const selectTemplate = async (template: string) => {
+    setLoading(true);
     setTemplateId(template);
     const response = await services.Templates.getTemplate(template);
     if (response.error) {
       setError({ status: '404', title: response.message });
+      setLoading(false);
+      return;
     }
     if (response.data && response.data.success) {
       setFormData(templateFormDataMapper(response.data.data.questions));
+      setLoading(false);
+      return;
     }
+    setLoading(false);
   };
 
   const submitForm = async (value: { name?: string }) => {
