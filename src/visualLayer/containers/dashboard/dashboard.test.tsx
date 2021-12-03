@@ -1,7 +1,9 @@
 import React from 'react';
 import {
+  fireEvent,
   render,
   screen,
+  waitFor,
 } from '@testing-library/react';
 import DashboardComponent from './index';
 
@@ -21,8 +23,10 @@ describe('Dashboard Page', () => {
       })),
     });
   });
-  it('Should render dashboard', () => {
+  it('Should render dashboard', async () => {
     render(<DashboardComponent />);
+    fireEvent.mouseOver(screen.getByTestId('curate-concert'));
+    await waitFor(() => screen.getByText('New Concert'));
     expect(screen.getByText('New Concert')).toBeInTheDocument();
   });
 
