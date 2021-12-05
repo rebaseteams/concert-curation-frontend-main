@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useAuth0 as defaultUseAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosRequestConfig } from 'axios';
 
 import {
@@ -11,10 +12,10 @@ import { Result } from 'antd';
 // importing services
 import extractUserToken from './services/userToken';
 
-import config from './config';
+import { config } from './config';
 
 // importing components
-import HeaderComponet from './visualLayer/containers/header';
+import { createHeaderComponent } from './visualLayer/containers/header';
 
 import DashboardComponent from './visualLayer/containers/dashboard';
 
@@ -28,13 +29,14 @@ import EditorContainer from './visualLayer/containers/editor/editor';
 
 // styles
 import './App.scss';
+import { UseAuth0 } from './model/types/auth0User';
 
 // For GET requests
 axios.interceptors.request.use(
   (req: AxiosRequestConfig) => {
     // Add configurations here
     const whiteListedEndpoints: Array<string> = [
-      `${config.AUTH_DOMAIN}/dbconnections/signup`,
+      `${config.constants.AUTH_DOMAIN}/dbconnections/signup`,
     ];
     if (req.url && whiteListedEndpoints.includes(req.url)) {
       return req;
@@ -51,40 +53,66 @@ axios.interceptors.request.use(
   (err) => Promise.reject(err),
 );
 
-function App():JSX.Element {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact>
-          <HeaderComponet />
-          <DashboardComponent />
-        </Route>
-        <Route path="/signup" exact>
-          <Signup />
-        </Route>
-        <Route path="/recommendations/:recommendationId" exact>
-          <RecommendationPage />
-        </Route>
-        <Route path="/artist/:id" exact>
-          <ArtistPage />
-        </Route>
-        <Route path="/editor/:id" exact>
-          <EditorContainer />
-        </Route>
-        <Route path="/*" exact>
-          <Result
-            status="404"
-            title="404"
-            subTitle="Sorry, the page you visited does not exist."
-            extra={<Link to="/">Back Home</Link>}
-          />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
-}
-
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
 localStorage.setItem('userid', '1238989');
-export default App;
+
+export interface AppOptions {
+  useAuth0?: UseAuth0;
+}
+
+export function createApp(
+  {
+    useAuth0 = defaultUseAuth0,
+  } : AppOptions,
+): () => JSX.Element | null {
+  const HeaderComponent = createHeaderComponent({ useAuth0 });
+
+  return function App(): JSX.Element | null {
+    const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
+    useEffect(
+      () => {
+        if (isAuthenticated || isLoading) {
+          return;
+        }
+        loginWithRedirect();
+      },
+      [isAuthenticated, isLoading],
+    );
+
+    if (!isAuthenticated) {
+      return null;
+    }
+
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact>
+            <HeaderComponent />
+            <DashboardComponent />
+          </Route>
+          <Route path="/signup" exact>
+            <Signup />
+          </Route>
+          <Route path="/recommendations/:recommendationId" exact>
+            <RecommendationPage />
+          </Route>
+          <Route path="/artist/:id" exact>
+            <ArtistPage />
+          </Route>
+          <Route path="/editor/:id" exact>
+            <EditorContainer />
+          </Route>
+          <Route path="/*" exact>
+            <Result
+              status="404"
+              title="404"
+              subTitle="Sorry, the page you visited does not exist."
+              extra={<Link to="/">Back Home</Link>}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
+  };
+}

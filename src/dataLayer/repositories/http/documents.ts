@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../../config';
+import { config } from '../../../config';
 import DocumentsInterface from '../../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
 import {
@@ -11,7 +11,7 @@ import {
   GetDocumentsResponse,
 } from '../../../model/types/service-response';
 
-const server = config.PROD_SERVER;
+const server = config.constants.PROD_SERVER;
 
 const DOCUMENTS_URI = `${server}/artists/recommendations/documents`;
 
