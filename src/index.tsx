@@ -3,10 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import { Auth0Provider } from '@auth0/auth0-react';
 import './index.scss';
-import App from './App';
+import { createApp } from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.dark.css';
-// import config from './config';
+import { config } from './config';
+
+const { Auth } = config.providers;
+
+const App = createApp({ });
 
 ReactDOM.render(
   // <Auth0Provider
@@ -14,8 +19,10 @@ ReactDOM.render(
   //   clientId={config.AUTH_CLIENT_ID}
   //   redirectUri={window.location.origin}
   // >
-  <App />,
   // </Auth0Provider>,
+  <Auth>
+    <App />
+  </Auth>,
   document.getElementById('root'),
 );
 

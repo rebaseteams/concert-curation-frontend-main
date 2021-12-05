@@ -2,7 +2,7 @@
 import axios from 'axios';
 import * as _ from 'lodash';
 import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
-import config from '../../../config';
+import { config } from '../../../config';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
@@ -14,7 +14,7 @@ import {
   PatchRecommendationResponse,
 } from '../../../model/types/service-response';
 
-const server = config.PROD_SERVER;
+const server = config.constants.PROD_SERVER;
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
   addNewRecommendation = async (concertData : QuestionsUI): Promise<AddRecommendationResponse> => {
     const data = _.pick(concertData, ['userId',
