@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextEncoder, TextDecoder } from 'util';
 import {
   fireEvent,
   render,
@@ -6,6 +7,10 @@ import {
   waitFor,
 } from '@testing-library/react';
 import DashboardComponent from './index';
+/* eslint-disable*/
+global.TextEncoder = TextEncoder;
+// @ts-expect-error
+global.TextDecoder = TextDecoder;
 
 describe('Dashboard Page', () => {
   beforeEach(() => {

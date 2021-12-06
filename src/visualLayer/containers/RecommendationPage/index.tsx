@@ -47,7 +47,7 @@ const renderSummary = (artistsData: Array<ARec>, view: string) => {
 };
 
 const RecommendationPage = (): JSX.Element => {
-  const { recommendationId }: { recommendationId: string } = useParams();
+  const { recommendationId } = useParams();
   const [concertData, setConcertData] = useState<Questions>();
   const [artistsData, setArtistsData] = useState<Array<ARec>>(
     [],
@@ -70,6 +70,8 @@ const RecommendationPage = (): JSX.Element => {
     }
   };
 
+  if (!recommendationId) { return <Empty />; }
+
   const getConcertData = async () => {
     const response = await services.ArtistRecommendation.getRecommendation(recommendationId);
     if (!response) {
@@ -90,7 +92,7 @@ const RecommendationPage = (): JSX.Element => {
   async function patchConcertData(discardedArtistId: string) {
     // await patchRecommendationArtist(id, discardedArtistId, userID);
     const patchData = {
-      formId: recommendationId,
+      formId: recommendationId || '',
       discardedArtistId,
       userId: userID,
     };

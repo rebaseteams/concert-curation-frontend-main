@@ -23,7 +23,7 @@ describe('Collaboration Form', () => {
 
   // TODO: Solve this testing issue
   it('Should render the templates name', () => {
-    render(<CollaborationFrom />);
+    render(<CollaborationFrom recommendationId="dknbjdsj87486389jkdvh" />);
     // expect(screen.getByText('')).toBeInTheDocument();
     expect(true).toBe(true);
   });

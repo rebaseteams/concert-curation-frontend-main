@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { Button, message, PageHeader } from 'antd';
-import { useHistory, useParams } from 'react-router-dom';
+import {
+  Button, Empty, message, PageHeader,
+} from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../../services/config.json';
 import services from '../../services';
 
 const EditorContainer = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [html, setHtml] = useState<string>('');
   const [documentName, setDocumentName] = useState('');
   const [editorContent, setEditorContent] = useState<string>('');
@@ -27,11 +29,14 @@ const EditorContainer = (): JSX.Element => {
     }
   };
 
-  const { id }: { id: string } = useParams();
+  const { id } = useParams();
+  if (!id) {
+    return <Empty />;
+  }
   getDocument(id);
 
   const redirectBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const saveDocument = async () => {
