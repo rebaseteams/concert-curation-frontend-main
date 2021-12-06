@@ -4,6 +4,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ConcertsTable from '.';
 import { ConcertCreationResponse } from '../../../model/types/questions';
 
+const getConcertsMock = (): Promise<void> => new Promise((resolve) => {
+  resolve();
+});
 describe('Concert Table', () => {
   const forms: Array<ConcertCreationResponse> = [
     {
@@ -36,22 +39,22 @@ describe('Concert Table', () => {
     });
   });
   it('should render table heading', () => {
-    render(<Router><ConcertsTable forms={forms} getConcerts /></Router>);
+    render(<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);
     expect(screen.getByText('Concert Name')).toBeInTheDocument();
   });
 
   it('should render name of concert', () => {
-    render(<Router><ConcertsTable forms={forms} getConcerts /></Router>);
+    render((<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);
     expect(screen.getByText('Facebook')).toBeInTheDocument();
   });
 
   it('should render date of concert', () => {
-    render(<Router><ConcertsTable forms={forms} getConcerts /></Router>);
+    render((<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);
     expect(screen.getByText('Mon Nov 16-11-2021 23:44:')).toBeInTheDocument();
   });
 
   it('should render NO Data if forms data is ermpty or not present', () => {
-    render(<Router><ConcertsTable forms={[]} getConcerts /></Router>);
+    render((<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);
     expect(screen.getByText('No Data')).toBeInTheDocument();
   });
 });

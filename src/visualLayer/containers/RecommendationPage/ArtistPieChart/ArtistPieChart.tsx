@@ -212,12 +212,9 @@ const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPie
                 <img src={artist2.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={{
-                  pathname: `/artist/${artist2.id}`,
-                  state: {
-                    recommendationId,
-                  },
-                }}
+                <Link
+                  to={`/artist/${artist2.id}`}
+                  state={recommendationId}
                 >
                   { _.upperFirst(artist2.name) }
                 </Link>
@@ -236,12 +233,9 @@ const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPie
                 <img src={artist1.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={{
-                  pathname: `/artist/${artist1.id}`,
-                  state: {
-                    recommendationId,
-                  },
-                }}
+                <Link
+                  to={`/artist/${artist1.id}`}
+                  state={recommendationId}
                 >
                   { _.upperFirst(artist1.name) }
                 </Link>
@@ -332,12 +326,9 @@ const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPie
                 <img src={artist3.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={{
-                  pathname: `/artist/${artist3.id}`,
-                  state: {
-                    recommendationId,
-                  },
-                }}
+                <Link
+                  to={`/artist/${artist3.id}`}
+                  state={recommendationId}
                 >
                   { _.upperFirst(artist3.name) }
                 </Link>
@@ -356,12 +347,9 @@ const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPie
                 <img src={artist4.img} alt="" />
               </div>
               <h4 className="name">
-                <Link to={{
-                  pathname: `/artist/${artist4.id}`,
-                  state: {
-                    recommendationId,
-                  },
-                }}
+                <Link
+                  to={`/artist/${artist4.id}`}
+                  state={recommendationId}
                 >
                   { _.upperFirst(artist4.name) }
                 </Link>
