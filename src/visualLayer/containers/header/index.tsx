@@ -14,16 +14,17 @@ const { Header } = Layout;
 const { Search } = Input;
 
 export interface CreateHeaderComponentProps {
-  useAuth0: UseAuth0,
+  useAuth0: UseAuth0;
 }
 
-export function createHeaderComponent(
-  {
-    useAuth0,
-  }: CreateHeaderComponentProps,
-): () => JSX.Element | null {
+export function createHeaderComponent({
+  useAuth0,
+}: CreateHeaderComponentProps): () => JSX.Element | null {
   const onSearch = (value: string) => {
-    notification.info({ message: `Searching ${value}`, placement: 'bottomRight' });
+    notification.info({
+      message: `Searching ${value}`,
+      placement: 'bottomRight',
+    });
   };
 
   return function HeaderComponent() {
@@ -33,7 +34,13 @@ export function createHeaderComponent(
 
     const renderPublic = () => (
       <div className="row-flex justify-between align-center">
-        <Button style={{ marginLeft: '10px' }} type="primary" onClick={() => loginWithRedirect()}>Log in</Button>
+        <Button
+          style={{ marginLeft: '10px' }}
+          type="primary"
+          onClick={() => loginWithRedirect()}
+        >
+          Log in
+        </Button>
       </div>
     );
 
@@ -44,7 +51,10 @@ export function createHeaderComponent(
           allowClear
           onSearch={onSearch}
           style={{
-            background: '#444', color: '#FFF', width: 354, marginRight: '70px',
+            background: '#444',
+            color: '#FFF',
+            width: 354,
+            marginRight: '70px',
           }}
         />
         {IconRenderer('waving_hand')}
@@ -54,9 +64,15 @@ export function createHeaderComponent(
           {user?.name}
         </span>
         {IconRenderer('avatar')}
-        {
-              isAuthenticated ? <Button style={{ marginLeft: '10px' }} type="primary" onClick={() => logout()}>Log out</Button> : null
-            }
+        {isAuthenticated ? (
+          <Button
+            style={{ marginLeft: '10px' }}
+            type="primary"
+            onClick={() => logout()}
+          >
+            Log out
+          </Button>
+        ) : null}
       </div>
     );
 
@@ -69,11 +85,15 @@ export function createHeaderComponent(
           <div className="header width-md">
             <div className="app-logo">
               <a href={window.location.origin}>
-                <img data-testid="cuttime-logo" src={cuttimelogo} alt="cuttimelogo" />
+                <img
+                  data-testid="cuttime-logo"
+                  src={cuttimelogo}
+                  alt="cuttimelogo"
+                />
               </a>
               <span className="text-size-4 cuttime">Cuttime .fm</span>
             </div>
-            { !isAuthenticated || !user ? renderPublic() : renderPrivate() }
+            {!isAuthenticated || !user ? renderPublic() : renderPrivate()}
           </div>
         </Header>
         <Outlet />
