@@ -77,12 +77,8 @@ export function createApp(
         }
         loginWithRedirect();
       },
-      [isAuthenticated, isLoading],
+      [],
     );
-
-    if (!isAuthenticated) {
-      return null;
-    }
 
     return (
       <BrowserRouter>
