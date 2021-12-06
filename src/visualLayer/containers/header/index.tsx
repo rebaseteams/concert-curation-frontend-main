@@ -28,10 +28,6 @@ export function createHeaderComponent(
   return function HeaderComponent() {
     const { isAuthenticated, user, logout } = useAuth0();
 
-    if (!isAuthenticated || !user) {
-      return null;
-    }
-
     return (
       <Header
         style={{ background: 'none', padding: 'none' }}
