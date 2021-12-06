@@ -1,35 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  PageHeader, Image, Button, Modal,
+  PageHeader, Image, Button, Modal, Spin,
 } from 'antd';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
+import services from '../../services';
+import { Artist } from '../../../model/types/artist';
 
 const ArtistPage = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id }: {id: string} = useParams(); // TODO: Use this id to sfetch artists information
+  const { id } = useParams(); // TODO: Use this id to sfetch artists information
+  const [artist, setArtist] = useState<Artist>();
   const { state }: { state: { recommendationId: string } } = useLocation();
   const { recommendationId } = state;
-  const history = useHistory();
+  const navigate = useNavigate();
   const [collaborationModal, setCollaborationModal] = useState(false);
 
   const redirectBack = () => {
-    history.goBack();
+    navigate(-1);
   };
+
+  const getArtistData = async () => {
+    const response = await services.Artist.getArtist('Artist1');
+    if (response.error) {
+      return;
+    }
+    setArtist(response.data);
+  };
+
+  useEffect(() => {
+    getArtistData();
+  }, []);
+
+  if (!artist) {
+    return <Spin />;
+  }
   return (
     <div>
       <PageHeader
         className="site-page-header"
         onBack={() => redirectBack()}
-        title="Artist name"
-        subTitle="rock start"
+        title={artist.artistName}
+        subTitle={artist.artistBio.split(' ').slice(0, 6).join(' ')}
         extra={[
           <Button type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>,
         ]}
       />
       <Image
         width={300}
-        src="https://randomuser.me/api/portraits/men/15.jpg"
+        src={artist.artistImage}
       />
       <Modal
         bodyStyle={{

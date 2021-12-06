@@ -4,7 +4,7 @@ import { useAuth0 as defaultUseAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosRequestConfig } from 'axios';
 
 import {
-  BrowserRouter, Link, Route, Switch,
+  BrowserRouter, Link, Route, Routes,
 } from 'react-router-dom';
 
 import { Result } from 'antd';
@@ -76,38 +76,32 @@ export function createApp(
           return;
         }
         loginWithRedirect();
-      },
-      [],
+      }, [],
     );
 
     return (
       <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            <HeaderComponent />
-            <DashboardComponent />
+        <Routes>
+          <Route path="/" element={<HeaderComponent />}>
+            <Route index element={<DashboardComponent />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
-          <Route path="/signup" exact>
-            <Signup />
-          </Route>
-          <Route path="/recommendations/:recommendationId" exact>
-            <RecommendationPage />
-          </Route>
-          <Route path="/artist/:id" exact>
-            <ArtistPage />
-          </Route>
-          <Route path="/editor/:id" exact>
-            <EditorContainer />
-          </Route>
-          <Route path="/*" exact>
-            <Result
-              status="404"
-              title="404"
-              subTitle="Sorry, the page you visited does not exist."
-              extra={<Link to="/">Back Home</Link>}
-            />
-          </Route>
-        </Switch>
+          {/* <HeaderComponet /> */}
+          <Route path="/recommendations/:recommendationId" element={<RecommendationPage />} />
+          <Route path="/artist/:id" element={<ArtistPage />} />
+          <Route path="/editor/:id" element={<EditorContainer />} />
+          <Route
+            path="/*"
+            element={(
+              <Result
+                status="404"
+                title="404"
+                subTitle="Sorry, the page you visited does not exist."
+                extra={<Link to="/">Back Home</Link>}
+              />
+          )}
+          />
+        </Routes>
       </BrowserRouter>
     );
   };

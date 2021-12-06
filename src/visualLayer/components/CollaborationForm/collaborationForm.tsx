@@ -11,7 +11,7 @@ import {
   Typography,
 } from 'antd';
 import * as _ from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
 import services from '../../services';
 // import getTemplates from '../../../utils/templates';
@@ -50,8 +50,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
   const [error, setError] = useState<{status: 403 | 404 | 500 | '403' | '404' | '500', title: string}>();
   // TODO: Fetch template questions and field by template id
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const history = useHistory();
-
+  const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
     const getTemplates = async () => {
@@ -101,7 +100,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
       return;
     }
     if (response.data && response.data.success) {
-      history.push(`/editor/${response.data.data.document.id}`);
+      navigate(`/editor/${response.data.data.document.id}`);
       return;
     }
     message.error('Bad Request');

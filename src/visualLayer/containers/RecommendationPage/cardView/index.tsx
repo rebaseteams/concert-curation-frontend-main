@@ -61,16 +61,11 @@ const CardView = ({ data, recommendationId }: CardViewProps): JSX.Element => {
           <button className="card-button" type="button" onClick={() => cancelButton(artist.artistName)}>X</button>
           <div className="card-body">
             <div className="card-heading">
-              <Link to={{
-                pathname: `/artist/${artist.artistId}`,
-                state: {
-                  recommendationId,
-                },
-              }}
+              <Link
+                to={`/artist/${artist.artistId}`}
+                state={recommendationId}
               >
-                <h3>
-                  {artist.artistName}
-                </h3>
+                <h4>{ artist.artistName }</h4>
               </Link>
               <p>
                 {String(artist.matchPercentage)}
