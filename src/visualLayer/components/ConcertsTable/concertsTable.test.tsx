@@ -38,6 +38,7 @@ describe('Concert Table', () => {
       })),
     });
   });
+
   it('should render table heading', () => {
     render(<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);
     expect(screen.getByText('Concert Name')).toBeInTheDocument();
