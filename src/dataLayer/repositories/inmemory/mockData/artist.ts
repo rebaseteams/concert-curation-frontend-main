@@ -29,25 +29,25 @@ export const artistMockDataNew: ArtistNew = {
   mediaHandles: [
     {
       handleName: 'facebook',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
       url: '',
       followers: 122342,
     },
     {
       handleName: 'twitter',
-      logoUrl: 'https://cdn-icons.flaticon.com/png/512/3256/premium/3256013.png?token=exp=1638880314~hmac=d3f9ec59e334cb8f49d32d09a3fc84e0',
+      logo: 'https://cdn-icons.flaticon.com/png/512/3256/premium/3256013.png?token=exp=1638880314~hmac=d3f9ec59e334cb8f49d32d09a3fc84e0',
       url: '',
       followers: 122342,
     },
     {
       handleName: 'spotify',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg',
       url: '',
       followers: 122342,
     },
     {
       handleName: 'youtube',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg',
       url: '',
       followers: 122342,
     },

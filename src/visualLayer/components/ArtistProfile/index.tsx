@@ -89,7 +89,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}) => (
               <div className="row-flex">
                 <img
                   alt="spotify logo"
-                  src={media.logoUrl}
+                  src={media.logo}
                   style={{ width: '50px', height: '50px', marginRight: '10px' }}
                 />
                 <div className="column-flex">

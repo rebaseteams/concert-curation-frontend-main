@@ -25,7 +25,7 @@ export type ArtistNew = {
   mediaHandles: Array<
     {
       handleName: string,
-      logoUrl: string,
+      logo: string,
       url: string,
       followers: number,
     }
