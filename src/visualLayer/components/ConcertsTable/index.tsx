@@ -133,7 +133,6 @@ const ConcertsTable = ({ forms, concertLoading, getConcerts }: ConcertsTableProp
 
   return (
     <div className="concert-table-container">
-
       <Table
         rowSelection={{
           type: 'checkbox',

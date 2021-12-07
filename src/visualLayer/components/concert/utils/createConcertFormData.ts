@@ -16,8 +16,8 @@ const createConcertFormData = (
       genreName: genre,
     })),
   },
-  wantedBrands: values.wantedBrands.map((brand: string) => ({ brandId: '65265373', brandName: brand })),
-  unwantedBrands: values.unwantedBrands.map((brand: string) => ({ brandId: '65265373', brandName: brand })),
+  wantedBrands: values.wantedBrands.map((brand: string) => ({ brandId: '05265373', brandName: brand })),
+  unwantedBrands: values.unwantedBrands.map((brand: string) => ({ brandId: '65260373', brandName: brand })),
   whatSellsMost: {
     beer: [],
     liquor: [],

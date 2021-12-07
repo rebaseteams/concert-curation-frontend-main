@@ -1,6 +1,37 @@
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 
+export type ArtistNew = {
+  id: string,
+  name: string,
+  image: string,
+  gender: string,
+  country: string,
+  coverImage: string,
+  bio: string,
+  associatedBrands: Array<string>
+  venues: Array<string>
+  popuarity: number,
+  audience: Array<
+    {
+      demographicName: string,
+      fields: Array<
+      {
+        name: string,
+        value: number,
+      }>,
+    }
+  >,
+  mediaHandles: Array<
+    {
+      handleName: string,
+      logoUrl: string,
+      url: string,
+      followers: number,
+    }
+  >,
+}
+
 export type Artist = {
         artistName: string,
         contryOrigin: string,

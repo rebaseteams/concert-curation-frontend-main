@@ -1,7 +1,10 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
+import { TextEncoder } from 'util';
 import ConcertsTable from '.';
 import { ConcertCreationResponse } from '../../../model/types/questions';
+
+global.TextEncoder = TextEncoder;
 
 const getConcertsMock = (): Promise<void> => new Promise((resolve) => {
   resolve();
@@ -21,22 +24,6 @@ describe('Concert Table', () => {
       status: true,
     },
   ];
-
-  beforeEach(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // deprecated
-        removeListener: jest.fn(), // deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      })),
-    });
-  });
 
   it('should render table heading', () => {
     render(<ConcertsTable concertLoading={false} forms={forms} getConcerts={getConcertsMock} />);

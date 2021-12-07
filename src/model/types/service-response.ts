@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Artist } from './artist';
+import { Artist, ArtistNew } from './artist';
 import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
@@ -129,7 +129,7 @@ export type GetTemplateResponse = {
 export type GetArtistResponse = {
   error: boolean,
   message: string,
-  data?: Artist,
+  data?: ArtistNew,
   status?: number | string;
 }
 export type CatchError = { message: string, status: number }
