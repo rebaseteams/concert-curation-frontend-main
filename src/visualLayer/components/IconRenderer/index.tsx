@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Add key pairs for rendering icons
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const iconMapper: any = {

@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { createHeaderComponent } from '.';
 import { Auth0User } from '../../../model/types/auth0User';

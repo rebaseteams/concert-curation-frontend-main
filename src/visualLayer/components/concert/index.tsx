@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/button-has-type */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Form,
   Button,
