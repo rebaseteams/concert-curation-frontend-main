@@ -8,13 +8,4 @@ export interface Config {
   providers: {
     Auth: Provider;
   }
-
-  // TODO: This may be discarded
-  constants: {
-    DEV_SERVER: string;
-    PROD_SERVER: string;
-    AUTH_DOMAIN: string;
-    AUTH_CLIENT_ID: string;
-    AUTH_CONNECTION: string;
-  }
 }

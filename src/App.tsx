@@ -12,7 +12,7 @@ import { Result } from 'antd';
 // importing services
 import extractUserToken from './services/userToken';
 
-import { config } from './config';
+import { AUTH_DOMAIN } from './config';
 
 // importing components
 import { createHeaderComponent } from './visualLayer/containers/header';
@@ -36,7 +36,7 @@ axios.interceptors.request.use(
   (req: AxiosRequestConfig) => {
     // Add configurations here
     const whiteListedEndpoints: Array<string> = [
-      `${config.constants.AUTH_DOMAIN}/dbconnections/signup`,
+      `${AUTH_DOMAIN}/dbconnections/signup`,
     ];
     if (req.url && whiteListedEndpoints.includes(req.url)) {
       return req;
