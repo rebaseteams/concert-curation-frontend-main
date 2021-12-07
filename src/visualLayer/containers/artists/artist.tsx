@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import {
-  PageHeader, Image, Button, Modal, Spin,
+  PageHeader, Button, Spin, Modal,
 } from 'antd';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
+import createArtistProfile from '../../components/ArtistProfile';
 import services from '../../services';
-import { Artist } from '../../../model/types/artist';
+import { ArtistNew } from '../../../model/types/artist';
+import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 
 const ArtistPage = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id } = useParams(); // TODO: Use this id to sfetch artists information
-  const [artist, setArtist] = useState<Artist>();
+  const [artist, setArtist] = useState<ArtistNew>();
   const { state }: { state: { recommendationId: string } } = useLocation();
-  const { recommendationId } = state;
+  const recommendationId = state ? state.recommendationId : '';
   const navigate = useNavigate();
   const [collaborationModal, setCollaborationModal] = useState(false);
 
@@ -35,21 +36,23 @@ const ArtistPage = (): JSX.Element => {
   if (!artist) {
     return <Spin />;
   }
+  const ArtistProfile = createArtistProfile({
+    artist,
+  });
   return (
     <div>
       <PageHeader
         className="site-page-header"
         onBack={() => redirectBack()}
-        title={artist.artistName}
-        subTitle={artist.artistBio.split(' ').slice(0, 6).join(' ')}
+        title={artist.name}
+        subTitle={artist.bio.split(' ').slice(0, 6).join(' ')}
         extra={[
           <Button type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>,
         ]}
       />
-      <Image
-        width={300}
-        src={artist.artistImage}
-      />
+      <div style={{ height: '88vh', overflow: 'auto' }}>
+        <ArtistProfile />
+      </div>
       <Modal
         bodyStyle={{
           height: '500px',

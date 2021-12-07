@@ -1,7 +1,6 @@
 import { UnsecuredJWT, generateKeyPair, SignJWT } from 'jose';
 import { TextEncoder, TextDecoder } from 'util';
 import { UnsignedTokenService } from './token.service.unsigned';
-
 /* eslint-disable*/
 global.TextEncoder = TextEncoder;
 // @ts-expect-error
