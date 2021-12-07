@@ -1,7 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-template-curly-in-string */
-import React from 'react';
 import {
   Button, Form, Input, Row,
 } from 'antd';

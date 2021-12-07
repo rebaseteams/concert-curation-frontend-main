@@ -1,4 +1,3 @@
-import React from 'react';
 import { Empty, Row, Col } from 'antd';
 import _ from 'lodash';
 

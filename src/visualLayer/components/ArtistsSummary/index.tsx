@@ -1,5 +1,3 @@
-import React from 'react';
-
 import * as _ from 'lodash';
 
 interface ArtistsSummaryProp {

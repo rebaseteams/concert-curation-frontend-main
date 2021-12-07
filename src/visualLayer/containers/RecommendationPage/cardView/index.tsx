@@ -1,7 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from 'react';
 import { Col, Modal } from 'antd';
 import './card-scopped.scss';
 import { Link } from 'react-router-dom';
