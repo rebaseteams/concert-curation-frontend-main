@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Artist, ArtistNew } from './artist';
+import { ArtistNew } from './artist';
 import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
