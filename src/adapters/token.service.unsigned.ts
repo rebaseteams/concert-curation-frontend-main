@@ -1,5 +1,13 @@
+import { TextEncoder, TextDecoder } from 'util';
+
+/* eslint-disable*/
+global.TextEncoder = TextEncoder;
+// @ts-expect-error
+global.TextDecoder = TextDecoder;
+
 import { UnsecuredJWT, JWTPayload } from 'jose';
 import jwtDecode from 'jwt-decode';
+
 import { TokenData, TokenService } from '../services/token.service';
 
 export class UnsignedTokenService implements TokenService {

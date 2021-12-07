@@ -7,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 
 // Components
+import { act } from '@testing-library/react';
 import ConcertsTable from '../../components/ConcertsTable';
 import CurateConcertModal from '../../components/CurateConcertModal';
 
@@ -40,7 +41,9 @@ const DashboardComponent = (): JSX.Element => {
     setLoadingForConcerts(true);
     const recommendations = await services.ArtistRecommendation.getAllRecommendations();
     if (recommendations.error) {
-      setError({ status: recommendations.status, message: recommendations.message });
+      act(() => {
+        setError({ status: recommendations.status, message: recommendations.message });
+      });
     } else {
       setForms(recommendations.data);
     }

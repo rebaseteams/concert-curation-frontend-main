@@ -40,7 +40,7 @@ describe('Header Component', () => {
     expect(screen.getByTestId('cuttime-logo')).toBeInTheDocument();
   });
 
-  test('should render private block when user isAuthenticated');
+  test.todo('should render private block when user isAuthenticated');
 
-  test('should render public block when user not isAuthenticated');
+  test.todo('should render public block when user not isAuthenticated');
 });

@@ -7,7 +7,7 @@ import { createApp } from './App';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.dark.css';
-import { config } from './config';
+import { config } from './config.dev';
 
 const { Auth } = config.providers;
 

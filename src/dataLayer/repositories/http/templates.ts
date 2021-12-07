@@ -3,11 +3,11 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-console */
 import axios from 'axios';
-import { config } from '../../../config';
+import { PROD_SERVER } from '../../../config';
 import { TemplatesInterface } from '../../../model/interfaces/templates';
 import { CatchError, GetTemplateResponse, GetTemplatesResponse } from '../../../model/types/service-response';
 
-const server = config.constants.PROD_SERVER;
+const server = PROD_SERVER;
 
 export default class TemplatesRepo implements TemplatesInterface {
   getTemplates = async (): Promise<GetTemplatesResponse> => {

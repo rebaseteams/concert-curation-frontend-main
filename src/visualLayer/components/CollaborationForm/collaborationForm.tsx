@@ -27,7 +27,7 @@ const { Text } = Typography;
 const renderTemplates = (
   templates: Array<Templates>,
   selectTemplate: (templateId: string) => void,
-) => (_.map(templates, (template) => (
+) => _.map(templates, (template) => (
   <Col
     key={template.templateId}
     span={6}
@@ -40,14 +40,21 @@ const renderTemplates = (
     />
     <Text type="secondary">{template.templateName}</Text>
   </Col>
-)));
+));
 
-const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JSX.Element => {
+const CollaborationForm = ({
+  recommendationId,
+}: {
+  recommendationId: string;
+}): JSX.Element => {
   const [templateId, setTemplateId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Array<FormFields>>([]);
   const [templates, setTemplates] = useState<Array<Templates>>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{status: 403 | 404 | 500 | '403' | '404' | '500', title: string}>();
+  const [error, setError] = useState<{
+      status: 403 | 404 | 500 | '403' | '404' | '500';
+      title: string;
+    }>();
   // TODO: Fetch template questions and field by template id
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
@@ -110,12 +117,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
     return <Spin />;
   }
   if (error) {
-    return (
-      <Result
-        status={error.status}
-        title={error.title}
-      />
-    );
+    return <Result status={error.status} title={error.title} />;
   }
   if (templateId) {
     return (
@@ -127,18 +129,29 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
           layout="vertical"
           onFinish={submitForm}
         >
-          { inputField({
-            label: 'Document Name',
-            placeholder: 'Document name',
-            required: true,
-            name: 'name',
-            message: 'document name is required',
-          }, 'text') }
-          { formData && renderFormFields(formData, { min: 33, max: 33 }) }
+          {inputField(
+            {
+              label: 'Document Name',
+              placeholder: 'Document name',
+              required: true,
+              name: 'name',
+              message: 'document name is required',
+            },
+            'text',
+          )}
+          {formData && renderFormFields(formData, { min: 33, max: 33 })}
 
           <Form.Item label="">
-            <Button type="link" htmlType="button" onClick={() => setTemplateId(null)}>Back</Button>
-            <Button type="primary" htmlType="submit">Preview</Button>
+            <Button
+              type="link"
+              htmlType="button"
+              onClick={() => setTemplateId(null)}
+            >
+              Back
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Preview
+            </Button>
           </Form.Item>
         </Form>
       </>
@@ -148,9 +161,7 @@ const CollaborationForm = ({ recommendationId }: {recommendationId: string}): JS
     return (
       <>
         <h4>Select template</h4>
-        <Row gutter={3}>
-          { renderTemplates(templates, selectTemplate) }
-        </Row>
+        <Row gutter={3}>{renderTemplates(templates, selectTemplate)}</Row>
       </>
     );
   }
