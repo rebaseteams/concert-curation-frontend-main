@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useAuth0 as defaultUseAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -17,7 +17,7 @@ import { AUTH_DOMAIN } from './config';
 // importing components
 import { createHeaderComponent } from './visualLayer/containers/header';
 
-import DashboardComponent from './visualLayer/containers/dashboard';
+import { createDashboardComponent } from './visualLayer/containers/dashboard';
 
 import Signup from './visualLayer/containers/signup/signup';
 
@@ -67,6 +67,7 @@ export function createApp(
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent({ useAuth0 });
+  const DashboardComponent = createDashboardComponent({ });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();

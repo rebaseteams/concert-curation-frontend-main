@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-import React from 'react';
 import ReactDOM from 'react-dom';
 // import { Auth0Provider } from '@auth0/auth0-react';
 import './index.scss';
 import { createApp } from './App';
-// import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.dark.css';
 import { config } from './config.dev';

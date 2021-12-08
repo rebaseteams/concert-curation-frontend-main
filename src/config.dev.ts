@@ -7,7 +7,6 @@ const tokenService = new UnsignedTokenService();
 
 export const config: Config = {
   mode: 'development',
-  // services: {},
   providers: {
     Auth: ({ children }) => InMemoryAuth0Provider({
       children,
