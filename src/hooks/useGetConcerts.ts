@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
-import ArtistRecommendationInterface from '../model/interfaces/artistRecommendation';
+import { ArtistRecommendationInterface } from '../model/interfaces/artistRecommendation';
 import { ConcertCreationResponse } from '../model/types/questions';
-
-interface Error {
-  status: string | number | undefined;
-  message: string | undefined;
-}
+import { Error } from '../model/types/errors';
 
 export function useGetConcerts(artistRecommendation: ArtistRecommendationInterface) {
   const [loadingForConcerts, setLoadingForConcerts] = useState(false);

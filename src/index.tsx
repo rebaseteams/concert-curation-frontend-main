@@ -9,9 +9,9 @@ import { config } from './config.dev';
 
 const { Auth } = config.providers;
 
-const { artistRecommendation } = config.services;
+const { artistRecommendation, documentsService } = config.services;
 
-const App = createApp({ artistRecommendation });
+const App = createApp({ artistRecommendation, documentsService });
 
 ReactDOM.render(
   // <Auth0Provider

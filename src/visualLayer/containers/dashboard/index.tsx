@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import {
   Layout, Button, Result, Row, Col, Table, Space, Empty, message, Modal, Tooltip,
@@ -20,43 +20,36 @@ import './dashboard.style.scss';
 import IconRenderer from '../../components/IconRenderer';
 import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 import { UseGetConcerts, useGetConcerts as defaultUseGetConcerts } from '../../../hooks/useGetConcerts';
-import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
+import { UseGetDocuments, useGetDocuments as defaultUseGetDocuments } from '../../../hooks/useGetDocuments';
+import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
 
 const { Content } = Layout;
 
 export interface CreateDashboardComponentProps {
   useGetConcerts?: UseGetConcerts,
   artistRecommendation: ArtistRecommendationInterface;
+  useGetDocuments?: UseGetDocuments,
+  documentsService: DocumentsInterface
 }
 
 export function createDashboardComponent({
   useGetConcerts = defaultUseGetConcerts,
   artistRecommendation,
+  useGetDocuments = defaultUseGetDocuments,
+  documentsService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
     const [displayFormModal, setDisplayFormModal] = useState(false);
     const [collaborationModal, setCollaborationModal] = useState(false);
-    const [loadingForDocuments, setLoadingForDocuments] = useState(false);
-    const [documents, setDocuments] = useState<Array<Documents>>([]);
 
     const {
       loadingForConcerts, error, forms, getRecommendations,
     } = useGetConcerts(artistRecommendation);
 
-    const getDocuments = async () => {
-      setLoadingForDocuments(true);
-      const documentsResponse = await services.Documents.getDocuments();
-      if (documentsResponse.error) {
-        // setError({ status: documentsResponse.status, message: documentsResponse.message });
-      } else if (documentsResponse.data && documentsResponse.data.data) {
-        setDocuments(documentsResponse.data.data);
-      }
-      setLoadingForDocuments(false);
-    };
-
-    useEffect(() => {
-      getDocuments();
-    }, []);
+    const {
+      loadingForDocuments, documents, getDocuments,
+    } = useGetDocuments(documentsService);
 
     const renderConcerts = ():
     JSX.Element => (
