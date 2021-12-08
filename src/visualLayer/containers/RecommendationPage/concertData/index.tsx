@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Row, Col } from 'antd';
 
 import { Questions } from '../../../../model/types/questions';
