@@ -85,10 +85,10 @@ export function createApp(
           <Route path="/" element={<HeaderComponent />}>
             <Route index element={<DashboardComponent />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/artist/:id" element={<ArtistPage />} />
           </Route>
           {/* <HeaderComponet /> */}
           <Route path="/recommendations/:recommendationId" element={<RecommendationPage />} />
-          <Route path="/artist/:id" element={<ArtistPage />} />
           <Route path="/editor/:id" element={<EditorContainer />} />
           <Route
             path="/*"

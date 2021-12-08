@@ -62,6 +62,7 @@ const CardView = ({ data, recommendationId }: CardViewProps): JSX.Element => {
           <div className="card-body">
             <div className="card-heading">
               <Link
+                className="font-color"
                 to={`/artist/${artist.artistId}`}
                 state={recommendationId}
               >
