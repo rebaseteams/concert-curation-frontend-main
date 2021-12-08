@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
+import ArtistRecommendationInterface from '../model/interfaces/artistRecommendation';
 import { ConcertCreationResponse } from '../model/types/questions';
-import services from '../visualLayer/services';
 
 interface Error {
   status: string | number | undefined;
   message: string | undefined;
 }
 
-export function useGetConcerts() {
+export function useGetConcerts(artistRecommendation: ArtistRecommendationInterface) {
   const [loadingForConcerts, setLoadingForConcerts] = useState(false);
   const [error, setError] = useState<Error>();
   const [forms, setForms] = useState<Array<ConcertCreationResponse>>([]);
 
   async function getRecommendations() {
     setLoadingForConcerts(true);
-    const recommendations = await services.ArtistRecommendation.getAllRecommendations();
+    const recommendations = await artistRecommendation.getAllRecommendations();
     if (recommendations.error) {
       setError({ status: recommendations.status, message: recommendations.message });
     } else {
@@ -35,7 +35,7 @@ export function useGetConcerts() {
   };
 }
 
-export type UseGetConcerts = () => {
+export type UseGetConcerts = (artistRecommendation: ArtistRecommendationInterface) => {
   loadingForConcerts: boolean;
   error: Error | undefined;
   forms: Array<ConcertCreationResponse>;

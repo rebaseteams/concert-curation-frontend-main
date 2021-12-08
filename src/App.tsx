@@ -30,6 +30,7 @@ import EditorContainer from './visualLayer/containers/editor/editor';
 // styles
 import './App.scss';
 import { UseAuth0 } from './model/types/auth0User';
+import ArtistRecommendationInterface from './model/interfaces/artistRecommendation';
 
 // For GET requests
 axios.interceptors.request.use(
@@ -59,15 +60,17 @@ localStorage.setItem('userid', '1238989');
 
 export interface AppOptions {
   useAuth0?: UseAuth0;
+  artistRecommendation: ArtistRecommendationInterface
 }
 
 export function createApp(
   {
     useAuth0 = defaultUseAuth0,
+    artistRecommendation,
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent({ useAuth0 });
-  const DashboardComponent = createDashboardComponent({ });
+  const DashboardComponent = createDashboardComponent({ artistRecommendation });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();

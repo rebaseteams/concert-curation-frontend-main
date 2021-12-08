@@ -20,15 +20,18 @@ import './dashboard.style.scss';
 import IconRenderer from '../../components/IconRenderer';
 import CollaborationForm from '../../components/CollaborationForm/collaborationForm';
 import { UseGetConcerts, useGetConcerts as defaultUseGetConcerts } from '../../../hooks/useGetConcerts';
+import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
 
 const { Content } = Layout;
 
 export interface CreateDashboardComponentProps {
-  useGetConcerts?: UseGetConcerts
+  useGetConcerts?: UseGetConcerts,
+  artistRecommendation: ArtistRecommendationInterface;
 }
 
 export function createDashboardComponent({
   useGetConcerts = defaultUseGetConcerts,
+  artistRecommendation,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
     const [displayFormModal, setDisplayFormModal] = useState(false);
@@ -38,7 +41,7 @@ export function createDashboardComponent({
 
     const {
       loadingForConcerts, error, forms, getRecommendations,
-    } = useGetConcerts();
+    } = useGetConcerts(artistRecommendation);
 
     const getDocuments = async () => {
       setLoadingForDocuments(true);
