@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 import * as _ from 'lodash';
-import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
+import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
 import { PROD_SERVER } from '../../../config';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';

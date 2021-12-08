@@ -9,7 +9,7 @@ import {
   GetDocumentsResponse,
 } from '../types/service-response';
 
-export default interface DocumentsInterface {
+export interface DocumentsInterface {
   createDocument (createDocumentForm: CreateDocumentForm): Promise<CreateDocumentResponse>;
   getDocuments (): Promise<GetDocumentsResponse>;
   deleteDocument (documentId: string): Promise<DeleteDocumentResponse>;

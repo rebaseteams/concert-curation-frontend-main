@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { PROD_SERVER } from '../../../config';
-import DocumentsInterface from '../../../model/interfaces/documents';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
 import {
   CatchError,

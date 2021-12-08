@@ -1,4 +1,4 @@
-import DocumentsInterface from '../../model/interfaces/documents';
+import { DocumentsInterface } from '../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../model/types/collaborationForm';
 import {
   CreateDocumentResponse, DeleteDocumentResponse, GetDocumentResponse, GetDocumentsResponse,

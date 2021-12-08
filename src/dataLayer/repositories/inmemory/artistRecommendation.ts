@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import ArtistRecommendationInterface from '../../../model/interfaces/artistRecommendation';
+import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
