@@ -47,7 +47,7 @@ export const artistMockDataNew: ArtistNew = {
     },
     {
       handleName: 'youtube',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg',
+      logo: 'https://www.freepnglogos.com/uploads/youtube-logo-png/youtube-transparent-youtube-play-button-png-download-clip-art-11.png',
       url: '',
       followers: 122342,
     },
