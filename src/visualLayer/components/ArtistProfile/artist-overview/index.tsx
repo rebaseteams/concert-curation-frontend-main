@@ -2,6 +2,7 @@ import {
   Col, Progress, Row, Typography,
 } from 'antd';
 import * as _ from 'lodash';
+import millify from 'millify';
 import { ArtistNew } from '../../../../model/types/artist';
 
 const { Text } = Typography;
@@ -15,7 +16,7 @@ const mediaColors: any = {
 };
 
 const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
-  const totalFollowers: number = _.sumBy(artist.mediaHandles, 'totalFollowers');
+  const totalFollowers: string = millify(_.sumBy(artist.mediaHandles, 'followers'));
   return (
     <div className="artist-profile-overview">
       <div className="row-flex justify-between align-center fan-container">
