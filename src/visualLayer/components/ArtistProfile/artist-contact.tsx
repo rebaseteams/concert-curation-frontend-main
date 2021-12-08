@@ -12,7 +12,7 @@ const ArtistContactDetails = ({ artist }: { artist: ArtistNew }): JSX.Element =>
   const [collaborationModal, setCollaborationModal] = useState(false);
   return (
     <div>
-      <Button type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>
+      <Button style={{ marginRight: '0px', marginLeft: '46%' }} type="primary" onClick={() => setCollaborationModal(true)}>Collaborate</Button>
       <Modal
         bodyStyle={{
           height: '500px',

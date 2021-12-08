@@ -15,17 +15,17 @@ import extractUserToken from './services/userToken';
 import { AUTH_DOMAIN } from './config';
 
 // importing components
-import { createHeaderComponent } from './visualLayer/containers/header';
+import { createHeaderComponent } from './visualLayer/pages/header';
 
-import { createDashboardComponent } from './visualLayer/containers/dashboard';
+import { createDashboardComponent } from './visualLayer/pages/dashboard';
 
-import Signup from './visualLayer/containers/signup/signup';
+import Signup from './visualLayer/pages/signup/signup';
 
-import RecommendationPage from './visualLayer/containers/RecommendationPage';
+import RecommendationPage from './visualLayer/pages/recommendation';
 
-import ArtistPage from './visualLayer/containers/artists/artist';
+import ArtistPage from './visualLayer/pages/artists/artist';
 
-import EditorContainer from './visualLayer/containers/editor/editor';
+import EditorContainer from './visualLayer/pages/editor/editor';
 
 // styles
 import './App.scss';
