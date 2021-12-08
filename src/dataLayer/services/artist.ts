@@ -8,7 +8,8 @@ export default class Artist implements ArtistInterface {
     this.artistRepo = artistRepo;
   }
 
-  getArtist = (artistId: string): Promise<GetArtistResponse> => new Promise((resolve) => {
+  getArtist = async (artistId: string):
+  Promise<GetArtistResponse> => new Promise((resolve) => {
     resolve(this.artistRepo.getArtist(artistId));
   })
 }

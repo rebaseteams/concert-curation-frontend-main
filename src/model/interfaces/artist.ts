@@ -3,5 +3,5 @@
 import { GetArtistResponse } from '../types/service-response';
 
 export default interface ArtistInterface {
-  getArtist: (artistId: string) => Promise<GetArtistResponse>,
+  getArtist(artistId: string): Promise<GetArtistResponse>,
 };
