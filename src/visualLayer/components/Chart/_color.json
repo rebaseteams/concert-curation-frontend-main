@@ -1,0 +1,16 @@
+{
+    "//imp": "TO BE UPDATED IN _colors.scss WHENEVER CHANDGED",
+    "app-dark": "#000",
+    "app-background": "#1b1d1b",
+    "app-forground": "#fafafa",
+    "app-warning": "rgb(247, 74, 74)",
+    "app-primary": "rgb(79, 79, 211)",
+    "hover-primary": "rgb(9, 9, 173)",
+    "app-secondary": "rgb(85, 85, 85)",
+    "app-shadow": "rgba(108, 16, 212, 0.582)",
+    "app-light": "rgb(182, 170, 170)",
+    "forget-button": "#18AEED",
+    "text-color":"#FFFFFF",
+    "button-font":"Open Sans",
+    "inputfield-background":"#22303F"
+}

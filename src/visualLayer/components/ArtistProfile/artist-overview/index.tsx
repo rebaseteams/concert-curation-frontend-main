@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 import millify from 'millify';
 import latestRelease from '../../../../dataLayer/repositories/inmemory/mockData/latestReleaseVideosa';
 import { ArtistNew } from '../../../../model/types/artist';
+import Line from '../../Chart/lineChart';
+import brandAffinity from '../../../../dataLayer/repositories/inmemory/mockData/brandAffinity';
 
 const { Text, Title } = Typography;
 
@@ -49,11 +51,28 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
 
       <Row style={{ marginTop: '20px' }}>
         <Col span={14}>
-          <h3>Affinity Over Brands</h3>
+          <Line
+            data={brandAffinity}
+            xLables={['Affinity over brands']}
+            width="100%"
+            strokeWidth={2}
+            background="#000"
+            forground="#FFF"
+            aspect={2}
+          />
 
         </Col>
         <Col span={10}>
           <h5>Popularity</h5>
+          <Line
+            data={brandAffinity}
+            xLables={['Affinity over brands']}
+            width="100%"
+            strokeWidth={2}
+            background="#000"
+            forground="#FFF"
+            aspect={1.5}
+          />
         </Col>
       </Row>
 
