@@ -27,13 +27,13 @@ import ConcertData from './concertData';
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
 import ArtistsSummary from '../../components/ArtistsSummary';
 import IconRenderer from '../../components/IconRenderer';
-import DownloadAsPdfButton from '../../components/Buttons/pdfCreateButton';
+// import DownloadAsPdfButton from '../../components/Buttons/pdfCreateButton';
 import CardView from './cardView';
 import { ARec } from '../../../model/types/artist-recommendation';
 
 // Importing styles
 import './recommendationPage.scss';
-import { ImageDownloadService } from '../../../services/image-download.service';
+import { DownloadService } from '../../../services/download.service';
 
 const { Content } = Layout;
 
@@ -54,11 +54,11 @@ const renderSummary = (artistsData: Array<ARec>, view: string) => {
 };
 
 export type CreateRecommendationPageProps = {
-  imageDownloadService: ImageDownloadService;
+  downloadService: DownloadService;
 };
 
 export function createRecommendationPage({
-  imageDownloadService,
+  downloadService,
 }: CreateRecommendationPageProps): () => JSX.Element | null {
   return function RecommendationPage(): JSX.Element {
     const { recommendationId } = useParams();
@@ -164,6 +164,60 @@ export function createRecommendationPage({
       return <Empty />;
     }
 
+    const renderRecommendationContainer = (): JSX.Element => (
+      <Row id="recommendation-page-container">
+        <Col xs={{ span: 24 }} lg={{ span: 4 }}>
+          {concertData && <ConcertData data={concertData} />}
+        </Col>
+
+        <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+          <Switch
+            checkedChildren={IconRenderer('pie')}
+            unCheckedChildren={IconRenderer('card')}
+            checked={artistsView.toggleBtn}
+            onChange={updateView}
+            style={{
+              position: 'absolute',
+              top: '0px',
+              right: '0px',
+              zIndex: 100,
+            }}
+          />
+          {artistsView.name === 'pie' ? (
+            <div className="pie-container scroll height=100">
+              {artistsData.length > 0 && (
+                <ArtistPieChart
+                  data={artistsData}
+                  recommendationId={recommendationId}
+                  // eslint-disable-next-line react/jsx-no-bind
+                  patchConcertData={patchConcertData}
+                />
+              )}
+            </div>
+          ) : (
+            <Row className="card-container" align="bottom">
+              {artistsData.length > 0 && (
+                <CardView
+                  data={artistsData.slice(0, 3)}
+                  recommendationId={recommendationId}
+                />
+              )}
+            </Row>
+          )}
+        </Col>
+
+        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+          <div className="summary-container">
+            <h3>Summary</h3>
+            <div>
+              {artistsData.length > 0
+                && renderSummary(artistsData, artistsView.name)}
+            </div>
+          </div>
+        </Col>
+      </Row>
+    );
+
     return (
       <Layout id="recommendation-page" className="recommendation-page">
         <Content
@@ -208,7 +262,7 @@ export function createRecommendationPage({
             <Tooltip placement="top" title="Download image" color="aqua">
               <Button
                 type="text"
-                onClick={() => imageDownloadService.download({
+                onClick={() => downloadService.downloadImage({
                   elementId: 'recommendation-page',
                   imageName: 'Concert-Curation.png',
                 })}
@@ -224,69 +278,47 @@ export function createRecommendationPage({
                 </span>
               </Button>
             </Tooltip>
-            <DownloadAsPdfButton downloadPdf={downloadPdf} />
+            <Tooltip
+              placement="top"
+              title="Download Pdf"
+              color="orange"
+            >
+              <Button
+                type="text"
+                onClick={() => downloadService.downloadPdf({
+                  pdfName: 'Recommendaton.pdf',
+                  content: renderRecommendationContainer(),
+                })}
+                data-testid="download-pdf"
+              >
+                <span
+                  className="material-icons"
+                  style={{
+                    color: 'orange',
+                  }}
+                >
+                  picture_as_pdf
+                </span>
+              </Button>
+            </Tooltip>
+            {/* <DownloadAsPdfButton downloadPdf={downloadService.downloadPdf({
+              pdfName: 'Recommendaton.pdf',
+              content: renderRecommendationContainer(),
+            })}
+            /> */}
           </div>
         </Content>
         <Content className="recommendation-page-body">
-          <PDFExport
+          {/* <PDFExport
             ref={pdfExportComponent}
             scale={0.4}
             paperSize="auto"
             margin={20}
             fileName={`ReccomendationFor${recommendationId}`}
           >
-            <Row id="recommendation-page-container">
-              <Col xs={{ span: 24 }} lg={{ span: 4 }}>
-                {concertData && <ConcertData data={concertData} />}
-              </Col>
-
-              <Col xs={{ span: 24 }} lg={{ span: 14 }}>
-                <Switch
-                  checkedChildren={IconRenderer('pie')}
-                  unCheckedChildren={IconRenderer('card')}
-                  checked={artistsView.toggleBtn}
-                  onChange={updateView}
-                  style={{
-                    position: 'absolute',
-                    top: '0px',
-                    right: '0px',
-                    zIndex: 100,
-                  }}
-                />
-                {artistsView.name === 'pie' ? (
-                  <div className="pie-container scroll height=100">
-                    {artistsData.length > 0 && (
-                      <ArtistPieChart
-                        data={artistsData}
-                        recommendationId={recommendationId}
-                        // eslint-disable-next-line react/jsx-no-bind
-                        patchConcertData={patchConcertData}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <Row className="card-container" align="bottom">
-                    {artistsData.length > 0 && (
-                      <CardView
-                        data={artistsData.slice(0, 3)}
-                        recommendationId={recommendationId}
-                      />
-                    )}
-                  </Row>
-                )}
-              </Col>
-
-              <Col xs={{ span: 24 }} lg={{ span: 6 }}>
-                <div className="summary-container">
-                  <h3>Summary</h3>
-                  <div>
-                    {artistsData.length > 0
-                      && renderSummary(artistsData, artistsView.name)}
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </PDFExport>
+            { renderRecommendationContainer() }
+          </PDFExport> */}
+          { renderRecommendationContainer() }
         </Content>
       </Layout>
     );
