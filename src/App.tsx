@@ -14,7 +14,7 @@ import { AUTH_DOMAIN } from './config';
 import { createHeaderComponent } from './visualLayer/pages/header';
 import { createDashboardComponent } from './visualLayer/pages/dashboard';
 import Signup from './visualLayer/pages/signup/signup';
-import RecommendationPage from './visualLayer/pages/recommendation';
+import { createRecommendationPage } from './visualLayer/pages/recommendation';
 import EditorContainer from './visualLayer/pages/editor/editor';
 
 // styles
@@ -24,6 +24,7 @@ import { ArtistRecommendationInterface } from './model/interfaces/artistRecommen
 import { DocumentsInterface } from './model/interfaces/documents';
 import ArtistInterface from './model/interfaces/artist';
 import createArtistPage from './visualLayer/pages/artists/artist';
+import { ImageDownloadService } from './services/image-download.service';
 
 // For GET requests
 axios.interceptors.request.use(
@@ -56,6 +57,7 @@ export interface AppOptions {
   artistRecommendation: ArtistRecommendationInterface;
   documentsService: DocumentsInterface;
   artistService: ArtistInterface;
+  imageDownloadService: ImageDownloadService;
 }
 
 export function createApp(
@@ -64,6 +66,7 @@ export function createApp(
     artistRecommendation,
     documentsService,
     artistService,
+    imageDownloadService,
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent({ useAuth0 });
@@ -71,6 +74,8 @@ export function createApp(
     { artistRecommendation, documentsService },
   );
   const ArtistPage = createArtistPage({ artistService });
+
+  const RecommendationPage = createRecommendationPage({ imageDownloadService });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
