@@ -23,7 +23,9 @@ interface ConcertsTableProp {
   getConcerts: () => Promise<void>;
 }
 
-const ConcertsTable = ({ forms, concertLoading, getConcerts }: ConcertsTableProp): JSX.Element => {
+export const ConcertsTable = (
+  { forms, concertLoading, getConcerts }: ConcertsTableProp,
+): JSX.Element => {
   const data: Array<ConcertCreationResponse> = _.map(forms, (form: ConcertCreationResponse) => ({
     ...form,
     key: form.id,
@@ -145,5 +147,3 @@ const ConcertsTable = ({ forms, concertLoading, getConcerts }: ConcertsTableProp
     </div>
   );
 };
-
-export default ConcertsTable;

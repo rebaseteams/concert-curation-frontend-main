@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react';
-// import { Error } from '../model/types/errors';
+import { Error } from '../model/types/errors';
 import { Documents } from '../model/types/document/addDocument';
 import { DocumentsInterface } from '../model/interfaces/documents';
 
-type GetDocument = {
+export type GetDocument = {
   loadingForDocuments: boolean;
   documents: Array<Documents>;
+  error: Error | undefined;
   getDocuments: () => Promise<void>;
 }
 
 export function useGetDocuments(documentsService: DocumentsInterface): GetDocument {
   const [loadingForDocuments, setLoadingForDocuments] = useState(false);
   const [documents, setDocuments] = useState<Array<Documents>>([]);
+  const [error, setError] = useState<Error>();
 
   async function getDocuments() {
     setLoadingForDocuments(true);
     const documentsResponse = await documentsService.getDocuments();
     if (documentsResponse.error) {
-      // setError({ status: documentsResponse.status, message: documentsResponse.message });
+      setError({ status: documentsResponse.status, message: documentsResponse.message });
     } else if (documentsResponse.data && documentsResponse.data.data) {
       setDocuments(documentsResponse.data.data);
     }
@@ -31,6 +33,7 @@ export function useGetDocuments(documentsService: DocumentsInterface): GetDocume
   return {
     loadingForDocuments,
     documents,
+    error,
     getDocuments,
   };
 }
