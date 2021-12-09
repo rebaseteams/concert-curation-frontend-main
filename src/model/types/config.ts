@@ -1,4 +1,4 @@
-import { ImageDownloadService } from '../../services/image-download.service';
+import { DownloadService } from '../../services/download.service';
 import ArtistInterface from '../interfaces/artist';
 import { ArtistRecommendationInterface } from '../interfaces/artistRecommendation';
 import { DocumentsInterface } from '../interfaces/documents';
@@ -9,7 +9,7 @@ export interface Config {
   mode: 'production' | 'development';
 
   services: {
-    imageDownloadService: ImageDownloadService,
+    downloadService: DownloadService,
     artistRecommendation: ArtistRecommendationInterface,
     documentsService: DocumentsInterface,
     artistService: ArtistInterface

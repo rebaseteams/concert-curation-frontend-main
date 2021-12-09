@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { HtmlImageDownloadService } from './adapters/html-image-download.service';
+import { HtmlDownloadService } from './adapters/html-download.service';
 import { UnsignedTokenService } from './adapters/token.service.unsigned';
 import { InMemoryAuth0Provider } from './contexts/auth-context.in-memory';
 import ArtistRecommendationRepo from './dataLayer/repositories/http/artistRecommendation';
@@ -18,7 +18,7 @@ export const config: Config = {
     artistRecommendation: new ArtistRecommendation(new ArtistRecommendationRepo()),
     documentsService: new Documents(new DocumentsRepo()),
     artistService: new Artist(new ArtistRepo()),
-    imageDownloadService: new HtmlImageDownloadService(),
+    downloadService: new HtmlDownloadService(),
   },
   providers: {
     Auth: ({ children }) => InMemoryAuth0Provider({

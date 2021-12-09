@@ -10,12 +10,12 @@ import { config } from './config.dev';
 const { Auth } = config.providers;
 
 const {
-  artistRecommendation, documentsService, artistService, imageDownloadService,
+  artistRecommendation, documentsService, artistService, downloadService,
 } = config.services;
 
 const App = createApp(
   {
-    artistRecommendation, documentsService, artistService, imageDownloadService,
+    artistRecommendation, documentsService, artistService, downloadService,
   },
 );
 

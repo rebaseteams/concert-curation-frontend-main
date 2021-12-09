@@ -24,7 +24,7 @@ import { ArtistRecommendationInterface } from './model/interfaces/artistRecommen
 import { DocumentsInterface } from './model/interfaces/documents';
 import ArtistInterface from './model/interfaces/artist';
 import createArtistPage from './visualLayer/pages/artists/artist';
-import { ImageDownloadService } from './services/image-download.service';
+import { DownloadService } from './services/download.service';
 
 // For GET requests
 axios.interceptors.request.use(
@@ -57,7 +57,7 @@ export interface AppOptions {
   artistRecommendation: ArtistRecommendationInterface;
   documentsService: DocumentsInterface;
   artistService: ArtistInterface;
-  imageDownloadService: ImageDownloadService;
+  downloadService: DownloadService;
 }
 
 export function createApp(
@@ -66,7 +66,7 @@ export function createApp(
     artistRecommendation,
     documentsService,
     artistService,
-    imageDownloadService,
+    downloadService,
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent({ useAuth0 });
@@ -75,7 +75,7 @@ export function createApp(
   );
   const ArtistPage = createArtistPage({ artistService });
 
-  const RecommendationPage = createRecommendationPage({ imageDownloadService });
+  const RecommendationPage = createRecommendationPage({ downloadService });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
