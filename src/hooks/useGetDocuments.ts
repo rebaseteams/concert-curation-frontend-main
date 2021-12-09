@@ -3,7 +3,13 @@ import { useEffect, useState } from 'react';
 import { Documents } from '../model/types/document/addDocument';
 import { DocumentsInterface } from '../model/interfaces/documents';
 
-export function useGetDocuments(documentsService: DocumentsInterface) {
+type GetDocument = {
+  loadingForDocuments: boolean;
+  documents: Array<Documents>;
+  getDocuments: () => Promise<void>;
+}
+
+export function useGetDocuments(documentsService: DocumentsInterface): GetDocument {
   const [loadingForDocuments, setLoadingForDocuments] = useState(false);
   const [documents, setDocuments] = useState<Array<Documents>>([]);
 
@@ -29,8 +35,4 @@ export function useGetDocuments(documentsService: DocumentsInterface) {
   };
 }
 
-export type UseGetDocuments = (documentsService: DocumentsInterface) => {
-  loadingForDocuments: boolean;
-  documents: Array<Documents>;
-  getDocuments: () => Promise<void>;
-}
+export type UseGetDocuments = (documentsService: DocumentsInterface) => GetDocument;
