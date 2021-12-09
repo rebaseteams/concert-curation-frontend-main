@@ -1,41 +1,37 @@
-import { useEffect, useState } from 'react';
 import {
   Spin,
 } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useArtistData as defaultuseArtistData, UseArtistData } from '../../../hooks/useArtistData';
 import createArtistProfile from '../../components/ArtistProfile';
-import services from '../../services';
-import { ArtistNew } from '../../../model/types/artist';
+import ArtistInterface from '../../../model/interfaces/artist';
 
-const ArtistPage = (): JSX.Element => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id } = useParams(); // TODO: Use this id to sfetch artists information
-  const [artist, setArtist] = useState<ArtistNew>();
+interface createArtistPageProp {
+  artistService: ArtistInterface
+  useArtistData?: UseArtistData;
+}
 
-  const getArtistData = async () => {
-    const response = await services.Artist.getArtist('Artist1');
-    if (response.error) {
-      return;
+const createArtistPage = ({ artistService, useArtistData = defaultuseArtistData }:
+  createArtistPageProp):
+  () => JSX.Element => {
+  const ArtistPage = (): JSX.Element => {
+    const { artist } = useArtistData(artistService);
+
+    if (!artist) {
+      return <Spin />;
     }
-    setArtist(response.data);
+    const ArtistProfile = createArtistProfile({
+      artist,
+    });
+    return (
+      <div>
+        <div style={{ height: '88vh', overflow: 'auto' }}>
+          <ArtistProfile />
+        </div>
+      </div>
+    );
   };
 
-  useEffect(() => {
-    getArtistData();
-  }, []);
-
-  if (!artist) {
-    return <Spin />;
-  }
-  const ArtistProfile = createArtistProfile({
-    artist,
-  });
-  return (
-    <div>
-      <div style={{ height: '88vh', overflow: 'auto' }}>
-        <ArtistProfile />
-      </div>
-    </div>
-  );
+  return ArtistPage;
 };
-export default ArtistPage;
+
+export default createArtistPage;

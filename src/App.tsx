@@ -1,30 +1,20 @@
 import { useEffect } from 'react';
-
 import { useAuth0 as defaultUseAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosRequestConfig } from 'axios';
-
 import {
   BrowserRouter, Link, Route, Routes,
 } from 'react-router-dom';
-
 import { Result } from 'antd';
 
 // importing services
 import extractUserToken from './services/userToken';
-
 import { AUTH_DOMAIN } from './config';
 
 // importing components
 import { createHeaderComponent } from './visualLayer/pages/header';
-
 import { createDashboardComponent } from './visualLayer/pages/dashboard';
-
 import Signup from './visualLayer/pages/signup/signup';
-
 import RecommendationPage from './visualLayer/pages/recommendation';
-
-import ArtistPage from './visualLayer/pages/artists/artist';
-
 import EditorContainer from './visualLayer/pages/editor/editor';
 
 // styles
@@ -32,6 +22,8 @@ import './App.scss';
 import { UseAuth0 } from './model/types/auth0User';
 import { ArtistRecommendationInterface } from './model/interfaces/artistRecommendation';
 import { DocumentsInterface } from './model/interfaces/documents';
+import ArtistInterface from './model/interfaces/artist';
+import createArtistPage from './visualLayer/pages/artists/artist';
 
 // For GET requests
 axios.interceptors.request.use(
@@ -62,7 +54,8 @@ localStorage.setItem('userid', '1238989');
 export interface AppOptions {
   useAuth0?: UseAuth0;
   artistRecommendation: ArtistRecommendationInterface;
-  documentsService: DocumentsInterface
+  documentsService: DocumentsInterface;
+  artistService: ArtistInterface;
 }
 
 export function createApp(
@@ -70,12 +63,14 @@ export function createApp(
     useAuth0 = defaultUseAuth0,
     artistRecommendation,
     documentsService,
+    artistService,
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent({ useAuth0 });
   const DashboardComponent = createDashboardComponent(
     { artistRecommendation, documentsService },
   );
+  const ArtistPage = createArtistPage({ artistService });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();

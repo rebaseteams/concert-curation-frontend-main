@@ -3,7 +3,15 @@ import { ArtistRecommendationInterface } from '../model/interfaces/artistRecomme
 import { ConcertCreationResponse } from '../model/types/questions';
 import { Error } from '../model/types/errors';
 
-export function useGetConcerts(artistRecommendation: ArtistRecommendationInterface) {
+type GetConcert = {
+  loadingForConcerts: boolean;
+  error: Error | undefined;
+  forms: Array<ConcertCreationResponse>;
+  getRecommendations: () => Promise<void>;
+}
+
+export function useGetConcerts(artistRecommendation: ArtistRecommendationInterface):
+GetConcert {
   const [loadingForConcerts, setLoadingForConcerts] = useState(false);
   const [error, setError] = useState<Error>();
   const [forms, setForms] = useState<Array<ConcertCreationResponse>>([]);
@@ -31,9 +39,5 @@ export function useGetConcerts(artistRecommendation: ArtistRecommendationInterfa
   };
 }
 
-export type UseGetConcerts = (artistRecommendation: ArtistRecommendationInterface) => {
-  loadingForConcerts: boolean;
-  error: Error | undefined;
-  forms: Array<ConcertCreationResponse>;
-  getRecommendations: () => Promise<void>;
-}
+export type UseGetConcerts = (artistRecommendation: ArtistRecommendationInterface) =>
+  GetConcert;

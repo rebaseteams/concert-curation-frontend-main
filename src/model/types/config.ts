@@ -1,3 +1,4 @@
+import ArtistInterface from '../interfaces/artist';
 import { ArtistRecommendationInterface } from '../interfaces/artistRecommendation';
 import { DocumentsInterface } from '../interfaces/documents';
 
@@ -8,7 +9,8 @@ export interface Config {
 
   services: {
     artistRecommendation: ArtistRecommendationInterface,
-    documentsService: DocumentsInterface
+    documentsService: DocumentsInterface,
+    artistService: ArtistInterface
   };
 
   providers: {
