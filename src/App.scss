@@ -98,6 +98,42 @@
     height: min-content;
 }
 
+
+// margins
+
+.m-1 { margin: 4px; }
+.m-2 { margin: 8px; }
+.m-3 { margin: 12px; }
+.m-4 { margin: 16px; }
+.m-5 { margin: 20px; }
+.m-6 { margin: 24px; }
+.m-7 { margin: 28px; }
+.m-8 { margin: 32px; }
+.m-9 { margin: 36px; }
+.m-10 { margin: 45px; }
+
+.mx-1 { margin: 0px 4px; }
+.mx-2 { margin: 0px 8px; }
+.mx-3 { margin: 0px 12px; }
+.mx-4 { margin: 0px 16px; }
+.mx-5 { margin: 0px 20px; }
+.mx-6 { margin: 0px 24px; }
+.mx-7 { margin: 0px 28px; }
+.mx-8 { margin: 0px 32px; }
+.mx-9 { margin: 0px 36px; }
+.mx-10 { margin: 0px 45px; }
+
+.my-1 { margin: 4px 0px; }
+.my-2 { margin: 8px 0px; }
+// .my-3 { margin: 12px 0px; }
+.my-4 { margin: 16px 0px; }
+.my-5 { margin: 20px 0px; }
+.my-6 { margin: 24px 0px; }
+.my-7 { margin: 28px 0px; }
+.my-8 { margin: 32px 0px; }
+.my-9 { margin: 36px 0px; }
+.my-10 { margin: 45px 0px; }
+
 .my-3 {
     margin: 0 10px;
 }

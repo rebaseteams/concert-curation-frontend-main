@@ -60,7 +60,6 @@ const RecommendationPage = (): JSX.Element => {
     toggleBtn: true,
   });
   const [error, setError] = useState<{ status: string; message: string }>();
-  const userID = '1234589';
 
   const pdfExportComponent = React.useRef<PDFExport>(null);
 
@@ -92,9 +91,8 @@ const RecommendationPage = (): JSX.Element => {
   async function patchConcertData(discardedArtistId: string) {
     // await patchRecommendationArtist(id, discardedArtistId, userID);
     const patchData = {
-      formId: recommendationId || '',
-      discardedArtistId,
-      userId: userID,
+      id: recommendationId || '',
+      artistId: discardedArtistId,
     };
     const response = await services.ArtistRecommendation.discardArtist(patchData);
     if (response.error) {

@@ -35,7 +35,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
         if (val.status !== 200) {
           resolve({ error: true, status: val.status, message: val.statusText });
         }
-        resolve({ error: false, data: val.data, message: 'success' });
+        resolve({ error: false, data: val.data.data, message: 'success' });
       }).catch((err: CatchError) => {
         resolve({ error: true, status: err.status, message: err.message });
       });
@@ -51,7 +51,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
           error: true, data: [], status: val.status, message: val.message,
         });
       }
-      resolve({ error: false, data: val.data, message: 'success' });
+      resolve({ error: false, data: val.data.data.recommendations, message: 'success' });
     }).catch((err: CatchError) => {
       resolve({
         error: true, data: [], status: err.status, message: err.message,
