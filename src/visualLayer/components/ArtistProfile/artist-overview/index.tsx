@@ -3,9 +3,10 @@ import {
 } from 'antd';
 import * as _ from 'lodash';
 import millify from 'millify';
+import latestRelease from '../../../../dataLayer/repositories/inmemory/mockData/latestReleaseVideosa';
 import { ArtistNew } from '../../../../model/types/artist';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mediaColors: any = {
@@ -54,6 +55,37 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
         <Col span={10}>
           <h5>Popularity</h5>
         </Col>
+      </Row>
+
+      <Title className="mx-5" level={2}>Latest Release</Title>
+      <Row>
+        { _.map(latestRelease, (video) => (
+          <Col md={{ span: 12 }} xs={{ span: 24 }}>
+            <div className="row-flex m-5">
+              <div>
+                <img width={200} height={120} src={video.tumbnail} alt={video.title} />
+              </div>
+              <div className="column-flex m-2">
+                <Title level={3}>{video.title}</Title>
+                <Text>
+                  Views
+                  {' '}
+                  {video.views}
+                </Text>
+                <Text>
+                  Channel
+                  {' '}
+                  {video.channelName}
+                </Text>
+                <Text>
+                  Subscribers
+                  {' '}
+                  {video.subscribers}
+                </Text>
+              </div>
+            </div>
+          </Col>
+        )) }
       </Row>
     </div>
   );
