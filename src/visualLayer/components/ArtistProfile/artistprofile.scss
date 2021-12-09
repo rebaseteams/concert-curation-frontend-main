@@ -26,8 +26,9 @@
   }
 
   .artist-profile-body{
+    max-width: 90%;
+    margin: auto;
     .artist-profile-overview {
-      max-width: 1000px;
       margin: 50px auto;
       .fan-container {
         .fan-circle {

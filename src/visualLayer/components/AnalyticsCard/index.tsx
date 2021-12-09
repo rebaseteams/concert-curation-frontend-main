@@ -1,8 +1,10 @@
-import { Empty, Row, Col } from 'antd';
+import {
+  Empty, Row, Col, Card,
+} from 'antd';
 import _ from 'lodash';
 
 type Data = {
-  name: string,
+  field: string,
   value: string | number;
 }
 
@@ -15,13 +17,13 @@ const AnalyticsCard = ({ data }: AnalyticsCardProp): JSX.Element => {
     return <Empty />;
   }
   return (
-    <Row>
-      { _.map(data, (d:Data) => (
-        <Col span={6}>
-          <div>
-            <h1>{d.name}</h1>
-            <h3>{d.value}</h3>
-          </div>
+    <Row className="mx-6">
+      { _.map(data, (d:Data, index: number) => (
+        <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 6 }} key={index}>
+          <Card color="#7F7" hoverable style={{ margin: '10px', textAlign: 'center' }} className="text-center m-4">
+            <h2>{d.value}</h2>
+            <h3>{d.field}</h3>
+          </Card>
         </Col>
       ))}
     </Row>

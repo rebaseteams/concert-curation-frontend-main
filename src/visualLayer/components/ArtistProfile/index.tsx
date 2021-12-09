@@ -12,7 +12,7 @@ import { ArtistNew } from '../../../model/types/artist';
 // Importing components
 import IconRenderer from '../IconRenderer';
 import ArtistOverview from './artist-overview/index';
-import ArtistInsights from './artist-insights';
+import ArtistInsights from './artist-insights/index';
 import ArtistToursView from './artist-tour';
 import ArtistContactDetails from './artist-contact';
 
@@ -54,7 +54,9 @@ const createArtistProfile = ({
         <div className="artist-profile-body">
           <Tabs centered>
             <TabPane tab="Overview" key="overview-tab">
-              <ArtistOverview artist={artist} />
+              <div>
+                <ArtistOverview artist={artist} />
+              </div>
             </TabPane>
             <TabPane tab="Insights" key="insights-tab">
               <ArtistInsights />
