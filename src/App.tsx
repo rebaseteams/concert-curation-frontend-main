@@ -75,7 +75,7 @@ export function createApp(
   );
   const ArtistPage = createArtistPage({ artistService });
 
-  const RecommendationPage = createRecommendationPage({ downloadService });
+  const RecommendationPage = createRecommendationPage({ downloadService, artistRecommendation });
 
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
