@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Row,
@@ -70,7 +69,9 @@ export function createRecommendationPage({
       artistRecommendation,
     );
 
-    const { discardArtistRecommendation, notification } = useDiscardArtistRecommendation(artistRecommendation);
+    const { discardArtistRecommendation, notification } = useDiscardArtistRecommendation(
+      artistRecommendation,
+    );
 
     const [artistsView, setArtistsView] = useState<{
       name: string;
@@ -93,6 +94,7 @@ export function createRecommendationPage({
         localStorage.setItem('view', 'card');
       }
     };
+    const container = React.useRef(null);
 
     useEffect(() => {
       if (notification) {
@@ -112,7 +114,7 @@ export function createRecommendationPage({
         setArtistsView({ name: 'card', toggleBtn: false });
       }
       getArtistRecommendation();
-    }, [notification?.status]);
+    }, [notification?.status, container]);
 
     if (error) {
       return (
@@ -255,7 +257,7 @@ export function createRecommendationPage({
                 type="text"
                 onClick={() => downloadService.downloadPdf({
                   pdfName: 'Recommendaton.pdf',
-                  content: renderRecommendationContainer(),
+                  container: container.current,
                 })}
                 data-testid="download-pdf"
               >
@@ -272,16 +274,9 @@ export function createRecommendationPage({
           </div>
         </Content>
         <Content className="recommendation-page-body">
-          {/* <PDFExport
-            ref={pdfExportComponent}
-            scale={0.4}
-            paperSize="auto"
-            margin={20}
-            fileName={`ReccomendationFor${recommendationId}`}
-          >
+          <div ref={container}>
             { renderRecommendationContainer() }
-          </PDFExport> */}
-          { renderRecommendationContainer() }
+          </div>
         </Content>
       </Layout>
     );
