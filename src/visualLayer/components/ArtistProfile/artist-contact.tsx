@@ -5,8 +5,6 @@ import { ArtistNew } from '../../../model/types/artist';
 import CollaborationForm from '../CollaborationForm/collaborationForm';
 
 const ArtistContactDetails = ({ artist }: { artist: ArtistNew }): JSX.Element => {
-  // eslint-disable-next-line no-console
-  console.log(artist);
   const { state }: { state: { recommendationId: string } } = useLocation();
   const recommendationId = state ? state.recommendationId : '';
   const [collaborationModal, setCollaborationModal] = useState(false);

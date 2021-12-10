@@ -5,7 +5,7 @@ export interface DownloadImageData {
 
 export interface DownloadPdfData {
   pdfName: string;
-  content: JSX.Element;
+  container: HTMLElement | null;
 }
 
 export interface DownloadService {
