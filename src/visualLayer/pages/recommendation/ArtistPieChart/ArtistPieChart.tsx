@@ -13,16 +13,17 @@ import {
 } from './utils';
 import { ARec } from '../../../../model/types/artist-recommendation';
 import IconRenderer from '../../../components/IconRenderer';
+import { PatchRequest } from '../../../../model/types/patch-request';
 // import IconRenderer from '../../IconRenderer';
 
 interface ArtistsPieChartProp {
   data: Array<ARec>;
   recommendationId: string;
-  patchConcertData: (discardedArtistId: string) => void
+  discardArtistRecommendation: (data: PatchRequest) => void
 }
 
 // eslint-disable-next-line
-const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPieChartProp) : JSX.Element => {
+const ArtistPieChart = ({ data, recommendationId, discardArtistRecommendation }: ArtistsPieChartProp) : JSX.Element => {
   const artist = {
     id: '',
     brand: [''],
@@ -93,7 +94,10 @@ const ArtistPieChart = ({ data, recommendationId, patchConcertData }: ArtistsPie
       title: 'Confirm',
       content: `Are you sure you want to remove ${artistName}`,
       okText: 'Remove',
-      onOk: () => patchConcertData(artistId),
+      onOk: () => discardArtistRecommendation({
+        artistId,
+        id: recommendationId,
+      }),
       cancelText: 'Cancel',
     });
   };

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+/* eslint-disable max-len */
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -14,26 +15,22 @@ import {
   message,
   Button,
 } from 'antd';
-import { PDFExport } from '@progress/kendo-react-pdf';
 import * as _ from 'lodash';
-
-// Importing Services and utils
-// import patchRecommendationArtist from '../../../services/patchRecommendationArtist';
-import services from '../../services';
-import { Questions } from '../../../model/types/questions';
 
 // Importing Components and Pages
 import ConcertData from './concertData';
 import ArtistPieChart from './ArtistPieChart/ArtistPieChart';
 import ArtistsSummary from '../../components/ArtistsSummary';
 import IconRenderer from '../../components/IconRenderer';
-// import DownloadAsPdfButton from '../../components/Buttons/pdfCreateButton';
 import CardView from './cardView';
 import { ARec } from '../../../model/types/artist-recommendation';
 
 // Importing styles
 import './recommendationPage.scss';
 import { DownloadService } from '../../../services/download.service';
+import { useGetArtistRecommendation as defaultUseGetArtistRecommendation, UseGetArtistRecommendation } from '../../../hooks/useGetArtistRecommendation';
+import { useDiscardArtistRecommendation as defaultUseDiscardArtistRecommendation, UseDiscardArtistRecommendation } from '../../../hooks/useDiscardArtistRecommendation';
+import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
 
 const { Content } = Layout;
 
@@ -54,16 +51,27 @@ const renderSummary = (artistsData: Array<ARec>, view: string) => {
 };
 
 export type CreateRecommendationPageProps = {
+  useGetArtistRecommendation?: UseGetArtistRecommendation;
+  useDiscardArtistRecommendation?: UseDiscardArtistRecommendation;
+  artistRecommendation: ArtistRecommendationInterface;
   downloadService: DownloadService;
 };
 
 export function createRecommendationPage({
+  useGetArtistRecommendation = defaultUseGetArtistRecommendation,
+  useDiscardArtistRecommendation = defaultUseDiscardArtistRecommendation,
+  artistRecommendation,
   downloadService,
 }: CreateRecommendationPageProps): () => JSX.Element | null {
   return function RecommendationPage(): JSX.Element {
-    const { recommendationId } = useParams();
-    const [concertData, setConcertData] = useState<Questions>();
-    const [artistsData, setArtistsData] = useState<Array<ARec>>([]);
+    const {
+      error, recommendationId, getArtistRecommendation, concertData, artistsData,
+    } = useGetArtistRecommendation(
+      artistRecommendation,
+    );
+
+    const { discardArtistRecommendation, notification } = useDiscardArtistRecommendation(artistRecommendation);
+
     const [artistsView, setArtistsView] = useState<{
       name: string;
       toggleBtn: boolean;
@@ -71,57 +79,9 @@ export function createRecommendationPage({
       name: 'pie',
       toggleBtn: true,
     });
-    const [error, setError] = useState<{ status: string; message: string }>();
-
-    const pdfExportComponent = React.useRef<PDFExport>(null);
-
-    const downloadPdf = () => {
-      if (pdfExportComponent.current) {
-        pdfExportComponent.current.save();
-      }
-    };
 
     if (!recommendationId) {
       return <Empty />;
-    }
-
-    const getConcertData = async () => {
-      const response = await services.ArtistRecommendation.getRecommendation(
-        recommendationId,
-      );
-      if (!response) {
-        setError({ status: '404', message: 'Internal Error' });
-        return;
-      }
-      if (response.error) {
-        setError({
-          status: String(response.status),
-          message: response.message,
-        });
-        return;
-      }
-      if (response.data) {
-        setConcertData(response.data.concertData);
-        setArtistsData(response.data.artists);
-      }
-    };
-
-    // eslint-disable-next-line react/jsx-no-bind
-    async function patchConcertData(discardedArtistId: string) {
-      // await patchRecommendationArtist(id, discardedArtistId, userID);
-      const patchData = {
-        id: recommendationId || '',
-        artistId: discardedArtistId,
-      };
-      const response = await services.ArtistRecommendation.discardArtist(
-        patchData,
-      );
-      if (response.error) {
-        message.error("Can't delete artist now!");
-        return;
-      }
-      message.success('Artist discarded');
-      getConcertData();
     }
 
     const updateView = (view: boolean) => {
@@ -135,6 +95,15 @@ export function createRecommendationPage({
     };
 
     useEffect(() => {
+      if (notification) {
+        if (notification.status === 'success') {
+          message.success(notification.message);
+        }
+        if (notification.status === 'error') {
+          message.error(notification.message);
+        }
+      }
+
       const view: string | null = String(localStorage.getItem('view'));
       if (view === 'pie') {
         setArtistsView({ name: 'pie', toggleBtn: true });
@@ -142,8 +111,8 @@ export function createRecommendationPage({
       if (view === 'card') {
         setArtistsView({ name: 'card', toggleBtn: false });
       }
-      getConcertData();
-    }, []);
+      getArtistRecommendation();
+    }, [notification?.status]);
 
     if (error) {
       return (
@@ -189,8 +158,7 @@ export function createRecommendationPage({
                 <ArtistPieChart
                   data={artistsData}
                   recommendationId={recommendationId}
-                  // eslint-disable-next-line react/jsx-no-bind
-                  patchConcertData={patchConcertData}
+                  discardArtistRecommendation={discardArtistRecommendation}
                 />
               )}
             </div>
@@ -301,11 +269,6 @@ export function createRecommendationPage({
                 </span>
               </Button>
             </Tooltip>
-            {/* <DownloadAsPdfButton downloadPdf={downloadService.downloadPdf({
-              pdfName: 'Recommendaton.pdf',
-              content: renderRecommendationContainer(),
-            })}
-            /> */}
           </div>
         </Content>
         <Content className="recommendation-page-body">
