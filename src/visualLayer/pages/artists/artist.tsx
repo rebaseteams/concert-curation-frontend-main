@@ -15,7 +15,6 @@ const createArtistPage = ({ artistService, useArtistData = defaultuseArtistData 
   () => JSX.Element => {
   const ArtistPage = (): JSX.Element => {
     const { artist } = useArtistData(artistService);
-
     if (!artist) {
       return <Spin />;
     }

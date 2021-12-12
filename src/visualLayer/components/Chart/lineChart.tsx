@@ -16,7 +16,6 @@ const colorPallets = ['red', 'green', 'yellow', 'blue', 'aqua'];
 interface LineChartProp {
     data: LineChartModal;
     xLables: string[];
-    width: string | number;
     strokeWidth: number;
     forground: string;
     background: string;
@@ -31,7 +30,6 @@ interface LineData {
 const Line = ({
   data,
   xLables = ['Line Chart'],
-  width = '100%',
   strokeWidth = 4,
   forground = '#111',
   background = '#FFF',
@@ -65,7 +63,7 @@ const Line = ({
   return (
     <div style={{ background }} className="lineChart-wrapper">
       <p className="chart-title" style={{ color: forground }}>{xLables[0]}</p>
-      <ResponsiveContainer width={width} aspect={aspect}>
+      <ResponsiveContainer aspect={aspect}>
         <LineChart
           data={combinedData}
           margin={{
@@ -76,14 +74,29 @@ const Line = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis tick={{ fill: forground }} dataKey="xAxis" minTickGap={combinedData.length / 6} angle={-45} markerHeight={10} dy={25} />
+          <XAxis tick={{ fill: forground }} dataKey="xAxis" minTickGap={combinedData.length / 6} angle={-30} markerHeight={2} dy={10} />
           <YAxis tick={{ fill: forground }} />
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              background: 'black',
+              border: 'none',
+              boxShadow: '1px 1px 12px #777',
+            }}
+          />
           {
-            data.yAxisData.map((yData, index) => <Lino strokeWidth={strokeWidth} type="monotone" key={`Line${yData.name}`} dataKey={yData.name} stroke={colorPallets[index + 4]} dot={false} />)
+            data.yAxisData.map((yData, index) => (
+              <Lino
+                strokeWidth={strokeWidth}
+                type="monotone"
+                key={`Line${yData.name}`}
+                dataKey={yData.name}
+                stroke={colorPallets[index + 4]}
+                dot={false}
+              />
+            ))
           }
           <Legend
-            wrapperStyle={{ bottom: 'unset', marginTop: 0, marginBottom: 10 }}
+            wrapperStyle={{ bottom: 'unset', marginTop: 0, marginBottom: 0 }}
             verticalAlign="bottom"
             height={30}
             margin={{ top: 80 }}

@@ -8,14 +8,14 @@ const xAxisData: Array<string> = [];
 _.times(20, (index: number) => {
   brand1Data.push({
     xAxis: String(100 + index),
-    yAxis: Math.random() % 2000,
+    yAxis: Math.floor(Math.random() * index * 100),
   });
 });
 
 _.times(20, (brand2: number) => {
   brand2Data.push({
     xAxis: String(100 + brand2),
-    yAxis: Math.random() % 200,
+    yAxis: Math.floor(Math.random() * brand2 * 100),
   });
 });
 

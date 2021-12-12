@@ -37,19 +37,19 @@ export const artistMockDataNew: ArtistNew = {
       handleName: 'twitter',
       logo: 'https://cdn-icons.flaticon.com/png/512/3256/premium/3256013.png?token=exp=1638880314~hmac=d3f9ec59e334cb8f49d32d09a3fc84e0',
       url: '',
-      followers: 122342,
+      followers: 98342,
     },
     {
       handleName: 'spotify',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg',
       url: '',
-      followers: 122342,
+      followers: 50342,
     },
     {
       handleName: 'youtube',
       logo: 'https://www.freepnglogos.com/uploads/youtube-logo-png/youtube-transparent-youtube-play-button-png-download-clip-art-11.png',
       url: '',
-      followers: 122342,
+      followers: 875342,
     },
   ],
 };

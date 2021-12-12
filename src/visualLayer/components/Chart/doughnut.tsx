@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/require-default-props */
 import React, { useEffect } from 'react';
 import {
@@ -14,7 +15,7 @@ import './chart.scoped.scss';
    <ChartComponent type='doughnut' data={data02} />
 */
 
-function CustomTooltip({ payload }: any) {
+function CustomTooltip({ payload }: any): JSX.Element | null {
   if (payload && payload.length > 0 && payload[0].name === 'ignore') {
     return null;
   }
@@ -22,17 +23,15 @@ function CustomTooltip({ payload }: any) {
 }
 
 interface DoughnutChartProps {
-    chartData: any;
+    chartData: { color: string; value: number };
     tooltip?: boolean;
     width?: string | number;
-    XLables?: Array<string>
 }
 
 const DoughnutChart = ({
   chartData,
   tooltip = false,
   width = '100%',
-  XLables,
 }:DoughnutChartProps) => {
   const [data, setData] = React.useState<Array<any>>([]);
   useEffect(() => {

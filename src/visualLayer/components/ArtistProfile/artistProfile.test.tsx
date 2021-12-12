@@ -27,4 +27,9 @@ describe('Artist Profile Component', () => {
     render(<BrowserRouter><ArtistProfile /></BrowserRouter>);
     expect(screen.getByText(artistMockDataNew.name)).toBeInTheDocument();
   });
+
+  it('should show artist facebook followers', () => {
+    render(<BrowserRouter><ArtistProfile /></BrowserRouter>);
+    expect(screen.getByText('122342')).toBeInTheDocument();
+  });
 });
