@@ -57,12 +57,11 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
         </Row>
       </div>
 
-      <Row style={{ marginTop: '20px' }}>
+      <Row style={{ margin: '20px 0px' }}>
         <Col span={14}>
           <Line
             data={brandAffinity}
             xLables={['Affinity over brands']}
-            width="100%"
             strokeWidth={2}
             background="#000"
             forground="#FFF"
@@ -71,15 +70,13 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
 
         </Col>
         <Col span={10}>
-          <h5>Popularity</h5>
           <Line
             data={brandAffinity}
-            xLables={['Affinity over brands']}
-            width="100%"
+            xLables={['Popularity']}
             strokeWidth={2}
             background="#000"
             forground="#FFF"
-            aspect={1.5}
+            aspect={1.4}
           />
         </Col>
       </Row>

@@ -11,7 +11,7 @@ export default class ArtistRepo implements ArtistInterface {
     axios.get(`${PROD_SERVER}/artists/${artistId}`).then((val: any) => {
       if (val.status === 200) {
         resolve({
-          error: false, message: val.statusText, data: val.data, status: val.status,
+          error: false, message: val.statusText, data: val.data.data, status: val.status,
         });
       }
       resolve({ error: true, message: val.statusText, status: val.status });
