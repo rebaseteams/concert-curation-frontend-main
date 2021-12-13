@@ -1,7 +1,6 @@
 import {
   Layout,
-  Row,
-  Col,
+  Tabs,
 } from 'antd';
 
 import { createRenderConcerts } from './concerts-list';
@@ -22,6 +21,7 @@ import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 
 const { Content } = Layout;
+const { TabPane } = Tabs;
 
 export interface CreateDashboardComponentProps {
   useGetConcerts?: UseGetConcerts;
@@ -48,15 +48,14 @@ export function createDashboardComponent({
     return (
       <Content style={{ height: '88vh', overflowY: 'auto', marginTop: '10px' }}>
 
-        <Row>
-          <Col md={{ span: 24 }}>
+        <Tabs centered>
+          <TabPane tab="Concerts" key="concerts">
             <ConcertList />
-          </Col>
-
-          <Col md={{ span: 24 }}>
+          </TabPane>
+          <TabPane tab="Documents" key="documents">
             <DocumentsList />
-          </Col>
-        </Row>
+          </TabPane>
+        </Tabs>
       </Content>
     );
   };
