@@ -23,7 +23,10 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
   return (
     <div className="artist-profile-overview">
       <div className="row-flex justify-between align-center fan-container">
-        <div className="column-flex align-center fan-circle mx-10">
+        <div
+          className="column-flex align-center fan-circle mx-10"
+          style={{ marginLeft: '120px' }}
+        >
           <Text type="secondary">Fans</Text>
           <Progress
             width={130}
@@ -31,7 +34,6 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
             strokeColor="#3FF"
             type="circle"
             percent={75}
-            // style={{ marginLeft: '70px' }}
             format={() => `${totalFollowers}`}
           />
         </div>
@@ -48,7 +50,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
                   />
                   <div className="column-flex">
                     <Text style={{ color: mediaColor, fontSize: '20px' }}>{`${media.handleName} Followers`}</Text>
-                    <Text style={{ color: mediaColor, fontSize: '22px' }}>{media.followers}</Text>
+                    <Text style={{ color: mediaColor, fontSize: '22px' }}>{millify(media.followers)}</Text>
                   </div>
                 </div>
               </Col>

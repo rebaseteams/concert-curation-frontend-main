@@ -389,4 +389,5 @@ export const recommendedArtistsMockData: ArtistRecommendation = {
       summary: 'Justin have a good fanbase in the selected venue location',
     },
   ],
+  discardedArtists: [],
 };
