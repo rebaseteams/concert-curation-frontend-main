@@ -64,7 +64,7 @@ export function createRecommendationPage({
 }: CreateRecommendationPageProps): () => JSX.Element | null {
   return function RecommendationPage(): JSX.Element {
     const {
-      error, recommendationId, getArtistRecommendation, concertData, artistsData,
+      error, recommendationId, getArtistRecommendation, concertData, artistsData, discardedArtists,
     } = useGetArtistRecommendation(
       artistRecommendation,
     );
@@ -135,10 +135,31 @@ export function createRecommendationPage({
       return <Empty />;
     }
 
+    const renderDiscardedArtists = () => {
+      if (discardedArtists.length > 0) {
+        return discardedArtists.map((discarded) => (
+          <div className="row-flex my-2">
+            <img width={25} src={discarded.artistImage} alt={discarded.artistName} />
+            <h4 className="mx-3">{discarded.artistName}</h4>
+          </div>
+        ));
+      }
+      return <div><span>No artist is discarded</span></div>;
+    };
+
     const renderRecommendationContainer = (): JSX.Element => (
       <Row id="recommendation-page-container">
         <Col xs={{ span: 24 }} lg={{ span: 4 }}>
           {concertData && <ConcertData data={concertData} />}
+          <h5>Discarded artists</h5>
+          <div
+            style={{
+              overflow: 'auto',
+              height: '110px',
+            }}
+          >
+            { renderDiscardedArtists() }
+          </div>
         </Col>
 
         <Col xs={{ span: 24 }} lg={{ span: 14 }}>

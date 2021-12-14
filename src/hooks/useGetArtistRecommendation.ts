@@ -12,6 +12,7 @@ export type GetArtistRecommendation = {
   getArtistRecommendation: () => Promise<void>;
   artistsData: Array<ARec>;
   concertData: Questions | undefined;
+  discardedArtists: Array<ARec>
 };
 
 export function useGetArtistRecommendation(
@@ -21,6 +22,7 @@ export function useGetArtistRecommendation(
   const [loadingArtistRecommendation, setLoadingArtistRecommendation] = useState(false);
   const [concertData, setConcertData] = useState<Questions>();
   const [artistsData, setArtistsData] = useState<Array<ARec>>([]);
+  const [discardedArtists, setDiscardedArtists] = useState<Array<ARec>>([]);
   const [recommendationId] = useState<string | undefined>(params.recommendationId);
 
   const [error, setError] = useState<Error>();
@@ -42,6 +44,7 @@ export function useGetArtistRecommendation(
     if (response.data) {
       setConcertData(response.data.concertData);
       setArtistsData(response.data.artists);
+      setDiscardedArtists(response.data.discardedArtists);
     }
     setLoadingArtistRecommendation(false);
   }
@@ -57,6 +60,7 @@ export function useGetArtistRecommendation(
     getArtistRecommendation,
     concertData,
     artistsData,
+    discardedArtists,
   };
 }
 

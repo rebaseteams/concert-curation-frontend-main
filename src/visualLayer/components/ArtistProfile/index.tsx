@@ -42,7 +42,9 @@ const createArtistProfile = ({
             background: `url(${artist.coverImage})`,
           }}
         >
-          <Button className="back-button" type="text" onClick={() => redirectBack()}>{IconRenderer('back')}</Button>
+          <Button className="back-button" type="text" onClick={() => redirectBack()}>
+            {IconRenderer('back')}
+          </Button>
           <Image
             className="profile-pic"
             width={200}
