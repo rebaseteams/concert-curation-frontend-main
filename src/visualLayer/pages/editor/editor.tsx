@@ -77,7 +77,7 @@ const EditorContainer = (): JSX.Element => {
           onChange={(evt, editor) => setEditorContent(editor.getContent())}
           init={{
             height: '88vh',
-            menubar: false,
+            menubar: 'file edit insert view format table tools',
             fontsize_formats:
               '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
             plugins: [
@@ -86,7 +86,7 @@ const EditorContainer = (): JSX.Element => {
               'searchreplace visualblocks code fullscreen',
               'insertdatetime media table paste code help wordcount',
             ],
-            toolbar: 'export code pagebreak | undo redo | formatselect | fontselect fontsizeselect | '
+            toolbar: 'export | undo redo | formatselect | fontselect fontsizeselect | '
            + 'bold italic backcolor forecolor | alignleft aligncenter '
            + 'alignright alignjustify | bullist numlist outdent indent | '
            + 'removeformat | help',
