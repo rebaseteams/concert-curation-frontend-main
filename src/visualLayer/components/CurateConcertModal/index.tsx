@@ -3,16 +3,18 @@ import {
 } from 'antd';
 
 import ConcertForm from '../concert';
-import { ConcertCreationResponse } from '../../../model/types/questions';
+import { ConcertCreationResponse, QuestionsUI } from '../../../model/types/questions';
+import { AddRecommendationResponse } from '../../../model/types/service-response';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   displayFormModal: boolean;
   forms: Array<ConcertCreationResponse>;
+  addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
 }
 
 const CurateConcertModal = ({
-  setDisplayFormModal, displayFormModal, forms,
+  setDisplayFormModal, displayFormModal, forms, addNewRecommendation,
 }: CurateConcertModalProp): JSX.Element => (
   <Modal
     title="Choose your prefrences"
@@ -40,6 +42,7 @@ const CurateConcertModal = ({
     <ConcertForm
       setVisible={setDisplayFormModal}
       forms={forms}
+      addNewRecommendation={addNewRecommendation}
     />
   </Modal>
 );

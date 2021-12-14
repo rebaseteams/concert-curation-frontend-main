@@ -14,12 +14,11 @@ import { ConcertFormProp } from './util';
 import createConcertFormData from './utils/createConcertFormData';
 import { onSubmitFormDataType } from '../../../model/types/concertForm';
 import { QuestionsUI } from '../../../model/types/questions';
-import services from '../../services';
 import renderFormFields from '../FormRenderer';
 import { ArtistBudget } from '../../../model/types/concertDataResponse';
 
 const ConcertForm = ({
-  setVisible, forms,
+  setVisible, forms, addNewRecommendation,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,7 @@ const ConcertForm = ({
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
     const result: QuestionsUI = createConcertFormData(values, budget);
-    const response = await services.ArtistRecommendation.addNewRecommendation(result);
+    const response = await addNewRecommendation(result);
     if (response.error) {
       setLoading(false);
       setVisible(false);

@@ -1,16 +1,22 @@
 import { Button, Result, Tooltip } from 'antd';
 import { useState } from 'react';
 import { GetConcert } from '../../../../hooks/useGetConcerts';
+import { QuestionsUI } from '../../../../model/types/questions';
+import { AddRecommendationResponse, DeleteRecommendationResponse } from '../../../../model/types/service-response';
 import { ConcertsTable } from '../../../components/ConcertsTable';
 import CurateConcertModal from '../../../components/CurateConcertModal';
 import IconRenderer from '../../../components/IconRenderer';
 
 export type CreateRenderChartProps = {
   getConcert: GetConcert;
+  deleteRecommendation: (id: string) => Promise<DeleteRecommendationResponse>;
+  addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
 };
 
 export function createRenderConcerts({
   getConcert,
+  deleteRecommendation,
+  addNewRecommendation,
 }: CreateRenderChartProps): () => JSX.Element | null {
   return function ConcertList(): JSX.Element | null {
     const {
@@ -30,6 +36,7 @@ export function createRenderConcerts({
           setDisplayFormModal={setDisplayFormModal}
           displayFormModal={displayFormModal}
           forms={forms}
+          addNewRecommendation={addNewRecommendation}
         />
         <div className="row-flex width-md">
           <h4 className="text-size-3" style={{ marginRight: '20px' }}>
@@ -53,6 +60,7 @@ export function createRenderConcerts({
           forms={forms}
           concertLoading={loadingForConcerts}
           getConcerts={getRecommendations}
+          deleteRecommendation={deleteRecommendation}
         />
       </>
     );

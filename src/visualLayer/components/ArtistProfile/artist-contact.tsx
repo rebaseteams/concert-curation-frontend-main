@@ -1,11 +1,9 @@
 import { Button, Modal } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArtistNew } from '../../../model/types/artist';
 import CollaborationForm from '../CollaborationForm/collaborationForm';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ArtistContactDetails = ({ artist }: { artist: ArtistNew }): JSX.Element => {
+const ArtistContactDetails = (): JSX.Element => {
   const { state }: { state: { recommendationId: string } } = useLocation();
   const recommendationId = state ? state.recommendationId : '';
   const [collaborationModal, setCollaborationModal] = useState(false);

@@ -65,7 +65,7 @@ const createArtistProfile = ({
               <ArtistToursView />
             </TabPane>
             <TabPane tab="Contact details" key="contact-tab">
-              <ArtistContactDetails artist={artist} />
+              <ArtistContactDetails />
             </TabPane>
           </Tabs>
         </div>

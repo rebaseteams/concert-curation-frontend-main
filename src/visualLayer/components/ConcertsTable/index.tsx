@@ -11,20 +11,21 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Importing Services and utils
-import services from '../../services';
 import { ConcertCreationResponse } from '../../../model/types/questions';
-// import { getRecommendedArtists } from '../../../services/recommendations';
+import { DeleteRecommendationResponse } from '../../../model/types/service-response';
 
 interface ConcertsTableProp {
   forms: Array<ConcertCreationResponse> | { message: string} | undefined;
   // TODO: find proper datatype for functions
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   concertLoading: boolean,
   getConcerts: () => Promise<void>;
+  deleteRecommendation: (id: string) => Promise<DeleteRecommendationResponse>
 }
 
 export const ConcertsTable = (
-  { forms, concertLoading, getConcerts }: ConcertsTableProp,
+  {
+    forms, concertLoading, getConcerts, deleteRecommendation,
+  }: ConcertsTableProp,
 ): JSX.Element => {
   const data: Array<ConcertCreationResponse> = _.map(forms, (form: ConcertCreationResponse) => ({
     ...form,
@@ -32,14 +33,9 @@ export const ConcertsTable = (
     dateCreated: form.dateCreated.slice(0, 25),
     actions: form.id,
   }));
-  // const getRecomendation = async (formId: string) => {
-  //   // below line will fetch artists recomended by form id
-  //   // will return recommended artist data
-  //   await getRecommendedArtists(formId);
-  // };
 
   const deleteNow = async (id: string) => {
-    const response = await services.ArtistRecommendation.deleteRecommendation(id);
+    const response = await deleteRecommendation(id);
     if (response && response.error) {
       message.error('Deletion Failed');
       return;
