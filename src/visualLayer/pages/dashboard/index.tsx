@@ -37,7 +37,11 @@ export function createDashboardComponent({
   documentsService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
-    const ConcertList = createRenderConcerts({ getConcert: useGetConcerts(artistRecommendation) });
+    const ConcertList = createRenderConcerts({
+      getConcert: useGetConcerts(artistRecommendation),
+      deleteRecommendation: artistRecommendation.deleteRecommendation,
+      addNewRecommendation: artistRecommendation.addNewRecommendation,
+    });
     const DocumentsList = createRenderDocuments(
       {
         getDocument: useGetDocuments(documentsService),
