@@ -97,6 +97,10 @@ export function createRecommendationPage({
       return <Empty />;
     }
 
+    const shareRecommendation = () => {
+      message.info('TODO: sharing recommendation feature', 1);
+    };
+
     const updateView = (view: boolean) => {
       if (view) {
         setArtistsView({ name: 'pie', toggleBtn: true });
@@ -261,7 +265,12 @@ export function createRecommendationPage({
               </Tag>
             </Tooltip>
           </Space>
-          <div>
+          <div className="row-flex align-center">
+            <Tooltip title="share this recommendation" color="blue">
+              <Button type="primary" onClick={shareRecommendation}>
+                { IconRenderer('share') }
+              </Button>
+            </Tooltip>
             <Tooltip title="documents">
               <Button type="ghost" onClick={() => { setDocumentsModal(true); }}>
                 { IconRenderer('doc') }
