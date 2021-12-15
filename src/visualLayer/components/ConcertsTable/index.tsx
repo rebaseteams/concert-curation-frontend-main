@@ -31,7 +31,7 @@ export const ConcertsTable = (
     ...form,
     key: form.id,
     dateCreated: form.dateCreated.slice(0, 25),
-    actions: form.id,
+    actions: { id: form.id, status: form.status },
   }));
 
   const deleteNow = async (id: string) => {
@@ -93,18 +93,22 @@ export const ConcertsTable = (
       title: 'Action',
       key: 'action',
       dataIndex: 'actions',
-      render: (id: string) => (
+      render: (action: { id: string, status: boolean }) => (
         <Space size="middle">
-          <Link
-            style={{
-              width: '90%',
-            }}
-            to={`recommendations/${id}`}
-          >
-            View Recommendation
-          </Link>
+          { action.status
+            ? (
+              <Link
+                style={{
+                  width: '90%',
+                }}
+                to={`recommendations/${action.id}`}
+              >
+                View Recommendation
+              </Link>
+            )
+            : <span style={{ color: '#555', cursor: 'pointer' }}>View Recommendation</span> }
           <Button
-            onClick={() => deleteConcertModal(id)}
+            onClick={() => deleteConcertModal(action.id)}
             type="link"
           >
             delete

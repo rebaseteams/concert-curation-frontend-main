@@ -21,6 +21,7 @@ const iconMapper: any = {
   waving_hand: 'waving_hand',
   refresh: 'refresh',
   menu: 'menu',
+  share: 'share',
 };
 
 const IconRenderer = (value: string): JSX.Element => {
