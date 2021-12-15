@@ -20,6 +20,7 @@ const iconMapper: any = {
   groupName: 'groups',
   waving_hand: 'waving_hand',
   refresh: 'refresh',
+  menu: 'menu',
 };
 
 const IconRenderer = (value: string): JSX.Element => {

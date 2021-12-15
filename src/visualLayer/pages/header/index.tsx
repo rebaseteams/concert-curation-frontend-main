@@ -44,7 +44,7 @@ export function createHeaderComponent({
     );
 
     const renderPrivate = () => (
-      <div className="row-flex justify-between align-center">
+      <div id="extra" className="row-flex justify-between align-center">
         <Search
           placeholder="search"
           allowClear
@@ -93,6 +93,7 @@ export function createHeaderComponent({
               <span className="text-size-4 cuttime">Cuttime .fm</span>
             </div>
             {!isAuthenticated || !user ? renderPublic() : renderPrivate()}
+            <div id="hamb">{ IconRenderer('menu') }</div>
           </div>
         </Header>
         <Outlet />
