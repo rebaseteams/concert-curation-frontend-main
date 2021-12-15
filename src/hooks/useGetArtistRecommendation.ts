@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArtistRecommendationInterface } from '../model/interfaces/artistRecommendation';
+import { DocumentsInterface } from '../model/interfaces/documents';
 import { ARec } from '../model/types/artist-recommendation';
+import { Documents } from '../model/types/document/addDocument';
 import { Error } from '../model/types/errors';
 import { Questions } from '../model/types/questions';
 
@@ -13,10 +15,12 @@ export type GetArtistRecommendation = {
   artistsData: Array<ARec>;
   concertData: Questions | undefined;
   discardedArtists: Array<ARec>
+  documents: Array<Documents>
 };
 
 export function useGetArtistRecommendation(
   artistRecommendation: ArtistRecommendationInterface,
+  documentsService: DocumentsInterface,
 ): GetArtistRecommendation {
   const params = useParams();
   const [loadingArtistRecommendation, setLoadingArtistRecommendation] = useState(false);
@@ -24,6 +28,7 @@ export function useGetArtistRecommendation(
   const [artistsData, setArtistsData] = useState<Array<ARec>>([]);
   const [discardedArtists, setDiscardedArtists] = useState<Array<ARec>>([]);
   const [recommendationId] = useState<string | undefined>(params.recommendationId);
+  const [documents, setDocuments] = useState<Array<Documents>>([]);
 
   const [error, setError] = useState<Error>();
 
@@ -45,6 +50,13 @@ export function useGetArtistRecommendation(
       setConcertData(response.data.concertData);
       setArtistsData(response.data.artists);
       setDiscardedArtists(response.data.discardedArtists);
+      const documentsRes = await documentsService.getDocuments();
+      if (documentsRes.error) {
+        setDocuments([]);
+      }
+      if (documentsRes.data?.success && documentsRes.data && documentsRes.data.data) {
+        setDocuments(documentsRes.data?.data);
+      }
     }
     setLoadingArtistRecommendation(false);
   }
@@ -61,8 +73,10 @@ export function useGetArtistRecommendation(
     concertData,
     artistsData,
     discardedArtists,
+    documents,
   };
 }
 
 export type UseGetArtistRecommendation = (
-  artistRecommendation: ArtistRecommendationInterface) => GetArtistRecommendation;
+  artistRecommendation: ArtistRecommendationInterface,
+  documentsService: DocumentsInterface) => GetArtistRecommendation;

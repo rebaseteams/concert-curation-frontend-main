@@ -13,6 +13,7 @@ import {
   Result,
   message,
   Button,
+  Modal,
 } from 'antd';
 import * as _ from 'lodash';
 
@@ -30,6 +31,8 @@ import { DownloadService } from '../../../services/download.service';
 import { useGetArtistRecommendation as defaultUseGetArtistRecommendation, UseGetArtistRecommendation } from '../../../hooks/useGetArtistRecommendation';
 import { useDiscardArtistRecommendation as defaultUseDiscardArtistRecommendation, UseDiscardArtistRecommendation } from '../../../hooks/useDiscardArtistRecommendation';
 import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
+import renderDocumentList from './DocumentsList';
 
 const { Content } = Layout;
 
@@ -54,6 +57,7 @@ export type CreateRecommendationPageProps = {
   useDiscardArtistRecommendation?: UseDiscardArtistRecommendation;
   artistRecommendation: ArtistRecommendationInterface;
   downloadService: DownloadService;
+  documentsService: DocumentsInterface;
 };
 
 export function createRecommendationPage({
@@ -61,12 +65,19 @@ export function createRecommendationPage({
   useDiscardArtistRecommendation = defaultUseDiscardArtistRecommendation,
   artistRecommendation,
   downloadService,
+  documentsService,
 }: CreateRecommendationPageProps): () => JSX.Element | null {
   return function RecommendationPage(): JSX.Element {
     const {
-      error, recommendationId, getArtistRecommendation, concertData, artistsData, discardedArtists,
+      error,
+      recommendationId,
+      getArtistRecommendation,
+      concertData, artistsData,
+      discardedArtists,
+      documents,
     } = useGetArtistRecommendation(
       artistRecommendation,
+      documentsService,
     );
 
     const { discardArtistRecommendation, notification } = useDiscardArtistRecommendation(
@@ -80,6 +91,7 @@ export function createRecommendationPage({
       name: 'pie',
       toggleBtn: true,
     });
+    const [documentsModal, setDocumentsModal] = useState(false);
 
     if (!recommendationId) {
       return <Empty />;
@@ -250,6 +262,11 @@ export function createRecommendationPage({
             </Tooltip>
           </Space>
           <div>
+            <Tooltip title="documents">
+              <Button type="ghost" onClick={() => { setDocumentsModal(true); }}>
+                { IconRenderer('doc') }
+              </Button>
+            </Tooltip>
             <Tooltip placement="top" title="Download image" color="aqua">
               <Button
                 type="text"
@@ -299,6 +316,25 @@ export function createRecommendationPage({
             { renderRecommendationContainer() }
           </div>
         </Content>
+        <Modal
+          title="Documents"
+          onCancel={() => { setDocumentsModal(false); }}
+          bodyStyle={{
+            height: '350px',
+            overflow: 'auto',
+          }}
+          style={{
+            position: 'absolute',
+            right: 20,
+          }}
+          visible={documentsModal}
+          footer={false}
+          width={350}
+        >
+          { documents.length > 0
+            ? renderDocumentList(documents)
+            : <Empty />}
+        </Modal>
       </Layout>
     );
   };
