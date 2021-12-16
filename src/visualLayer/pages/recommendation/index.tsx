@@ -160,7 +160,7 @@ export function createRecommendationPage({
           </div>
         ));
       }
-      return <div><span>No artist is discarded</span></div>;
+      return <div><Empty description="Discarded artists will be listed here." /></div>;
     };
 
     const renderRecommendationContainer = (): JSX.Element => (
@@ -243,6 +243,22 @@ export function createRecommendationPage({
               <Tag color="orange">
                 <span className="text-size-4">
                   {IconRenderer(concertData.sponsorshipType)}
+                </span>
+              </Tag>
+            </Tooltip>
+            <Tooltip
+              title={(
+                <div>
+                  <h2>Selected Venues</h2>
+                  {' '}
+                  { concertData.venue.map((v: string) => <h3>{v}</h3>) }
+                </div>
+              )}
+              color="#0029"
+            >
+              <Tag className="cursor" color="blue">
+                <span className="text-size-4">
+                  { IconRenderer('location') }
                 </span>
               </Tag>
             </Tooltip>
