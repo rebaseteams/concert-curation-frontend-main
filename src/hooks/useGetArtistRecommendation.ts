@@ -14,8 +14,9 @@ export type GetArtistRecommendation = {
   getArtistRecommendation: () => Promise<void>;
   artistsData: Array<ARec>;
   concertData: Questions | undefined;
-  discardedArtists: Array<ARec>
-  documents: Array<Documents>
+  discardedArtists: Array<ARec>;
+  documents: Array<Documents>;
+  lastModifiedBy: string;
 };
 
 export function useGetArtistRecommendation(
@@ -29,6 +30,7 @@ export function useGetArtistRecommendation(
   const [discardedArtists, setDiscardedArtists] = useState<Array<ARec>>([]);
   const [recommendationId] = useState<string | undefined>(params.recommendationId);
   const [documents, setDocuments] = useState<Array<Documents>>([]);
+  const [lastModifiedBy, setLastModifiedBy] = useState<string>('');
 
   const [error, setError] = useState<Error>();
 
@@ -50,7 +52,9 @@ export function useGetArtistRecommendation(
       setConcertData(response.data.concertData);
       setArtistsData(response.data.artists);
       setDiscardedArtists(response.data.discardedArtists);
-      const documentsRes = await documentsService.getDocuments();
+      setLastModifiedBy(response.data.lastChangedUserId);
+      const documentsRes = await
+      documentsService.getDocumentsForRecommendation(response.data.documents);
       if (documentsRes.error) {
         setDocuments([]);
       }
@@ -74,6 +78,7 @@ export function useGetArtistRecommendation(
     artistsData,
     discardedArtists,
     documents,
+    lastModifiedBy,
   };
 }
 

@@ -14,12 +14,12 @@ const createArtistPage = ({ artistService, useArtistData = defaultuseArtistData 
   createArtistPageProp):
   () => JSX.Element => {
   const ArtistPage = (): JSX.Element => {
-    const { artist } = useArtistData(artistService);
+    const { artist, recommendationId } = useArtistData(artistService);
     if (!artist) {
       return <Spin />;
     }
     const ArtistProfile = createArtistProfile({
-      artist,
+      artist, recommendationId,
     });
     return (
       <div>

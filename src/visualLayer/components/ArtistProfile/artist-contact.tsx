@@ -1,11 +1,9 @@
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import CollaborationForm from '../CollaborationForm/collaborationForm';
 
-const ArtistContactDetails = (): JSX.Element => {
-  const { state }: { state: { recommendationId: string } } = useLocation();
-  const recommendationId = state ? state.recommendationId : '';
+const ArtistContactDetails = ({ recommendationId }: { recommendationId: string }): JSX.Element => {
   const [collaborationModal, setCollaborationModal] = useState(false);
   return (
     <div>

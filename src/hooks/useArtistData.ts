@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import ArtistInterface from '../model/interfaces/artist';
 import { ArtistNew } from '../model/types/artist';
 
 type ArtistData = {
   artist: ArtistNew | undefined;
+  recommendationId: string;
 }
 
 const useArtistData = (artistService: ArtistInterface): ArtistData => {
@@ -19,12 +20,15 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
     setArtist(response.data);
   };
 
+  const recommendationId = useLocation();
+
   useEffect(() => {
     getArtistData();
   }, []);
 
   return {
     artist,
+    recommendationId: recommendationId.state,
   };
 };
 
