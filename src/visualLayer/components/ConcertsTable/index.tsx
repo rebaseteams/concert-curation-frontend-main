@@ -101,7 +101,7 @@ export const ConcertsTable = (
                 style={{
                   width: '90%',
                 }}
-                to={`recommendations/${action.id}`}
+                to={`/recommendations/${action.id}`}
               >
                 View Recommendation
               </Link>

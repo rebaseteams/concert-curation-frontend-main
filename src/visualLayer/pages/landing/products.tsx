@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 
 const Products = (): JSX.Element => (
   <div className="height-100 third-sec">
-    <Row className="height-100 row-flex justify-center align-center">
+    <Row gutter={10} className="height-100 row-flex justify-center align-center">
       <Col xs={{ span: 24 }} md={{ span: 12 }}>
         <div className="column-flex justify-center align-center">
           <span style={{ fontSize: '65px', color: '#6f4' }} className="material-icons">
