@@ -25,6 +25,7 @@ import { DocumentsInterface } from './model/interfaces/documents';
 import ArtistInterface from './model/interfaces/artist';
 import createArtistPage from './visualLayer/pages/artists/artist';
 import { DownloadService } from './services/download.service';
+import LandingPage from './visualLayer/pages/landing';
 
 // For GET requests
 axios.interceptors.request.use(
@@ -94,7 +95,8 @@ export function createApp(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HeaderComponent />}>
-            <Route index element={<DashboardComponent />} />
+            <Route index element={<LandingPage />} />
+            <Route path="/dashboard" element={<DashboardComponent />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/artist/:id" element={<ArtistPage />} />
           </Route>

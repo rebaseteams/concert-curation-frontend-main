@@ -72,6 +72,11 @@
     justify-content: space-between;
 }
 
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
 .align-center {
     display: flex;
     align-items: center;
@@ -95,7 +100,11 @@
 }
 
 .height-100 {
-    height: min-content;
+    height: 100%;
+}
+
+.width-100 {
+    width: 100%;
 }
 
 .cursor {
