@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  Row,
-  Col,
-  Switch,
-  Layout,
-  Space,
-  Tag,
-  Typography,
-  Tooltip,
-  Empty,
-  Result,
-  message,
-  Button,
-  Modal,
+  Row, Col, Switch,
+  Layout, Space, Tag,
+  Typography, Tooltip, Empty,
+  Result, message, Button, Modal,
 } from 'antd';
 import * as _ from 'lodash';
+import * as htmlToImage from 'html-to-image';
 
 // Importing Components and Pages
 import ConcertData from './concertData';
@@ -94,12 +86,29 @@ export function createRecommendationPage({
     });
     const [documentsModal, setDocumentsModal] = useState(false);
 
+    const navigate = useNavigate();
+    const redirectBack = () => {
+      navigate(-1);
+    };
+
     if (!recommendationId) {
       return <Empty />;
     }
 
-    const shareRecommendation = () => {
-      message.info('TODO: sharing recommendation feature', 1);
+    const shareRecommendation = async () => {
+      const root = document.getElementById('recommendation-page-container');
+      // const formData = new FormData();
+      // const file = document.getElementById('file');
+      // console.log();
+      // formData.append('file', root);
+      if (root) {
+        // Setting background black to not have transprent
+        root.style.background = '#000';
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        await htmlToImage.toPng(root).then((dataUrl) => {
+          // console.log(dataUrl);
+        });
+      }
     };
 
     const updateView = (view: boolean) => {
@@ -233,9 +242,9 @@ export function createRecommendationPage({
           className="recommendation-page-header justify-between"
         >
           <Space>
-            <Link color="#FFF" to="/">
+            <Button type="text" color="#FFF" onClick={redirectBack}>
               {IconRenderer('back')}
-            </Link>
+            </Button>
             <Title level={2}>{concertData.concertName}</Title>
             <Tooltip
               title={`Sponsorship: ${concertData.sponsorshipType}`}
