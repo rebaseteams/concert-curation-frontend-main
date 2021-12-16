@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import {
   Button, Layout, Input, notification,
 } from 'antd';
@@ -83,13 +83,13 @@ export function createHeaderComponent({
         >
           <div className="header width-md">
             <div className="app-logo">
-              <a href={window.location.origin}>
+              <Link to="/">
                 <img
                   data-testid="cuttime-logo"
                   src={cuttimelogo}
                   alt="cuttimelogo"
                 />
-              </a>
+              </Link>
               <span className="text-size-4 cuttime">Cuttime .fm</span>
             </div>
             {!isAuthenticated || !user ? renderPublic() : renderPrivate()}

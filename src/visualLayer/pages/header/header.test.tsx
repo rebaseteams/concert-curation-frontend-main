@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/no-extraneous-dependencies */
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { createHeaderComponent } from '.';
 import { Auth0User } from '../../../model/types/auth0User';
 import { createUseAuth0Mock } from '../../../../test/mocks/use-auth0.mock';
@@ -34,7 +35,8 @@ describe('Header Component', () => {
   test('renders cuttime logo in Header component', () => {
     const { HeaderComponent } = setup({});
 
-    render(<HeaderComponent />, { wrapper: ({ children }) => <>{children}</> });
+    render(<BrowserRouter><HeaderComponent /></BrowserRouter>,
+      { wrapper: ({ children }) => <>{children}</> });
 
     expect(screen.getByTestId('cuttime-logo')).toBeInTheDocument();
   });
