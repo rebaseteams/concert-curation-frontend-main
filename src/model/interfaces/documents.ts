@@ -6,6 +6,7 @@ import {
   DeleteDocumentResponse,
   EditDocumentsResponse,
   GetDocumentResponse,
+  GetDocumentsForRecommendationResponse,
   GetDocumentsResponse,
 } from '../types/service-response';
 
@@ -15,4 +16,5 @@ export interface DocumentsInterface {
   deleteDocument (documentId: string): Promise<DeleteDocumentResponse>;
   editDocument (documentId: string, html: string): Promise<EditDocumentsResponse>;
   getDocument (documentId: string): Promise<GetDocumentResponse>;
+  getDocumentsForRecommendation (documentsIds: Array<string>): Promise<GetDocumentsForRecommendationResponse>
 }

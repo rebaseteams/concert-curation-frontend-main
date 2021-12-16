@@ -24,10 +24,11 @@ const { TabPane } = Tabs;
 
 type ArtistProfileProp = {
   artist: ArtistNew,
+  recommendationId: string,
 }
 
 const createArtistProfile = ({
-  artist,
+  artist, recommendationId,
 }: ArtistProfileProp): () => JSX.Element | null => {
   return function ArtistProfile(): JSX.Element {
     const navigate = useNavigate();
@@ -67,7 +68,7 @@ const createArtistProfile = ({
               <ArtistToursView />
             </TabPane>
             <TabPane tab="Contact details" key="contact-tab">
-              <ArtistContactDetails />
+              <ArtistContactDetails recommendationId={recommendationId} />
             </TabPane>
           </Tabs>
         </div>

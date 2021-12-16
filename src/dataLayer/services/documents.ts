@@ -1,7 +1,9 @@
 import { DocumentsInterface } from '../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../model/types/collaborationForm';
 import {
-  CreateDocumentResponse, DeleteDocumentResponse, GetDocumentResponse, GetDocumentsResponse,
+  CreateDocumentResponse,
+  DeleteDocumentResponse,
+  GetDocumentResponse, GetDocumentsForRecommendationResponse, GetDocumentsResponse,
 } from '../../model/types/service-response';
 
 export default class Documents implements DocumentsInterface {
@@ -9,6 +11,15 @@ export default class Documents implements DocumentsInterface {
 
     constructor(documentsRepo : DocumentsInterface) {
       this.documentsRepo = documentsRepo;
+    }
+
+    getDocumentsForRecommendation(documentsIds: string[]):
+      Promise<GetDocumentsForRecommendationResponse> {
+      return new Promise((resolve) => {
+        this.documentsRepo.getDocumentsForRecommendation(documentsIds).then((val) => {
+          resolve(val);
+        });
+      });
     }
 
     getDocuments(): Promise<GetDocumentsResponse> {

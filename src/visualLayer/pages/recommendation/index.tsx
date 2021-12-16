@@ -75,6 +75,7 @@ export function createRecommendationPage({
       concertData, artistsData,
       discardedArtists,
       documents,
+      lastModifiedBy,
     } = useGetArtistRecommendation(
       artistRecommendation,
       documentsService,
@@ -282,6 +283,10 @@ export function createRecommendationPage({
             </Tooltip>
           </Space>
           <div className="row-flex align-center">
+            <span className="mx-5">
+              last modified by -
+              {lastModifiedBy}
+            </span>
             <Tooltip title="share this recommendation" color="blue">
               <Button type="primary" onClick={shareRecommendation}>
                 { IconRenderer('share') }

@@ -4,6 +4,8 @@ import { ArtistRecommendation } from '../../../../model/types/artist-recommendat
 
 /* eslint-disable import/prefer-default-export */
 export const recommendedArtistsMockData: ArtistRecommendation = {
+  documents: [],
+  lastChangedUserId: '7863hjdvfjg27863',
   concertData: {
     userId: '76376',
     dateCreated: 'Mon 23-11-2021 12:34:55',

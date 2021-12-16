@@ -99,6 +99,16 @@ export type GetDocumentResponse = {
   status?: number | string;
 }
 
+export type GetDocumentsForRecommendationResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: true,
+    data: Array<DocumentData>
+  },
+  status?: number | string;
+}
+
 // Notifications Response
 export type SendNotificationResponse = {
   error: boolean,

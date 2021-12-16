@@ -8,6 +8,7 @@ import {
   DeleteDocumentResponse,
   EditDocumentsResponse,
   GetDocumentResponse,
+  GetDocumentsForRecommendationResponse,
   GetDocumentsResponse,
 } from '../../../model/types/service-response';
 
@@ -19,6 +20,19 @@ export default class DocumentsRepo implements DocumentsInterface {
   getDocuments = async (): Promise<GetDocumentsResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     axios.get(DOCUMENTS_URI).then((response: any) => {
+      if (response.status !== 200) {
+        resolve({ error: true, message: response.statusText, status: response.status });
+      }
+      resolve({ error: false, message: response.statusText, data: response.data });
+    }).catch((err: CatchError) => {
+      resolve({ error: true, message: err.message, status: err.status });
+    });
+  });
+
+  getDocumentsForRecommendation = async (documentsList: Array<string>):
+    Promise<GetDocumentsForRecommendationResponse> => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    axios.post(`${DOCUMENTS_URI}/ids`, { ids: documentsList }).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
