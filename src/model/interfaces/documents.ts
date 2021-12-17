@@ -8,6 +8,7 @@ import {
   GetDocumentResponse,
   GetDocumentsForRecommendationResponse,
   GetDocumentsResponse,
+  ShareDocumentResponse,
 } from '../types/service-response';
 
 export interface DocumentsInterface {
@@ -17,4 +18,5 @@ export interface DocumentsInterface {
   editDocument (documentId: string, html: string): Promise<EditDocumentsResponse>;
   getDocument (documentId: string): Promise<GetDocumentResponse>;
   getDocumentsForRecommendation (documentsIds: Array<string>): Promise<GetDocumentsForRecommendationResponse>
+  shareDocument (documentId: string, emails: string | Array<string>, file: File): Promise<ShareDocumentResponse>
 }

@@ -109,6 +109,15 @@ export type GetDocumentsForRecommendationResponse = {
   status?: number | string;
 }
 
+export type ShareDocumentResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: true,
+  },
+  status?: number | string;
+}
+
 // Notifications Response
 export type SendNotificationResponse = {
   error: boolean,

@@ -3,10 +3,13 @@
 .landing-page {
   font-family: 'Montserrat', sans-serif;
   background-color: #666;
-  height: 90vh;
+  height: 89vh;
   overflow: auto;
   background-image: url(https://cdn.wallpapersafari.com/48/11/uRFcp7.jpeg);
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   .first-sec {
     // height: 100%;
