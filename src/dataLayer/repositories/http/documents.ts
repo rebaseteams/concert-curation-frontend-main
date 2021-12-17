@@ -10,6 +10,7 @@ import {
   GetDocumentResponse,
   GetDocumentsForRecommendationResponse,
   GetDocumentsResponse,
+  ShareDocumentResponse,
 } from '../../../model/types/service-response';
 
 const server = PROD_SERVER;
@@ -98,5 +99,29 @@ export default class DocumentsRepo implements DocumentsInterface {
     }).catch((err: CatchError) => {
       resolve({ error: true, message: err.message, status: err.status });
     });
-  })
+  });
+
+  shareDocument = async (documentId: string, emails: string | Array<string>, file: File):
+    Promise<ShareDocumentResponse> => {
+    const formData = new FormData();
+    formData.append('attachments', file);
+    formData.append('emails', `["${emails}"]`);
+    return new Promise((resolve) => {
+      axios.post(`${DOCUMENTS_URI}/share/${documentId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }).then((res: any) => {
+        if (res.status !== 200) {
+          resolve({ error: true, message: res.statusText, status: res.status });
+        }
+        resolve({
+          error: false, message: res.statusText, data: res.data, status: res.status,
+        });
+      }).catch((err: CatchError) => {
+        resolve({ error: true, message: err.message, status: err.status });
+      });
+    });
+  }
 }

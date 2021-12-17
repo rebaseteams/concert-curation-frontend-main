@@ -97,17 +97,15 @@ export function createRecommendationPage({
 
     const shareRecommendation = async () => {
       const root = document.getElementById('recommendation-page-container');
-      // const formData = new FormData();
-      // const file = document.getElementById('file');
-      // console.log();
-      // formData.append('file', root);
       if (root) {
         // Setting background black to not have transprent
-        root.style.background = '#000';
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        await htmlToImage.toPng(root).then((dataUrl) => {
-          // console.log(dataUrl);
+        root.style.background = '#111';
+        await htmlToImage.toBlob(root).then((dataUrl) => {
+          let file: File;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          if (dataUrl) file = new File([dataUrl], 'file', { type: 'image/png' });
         });
+        root.style.background = '';
       }
     };
 

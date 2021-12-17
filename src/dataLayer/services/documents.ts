@@ -3,7 +3,9 @@ import { CreateDocumentForm } from '../../model/types/collaborationForm';
 import {
   CreateDocumentResponse,
   DeleteDocumentResponse,
-  GetDocumentResponse, GetDocumentsForRecommendationResponse, GetDocumentsResponse,
+  GetDocumentResponse,
+  GetDocumentsForRecommendationResponse,
+  GetDocumentsResponse, ShareDocumentResponse,
 } from '../../model/types/service-response';
 
 export default class Documents implements DocumentsInterface {
@@ -64,4 +66,11 @@ export default class Documents implements DocumentsInterface {
         });
       });
     }
+
+    shareDocument = async (documentId: string, emails: string | Array<string>, file: File):
+      Promise<ShareDocumentResponse> => new Promise((resolve) => {
+      this.documentsRepo.shareDocument(documentId, emails, file).then((val) => {
+        resolve(val);
+      });
+    })
 }

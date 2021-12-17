@@ -15,7 +15,7 @@ import { createHeaderComponent } from './visualLayer/pages/header';
 import { createDashboardComponent } from './visualLayer/pages/dashboard';
 import Signup from './visualLayer/pages/signup/signup';
 import { createRecommendationPage } from './visualLayer/pages/recommendation';
-import EditorContainer from './visualLayer/pages/editor/editor';
+import { createEditorPage } from './visualLayer/pages/editor/editor';
 
 // styles
 import './App.scss';
@@ -80,6 +80,10 @@ export function createApp(
     downloadService, artistRecommendation, documentsService,
   });
 
+  const EditorPage = createEditorPage({
+    documentsService,
+  });
+
   return function App(): JSX.Element | null {
     const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
     useEffect(
@@ -102,7 +106,7 @@ export function createApp(
           </Route>
           {/* <HeaderComponet /> */}
           <Route path="/recommendations/:recommendationId" element={<RecommendationPage />} />
-          <Route path="/editor/:id" element={<EditorContainer />} />
+          <Route path="/editor/:id" element={<EditorPage />} />
           <Route
             path="/*"
             element={(
