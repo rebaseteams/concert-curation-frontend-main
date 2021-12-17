@@ -32,7 +32,7 @@
   }
 
   .second-sec {
-    background-color: rgb(0, 34, 78);
+    background-color: rgba(0, 34, 78, 0.856);
     padding: 0px 20px;
     text-align: left;
 
@@ -48,11 +48,18 @@
   }
 
   .third-sec {
-    background-color: rgba(0, 0, 0, 0.733);
-    padding: 0px 10%;
+    background-color: rgba(48, 0, 179, 0.733);
+    padding: 100px 10%;
     text-align: center;
+    text-shadow: 0px 0px 2px rgb(0, 0, 0), 0px 0px 6px rgb(36, 35, 35);
+    height: 200%;
+    max-height: 1300px;
+    font-size: 16px;
     h4 {
       font-size: 35px;
+    }
+    p {
+      color: rgb(224, 215, 215);
     }
   }
 }
