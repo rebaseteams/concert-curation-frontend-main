@@ -143,6 +143,7 @@ export const ConcertsTable = (
         columns={columns}
         dataSource={data}
         className="concert-table"
+        pagination={{ pageSize: 5 }}
       />
     </div>
   );
