@@ -20,12 +20,8 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
     setArtist(response.data);
   };
 
-  const location: { state: string } = useLocation();
-
-  let recommendationId = '';
-  if (location.state) {
-    recommendationId = location.state;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const recommendationId: string = useLocation().state as string;
 
   useEffect(() => {
     getArtistData();
