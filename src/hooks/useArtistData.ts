@@ -20,7 +20,7 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
     setArtist(response.data);
   };
 
-  const location = useLocation();
+  const location: { state: string } = useLocation();
 
   let recommendationId = '';
   if (location.state) {
