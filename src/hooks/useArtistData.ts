@@ -20,7 +20,12 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
     setArtist(response.data);
   };
 
-  const recommendationId = useLocation();
+  const location = useLocation();
+
+  let recommendationId = '';
+  if (location.state) {
+    recommendationId = location.state;
+  }
 
   useEffect(() => {
     getArtistData();
@@ -28,7 +33,7 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
 
   return {
     artist,
-    recommendationId: recommendationId.state,
+    recommendationId,
   };
 };
 
