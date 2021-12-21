@@ -16,6 +16,6 @@ export interface Config {
   };
 
   providers: {
-    Auth: Provider;
+    // Auth: Provider;
   }
 }

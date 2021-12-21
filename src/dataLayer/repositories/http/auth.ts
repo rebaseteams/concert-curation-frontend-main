@@ -14,6 +14,8 @@ export default class AuthRepo implements AuthInterface {
         password: data.password,
         connection: AUTH_CONNECTION,
         username: data.userName,
+        name: data.userName,
+        nickname: data.userName,
       }).then((value) => {
         console.log(value.data);
         if (value.status === 200) resolve({ success: true });
