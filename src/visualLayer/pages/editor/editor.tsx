@@ -11,6 +11,10 @@ import FormItem from 'antd/lib/form/FormItem';
 import config from '../../../services/config.json';
 import services from '../../services';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
+import { HtmlDownloadService } from '../../../adapters/html-download.service';
+
+// logos and images
+import pdflogo from '../../../assets/pdf-logo.png';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -26,6 +30,15 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
     const [createdOn, setCreatedOn] = useState<string>('');
     const documentId = useRef<string>('');
     const [enterEmail, setEnterEmail] = useState(false);
+    const htmlDownloadService = new HtmlDownloadService();
+
+    const downloadPdf = () => {
+      const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
+      if (root.contentWindow) {
+        const PdfHtml: HTMLElement = root.contentWindow.document.body;
+        htmlDownloadService.downloadPdf({ pdfName: `${documentName}${Date().split('GMT')[0]}`, container: PdfHtml });
+      }
+    };
 
     const getDocument = async (id: string) => {
       const response = await services.Documents.getDocument(id);
@@ -102,6 +115,9 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
           subTitle={`created on ${createdOn}`}
           extra={(
             <>
+              <Button type="text" onClick={downloadPdf}>
+                <img width={25} src={pdflogo} alt="pdf-logo" />
+              </Button>
               <Button type="ghost" onClick={() => setEnterEmail(true)}>Share</Button>
               <Button type="primary" onClick={() => saveDocument()}>Save</Button>
             </>
