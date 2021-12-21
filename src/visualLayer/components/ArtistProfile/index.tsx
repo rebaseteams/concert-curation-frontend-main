@@ -40,7 +40,7 @@ const createArtistProfile = ({
         <div
           className="artist-profile-heading"
           style={{
-            background: 'url(https://picsum.photos/1500/600?random=2)', // `url(${artist.coverImage})`,
+            background: `url(${artist.coverImage})`, // 'url(https://picsum.photos/1500/600?random=2)',
           }}
         >
           <Button className="back-button" type="text" onClick={() => redirectBack()}>

@@ -1,13 +1,14 @@
 /* eslint-disable linebreak-style */
 import ReactDOM from 'react-dom';
-// import { Auth0Provider } from '@auth0/auth0-react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import './index.scss';
 import { createApp } from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.dark.css';
 import { config } from './config.dev';
-
-const { Auth } = config.providers;
+import {
+  AUTH_AUDIENCE, AUTH_CLIENT_ID, AUTH_DOMAIN, AUTH_SCOPE,
+} from './config';
 
 const {
   artistRecommendation, documentsService, artistService, downloadService,
@@ -20,15 +21,15 @@ const App = createApp(
 );
 
 ReactDOM.render(
-  // <Auth0Provider
-  //   domain={config.AUTH_DOMAIN}
-  //   clientId={config.AUTH_CLIENT_ID}
-  //   redirectUri={window.location.origin}
-  // >
-  // </Auth0Provider>,
-  <Auth>
+  <Auth0Provider
+    domain={AUTH_DOMAIN}
+    clientId={AUTH_CLIENT_ID}
+    redirectUri={window.location.origin}
+    audience={AUTH_AUDIENCE}
+    scope={AUTH_SCOPE}
+  >
     <App />
-  </Auth>,
+  </Auth0Provider>,
   document.getElementById('root'),
 );
 

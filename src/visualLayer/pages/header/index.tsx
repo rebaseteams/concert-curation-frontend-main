@@ -1,24 +1,24 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
   Button, Layout, Input, notification,
 } from 'antd';
+import { useAuth0 } from '@auth0/auth0-react';
 import './header.scss';
 import cuttimelogo from './cuttime.png';
 import IconRenderer from '../../components/IconRenderer';
-import { UseAuth0 } from '../../../model/types/auth0User';
+// import { UseAuth0 } from '../../../model/types/auth0User';
 
 const { Header } = Layout;
 const { Search } = Input;
 
-export interface CreateHeaderComponentProps {
-  useAuth0: UseAuth0;
-}
+// export interface CreateHeaderComponentProps {
+//   useAuth0: UseAuth0;
+// }
 
-export function createHeaderComponent({
-  useAuth0,
-}: CreateHeaderComponentProps): () => JSX.Element | null {
+export function createHeaderComponent(): () => JSX.Element | null {
   const onSearch = (value: string) => {
     notification.info({
       message: `Searching ${value}`,
@@ -28,9 +28,9 @@ export function createHeaderComponent({
 
   return function HeaderComponent() {
     const {
-      isAuthenticated, user, logout, loginWithRedirect,
+      isAuthenticated, user, logout, loginWithRedirect, isLoading,
     } = useAuth0();
-
+    const navigate = useNavigate();
     const renderPublic = () => (
       <div className="row-flex justify-between align-center">
         <Button
@@ -39,6 +39,13 @@ export function createHeaderComponent({
           onClick={() => loginWithRedirect()}
         >
           Log in
+        </Button>
+        <Button
+          style={{ marginLeft: '10px' }}
+          type="primary"
+          onClick={() => navigate('/signup')}
+        >
+          Sign Up
         </Button>
       </div>
     );
@@ -92,7 +99,8 @@ export function createHeaderComponent({
               </Link>
               <span className="text-size-4 cuttime">Cuttime .fm</span>
             </div>
-            {!isAuthenticated || !user ? renderPublic() : renderPrivate()}
+            {isLoading ? <div>Loading....</div>
+              : (!isAuthenticated || !user ? renderPublic() : renderPrivate())}
             <div id="hamb">{ IconRenderer('menu') }</div>
           </div>
         </Header>

@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useAuth0 as defaultUseAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
-  BrowserRouter, Link, Route, Routes,
+  BrowserRouter, Link, Route, Routes, Navigate,
 } from 'react-router-dom';
 import { Result } from 'antd';
 
 // importing services
-import extractUserToken from './services/userToken';
 import { AUTH_DOMAIN } from './config';
+import extractUserToken from './services/userToken';
 
 // importing components
 import { createHeaderComponent } from './visualLayer/pages/header';
@@ -19,7 +19,7 @@ import { createEditorPage } from './visualLayer/pages/editor/editor';
 
 // styles
 import './App.scss';
-import { UseAuth0 } from './model/types/auth0User';
+// import { UseAuth0 } from './model/types/auth0User';
 import { ArtistRecommendationInterface } from './model/interfaces/artistRecommendation';
 import { DocumentsInterface } from './model/interfaces/documents';
 import ArtistInterface from './model/interfaces/artist';
@@ -27,34 +27,12 @@ import createArtistPage from './visualLayer/pages/artists/artist';
 import { DownloadService } from './services/download.service';
 import LandingPage from './visualLayer/pages/landing';
 
-// For GET requests
-axios.interceptors.request.use(
-  (req: AxiosRequestConfig) => {
-    // Add configurations here
-    const whiteListedEndpoints: Array<string> = [
-      `${AUTH_DOMAIN}/dbconnections/signup`,
-    ];
-    if (req.url && whiteListedEndpoints.includes(req.url)) {
-      return req;
-    }
-    if (req) {
-      if (!req.headers) {
-        req.headers = {};
-      }
-      // Extract the userid from the token
-      req.headers.userId = extractUserToken();
-    }
-    return req;
-  },
-  (err) => Promise.reject(err),
-);
-
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
 localStorage.setItem('userid', '1238989');
 
 export interface AppOptions {
-  useAuth0?: UseAuth0;
+  // useAuth0?: UseAuth0;
   artistRecommendation: ArtistRecommendationInterface;
   documentsService: DocumentsInterface;
   artistService: ArtistInterface;
@@ -63,14 +41,14 @@ export interface AppOptions {
 
 export function createApp(
   {
-    useAuth0 = defaultUseAuth0,
+    // useAuth0 = defaultUseAuth0,
     artistRecommendation,
     documentsService,
     artistService,
     downloadService,
   } : AppOptions,
 ): () => JSX.Element | null {
-  const HeaderComponent = createHeaderComponent({ useAuth0 });
+  const HeaderComponent = createHeaderComponent();
   const DashboardComponent = createDashboardComponent(
     { artistRecommendation, documentsService },
   );
@@ -85,41 +63,74 @@ export function createApp(
   });
 
   return function App(): JSX.Element | null {
-    const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
-    useEffect(
-      () => {
-        if (isAuthenticated || isLoading) {
-          return;
+    const [auth, setAuth] = useState(false);
+    const {
+      getAccessTokenSilently, isAuthenticated,
+    } = useAuth0();
+    getAccessTokenSilently().then((token) => {
+      localStorage.setItem('token', `Bearer ${token}`);
+      setAuth(true);
+    }).catch(() => {
+      setAuth(true);
+    });
+
+    // For GET requests
+    axios.interceptors.request.use(
+      (req: AxiosRequestConfig) => {
+        // Add configurations here
+        const whiteListedEndpoints: Array<string> = [
+          `${AUTH_DOMAIN}/dbconnections/signup`,
+        ];
+        if (req.url && whiteListedEndpoints.includes(req.url)) {
+          return req;
         }
-        loginWithRedirect();
-      }, [],
+        if (req) {
+          if (!req.headers) {
+            req.headers = {};
+          }
+          // Extract the userid from the token
+          const { userId, token } = extractUserToken();
+          req.headers.userId = userId;
+          req.headers.authorization = token;
+        }
+        return req;
+      },
+      (err) => Promise.reject(err),
     );
 
+    const authenticate = (comp : JSX.Element) : JSX.Element => {
+      const toReturn = isAuthenticated ? comp : <Navigate to="/signup" />;
+      return toReturn;
+    };
+
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HeaderComponent />}>
-            <Route index element={<LandingPage />} />
-            <Route path="/dashboard" element={<DashboardComponent />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/artist/:id" element={<ArtistPage />} />
-          </Route>
-          {/* <HeaderComponet /> */}
-          <Route path="/recommendations/:recommendationId" element={<RecommendationPage />} />
-          <Route path="/editor/:id" element={<EditorPage />} />
-          <Route
-            path="/*"
-            element={(
-              <Result
-                status="404"
-                title="404"
-                subTitle="Sorry, the page you visited does not exist."
-                extra={<Link to="/">Back Home</Link>}
-              />
+      auth
+        ? (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HeaderComponent />}>
+                <Route index element={<LandingPage />} />
+                <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
+                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup />} />
+                <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
+              </Route>
+              <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
+              <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
+              <Route
+                path="/*"
+                element={(
+                  <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Link to="/">Back Home</Link>}
+                  />
           )}
-          />
-        </Routes>
-      </BrowserRouter>
+              />
+            </Routes>
+          </BrowserRouter>
+        )
+        : <div>Loading...</div>
     );
   };
 }
