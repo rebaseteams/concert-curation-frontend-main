@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios';
+import services from '../visualLayer/services';
+import { config } from '../config.dev';
 import base64 from './base64.json';
-
-import config from './config.json';
 
 export type CreateEnvelope = {
   pdfBase64: string,
@@ -60,7 +60,7 @@ const createEnvelope = async ({
     status: 'sent',
   };
 
-  const response = await axios.post('http://localhost:4000/docusign', JSON.stringify(data));
+  const response = await config.services.docusignService.createEnvelope(data);
   return response.data;
 };
 

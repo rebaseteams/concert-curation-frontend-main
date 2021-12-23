@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type CreateDocumentForm = {
   templateId: string,
   recommendationId: string,
