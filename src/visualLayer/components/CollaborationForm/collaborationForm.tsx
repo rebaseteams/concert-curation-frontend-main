@@ -44,8 +44,10 @@ const renderTemplates = (
 
 const CollaborationForm = ({
   recommendationId,
+  artistId,
 }: {
   recommendationId: string;
+  artistId: string;
 }): JSX.Element => {
   const [templateId, setTemplateId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Array<FormFields>>([]);
@@ -98,6 +100,7 @@ const CollaborationForm = ({
       templateId: templateId || '1234',
       fields: value,
       recommendationId,
+      required: { artistId },
       name: name || 'Document name',
     };
 
