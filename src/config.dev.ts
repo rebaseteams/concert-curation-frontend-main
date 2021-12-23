@@ -9,6 +9,8 @@ import Artist from './dataLayer/services/artist';
 import ArtistRecommendation from './dataLayer/services/artistRecommendation';
 import Documents from './dataLayer/services/documents';
 import { Config } from './model/types/config';
+import DocusignService from './dataLayer/services/docusign';
+import DocusignRepo from './dataLayer/repositories/http/docusign';
 
 // const tokenService = new UnsignedTokenService();
 
@@ -19,6 +21,7 @@ export const config: Config = {
     documentsService: new Documents(new DocumentsRepo()),
     artistService: new Artist(new ArtistRepo()),
     downloadService: new HtmlDownloadService(),
+    docusignService: new DocusignService(new DocusignRepo()),
   },
   providers: {
   },
