@@ -3,6 +3,7 @@ export type CreateDocumentForm = {
   recommendationId: string,
   fields: object;
   name: string,
+  required: any;
 }
 
 export type CreateCollaborationResponseData = {

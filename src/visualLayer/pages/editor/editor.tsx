@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
 import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
@@ -15,6 +16,10 @@ import { HtmlDownloadService } from '../../../adapters/html-download.service';
 
 // logos and images
 import pdflogo from '../../../assets/pdf-logo.png';
+import { htmlToPdfBase64 } from '../../../adapters/html-to-pdfbase64';
+import { CreateEnvelope, createEnvelope } from '../../../services/docusign';
+import DocusignForm from '../../components/DocusignModal';
+import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -30,6 +35,7 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
     const [createdOn, setCreatedOn] = useState<string>('');
     const documentId = useRef<string>('');
     const [enterEmail, setEnterEmail] = useState(false);
+    const [docusignModal, setDocusignModal] = useState(false);
     const htmlDownloadService = new HtmlDownloadService();
 
     const downloadPdf = () => {
@@ -106,6 +112,54 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
       message.error('Somthing went wrong');
     };
 
+    const docSign = async (data: DocusignFormData) => {
+      console.log(data);
+      const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
+      if (!root.contentWindow) {
+        return;
+      }
+      const pdfBase64 = htmlToPdfBase64(root.contentWindow.document.body);
+      const envelopData: CreateEnvelope = {
+        pdfBase64,
+        fileName: data.fileName,
+        fileExtension: 'pdf',
+        emailSubject: data.emailSubject,
+        documentId: '1',
+        recipients: {
+          carbonCopies: [
+            {
+              email: data.ccEmail,
+              name: data.ccName,
+              recipientId: '1',
+              routingOrder: '2',
+            },
+          ],
+          signers: [
+            {
+              email: 'pkumarprajapati007@gmail.com', // Provide artists email programatically
+              recipientId: '2',
+              routingOrder: '1',
+              name: 'Praveen Prajapati', // Provide artists name programatically
+              tabs: {
+                signHereTabs: [
+                  {
+                    anchorString: '**signature_1**', // Add this string in pdf where you want to add signature
+                    anchorUnits: 'pixels',
+                    anchorXOffset: '20',
+                    anchorYOffset: '10',
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      };
+      console.log(envelopData);
+      const envelope = await createEnvelope(envelopData);
+      message.success(`${envelope}`);
+      setDocusignModal(false);
+    };
+
     return (
       <div>
         <PageHeader
@@ -115,6 +169,7 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
           subTitle={`created on ${createdOn}`}
           extra={(
             <>
+              <Button type="primary" onClick={() => { setDocusignModal(true); }}>Sign</Button>
               <Button type="text" onClick={downloadPdf}>
                 <img width={25} src={pdflogo} alt="pdf-logo" />
               </Button>
@@ -173,6 +228,15 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
               <Button htmlType="submit" type="primary">Send</Button>
             </FormItem>
           </Form>
+        </Modal>
+
+        <Modal
+          title="Enter Email"
+          visible={docusignModal}
+          onCancel={() => setDocusignModal(false)}
+          footer={false}
+        >
+          <DocusignForm sendContract={docSign} />
         </Modal>
       </div>
     );

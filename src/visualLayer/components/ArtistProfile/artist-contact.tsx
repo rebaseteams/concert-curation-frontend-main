@@ -4,7 +4,8 @@ import { useState } from 'react';
 import CollaborationForm from '../CollaborationForm/collaborationForm';
 import collaborationImage from '../../../assets/job.png';
 
-const ArtistContactDetails = ({ recommendationId }: { recommendationId: string }): JSX.Element => {
+const ArtistContactDetails = ({ recommendationId, artistId }:
+  { recommendationId: string; artistId: string }): JSX.Element => {
   const [collaborationModal, setCollaborationModal] = useState(false);
   return (
     <div style={{ width: '70%', margin: 'auto' }} className="row-flex ">
@@ -28,7 +29,7 @@ const ArtistContactDetails = ({ recommendationId }: { recommendationId: string }
         width={800}
         footer={false}
       >
-        <CollaborationForm recommendationId={recommendationId} />
+        <CollaborationForm recommendationId={recommendationId} artistId={artistId} />
       </Modal>
     </div>
   );
