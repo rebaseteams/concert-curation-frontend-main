@@ -5,7 +5,9 @@ import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 type DocusignFormProo = {
   sendContract: (data: DocusignFormData) => void;
 }
-const DocusignForm = ({ sendContract }: DocusignFormProo): JSX.Element => {
+const DocusignForm = ({
+  sendContract,
+}: DocusignFormProo): JSX.Element => {
   const hello = '84';
   return (
     <>

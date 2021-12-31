@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import {
   Button, Empty, Form, Input, message, PageHeader,
@@ -33,7 +33,7 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
     const [documentName, setDocumentName] = useState('');
     const [editorContent, setEditorContent] = useState<string>('');
     const [createdOn, setCreatedOn] = useState<string>('');
-    const documentId = useRef<string>('');
+    const [documentId, setDocumentId] = useState<string>('');
     const [enterEmail, setEnterEmail] = useState(false);
     const [docusignModal, setDocusignModal] = useState(false);
     const htmlDownloadService = new HtmlDownloadService();
@@ -56,7 +56,7 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
         setDocumentName(response.data.data.name);
         setHtml(response.data.data.html);
         setCreatedOn(response.data.data.createdOn.split('T')[0]);
-        documentId.current = response.data.data.id;
+        setDocumentId(response.data.data.id);
       }
     };
 
@@ -113,7 +113,6 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
     };
 
     const docSign = async (data: DocusignFormData) => {
-      console.log(data);
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
       if (!root.contentWindow) {
         return;
@@ -124,7 +123,7 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
         fileName: data.fileName,
         fileExtension: 'pdf',
         emailSubject: data.emailSubject,
-        documentId: '1',
+        pdfId: '1',
         recipients: {
           carbonCopies: [
             {
@@ -154,9 +153,12 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
           ],
         },
       };
-      console.log(envelopData);
-      const envelope = await createEnvelope(envelopData);
-      message.success(`${envelope}`);
+      const envelope = await createEnvelope(envelopData, documentId);
+      if (envelope.error) {
+        message.error(envelope.message);
+        return;
+      }
+      message.success(`${envelope.message}`);
       setDocusignModal(false);
     };
 

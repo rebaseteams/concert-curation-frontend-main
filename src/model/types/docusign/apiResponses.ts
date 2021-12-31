@@ -5,3 +5,10 @@ export type CreateEnvelopeResponse = {
   data?: any,
   status?: number | string;
 }
+
+export type GetenvelopesResponse = {
+  error: boolean,
+  message: string,
+  data?: any,
+  status?: number | string;
+}
