@@ -1,5 +1,5 @@
 import { DocusignInterface } from '../../model/interfaces/docusign';
-import { CreateEnvelopeResponse } from '../../model/types/docusign/apiResponses';
+import { CreateEnvelopeResponse, GetenvelopesResponse } from '../../model/types/docusign/apiResponses';
 
 export default class DocusignService implements DocusignInterface {
   private docusignRepo: DocusignInterface;
@@ -9,8 +9,13 @@ export default class DocusignService implements DocusignInterface {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  createEnvelope = async (envelopeData: any):
+  createEnvelope = async (envelopeData: any, documentId: string):
   Promise<CreateEnvelopeResponse> => new Promise((resolve) => {
-    resolve(this.docusignRepo.createEnvelope(envelopeData));
+    resolve(this.docusignRepo.createEnvelope(envelopeData, documentId));
+  })
+
+  getEnvelopes = async ():
+  Promise<GetenvelopesResponse> => new Promise((resolve) => {
+    resolve(this.docusignRepo.getEnvelopes());
   })
 }

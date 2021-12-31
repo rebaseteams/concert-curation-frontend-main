@@ -4,13 +4,14 @@ import axios, { AxiosResponse } from 'axios';
 import services from '../visualLayer/services';
 import { config } from '../config.dev';
 import base64 from './base64.json';
+import { CreateEnvelopeResponse } from '../model/types/docusign/apiResponses';
 
 export type CreateEnvelope = {
   pdfBase64: string,
   emailSubject: string,
   fileName: string,
   fileExtension: string,
-  documentId: string,
+  pdfId: string,
   recipients: {
     carbonCopies: Array<{
       email: string,
@@ -40,9 +41,9 @@ const createEnvelope = async ({
   emailSubject,
   fileName,
   fileExtension,
-  documentId,
+  pdfId,
   recipients,
-}: CreateEnvelope): Promise<any> => {
+}: CreateEnvelope, documentId: string): Promise<CreateEnvelopeResponse> => {
   const data = {
     emailSubject,
     documents: [
@@ -50,7 +51,7 @@ const createEnvelope = async ({
         documentBase64: base64.pdf,
         name: fileName,
         fileExtension,
-        documentId,
+        documentId: pdfId,
       },
     ],
     recipients: {
@@ -60,7 +61,7 @@ const createEnvelope = async ({
     status: 'sent',
   };
 
-  const response = await config.services.docusignService.createEnvelope(data);
+  const response = await config.services.docusignService.createEnvelope(data, documentId);
   return response.data;
 };
 
