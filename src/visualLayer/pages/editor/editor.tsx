@@ -15,7 +15,6 @@ import { HtmlDownloadService } from '../../../adapters/html-download.service';
 
 // logos and images
 import pdflogo from '../../../assets/pdf-logo.png';
-import { htmlToPdfBase64 } from '../../../adapters/html-to-pdfbase64';
 import { CreateEnvelope, createEnvelope } from '../../../services/docusign';
 import DocusignForm from '../../components/ContractForm';
 import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
@@ -117,9 +116,8 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (!root.contentWindow) {
         return;
       }
-      const pdfBase64 = htmlToPdfBase64(root.contentWindow.document.body);
       const envelopData: CreateEnvelope = {
-        pdfBase64,
+        pdfBase64: String(root.contentWindow.document.body.innerHTML),
         fileName: data.fileName,
         fileExtension: 'pdf',
         emailSubject: data.emailSubject,
@@ -172,12 +170,12 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           subTitle={`created on ${createdOn}`}
           extra={(
             <>
-              <Button type="primary" onClick={() => { setDocusignModal(true); }}>Sign</Button>
+              <Button type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
+              <Button type="ghost" onClick={() => setEnterEmail(true)}>Share</Button>
+              <Button type="primary" onClick={() => saveDocument()}>Save</Button>
               <Button type="text" onClick={downloadPdf}>
                 <img width={25} src={pdflogo} alt="pdf-logo" />
               </Button>
-              <Button type="ghost" onClick={() => setEnterEmail(true)}>Share</Button>
-              <Button type="primary" onClick={() => saveDocument()}>Save</Button>
             </>
           )}
         />

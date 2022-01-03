@@ -37,7 +37,7 @@ const DocusignForm = ({
         {
           acceptTerm
             ? <Button type="primary" htmlType="submit">Send</Button>
-            : <Button disabled type="primary" htmlType="submit">Send</Button>
+            : <Button disabled type="primary">Send</Button>
         }
       </Form>
     </>

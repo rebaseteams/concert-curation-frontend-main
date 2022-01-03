@@ -7,7 +7,7 @@ import base64 from './base64.json';
 import { CreateEnvelopeResponse } from '../model/types/docusign/apiResponses';
 
 export type CreateEnvelope = {
-  pdfBase64: string,
+  pdfBase64: HTMLElement | string,
   emailSubject: string,
   fileName: string,
   fileExtension: string,
@@ -39,7 +39,7 @@ export type CreateEnvelope = {
 type EnvelopeData = {
   emailSubject: string;
   documents: Array<{
-    documentBase64: string;
+    documentBase64: HTMLElement | string;
     name: string;
     fileExtension: string;
     documentId: string;
@@ -81,7 +81,7 @@ const createEnvelope = ({
     emailSubject,
     documents: [
       {
-        documentBase64: base64.pdf,
+        documentBase64: pdfBase64,
         name: fileName,
         fileExtension,
         documentId: pdfId,
