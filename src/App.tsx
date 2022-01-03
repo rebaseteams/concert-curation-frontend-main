@@ -26,6 +26,7 @@ import ArtistInterface from './model/interfaces/artist';
 import createArtistPage from './visualLayer/pages/artists/artist';
 import { DownloadService } from './services/download.service';
 import LandingPage from './visualLayer/pages/landing';
+import { DocusignInterface } from './model/interfaces/docusign';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -37,6 +38,7 @@ export interface AppOptions {
   documentsService: DocumentsInterface;
   artistService: ArtistInterface;
   downloadService: DownloadService;
+  docusignService: DocusignInterface;
 }
 
 export function createApp(
@@ -46,6 +48,7 @@ export function createApp(
     documentsService,
     artistService,
     downloadService,
+    docusignService,
   } : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent();
@@ -60,6 +63,7 @@ export function createApp(
 
   const EditorPage = createEditorPage({
     documentsService,
+    docusignService,
   });
 
   return function App(): JSX.Element | null {
