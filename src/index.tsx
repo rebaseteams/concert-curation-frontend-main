@@ -11,12 +11,12 @@ import {
 } from './config';
 
 const {
-  artistRecommendation, documentsService, artistService, downloadService,
+  artistRecommendation, documentsService, artistService, downloadService, docusignService,
 } = config.services;
 
 const App = createApp(
   {
-    artistRecommendation, documentsService, artistService, downloadService,
+    artistRecommendation, documentsService, artistService, downloadService, docusignService,
   },
 );
 

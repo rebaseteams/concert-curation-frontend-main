@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
 import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
@@ -18,14 +17,16 @@ import { HtmlDownloadService } from '../../../adapters/html-download.service';
 import pdflogo from '../../../assets/pdf-logo.png';
 import { htmlToPdfBase64 } from '../../../adapters/html-to-pdfbase64';
 import { CreateEnvelope, createEnvelope } from '../../../services/docusign';
-import DocusignForm from '../../components/DocusignModal';
+import DocusignForm from '../../components/ContractForm';
 import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
+import { DocusignInterface } from '../../../model/interfaces/docusign';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
+  docusignService: DocusignInterface
 }
 
-export const createEditorPage = ({ documentsService }: EditorPageProp):
+export const createEditorPage = ({ documentsService, docusignService }: EditorPageProp):
   () => JSX.Element => {
   return function EdiortContainer() {
     const navigate = useNavigate();
@@ -97,7 +98,6 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
 
     const saveDocument = async () => {
       if (editorContent.length <= 0) {
-        message.warning('Wrong editor content');
         return;
       }
       const response = await services.Documents.editDocument(id, editorContent);
@@ -153,12 +153,13 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
           ],
         },
       };
-      const envelope = await createEnvelope(envelopData, documentId);
-      if (envelope.error) {
-        message.error(envelope.message);
+      const envelope = createEnvelope(envelopData);
+      const response = await docusignService.createEnvelope(envelope, documentId);
+      if (response.error) {
+        message.error(response.message);
         return;
       }
-      message.success(`${envelope.message}`);
+      message.success(`${response.message}`);
       setDocusignModal(false);
     };
 
@@ -188,7 +189,9 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
         >
           <Editor
           // eslint-disable-next-line no-return-assign
-            onInit={(evt, editor) => setHtml(editor.getContent())}
+            onInit={(evt, editor) => {
+              setHtml(editor.getContent()); setEditorContent(editor.getContent());
+            }}
             apiKey={config.TINY_API}
             initialValue={html}
             id="editor"
@@ -233,10 +236,14 @@ export const createEditorPage = ({ documentsService }: EditorPageProp):
         </Modal>
 
         <Modal
-          title="Enter Email"
+          title="Please fill this form"
           visible={docusignModal}
           onCancel={() => setDocusignModal(false)}
           footer={false}
+          style={{
+            height: '80vh',
+            overflow: 'auto',
+          }}
         >
           <DocusignForm sendContract={docSign} />
         </Modal>
