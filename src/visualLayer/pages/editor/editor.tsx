@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import {
-  Button, Empty, Form, Input, message, PageHeader, Spin,
+  Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin,
 } from 'antd';
 import * as htmlToImage from 'html-to-image';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,6 +19,7 @@ import { CreateEnvelope, createEnvelope } from '../../../services/docusign';
 import DocusignForm from '../../components/ContractForm';
 import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
+import IconRenderer from '../../components/IconRenderer';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -33,6 +34,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const [loading, setLoading] = useState(false);
     const [documentName, setDocumentName] = useState('');
     const [editorContent, setEditorContent] = useState<string>('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [createdOn, setCreatedOn] = useState<string>('');
     const [documentId, setDocumentId] = useState<string>('');
     const [enterEmail, setEnterEmail] = useState(false);
@@ -56,7 +58,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (response.data && response.data.success) {
         setDocumentName(response.data.data.name);
         setHtml(response.data.data.html);
-        setCreatedOn(response.data.data.createdOn.split('T')[0]);
+        // setCreatedOn(response.data.data.createdOn.split('T')[0]);
         setDocumentId(response.data.data.id);
       }
     };
@@ -164,6 +166,21 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       setDocusignModal(false);
     };
 
+    const sharingMenu = (): JSX.Element => {
+      return (
+        <div className="column-flex p-8" style={{ background: '#222' }}>
+          <Button type="text" style={{ textAlign: 'left' }} onClick={() => setEnterEmail(true)}>
+            { IconRenderer('send') }
+            <span className="mx-2">Sent via email</span>
+          </Button>
+          <Button type="text" style={{ textAlign: 'left' }} onClick={downloadPdf}>
+            <img width={25} src={pdflogo} alt="pdf-logo" />
+            <span className="mx-2">Download as pdf</span>
+          </Button>
+        </div>
+      );
+    };
+
     return (
       <div>
         <PageHeader
@@ -172,14 +189,15 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           title={documentName}
           subTitle={`created on ${createdOn}`}
           extra={(
-            <>
-              <Button type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
-              <Button type="ghost" onClick={() => setEnterEmail(true)}>Share</Button>
-              <Button type="primary" onClick={() => saveDocument()}>Save</Button>
-              <Button type="text" onClick={downloadPdf}>
-                <img width={25} src={pdflogo} alt="pdf-logo" />
-              </Button>
-            </>
+            <div className="row-flex align-center">
+              <Button className="m-2" type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
+              <Button className="m-2" type="primary" onClick={() => saveDocument()}>Save</Button>
+              <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
+                <Button type="text">
+                  { IconRenderer('share') }
+                </Button>
+              </Dropdown>
+            </div>
           )}
         />
         <div
