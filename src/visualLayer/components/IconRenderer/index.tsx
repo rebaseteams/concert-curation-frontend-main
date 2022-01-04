@@ -22,6 +22,8 @@ const iconMapper: any = {
   refresh: 'refresh',
   menu: 'menu',
   share: 'share',
+  email: 'email',
+  send: 'send',
 };
 
 const IconRenderer = (value: string): JSX.Element => {
