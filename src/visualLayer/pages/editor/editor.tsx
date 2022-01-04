@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import {
-  Button, Empty, Form, Input, message, PageHeader,
+  Button, Empty, Form, Input, message, PageHeader, Spin,
 } from 'antd';
 import * as htmlToImage from 'html-to-image';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,6 +30,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
   return function EdiortContainer() {
     const navigate = useNavigate();
     const [html, setHtml] = useState<string>('');
+    const [loading, setLoading] = useState(false);
     const [documentName, setDocumentName] = useState('');
     const [editorContent, setEditorContent] = useState<string>('');
     const [createdOn, setCreatedOn] = useState<string>('');
@@ -112,6 +113,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     };
 
     const docSign = async (data: DocusignFormData) => {
+      setLoading(true);
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
       if (!root.contentWindow) {
         return;
@@ -158,6 +160,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         return;
       }
       message.success(`${response.message}`);
+      setLoading(false);
       setDocusignModal(false);
     };
 
@@ -238,12 +241,26 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           visible={docusignModal}
           onCancel={() => setDocusignModal(false)}
           footer={false}
-          style={{
-            height: '80vh',
-            overflow: 'auto',
-          }}
+          style={
+            {
+              padding: '10px',
+            }
+          }
+          bodyStyle={
+              {
+                height: 'calc(100vh - 200px)',
+                padding: '10px',
+                overflowY: 'scroll',
+                margin: '0',
+              }
+            }
         >
-          <DocusignForm sendContract={docSign} />
+          { loading ? (
+            <div className="column-flex justify-center align-center height-100">
+              <Spin />
+              <span>please wait</span>
+            </div>
+          ) : <DocusignForm sendContract={docSign} />}
         </Modal>
       </div>
     );
