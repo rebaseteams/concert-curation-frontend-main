@@ -12,3 +12,10 @@ export type GetenvelopesResponse = {
   data?: any,
   status?: number | string;
 }
+
+export type UpdateResponse = {
+  error: boolean,
+  message: string,
+  data?: any,
+  status?: number | string;
+}

@@ -4,12 +4,14 @@ import {
   Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin, Tag,
 } from 'antd';
 import * as htmlToImage from 'html-to-image';
+import { Editor } from '@tinymce/tinymce-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'antd/lib/modal/Modal';
 import FormItem from 'antd/lib/form/FormItem';
 import services from '../../services';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { HtmlDownloadService } from '../../../adapters/html-download.service';
+import config from '../../../services/config.json';
 
 // logos and images
 import pdflogo from '../../../assets/pdf-logo.png';
@@ -19,7 +21,6 @@ import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 import IconRenderer from '../../components/IconRenderer';
 import { DocumentContractData, DocumentModes } from '../../../model/types/service-response';
-import createTextEditor from '../../components/TextEditor';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -43,10 +44,6 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const [documentMode, setDocumentMode] = useState<DocumentModes>();
     const [contractInfo, setContractInfo] = useState<DocumentContractData>();
     const htmlDownloadService = new HtmlDownloadService();
-
-    const TextEditor = createTextEditor({
-      setEditorContent, html, setHtml, isDisabled,
-    });
 
     const downloadPdf = () => {
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
@@ -81,7 +78,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     }
     useEffect(() => {
       getDocument(id);
-    }, []);
+    }, [html]);
 
     const redirectBack = () => {
       navigate(-1);
@@ -123,6 +120,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       }
       if (response.data && response.data.success) {
         message.success('saved successfully');
+        getDocument(id);
         return;
       }
       message.error('Somthing went wrong');
@@ -173,9 +171,11 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       const response = await docusignService.createEnvelope(envelope, documentId);
       if (response.error) {
         message.error(response.message);
+        setLoading(false);
         return;
       }
       message.success(`${response.message}`);
+      getDocument(id);
       setLoading(false);
       setDocusignModal(false);
     };
@@ -193,6 +193,17 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           </Button>
         </div>
       );
+    };
+
+    const updateDocument = async () => {
+      if (contractInfo && contractInfo.envelopeId) {
+        setLoading(true);
+        await docusignService.updateStatus(documentId, contractInfo.envelopeId);
+        setTimeout(() => {
+          getDocument(id);
+          setLoading(false);
+        }, 3000);
+      }
     };
 
     const renderHeaderExtra = () => {
@@ -213,11 +224,20 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         return (
           <div className="row-flex align-center">
             <Tag color="lime">Document is submitted</Tag>
-            <Button type="text">
-              <div className="row-flex align-center">
-                { IconRenderer('refresh') }
-                <span>Update status</span>
-              </div>
+            <Button type="text" onClick={() => updateDocument()}>
+              { loading ? (
+                <>
+                  <Spin />
+                  {' '}
+                  updating
+                </>
+              )
+                : (
+                  <div className="row-flex align-center">
+                    { IconRenderer('refresh') }
+                    <span>Update status</span>
+                  </div>
+                )}
             </Button>
             <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
               <Button type="text">
@@ -229,16 +249,14 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       }
       if (documentMode === 'sign' && contractInfo) {
         return (
-          <div>
-            <h1>Document is submitted</h1>
-            <span>{ contractInfo.status }</span>
-            <Button type="primary">Download</Button>
+          <div className="row-flex align-center">
+            <Tag color="green">Document is signed</Tag>
+            <Button type="link">Download Signed Document</Button>
           </div>
         );
       }
       return <Empty />;
     };
-
     return (
       <div>
         <PageHeader
@@ -254,8 +272,35 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
             margin: 'auto',
           }}
         >
-          <TextEditor />
-          {/* { renderEditorBody() } */}
+          <Editor
+          // eslint-disable-next-line no-return-assign
+            onInit={(evt, editor) => {
+              setHtml(editor.getContent()); setEditorContent(editor.getContent());
+            }}
+            apiKey={config.TINY_API}
+            disabled={isDisabled}
+            initialValue={html}
+            id="editor"
+          // eslint-disable-next-line no-return-assign
+            onChange={(evt, editor) => setEditorContent(editor.getContent())}
+            init={{
+              height: '88vh',
+              menubar: 'file edit insert view format table tools',
+              fontsize_formats:
+                '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
+              plugins: [
+                'export pagebreak',
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount',
+              ],
+              toolbar: 'export | undo redo | formatselect | fontselect fontsizeselect | '
+             + 'bold italic backcolor forecolor | alignleft aligncenter '
+             + 'alignright alignjustify | bullist numlist outdent indent | '
+             + 'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            }}
+          />
         </div>
 
         <Modal
