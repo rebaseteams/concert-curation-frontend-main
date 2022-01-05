@@ -87,6 +87,18 @@ type DocumentData = {
   createdOn: string,
   recommendationId: string,
   html: string
+  mode: DocumentModes,
+  contract: DocumentContractData,
+}
+
+export type DocumentModes = 'edit' | 'submit' | 'sign';
+
+export type DocumentContractData = {
+  envelopeId: string,
+  url: string,
+  dateCreated: string,
+  signDate: string,
+  status: string,
 }
 
 export type GetDocumentResponse = {

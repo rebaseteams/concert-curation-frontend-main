@@ -1,14 +1,12 @@
 /* eslint-disable arrow-body-style */
-import { useState } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import { useEffect, useState } from 'react';
 import {
-  Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin,
+  Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin, Tag,
 } from 'antd';
 import * as htmlToImage from 'html-to-image';
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'antd/lib/modal/Modal';
 import FormItem from 'antd/lib/form/FormItem';
-import config from '../../../services/config.json';
 import services from '../../services';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { HtmlDownloadService } from '../../../adapters/html-download.service';
@@ -20,6 +18,8 @@ import DocusignForm from '../../components/ContractForm';
 import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 import IconRenderer from '../../components/IconRenderer';
+import { DocumentContractData, DocumentModes } from '../../../model/types/service-response';
+import createTextEditor from '../../components/TextEditor';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -36,10 +36,17 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const [editorContent, setEditorContent] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [createdOn, setCreatedOn] = useState<string>('');
+    const [isDisabled, setIsDisabled] = useState(false);
     const [documentId, setDocumentId] = useState<string>('');
     const [enterEmail, setEnterEmail] = useState(false);
     const [docusignModal, setDocusignModal] = useState(false);
+    const [documentMode, setDocumentMode] = useState<DocumentModes>();
+    const [contractInfo, setContractInfo] = useState<DocumentContractData>();
     const htmlDownloadService = new HtmlDownloadService();
+
+    const TextEditor = createTextEditor({
+      setEditorContent, html, setHtml, isDisabled,
+    });
 
     const downloadPdf = () => {
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
@@ -58,6 +65,11 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (response.data && response.data.success) {
         setDocumentName(response.data.data.name);
         setHtml(response.data.data.html);
+        setDocumentMode(response.data.data.mode);
+        if (response.data.data.mode === 'submit' || response.data.data.mode === 'sign') {
+          setContractInfo(response.data.data.contract);
+          setIsDisabled(true);
+        }
         // setCreatedOn(response.data.data.createdOn.split('T')[0]);
         setDocumentId(response.data.data.id);
       }
@@ -67,7 +79,9 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     if (!id) {
       return <Empty />;
     }
-    getDocument(id);
+    useEffect(() => {
+      getDocument(id);
+    }, []);
 
     const redirectBack = () => {
       navigate(-1);
@@ -114,7 +128,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       message.error('Somthing went wrong');
     };
 
-    const docSign = async (data: DocusignFormData) => {
+    const submitForSign = async (data: DocusignFormData) => {
       setLoading(true);
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
       if (!root.contentWindow) {
@@ -181,6 +195,50 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       );
     };
 
+    const renderHeaderExtra = () => {
+      if (documentMode === 'edit') {
+        return (
+          <div className="row-flex align-center">
+            <Button className="m-2" type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
+            <Button className="m-2" type="primary" onClick={() => saveDocument()}>Save</Button>
+            <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
+              <Button type="text">
+                { IconRenderer('share') }
+              </Button>
+            </Dropdown>
+          </div>
+        );
+      }
+      if (documentMode === 'submit' && contractInfo) {
+        return (
+          <div className="row-flex align-center">
+            <Tag color="lime">Document is submitted</Tag>
+            <Button type="text">
+              <div className="row-flex align-center">
+                { IconRenderer('refresh') }
+                <span>Update status</span>
+              </div>
+            </Button>
+            <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
+              <Button type="text">
+                { IconRenderer('share') }
+              </Button>
+            </Dropdown>
+          </div>
+        );
+      }
+      if (documentMode === 'sign' && contractInfo) {
+        return (
+          <div>
+            <h1>Document is submitted</h1>
+            <span>{ contractInfo.status }</span>
+            <Button type="primary">Download</Button>
+          </div>
+        );
+      }
+      return <Empty />;
+    };
+
     return (
       <div>
         <PageHeader
@@ -188,17 +246,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           onBack={() => redirectBack()}
           title={documentName}
           subTitle={`created on ${createdOn}`}
-          extra={(
-            <div className="row-flex align-center">
-              <Button className="m-2" type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
-              <Button className="m-2" type="primary" onClick={() => saveDocument()}>Save</Button>
-              <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
-                <Button type="text">
-                  { IconRenderer('share') }
-                </Button>
-              </Dropdown>
-            </div>
-          )}
+          extra={renderHeaderExtra()}
         />
         <div
           style={{
@@ -206,34 +254,8 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
             margin: 'auto',
           }}
         >
-          <Editor
-          // eslint-disable-next-line no-return-assign
-            onInit={(evt, editor) => {
-              setHtml(editor.getContent()); setEditorContent(editor.getContent());
-            }}
-            apiKey={config.TINY_API}
-            initialValue={html}
-            id="editor"
-          // eslint-disable-next-line no-return-assign
-            onChange={(evt, editor) => setEditorContent(editor.getContent())}
-            init={{
-              height: '88vh',
-              menubar: 'file edit insert view format table tools',
-              fontsize_formats:
-                '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
-              plugins: [
-                'export pagebreak',
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount',
-              ],
-              toolbar: 'export | undo redo | formatselect | fontselect fontsizeselect | '
-             + 'bold italic backcolor forecolor | alignleft aligncenter '
-             + 'alignright alignjustify | bullist numlist outdent indent | '
-             + 'removeformat | help',
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-            }}
-          />
+          <TextEditor />
+          {/* { renderEditorBody() } */}
         </div>
 
         <Modal
@@ -278,7 +300,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
               <Spin />
               <span>please wait</span>
             </div>
-          ) : <DocusignForm sendContract={docSign} />}
+          ) : <DocusignForm sendContract={submitForSign} />}
         </Modal>
       </div>
     );
