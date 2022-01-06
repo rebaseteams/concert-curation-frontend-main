@@ -93,8 +93,7 @@ export function createApp(
             req.headers = {};
           }
           // Extract the userid from the token
-          const { userId, token } = extractUserToken();
-          req.headers.userId = userId;
+          const { token } = extractUserToken();
           req.headers.authorization = token;
         }
         return req;
