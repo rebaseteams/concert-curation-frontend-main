@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-template-curly-in-string */
 import {
-  Button, Form, Input, Row,
+  Button, Form, Input, Row, Select,
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './signup.scss';
@@ -27,7 +27,9 @@ const Signup = () : JSX.Element => {
   } = useAuth0();
 
   const onFinish = async (values: {user : SignUp}) => {
-    const resp = await services.Auth.signUp(values.user);
+    const { user } = values;
+    delete user.role;
+    const resp = await services.Auth.signUp(user);
     if (resp.success) alert('Verify your email');
     else alert('Sign Up failed');
   };
@@ -38,11 +40,20 @@ const Signup = () : JSX.Element => {
         <Form.Item name={['user', 'userName']} label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item name={['user', 'password']} label="Password" rules={[{ required: true }]}>
-          <Input.Password />
-        </Form.Item>
         <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email' }]}>
           <Input />
+        </Form.Item>
+        <Form.Item name={['user', 'role']} label="Role">
+          <Select
+            placeholder="Select a role"
+          >
+            <Select.Option value="admin">Admin</Select.Option>
+            <Select.Option value="branduser">Brand User</Select.Option>
+            <Select.Option value="artist">Artist</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item name={['user', 'password']} label="Password" rules={[{ required: true }]}>
+          <Input.Password />
         </Form.Item>
         <Row>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
