@@ -28,7 +28,6 @@ const Signup = () : JSX.Element => {
 
   const onFinish = async (values: {user : SignUp}) => {
     const { user } = values;
-    delete user.role;
     const resp = await services.Auth.signUp(user);
     if (resp.success) alert('Verify your email');
     else alert('Sign Up failed');
