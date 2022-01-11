@@ -149,7 +149,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           ],
           signers: [
             {
-              email: 'pkumarprajapati007@gmail.com', // Provide artists email programatically
+              email: 'praveen.prajapati.rebase@gmail.com', // Provide artists email programatically
               recipientId: '2',
               routingOrder: '1',
               name: 'Praveen Prajapati', // Provide artists name programatically
