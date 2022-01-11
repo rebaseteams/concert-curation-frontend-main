@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import {
   BrowserRouter, Link, Route, Routes, Navigate,
 } from 'react-router-dom';
-import { Result } from 'antd';
+import { Result, Spin } from 'antd';
 
 // importing services
 import { AUTH_DOMAIN } from './config';
@@ -135,7 +135,11 @@ export function createApp(
             </Routes>
           </BrowserRouter>
         )
-        : <div>Loading...</div>
+        : (
+          <div className="column-flex justify-center align-center" style={{ height: '100vh' }}>
+            <Spin size="large" />
+          </div>
+        )
     );
   };
 }
