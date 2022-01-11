@@ -27,6 +27,7 @@ import createArtistPage from './visualLayer/pages/artists/artist';
 import { DownloadService } from './services/download.service';
 import LandingPage from './visualLayer/pages/landing';
 import { DocusignInterface } from './model/interfaces/docusign';
+import SuperAdminDashboard from './visualLayer/pages/superadmin/dashboard';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -116,6 +117,7 @@ export function createApp(
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
+                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard />)} />
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
@@ -128,7 +130,7 @@ export function createApp(
                     subTitle="Sorry, the page you visited does not exist."
                     extra={<Link to="/">Back Home</Link>}
                   />
-          )}
+            )}
               />
             </Routes>
           </BrowserRouter>
