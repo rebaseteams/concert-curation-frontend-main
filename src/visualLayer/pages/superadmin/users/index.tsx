@@ -55,7 +55,7 @@ const Users = () : JSX.Element => {
         dataSource={listToDisplay}
         renderItem={(item) => (
           <List.Item
-            actions={[<Button>view</Button>, <Button>edit</Button>]}
+            actions={[<Button>edit</Button>]}
           >
             <Skeleton avatar title={false} loading={loadingUsers} active>
               <List.Item.Meta
