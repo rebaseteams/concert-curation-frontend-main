@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { PROD_SERVER } from '../../../config';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
 import {
@@ -13,14 +12,16 @@ import {
   ShareDocumentResponse,
 } from '../../../model/types/service-response';
 
-const server = PROD_SERVER;
-
-const DOCUMENTS_URI = `${server}/artists/recommendations/documents`;
-
 export default class DocumentsRepo implements DocumentsInterface {
+  documentsUri: string;
+
+  constructor(server: string) {
+    this.documentsUri = `${server}/artists/recommendations/documents`;
+  }
+
   getDocuments = async (): Promise<GetDocumentsResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(DOCUMENTS_URI).then((response: any) => {
+    axios.get(this.documentsUri).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
@@ -33,7 +34,7 @@ export default class DocumentsRepo implements DocumentsInterface {
   getDocumentsForRecommendation = async (documentsList: Array<string>):
     Promise<GetDocumentsForRecommendationResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.post(`${DOCUMENTS_URI}/ids`, { ids: documentsList }).then((response: any) => {
+    axios.post(`${this.documentsUri}/ids`, { ids: documentsList }).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
@@ -46,7 +47,7 @@ export default class DocumentsRepo implements DocumentsInterface {
   getDocument = async (documentId: string):
   Promise<GetDocumentResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(`${DOCUMENTS_URI}/${documentId}`).then((response: any) => {
+    axios.get(`${this.documentsUri}/${documentId}`).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
@@ -59,7 +60,7 @@ export default class DocumentsRepo implements DocumentsInterface {
   createDocument = async (collaborationFormValues: CreateDocumentForm):
     Promise<CreateDocumentResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.post(DOCUMENTS_URI, collaborationFormValues).then((val: any) => {
+    axios.post(this.documentsUri, collaborationFormValues).then((val: any) => {
       if (val.status !== 200) {
         resolve({ error: true, message: val.statusText, status: val.status });
       }
@@ -74,7 +75,7 @@ export default class DocumentsRepo implements DocumentsInterface {
   deleteDocument = async (documentId: string):
   Promise<DeleteDocumentResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.delete(`${DOCUMENTS_URI}/${documentId}`).then((response: any) => {
+    axios.delete(`${this.documentsUri}/${documentId}`).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
@@ -89,7 +90,7 @@ export default class DocumentsRepo implements DocumentsInterface {
   editDocument = async (documentId: string, html: string):
   Promise<EditDocumentsResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.patch(`${DOCUMENTS_URI}/${documentId}`, { html }).then((response: any) => {
+    axios.patch(`${this.documentsUri}/${documentId}`, { html }).then((response: any) => {
       if (response.status !== 200) {
         resolve({ error: true, message: response.statusText, status: response.status });
       }
@@ -107,7 +108,7 @@ export default class DocumentsRepo implements DocumentsInterface {
     formData.append('attachments', file);
     formData.append('emails', `["${emails}"]`);
     return new Promise((resolve) => {
-      axios.post(`${DOCUMENTS_URI}/share/${documentId}`, formData, {
+      axios.post(`${this.documentsUri}/share/${documentId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

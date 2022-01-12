@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { PROD_SERVER } from '../../../config';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 import {
   CreateEnvelopeResponse, GetenvelopesResponse, GetSignedPdfRes, UpdateResponse,
 } from '../../../model/types/docusign/apiResponses';
 import { CatchError } from '../../../model/types/service-response';
 
-const server = PROD_SERVER;
-
-const DOCUSIGN_URI = `${server}/artists/recommendations/documents/docusign`;
-
 export default class DocusignRepo implements DocusignInterface {
+  docusignUri: string;
+
+  constructor(server: string) {
+    this.docusignUri = `${server}/artists/recommendations/documents/docusign`;
+  }
+
   getEnvelopes = async (): Promise<GetenvelopesResponse> => new Promise((resolve) => {
-    axios.get(DOCUSIGN_URI).then((res) => {
+    axios.get(this.docusignUri).then((res) => {
       if (res.status !== 200) {
         resolve({ error: true, message: res.statusText, status: res.status });
       }
@@ -28,7 +29,7 @@ export default class DocusignRepo implements DocusignInterface {
 
   createEnvelope = async (envelopeData: any, documentId: string):
   Promise<CreateEnvelopeResponse> => new Promise((resolve) => {
-    axios.post(`${DOCUSIGN_URI}/${documentId}`, envelopeData).then((res) => {
+    axios.post(`${this.docusignUri}/${documentId}`, envelopeData).then((res) => {
       if (res.status !== 200) {
         resolve({ error: true, message: res.statusText, status: res.status });
       }
@@ -49,7 +50,7 @@ export default class DocusignRepo implements DocusignInterface {
 
   updateStatus = async (envelopeId: string, documentId: string):
     Promise<UpdateResponse> => new Promise((resolve) => {
-    axios.get(`${DOCUSIGN_URI}/${documentId}/${envelopeId}`).then((res) => {
+    axios.get(`${this.docusignUri}/${documentId}/${envelopeId}`).then((res) => {
       if (res.status !== 200) {
         resolve({ error: true, message: res.statusText, status: res.status });
       }
@@ -70,7 +71,7 @@ export default class DocusignRepo implements DocusignInterface {
 
   getSignedPdf = async (envelopeId: string):
   Promise<GetSignedPdfRes> => new Promise((resolve) => {
-    axios.get(`${DOCUSIGN_URI}/${envelopeId}`).then((res: any) => {
+    axios.get(`${this.docusignUri}/${envelopeId}`).then((res: any) => {
       if (res.status !== 200) {
         resolve({ error: true, message: res.statusText, status: res.status });
       }

@@ -2,7 +2,6 @@
 import axios from 'axios';
 import * as _ from 'lodash';
 import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
-import { PROD_SERVER } from '../../../config';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
@@ -15,8 +14,13 @@ import {
 } from '../../../model/types/service-response';
 
 // TODO: This should not be directly referenced
-const server = PROD_SERVER;
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
+  server: string;
+
+  constructor(server: string) {
+    this.server = server;
+  }
+
   addNewRecommendation = async (concertData : QuestionsUI): Promise<AddRecommendationResponse> => {
     const data = _.pick(concertData, ['userId',
       'concertName',
@@ -31,7 +35,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
     ]);
     return new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      axios.post(`${server}/artists/recommendations`, data).then((val: any) => {
+      axios.post(`${this.server}/artists/recommendations`, data).then((val: any) => {
         if (val.status !== 200) {
           resolve({ error: true, status: val.status, message: val.statusText });
         }
@@ -45,7 +49,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
   getAllRecommendations = async ():
     Promise<GetAllRecommendationsResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(`${server}/artists/recommendations/`).then((val: any) => {
+    axios.get(`${this.server}/artists/recommendations/`).then((val: any) => {
       if (val.status !== 200) {
         resolve({
           error: true, data: [], status: val.status, message: val.message,
@@ -62,7 +66,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
   getRecommendation = async (recommendationId : string):
     Promise<GetRecommendationResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.get(`${server}/artists/recommendations/${recommendationId}`).then((val: any) => {
+    axios.get(`${this.server}/artists/recommendations/${recommendationId}`).then((val: any) => {
       if (val.status !== 200) {
         resolve({ error: true, status: val.status, message: val.message });
       }
@@ -75,7 +79,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
   discardArtist = async (data : PatchRequest):
     Promise<PatchRecommendationResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.patch(`${server}/artists/recommendations/`, data).then((val:any) => {
+    axios.patch(`${this.server}/artists/recommendations/`, data).then((val:any) => {
       if (val.status !== 200) {
         resolve({ error: true, status: val.status, message: val.statusText });
       }
@@ -88,7 +92,7 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
   deleteRecommendation = async (recommendationId : string):
     Promise<DeleteRecommendationResponse> => new Promise((resolve) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    axios.delete(`${server}/artists/recommendations/${recommendationId}`).then((val: any) => {
+    axios.delete(`${this.server}/artists/recommendations/${recommendationId}`).then((val: any) => {
       if (val.status !== 200) {
         resolve({ error: true, status: val.status, message: val.statusText });
       }

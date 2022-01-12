@@ -5,18 +5,28 @@ import './index.scss';
 import { createApp } from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.dark.css';
-import { config } from './config.dev';
-import {
-  AUTH_AUDIENCE, AUTH_CLIENT_ID, AUTH_DOMAIN, AUTH_SCOPE,
-} from './config';
+import { config as devConfig } from './config.development';
+import { config as prodConfig } from './config.production';
 
+console.log(process.env);
+
+const { services, resources } = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 const {
   artistRecommendation, documentsService, artistService, downloadService, docusignService,
-} = config.services;
+} = services;
+
+const {
+  AUTH_AUDIENCE, AUTH_DOMAIN, AUTH_CLIENT_ID, AUTH_SCOPE,
+} = resources;
 
 const App = createApp(
   {
-    artistRecommendation, documentsService, artistService, downloadService, docusignService,
+    services: {
+      artistRecommendation, documentsService, artistService, downloadService, docusignService,
+    },
+    resources: {
+      AUTH_DOMAIN,
+    },
   },
 );
 

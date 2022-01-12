@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosResponse } from 'axios';
-import services from '../visualLayer/services';
-import { config } from '../config.dev';
-import base64 from './base64.json';
-import { CreateEnvelopeResponse } from '../model/types/docusign/apiResponses';
-
 export type CreateEnvelope = {
   pdfBase64: HTMLElement | string,
   emailSubject: string,
