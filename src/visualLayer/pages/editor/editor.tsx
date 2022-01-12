@@ -21,6 +21,7 @@ import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 import IconRenderer from '../../components/IconRenderer';
 import { DocumentContractData, DocumentModes } from '../../../model/types/service-response';
+import downloadSignedPdf from './downloadSignedPdf';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -206,6 +207,17 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       }
     };
 
+    const downloadSigned = async (envelopeId: string) => {
+      setLoading(true);
+      const data = await downloadSignedPdf(envelopeId);
+      if (!data) {
+        message.error('Error');
+      } else {
+        message.success('Downloaded');
+      }
+      setLoading(false);
+    };
+
     const renderHeaderExtra = () => {
       if (documentMode === 'edit') {
         return (
@@ -250,8 +262,17 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (documentMode === 'sign' && contractInfo) {
         return (
           <div className="row-flex align-center">
-            <Tag color="green">Document is signed</Tag>
-            <Button type="link">Download Signed Document</Button>
+            <Tag color="warning">Document is signed</Tag>
+            {
+              loading
+                ? (
+                  <Button disabled type="link" onClick={() => downloadSigned(contractInfo.envelopeId)}>
+                    <Spin />
+                    Downloading
+                  </Button>
+                )
+                : <Button type="link" onClick={() => downloadSigned(contractInfo.envelopeId)}>Download pdf</Button>
+            }
           </div>
         );
       }
