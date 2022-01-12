@@ -19,3 +19,10 @@ export type UpdateResponse = {
   data?: any,
   status?: number | string;
 }
+
+export type GetSignedPdfRes = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean, data: string },
+  status?: number | string;
+}

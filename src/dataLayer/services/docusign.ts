@@ -1,5 +1,7 @@
 import { DocusignInterface } from '../../model/interfaces/docusign';
-import { CreateEnvelopeResponse, GetenvelopesResponse, UpdateResponse } from '../../model/types/docusign/apiResponses';
+import {
+  CreateEnvelopeResponse, GetenvelopesResponse, GetSignedPdfRes, UpdateResponse,
+} from '../../model/types/docusign/apiResponses';
 
 export default class DocusignService implements DocusignInterface {
   private docusignRepo: DocusignInterface;
@@ -22,5 +24,10 @@ export default class DocusignService implements DocusignInterface {
   updateStatus = async (envelopeId: string, documentId: string):
    Promise<UpdateResponse> => new Promise((resolve) => {
     resolve(this.docusignRepo.updateStatus(envelopeId, documentId));
+  });
+
+  getSignedPdf = async (envelopeId: string):
+  Promise<GetSignedPdfRes> => new Promise((resolve) => {
+    resolve(this.docusignRepo.getSignedPdf(envelopeId));
   });
 }
