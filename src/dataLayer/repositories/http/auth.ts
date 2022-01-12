@@ -3,12 +3,17 @@
 import axios from 'axios';
 import AuthInterface from '../../../model/interfaces/auth';
 import { SignUp } from '../../../model/types/signup';
-import { PROD_SERVER } from '../../../config';
 
 export default class AuthRepo implements AuthInterface {
+  server: string;
+
+  constructor(server: string) {
+    this.server = server;
+  }
+
   signUp = async (data : SignUp) : Promise<{success : boolean}> => {
     return new Promise((resolve) => {
-      axios.post(`${PROD_SERVER}/users`, {
+      axios.post(`${this.server}/users`, {
         email: data.email,
         password: data.password,
         name: data.userName,

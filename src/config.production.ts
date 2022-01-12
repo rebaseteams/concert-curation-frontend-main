@@ -13,15 +13,25 @@ import DocusignService from './dataLayer/services/docusign';
 import DocusignRepo from './dataLayer/repositories/http/docusign';
 
 // const tokenService = new UnsignedTokenService();
+const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
 
+const server = 'https://myconcert.rebaseitlabs.in/api';
 export const config: Config = {
-  mode: 'development',
+  mode: 'production',
+  resources: {
+    SERVER: server,
+    AUTH_DOMAIN: 'https://dev-bnfcgcth.us.auth0.com',
+    AUTH_CLIENT_ID: 'B7hdgDYvx7fyGktJJxxidg9qg0Xvbq0s',
+    AUTH_CONNECTION: 'Username-Password-Authentication',
+    AUTH_AUDIENCE: 'http://localhost:4000',
+    AUTH_SCOPE: scopes.join(' '),
+  },
   services: {
-    artistRecommendation: new ArtistRecommendation(new ArtistRecommendationRepo()),
-    documentsService: new Documents(new DocumentsRepo()),
-    artistService: new Artist(new ArtistRepo()),
+    artistRecommendation: new ArtistRecommendation(new ArtistRecommendationRepo(server)),
+    documentsService: new Documents(new DocumentsRepo(server)),
+    artistService: new Artist(new ArtistRepo(server)),
     downloadService: new HtmlDownloadService(),
-    docusignService: new DocusignService(new DocusignRepo()),
+    docusignService: new DocusignService(new DocusignRepo(server)),
   },
   providers: {
   },

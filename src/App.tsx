@@ -7,7 +7,6 @@ import {
 import { Result, Spin } from 'antd';
 
 // importing services
-import { AUTH_DOMAIN } from './config';
 import extractUserToken from './services/userToken';
 
 // importing components
@@ -34,23 +33,35 @@ import SuperAdminDashboard from './visualLayer/pages/superadmin/dashboard';
 localStorage.setItem('userid', '1238989');
 
 export interface AppOptions {
+  services: {
+    artistRecommendation: ArtistRecommendationInterface;
+    documentsService: DocumentsInterface;
+    artistService: ArtistInterface;
+    downloadService: DownloadService;
+    docusignService: DocusignInterface;
+  },
+  resources: {
+    AUTH_DOMAIN: string;
+  }
   // useAuth0?: UseAuth0;
-  artistRecommendation: ArtistRecommendationInterface;
-  documentsService: DocumentsInterface;
-  artistService: ArtistInterface;
-  downloadService: DownloadService;
-  docusignService: DocusignInterface;
+
 }
 
 export function createApp(
   {
-    // useAuth0 = defaultUseAuth0,
-    artistRecommendation,
-    documentsService,
-    artistService,
-    downloadService,
-    docusignService,
-  } : AppOptions,
+    services: {
+      // useAuth0 = defaultUseAuth0,
+      artistRecommendation,
+      documentsService,
+      artistService,
+      downloadService,
+      docusignService,
+    },
+    resources: {
+      AUTH_DOMAIN,
+    },
+  }
+   : AppOptions,
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent();
   const DashboardComponent = createDashboardComponent(

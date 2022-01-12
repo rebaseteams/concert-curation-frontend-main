@@ -3,16 +3,19 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-console */
 import axios from 'axios';
-import { PROD_SERVER } from '../../../config';
 import { TemplatesInterface } from '../../../model/interfaces/templates';
 import { CatchError, GetTemplateResponse, GetTemplatesResponse } from '../../../model/types/service-response';
 
-const server = PROD_SERVER;
-
 export default class TemplatesRepo implements TemplatesInterface {
+  server: string;
+
+  constructor(server:string) {
+    this.server = server;
+  }
+
   getTemplates = async (): Promise<GetTemplatesResponse> => {
     return new Promise((resolve) => {
-      axios.get(`${server}/artists/recommendations/documents/templates`).then((response: any) => {
+      axios.get(`${this.server}/artists/recommendations/documents/templates`).then((response: any) => {
         if (response.status !== 200) {
           resolve({ error: true, message: response.statusText, status: response.status });
         }
@@ -30,7 +33,7 @@ export default class TemplatesRepo implements TemplatesInterface {
 
   getTemplate = async (templateId: string): Promise<GetTemplateResponse> => {
     return new Promise((resolve) => {
-      axios.get(`${server}/artists/recommendations/documents/templates/${templateId}`).then((response: any) => {
+      axios.get(`${this.server}/artists/recommendations/documents/templates/${templateId}`).then((response: any) => {
         if (response.status !== 200) {
           resolve({ error: true, message: response.statusText, status: response.status });
         }
