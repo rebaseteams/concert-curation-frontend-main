@@ -7,7 +7,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import './signup.scss';
 import { SignUp } from '../../../model/types/signup';
-import services from '../../services';
+import AuthInterface from '../../../model/interfaces/auth';
 
 const layout = {
   labelCol: { span: 8 },
@@ -21,14 +21,18 @@ const validateMessages = {
   },
 };
 
-const Signup = () : JSX.Element => {
+type SignUpProps = {
+  AuthService: AuthInterface;
+}
+
+const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
   const {
     loginWithRedirect,
   } = useAuth0();
 
   const onFinish = async (values: {user : SignUp}) => {
     const { user } = values;
-    const resp = await services.Auth.signUp(user);
+    const resp = await AuthService.signUp(user); // services.Auth.signUp(user);
     if (resp.success) alert('Verify your email');
     else alert('Sign Up failed');
   };

@@ -8,7 +8,6 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'antd/lib/modal/Modal';
 import FormItem from 'antd/lib/form/FormItem';
-import services from '../../services';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { HtmlDownloadService } from '../../../adapters/html-download.service';
 import config from '../../../services/config.json';
@@ -55,7 +54,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     };
 
     const getDocument = async (id: string) => {
-      const response = await services.Documents.getDocument(id);
+      const response = await documentsService.getDocument(id);
       if (response.error) {
         message.error(response.message);
         return;
@@ -114,7 +113,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (editorContent.length <= 0) {
         return;
       }
-      const response = await services.Documents.editDocument(id, editorContent);
+      const response = await documentsService.editDocument(id, editorContent);
       if (response.error) {
         message.error(response.message);
         return;
@@ -209,7 +208,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
 
     const downloadSigned = async (envelopeId: string) => {
       setLoading(true);
-      const data = await downloadSignedPdf(envelopeId);
+      const data = await downloadSignedPdf(envelopeId, docusignService);
       if (!data) {
         message.error('Error');
       } else {

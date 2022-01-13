@@ -4,13 +4,22 @@ import {
 import { useArtistData as defaultuseArtistData, UseArtistData } from '../../../hooks/useArtistData';
 import createArtistProfile from '../../components/ArtistProfile';
 import ArtistInterface from '../../../model/interfaces/artist';
+import { TemplatesInterface } from '../../../model/interfaces/templates';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
 
 interface createArtistPageProp {
-  artistService: ArtistInterface
+  artistService: ArtistInterface;
+  templatesService: TemplatesInterface;
+  documentsService: DocumentsInterface;
   useArtistData?: UseArtistData;
 }
 
-const createArtistPage = ({ artistService, useArtistData = defaultuseArtistData }:
+const createArtistPage = ({
+  artistService,
+  templatesService,
+  documentsService,
+  useArtistData = defaultuseArtistData,
+}:
   createArtistPageProp):
   () => JSX.Element => {
   const ArtistPage = (): JSX.Element => {
@@ -19,7 +28,7 @@ const createArtistPage = ({ artistService, useArtistData = defaultuseArtistData 
       return <Spin />;
     }
     const ArtistProfile = createArtistProfile({
-      artist, recommendationId,
+      artist, recommendationId, templatesService, documentsService,
     });
     return (
       <div>

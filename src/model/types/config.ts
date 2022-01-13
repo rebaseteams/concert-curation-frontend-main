@@ -1,8 +1,10 @@
 import { DownloadService } from '../../services/download.service';
 import ArtistInterface from '../interfaces/artist';
 import { ArtistRecommendationInterface } from '../interfaces/artistRecommendation';
+import AuthInterface from '../interfaces/auth';
 import { DocumentsInterface } from '../interfaces/documents';
 import { DocusignInterface } from '../interfaces/docusign';
+import { TemplatesInterface } from '../interfaces/templates';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -24,6 +26,8 @@ export interface Config {
     documentsService: DocumentsInterface,
     artistService: ArtistInterface,
     docusignService: DocusignInterface
+    templatesService: TemplatesInterface,
+    AuthService: AuthInterface,
   };
 
   providers: {

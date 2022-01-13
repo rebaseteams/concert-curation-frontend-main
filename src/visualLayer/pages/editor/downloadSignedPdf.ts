@@ -1,8 +1,8 @@
-import DocusignRepo from '../../../dataLayer/repositories/http/docusign';
+import { DocusignInterface } from '../../../model/interfaces/docusign';
 
-const downloadSignedPdf = async (envelopeId: string): Promise<boolean> => {
-  const docusignRepo = new DocusignRepo();
-  const response = await docusignRepo.getSignedPdf(envelopeId);
+const downloadSignedPdf = async (envelopeId: string, docusignService: DocusignInterface):
+Promise<boolean> => {
+  const response = await docusignService.getSignedPdf(envelopeId);
   if (response.error && response.data && !response.data.success) {
     return false;
   }

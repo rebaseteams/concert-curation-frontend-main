@@ -18,6 +18,8 @@ import ArtistContactDetails from './artist-contact';
 
 // styles
 import './artistprofile.scss';
+import { TemplatesInterface } from '../../../model/interfaces/templates';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -25,10 +27,12 @@ const { TabPane } = Tabs;
 type ArtistProfileProp = {
   artist: ArtistNew,
   recommendationId: string,
+  templatesService: TemplatesInterface,
+  documentsService: DocumentsInterface,
 }
 
 const createArtistProfile = ({
-  artist, recommendationId,
+  artist, recommendationId, templatesService, documentsService,
 }: ArtistProfileProp): () => JSX.Element | null => {
   return function ArtistProfile(): JSX.Element {
     const navigate = useNavigate();
@@ -68,7 +72,12 @@ const createArtistProfile = ({
               <ArtistToursView />
             </TabPane>
             <TabPane tab="Contact details" key="contact-tab">
-              <ArtistContactDetails recommendationId={recommendationId} artistId={artist.id} />
+              <ArtistContactDetails
+                recommendationId={recommendationId}
+                artistId={artist.id}
+                templateService={templatesService}
+                documentService={documentsService}
+              />
             </TabPane>
           </Tabs>
         </div>

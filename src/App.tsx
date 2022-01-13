@@ -27,6 +27,8 @@ import { DownloadService } from './services/download.service';
 import LandingPage from './visualLayer/pages/landing';
 import { DocusignInterface } from './model/interfaces/docusign';
 import SuperAdminDashboard from './visualLayer/pages/superadmin/dashboard';
+import { TemplatesInterface } from './model/interfaces/templates';
+import AuthInterface from './model/interfaces/auth';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -39,6 +41,8 @@ export interface AppOptions {
     artistService: ArtistInterface;
     downloadService: DownloadService;
     docusignService: DocusignInterface;
+    templatesService: TemplatesInterface;
+    AuthService: AuthInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -56,6 +60,8 @@ export function createApp(
       artistService,
       downloadService,
       docusignService,
+      templatesService,
+      AuthService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -65,9 +71,9 @@ export function createApp(
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent();
   const DashboardComponent = createDashboardComponent(
-    { artistRecommendation, documentsService },
+    { artistRecommendation, documentsService, templatesService },
   );
-  const ArtistPage = createArtistPage({ artistService });
+  const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });
 
   const RecommendationPage = createRecommendationPage({
     downloadService, artistRecommendation, documentsService,
@@ -126,7 +132,7 @@ export function createApp(
               <Route path="/" element={<HeaderComponent />}>
                 <Route index element={<LandingPage />} />
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
-                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup />} />
+                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
                 <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard />)} />
               </Route>

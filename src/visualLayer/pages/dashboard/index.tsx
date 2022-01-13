@@ -19,11 +19,13 @@ import {
 import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { TemplatesInterface } from '../../../model/interfaces/templates';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 
 export interface CreateDashboardComponentProps {
+  templatesService: TemplatesInterface;
   useGetConcerts?: UseGetConcerts;
   artistRecommendation: ArtistRecommendationInterface;
   useGetDocuments?: UseGetDocuments;
@@ -33,6 +35,7 @@ export interface CreateDashboardComponentProps {
 export function createDashboardComponent({
   useGetConcerts = defaultUseGetConcerts,
   artistRecommendation,
+  templatesService,
   useGetDocuments = defaultUseGetDocuments,
   documentsService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
@@ -46,6 +49,8 @@ export function createDashboardComponent({
       {
         getDocument: useGetDocuments(documentsService),
         useDeleteDocument: useDeleteDocument(documentsService),
+        templatesService,
+        documentsService,
       },
     );
 

@@ -11,6 +11,10 @@ import Documents from './dataLayer/services/documents';
 import { Config } from './model/types/config';
 import DocusignService from './dataLayer/services/docusign';
 import DocusignRepo from './dataLayer/repositories/http/docusign';
+import TemplatesService from './dataLayer/services/templates';
+import TemplatesRepo from './dataLayer/repositories/http/templates';
+import Auth from './dataLayer/services/auth';
+import AuthRepo from './dataLayer/repositories/http/auth';
 
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
@@ -32,6 +36,8 @@ export const config: Config = {
     artistService: new Artist(new ArtistRepo(server)),
     downloadService: new HtmlDownloadService(),
     docusignService: new DocusignService(new DocusignRepo(server)),
+    templatesService: new TemplatesService(new TemplatesRepo(server)),
+    AuthService: new Auth(new AuthRepo(server)),
   },
   providers: {
   },

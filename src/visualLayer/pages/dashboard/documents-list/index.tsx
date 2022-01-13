@@ -16,15 +16,21 @@ import { DeleteDocument } from '../../../../hooks/useDeleteDocument';
 import { Documents } from '../../../../model/types/document/addDocument';
 import IconRenderer from '../../../components/IconRenderer';
 import CollaborationForm from '../../../components/CollaborationForm/collaborationForm';
+import { TemplatesInterface } from '../../../../model/interfaces/templates';
+import { DocumentsInterface } from '../../../../model/interfaces/documents';
 
 export type CreateRenderDocumentsProps = {
   getDocument: GetDocument;
   useDeleteDocument: DeleteDocument;
+  templatesService: TemplatesInterface;
+  documentsService: DocumentsInterface;
 };
 
 export function createRenderDocuments({
   getDocument,
   useDeleteDocument,
+  templatesService,
+  documentsService,
 }: CreateRenderDocumentsProps): () => JSX.Element | null {
   return function DocumentList(): JSX.Element | null {
     const [collaborationModal, setCollaborationModal] = useState(false);
@@ -133,7 +139,12 @@ export function createRenderDocuments({
           width={800}
           footer={false}
         >
-          <CollaborationForm recommendationId="8636doudufo864" artistId="8b633614-6264-4399-baad-e362db8f4f62" />
+          <CollaborationForm
+            recommendationId="8636doudufo864"
+            artistId="8b633614-6264-4399-baad-e362db8f4f62"
+            templatesService={templatesService}
+            documentsService={documentsService}
+          />
         </Modal>
         <div className="width-md">
           <div className="row-flex">

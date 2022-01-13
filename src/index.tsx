@@ -8,11 +8,17 @@ import 'antd/dist/antd.dark.css';
 import { config as devConfig } from './config.development';
 import { config as prodConfig } from './config.production';
 
-console.log(process.env);
+// console.log(process.env);
 
 const { services, resources } = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 const {
-  artistRecommendation, documentsService, artistService, downloadService, docusignService,
+  artistRecommendation,
+  documentsService,
+  artistService,
+  downloadService,
+  docusignService,
+  templatesService,
+  AuthService,
 } = services;
 
 const {
@@ -22,7 +28,13 @@ const {
 const App = createApp(
   {
     services: {
-      artistRecommendation, documentsService, artistService, downloadService, docusignService,
+      artistRecommendation,
+      documentsService,
+      artistService,
+      downloadService,
+      docusignService,
+      templatesService,
+      AuthService,
     },
     resources: {
       AUTH_DOMAIN,

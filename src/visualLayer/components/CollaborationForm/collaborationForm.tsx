@@ -13,14 +13,14 @@ import {
 import * as _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import { CreateDocumentForm } from '../../../model/types/collaborationForm';
-import services from '../../services';
-// import getTemplates from '../../../utils/templates';
 
 import './style.scss';
 import { Templates } from '../../../model/types/templates';
 import renderFormFields, { inputField } from '../FormRenderer';
 import { FormFields } from '../../../model/types/formRenderer';
 import templateFormDataMapper from './utils';
+import { TemplatesInterface } from '../../../model/interfaces/templates';
+import { DocumentsInterface } from '../../../model/interfaces/documents';
 
 const { Text } = Typography;
 
@@ -45,9 +45,13 @@ const renderTemplates = (
 const CollaborationForm = ({
   recommendationId,
   artistId,
+  templatesService,
+  documentsService,
 }: {
   recommendationId: string;
   artistId: string;
+  templatesService: TemplatesInterface;
+  documentsService: DocumentsInterface;
 }): JSX.Element => {
   const [templateId, setTemplateId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Array<FormFields>>([]);
@@ -63,7 +67,7 @@ const CollaborationForm = ({
   useEffect(() => {
     setLoading(true);
     const getTemplates = async () => {
-      const data = await services.Templates.getTemplates();
+      const data = await templatesService.getTemplates();
       if (data.error) {
         setError({ status: '404', title: data.message });
       }
@@ -78,7 +82,7 @@ const CollaborationForm = ({
   const selectTemplate = async (template: string) => {
     setLoading(true);
     setTemplateId(template);
-    const response = await services.Templates.getTemplate(template);
+    const response = await templatesService.getTemplate(template);
     if (response.error) {
       setError({ status: '404', title: response.message });
       setLoading(false);
@@ -104,7 +108,7 @@ const CollaborationForm = ({
       name: name || 'Document name',
     };
 
-    const response = await services.Documents.createDocument(result);
+    const response = await documentsService.createDocument(result);
     if (response.error) {
       message.error('Somthing went wrong');
       return;
