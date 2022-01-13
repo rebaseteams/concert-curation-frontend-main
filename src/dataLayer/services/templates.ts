@@ -2,7 +2,7 @@
 import { TemplatesInterface } from '../../model/interfaces/templates';
 import { GetTemplateResponse, GetTemplatesResponse } from '../../model/types/service-response';
 
-export default class Templates implements TemplatesInterface {
+export default class TemplatesService implements TemplatesInterface {
   private templatesRepo: TemplatesInterface;
 
   constructor(templatesRepo: TemplatesInterface) {
