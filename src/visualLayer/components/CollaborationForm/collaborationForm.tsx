@@ -100,24 +100,28 @@ const CollaborationForm = ({
     const { name } = value;
     // eslint-disable-next-line no-param-reassign
     delete value.name;
-    const result: CreateDocumentForm = {
-      templateId: templateId || '1234',
+    if (!templateId) {
+      message.error('No template Id');
+      return;
+    }
+    const documentFormData: CreateDocumentForm = {
+      templateId,
       fields: value,
       recommendationId,
       required: { artistId },
       name: name || 'Document name',
     };
 
-    const response = await documentsService.createDocument(result);
+    const response = await documentsService.createDocument(documentFormData);
     if (response.error) {
-      message.error('Somthing went wrong');
+      message.error(response.message);
       return;
     }
     if (response.data && response.data.success) {
       navigate(`/editor/${response.data.data.document.id}`);
       return;
     }
-    message.error('Bad Request');
+    message.error(response.message);
   };
 
   if (loading) {
