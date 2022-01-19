@@ -4,13 +4,13 @@
 /* eslint-disable max-len */
 import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import {
-  List, Button, Skeleton, Form, Input, Select, Modal, Space,
+  List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch,
 } from 'antd';
 import { useState } from 'react';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
-const list : Array<{name : string, resource : Array<string>, actions : Array<string>}> = [];
+const list : Array<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}> = [];
 const resources = [
   {
     name: 'res1',
@@ -23,14 +23,19 @@ const resources = [
 ];
 const Roles = () : JSX.Element => {
   let loadingRoles = true;
-  const [role, setRole] = useState<{name : string, actions : Array<string>}>({ name: '', actions: [] });
-  const [listToDisplay] = useState<Array<{name : string, actions : Array<string>}>>(list);
+  const [role, setRole] = useState<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>({ name: '', resource: [], actions: [] });
+  const [listToDisplay] = useState<Array<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>>(list);
   const [actions, setActions] = useState<Array<Array<string>>>([]);
+  const sampleRole = [
+    { permission: true, name: 'res1', actions: 'ac2' },
+    { permission: true, name: 'res2', actions: 'ac22' },
+    { permission: true, name: 'res1', actions: 'ac1' },
+  ];
   const loadRoles = () => {
     for (let i = 0; i < 10; i += 1) {
       list.push({
         name: 'Role x',
-        resource: ['resource1', 'resource2', 'resource3'],
+        resource: sampleRole,
         actions: ['get', 'view'],
       });
     }
@@ -73,18 +78,13 @@ const Roles = () : JSX.Element => {
                   >
                     <Select
                       onChange={(value) => {
-                        console.log(value);
                         resources.forEach((element) => {
                           if (element.name === value) {
                             const ac = [...actions];
-                            console.log('actions : ', ac);
-                            console.log('key : ', key);
                             ac[key] = element.actions;
-                            console.log('actions : ', ac[key]);
                             setActions(ac);
                           }
                         });
-                        console.log(actions[key]);
                       }}
                       placeholder="Select Resource"
                     >
@@ -100,12 +100,15 @@ const Roles = () : JSX.Element => {
                   >
                     <Select placeholder="Select Actions">
                       {
-                          actions[key].map((action, index) => {
-                            console.log(action);
-                            return (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>);
-                          })
+                          actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
                     </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name={[name, 'permission']}
+                    rules={[{ required: true, message: 'Missing resource name' }]}
+                  >
+                    <Switch checkedChildren="allow" unCheckedChildren="deny" defaultChecked />
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Space>
@@ -138,19 +141,75 @@ const Roles = () : JSX.Element => {
     'Cancel',
     () => { console.log('save'); },
     <>
-      <Form initialValues={role} onValuesChange={onValuesChange} validateMessages={validateMessages}>
-        <Form.Item>
-          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="actions" label="Actions" rules={[{ required: true }]}>
-            <Select
-              mode="tags"
-              placeholder="Please select"
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
+      <Form initialValues={{ role }} onValuesChange={onValuesChange} validateMessages={validateMessages}>
+        <Form.Item name={['role', 'name']} label="Name" rules={[{ required: true }]}>
+          <Input />
         </Form.Item>
+        <Form.List name={['role', 'resource']}>
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'name']}
+                    rules={[{ required: true, message: 'Missing resource name' }]}
+                  >
+                    <Select
+                      onChange={(value) => {
+                        resources.forEach((element) => {
+                          if (element.name === value) {
+                            const ac = [...actions];
+                            ac[key] = element.actions;
+                            setActions(ac);
+                          }
+                        });
+                      }}
+                      placeholder="Select Resource"
+                    >
+                      {resources.map((resource) => (
+                        <Select.Option key={resource.name}>{resource.name}</Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'actions']}
+                    rules={[{ required: true, message: 'Missing actions' }]}
+                  >
+                    <Select placeholder="Select Actions">
+                      {
+                          // actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                      }
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name={[name, 'permission']}
+                    rules={[{ required: true, message: 'Missing resource name' }]}
+                  >
+                    <Switch checkedChildren="allow" unCheckedChildren="deny" defaultChecked />
+                  </Form.Item>
+                  <MinusCircleOutlined onClick={() => remove(name)} />
+                </Space>
+              ))}
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => {
+                    const ac = [...actions];
+                    ac.push([]);
+                    setActions(ac);
+                    add();
+                  }}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Add resource
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
       </Form>
     </>,
   );
@@ -172,7 +231,16 @@ const Roles = () : JSX.Element => {
           <List.Item
             actions={[
               <Button onClick={() => {
-                setRole({ name: item.name, actions: item.actions });
+                setRole({ name: item.name, resource: item.resource, actions: item.actions });
+                const ac: string[][] = [];
+                role.resource.forEach((value) => {
+                  resources.forEach((element) => {
+                    if (element.name === value.name) {
+                      ac.push(element.actions);
+                    }
+                  });
+                });
+                setActions(ac);
                 editRoleModal.showModal();
               }}
               >
