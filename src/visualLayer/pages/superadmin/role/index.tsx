@@ -18,14 +18,14 @@ const resources = [
   },
   {
     name: 'res2',
-    actions: ['ac1', 'ac2', 'ac3'],
+    actions: ['ac21', 'ac22', 'ac23'],
   },
 ];
 const Roles = () : JSX.Element => {
   let loadingRoles = true;
   const [role, setRole] = useState<{name : string, actions : Array<string>}>({ name: '', actions: [] });
   const [listToDisplay] = useState<Array<{name : string, actions : Array<string>}>>(list);
-
+  const [actions, setActions] = useState<Array<Array<string>>>([]);
   const loadRoles = () => {
     for (let i = 0; i < 10; i += 1) {
       list.push({
@@ -51,10 +51,6 @@ const Roles = () : JSX.Element => {
     console.log(role);
   };
 
-  const handleResourceChange = (value : JSON) => {
-    console.log(value);
-  };
-
   const modal = CustomModal(
     'Create Role',
     'Save',
@@ -75,7 +71,23 @@ const Roles = () : JSX.Element => {
                     name={[name, 'name']}
                     rules={[{ required: true, message: 'Missing resource name' }]}
                   >
-                    <Select onChange={handleResourceChange} placeholder="Select Resource">
+                    <Select
+                      onChange={(value) => {
+                        console.log(value);
+                        resources.forEach((element) => {
+                          if (element.name === value) {
+                            const ac = [...actions];
+                            console.log('actions : ', ac);
+                            console.log('key : ', key);
+                            ac[key] = element.actions;
+                            console.log('actions : ', ac[key]);
+                            setActions(ac);
+                          }
+                        });
+                        console.log(actions[key]);
+                      }}
+                      placeholder="Select Resource"
+                    >
                       {resources.map((resource) => (
                         <Select.Option key={resource.name}>{resource.name}</Select.Option>
                       ))}
@@ -86,13 +98,30 @@ const Roles = () : JSX.Element => {
                     name={[name, 'actions']}
                     rules={[{ required: true, message: 'Missing actions' }]}
                   >
-                    <Select placeholder="Select Actions" />
+                    <Select placeholder="Select Actions">
+                      {
+                          actions[key].map((action, index) => {
+                            console.log(action);
+                            return (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>);
+                          })
+                      }
+                    </Select>
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Space>
               ))}
               <Form.Item>
-                <Button type="dashed" onClick={() => add(resources[0])} block icon={<PlusOutlined />}>
+                <Button
+                  type="dashed"
+                  onClick={() => {
+                    const ac = [...actions];
+                    ac.push([]);
+                    setActions(ac);
+                    add();
+                  }}
+                  block
+                  icon={<PlusOutlined />}
+                >
                   Add resource
                 </Button>
               </Form.Item>
