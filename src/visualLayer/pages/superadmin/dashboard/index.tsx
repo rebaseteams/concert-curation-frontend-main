@@ -2,6 +2,7 @@ import {
   Tabs,
 } from 'antd';
 import Resources from '../resource';
+import Roles from '../role';
 import Users from '../users';
 
 const { TabPane } = Tabs;
@@ -16,7 +17,7 @@ const SuperAdminDashboard = () : JSX.Element => (
         <Resources />
       </TabPane>
       <TabPane tab="Roles" key="role">
-        Role Tab
+        <Roles />
       </TabPane>
     </Tabs>
   </>
