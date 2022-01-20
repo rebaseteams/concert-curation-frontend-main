@@ -2,6 +2,9 @@
 /* eslint-disable no-console */
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-len */
+
+// TODO : Replace hardcoded data with API data
+
 import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import {
   List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch,
