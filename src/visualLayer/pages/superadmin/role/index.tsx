@@ -92,7 +92,7 @@ const Roles = () : JSX.Element => {
                       placeholder="Select Resource"
                     >
                       {resources.map((resource) => (
-                        <Select.Option key={resource.name}>{resource.name}</Select.Option>
+                        <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
                       ))}
                     </Select>
                   </Form.Item>
@@ -103,7 +103,7 @@ const Roles = () : JSX.Element => {
                   >
                     <Select placeholder="Select Actions">
                       {
-                          actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                          actions[key].map((action, index) => (<Select.Option value={actions[key][index]} key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
                     </Select>
                   </Form.Item>
@@ -171,7 +171,7 @@ const Roles = () : JSX.Element => {
                       placeholder="Select Resource"
                     >
                       {resources.map((resource) => (
-                        <Select.Option key={resource.name}>{resource.name}</Select.Option>
+                        <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
                       ))}
                     </Select>
                   </Form.Item>
