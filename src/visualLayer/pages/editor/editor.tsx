@@ -1,13 +1,14 @@
 /* eslint-disable arrow-body-style */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
-  Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin, Tag,
+  Button, Dropdown, Empty, Form, Input, message, PageHeader, Spin, Tag, Modal,
 } from 'antd';
 import * as htmlToImage from 'html-to-image';
 import { Editor } from '@tinymce/tinymce-react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Modal from 'antd/lib/modal/Modal';
+// import Modal from 'antd/lib/modal/Modal';
 import FormItem from 'antd/lib/form/FormItem';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { HtmlDownloadService } from '../../../adapters/html-download.service';
 import config from '../../../services/config.json';
@@ -42,6 +43,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const [enterEmail, setEnterEmail] = useState(false);
     const [docusignModal, setDocusignModal] = useState(false);
     const [documentMode, setDocumentMode] = useState<DocumentModes>();
+    const submitFormRef = useRef<DocusignFormData>();
     const [contractInfo, setContractInfo] = useState<DocumentContractData>();
     const htmlDownloadService = new HtmlDownloadService();
 
@@ -126,7 +128,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       message.error('Somthing went wrong');
     };
 
-    const submitForSign = async (data: DocusignFormData) => {
+    const submitForSign = async (data : DocusignFormData) => {
       setLoading(true);
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
       if (!root.contentWindow) {
@@ -180,6 +182,25 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       setDocusignModal(false);
     };
 
+    const confirmModal = () => {
+      Modal.confirm({
+        title: 'Confirm',
+        icon: <ExclamationCircleOutlined />,
+        content: 'Changes saved will be final and you cannot edit further!',
+        onOk: () => {
+          if (submitFormRef.current) {
+            submitForSign(submitFormRef.current);
+          }
+        },
+      });
+    };
+
+    const handleSubmit = async (data: DocusignFormData) => {
+      submitFormRef.current = data;
+      setDocusignModal(false);
+      confirmModal();
+    };
+
     const sharingMenu = (): JSX.Element => {
       return (
         <div className="column-flex p-8" style={{ background: '#222' }}>
@@ -221,7 +242,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       if (documentMode === 'edit') {
         return (
           <div className="row-flex align-center">
-            <Button className="m-2" type="primary" onClick={() => { setDocusignModal(true); }}>Submit</Button>
+            <Button className="m-2" type="primary" onClick={() => setDocusignModal(true)}>Submit</Button>
             <Button className="m-2" type="primary" onClick={() => saveDocument()}>Save</Button>
             <Dropdown className="m-2" overlay={sharingMenu} trigger={['click']}>
               <Button type="text">
@@ -365,7 +386,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
               <Spin />
               <span>please wait</span>
             </div>
-          ) : <DocusignForm sendContract={submitForSign} />}
+          ) : <DocusignForm sendContract={handleSubmit} />}
         </Modal>
       </div>
     );
