@@ -5,6 +5,7 @@ import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
 import { TemplateResponse, Templates } from './templates';
+import { NewUserResponseData } from './users';
 
 // Recommendations Response
 export type GetAllRecommendationsResponse = {
@@ -164,3 +165,71 @@ export type GetArtistResponse = {
   status?: number | string;
 }
 export type CatchError = { message: string, status: number }
+
+// Users Response
+export type CreateUserResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data : {
+        user : NewUserResponseData,
+    }
+  },
+  status?: number | string;
+}
+
+export type getUserByIdResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: NewUserResponseData
+  },
+  status?: number | string;
+}
+
+export type getUsersResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: {
+      users: Array<NewUserResponseData>
+    }
+  },
+  status?: number | string;
+}
+
+export type getPendingUsersResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: {
+      users: Array<NewUserResponseData>
+    }
+  },
+  status?: number | string;
+}
+
+export type approveUserResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+export type updateUsersRoleResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+export type deleteUserResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
