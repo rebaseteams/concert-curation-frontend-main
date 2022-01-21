@@ -79,7 +79,7 @@ const Users = () : JSX.Element => {
           >
             {
               roles.map((role) => (
-                <Select.Option key={role}>{role}</Select.Option>
+                <Select.Option value={role} key={role}>{role}</Select.Option>
               ))
             }
           </Select>
