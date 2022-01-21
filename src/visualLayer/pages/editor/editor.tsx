@@ -133,9 +133,9 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         return;
       }
       const envelopData: CreateEnvelope = {
-        pdfBase64: String(root.contentWindow.document.body.innerHTML),
+        html: root.contentWindow.document.body.innerHTML,
         fileName: data.fileName,
-        fileExtension: 'pdf',
+        fileExtension: 'html',
         emailSubject: data.emailSubject,
         pdfId: '1',
         recipients: {

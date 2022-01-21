@@ -1,5 +1,5 @@
 export type CreateEnvelope = {
-  pdfBase64: HTMLElement | string,
+  html: string,
   emailSubject: string,
   fileName: string,
   fileExtension: string,
@@ -31,10 +31,12 @@ export type CreateEnvelope = {
 type EnvelopeData = {
   emailSubject: string;
   documents: Array<{
-    documentBase64: HTMLElement | string;
-    name: string;
-    fileExtension: string;
-    documentId: string;
+      htmlDefinition:
+      {
+          source: string
+      },
+      documentId: string,
+      name: string
   }>;
   recipients: {
     carbonCopies: Array<{
@@ -62,7 +64,7 @@ type EnvelopeData = {
 }
 
 const createEnvelope = ({
-  pdfBase64,
+  html,
   emailSubject,
   fileName,
   fileExtension,
@@ -73,10 +75,11 @@ const createEnvelope = ({
     emailSubject,
     documents: [
       {
-        documentBase64: pdfBase64,
+        htmlDefinition: {
+          source: html,
+        },
+        documentId: '1',
         name: fileName,
-        fileExtension,
-        documentId: pdfId,
       },
     ],
     recipients: {
