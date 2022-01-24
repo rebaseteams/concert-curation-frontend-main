@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Auth0Context, Auth0ContextInterface } from '@auth0/auth0-react';
 import { ReactNode, useState } from 'react';
 import { Auth0User } from '../model/types/auth0User';
@@ -17,7 +18,7 @@ export function InMemoryAuth0Provider({
 }: InMemoryAuth0ProviderProps): JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const value: Auth0ContextInterface = {
+  const value: Auth0ContextInterface | any = {
     buildAuthorizeUrl: async () => '',
     buildLogoutUrl: () => '',
     getAccessTokenSilently: async () => value.loginWithRedirect()
