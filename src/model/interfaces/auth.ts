@@ -4,5 +4,5 @@
 import { SignUp } from '../types/signup';
 
 export default interface AuthInterface {
-  signUp(data : SignUp) : Promise<{success : boolean}>;
+  signUp(data : SignUp) : Promise<{success : boolean, data : unknown}>;
 };
