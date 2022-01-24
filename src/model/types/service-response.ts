@@ -238,55 +238,35 @@ export type deleteUserResponse = {
 
 // Resource Response
 export type CreateResourceResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data : {
-        resource : NewResourceResponseData,
-    }
-  },
-  status?: number | string;
+  success: boolean,
+  data : {
+    resource : NewResourceResponseData,
+  }
 }
 
 export type GetResourceByIdResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data: NewResourceResponseData
-  },
-  status?: number | string;
+  success: boolean,
+  data: NewResourceResponseData
 }
 
 export type GetResourcesResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data: {
-      resources: Array<NewResourceResponseData>
-    }
-  },
-  status?: number | string;
+  success: boolean,
+  data: {
+    resources: Array<NewResourceResponseData>
+  }
 }
 
 export type DeleteResourceResponse = {
-  error: boolean,
-  message: string,
-  data?: { success: boolean },
-  status?: number | string;
+  success: boolean,
+  data : any
 }
 
 export type EditResourceResponse = {
-  error: boolean,
-  message: string,
-  data?: { success: boolean },
-  status?: number | string;
+  success: boolean,
+  data : any
 }
 
 // Roles Response
-
 export type CreateRoleResponse = {
   success: boolean,
   data : {
