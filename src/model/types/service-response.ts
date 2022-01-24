@@ -4,6 +4,7 @@ import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
+import { NewResourceResponseData } from './resources';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
 
@@ -228,6 +229,55 @@ export type updateUsersRoleResponse = {
 }
 
 export type deleteUserResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+// Resource Response
+export type CreateResourceResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data : {
+        resource : NewResourceResponseData,
+    }
+  },
+  status?: number | string;
+}
+
+export type GetResourceByIdResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: NewResourceResponseData
+  },
+  status?: number | string;
+}
+
+export type GetResourcesResponse = {
+  error: boolean,
+  message: string,
+  data?: {
+    success: boolean,
+    data: {
+      resources: Array<NewResourceResponseData>
+    }
+  },
+  status?: number | string;
+}
+
+export type DeleteResourceResponse = {
+  error: boolean,
+  message: string,
+  data?: { success: boolean },
+  status?: number | string;
+}
+
+export type EditResourceResponse = {
   error: boolean,
   message: string,
   data?: { success: boolean },
