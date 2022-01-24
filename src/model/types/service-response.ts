@@ -170,70 +170,41 @@ export type CatchError = { message: string, status: number }
 
 // Users Response
 export type CreateUserResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data : {
-        user : NewUserResponseData,
-    }
-  },
-  status?: number | string;
+  success: boolean,
+  data : {
+    user : NewUserResponseData,
+  }
 }
 
 export type getUserByIdResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data: NewUserResponseData
-  },
-  status?: number | string;
+  success: boolean,
+  data: NewUserResponseData
 }
 
 export type getUsersResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data: {
-      users: Array<NewUserResponseData>
-    }
-  },
-  status?: number | string;
+  success: boolean,
+  data: {
+    users: Array<NewUserResponseData>
+  }
 }
 
 export type getPendingUsersResponse = {
-  error: boolean,
-  message: string,
-  data?: {
-    success: boolean,
-    data: {
-      users: Array<NewUserResponseData>
-    }
-  },
-  status?: number | string;
+  success: boolean,
+  data: {
+    users: Array<NewUserResponseData>
+  }
 }
 
 export type approveUserResponse = {
-  error: boolean,
-  message: string,
-  data?: { success: boolean },
-  status?: number | string;
+  success: boolean,
 }
 
 export type updateUsersRoleResponse = {
-  error: boolean,
-  message: string,
-  data?: { success: boolean },
-  status?: number | string;
+  success: boolean,
 }
 
 export type deleteUserResponse = {
-  error: boolean,
-  message: string,
-  data?: { success: boolean },
-  status?: number | string;
+  success: boolean,
 }
 
 // Resource Response
