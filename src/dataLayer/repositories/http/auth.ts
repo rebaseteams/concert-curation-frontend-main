@@ -3,6 +3,7 @@
 import axios from 'axios';
 import AuthInterface from '../../../model/interfaces/auth';
 import { SignUp } from '../../../model/types/signup';
+import customErrorHandler from '../../../utils/customErrorHandler';
 
 export default class AuthRepo implements AuthInterface {
   server: string;
@@ -11,7 +12,7 @@ export default class AuthRepo implements AuthInterface {
     this.server = server;
   }
 
-  signUp = async (data : SignUp) : Promise<{success : boolean}> => {
+  signUp = async (data : SignUp) : Promise<{success : boolean, data : unknown}> => {
     return new Promise((resolve) => {
       axios.post(`${this.server}/users`, {
         email: data.email,
@@ -19,12 +20,9 @@ export default class AuthRepo implements AuthInterface {
         name: data.userName,
         role: data.role,
       }).then((value) => {
-        console.log(value.data);
-        if (value.status === 200) resolve({ success: true });
-        resolve({ success: false });
+        resolve({ success: true, data: value.data });
       }).catch((err) => {
-        console.log(err);
-        resolve({ success: false });
+        customErrorHandler.axiosErrorHandler(err);
       });
     });
   };

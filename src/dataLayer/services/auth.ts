@@ -9,7 +9,7 @@ export default class Auth implements AuthInterface {
       this.authRepo = authRepo;
     }
 
-    signUp = async (data : SignUp) : Promise<{success : boolean}> => {
+    signUp = async (data : SignUp) : Promise<{success : boolean, data : unknown}> => {
       return new Promise((resolve) => {
         this.authRepo.signUp(data).then((value) => resolve(value));
       });
