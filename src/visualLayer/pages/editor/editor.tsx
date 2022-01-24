@@ -55,11 +55,11 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       }
     };
 
-    const getDocument = async (id: string) => {
+    const getDocument = async (id: string): Promise<boolean> => {
       const response = await documentsService.getDocument(id);
       if (response.error) {
         message.error(response.message);
-        return;
+        return false;
       }
       if (response.data && response.data.success) {
         setDocumentName(response.data.data.name);
@@ -71,7 +71,9 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         }
         // setCreatedOn(response.data.data.createdOn.split('T')[0]);
         setDocumentId(response.data.data.id);
+        return true;
       }
+      return false;
     };
 
     const { id } = useParams();
@@ -217,11 +219,15 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const updateDocument = async () => {
       if (contractInfo && contractInfo.envelopeId) {
         setLoading(true);
-        await docusignService.updateStatus(documentId, contractInfo.envelopeId);
-        setTimeout(() => {
-          getDocument(id);
-          setLoading(false);
-        }, 3000);
+        const res = await docusignService.updateStatus(documentId, contractInfo.envelopeId);
+        if (res.error) {
+          message.error(`Error: ${res.message}`);
+        }
+        const data = await getDocument(id);
+        if (!data) {
+          message.error('Error');
+        }
+        setLoading(false);
       }
     };
 
