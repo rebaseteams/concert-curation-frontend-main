@@ -5,6 +5,7 @@ import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
+import { NewRoleResponseData } from './roles';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
 
@@ -282,4 +283,35 @@ export type EditResourceResponse = {
   message: string,
   data?: { success: boolean },
   status?: number | string;
+}
+
+// Roles Response
+
+export type CreateRoleResponse = {
+  success: boolean,
+  data : {
+      role : NewRoleResponseData,
+  }
+}
+
+export type GetRoleByIdResponse = {
+  success: boolean,
+  data: NewRoleResponseData
+}
+
+export type GetRolesResponse = {
+  success: boolean,
+  data: {
+    roles: Array<NewRoleResponseData>
+  }
+}
+
+export type EditRoleResponse = {
+  success: boolean,
+  data : any
+}
+
+export type DeleteRoleResponse = {
+  success: boolean,
+  data : any
 }
