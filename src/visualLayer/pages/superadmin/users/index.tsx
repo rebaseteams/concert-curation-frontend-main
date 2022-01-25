@@ -4,24 +4,34 @@
 
 // TODO : Replace hardcoded data with API data
 
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
-  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select, Modal,
+  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select, Modal, message,
 } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
+import { RolesInterface } from '../../../../model/interfaces/roles';
 import { UsersInterface } from '../../../../model/interfaces/users';
 import CustomModal from '../../../components/CustomModal';
 
 const list : Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}> = [];
-const roles : Array<string> = ['role1', 'role2', 'role3'];
 
-const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element => {
+const Users = ({ userService, roleService } : {userService : UsersInterface, roleService : RolesInterface}) : JSX.Element => {
   let pendingApproval = false;
   const [form] = Form.useForm();
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
   const [listToDisplay, setListToDisplay] = useState<Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}>>(list);
+  const [roles, setRoles] = useState<Array<{name : string, id : string}>>([{ name: 'role1', id: '' }, { name: 'role2', id: '' }, { name: 'role3', id: '' }]);
   const validateMessages = {
     required: '${label} is required!',
+  };
+
+  const loadRoles = async () => {
+    const resp = await roleService.getRoles(0, 1);
+    if (resp.success) {
+      setRoles(resp.data.roles.map((element) => ({ name: element.name, id: element.id })));
+      console.log(resp.data);
+    }
   };
 
   const loadUsers = async () => {
@@ -38,10 +48,13 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
         });
       });
     }
+    console.log(list);
+    await loadRoles();
     setLoadingUsers(false);
   };
 
   useEffect(() => {
+    loadRoles();
     loadUsers();
   }, []);
 
@@ -49,15 +62,13 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
     pendingApproval = e.target.checked;
   };
 
-  const applyChanges = () => {
+  const applyChanges = async () => {
     setLoadingUsers(true);
     if (pendingApproval) {
-      const tempList = list.filter((val) => {
-        if (val.pending) {
-          return val;
-        } return null;
-      });
-      setListToDisplay(tempList);
+      const resp = await userService.getPendingUsers(0, 10);
+      setListToDisplay(resp.data.users.map((user) => ({
+        id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles,
+      })));
     } else setListToDisplay(list);
     setLoadingUsers(false);
   };
@@ -69,7 +80,6 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
       Modal.success({ content: 'User successfully updated' });
     }
   };
-
   const editRoleModal = CustomModal(
     'Update Role',
     'Save',
@@ -87,7 +97,7 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
           >
             {
               roles.map((role) => (
-                <Select.Option value={role} key={role}>{role}</Select.Option>
+                <Select.Option value={role.name} key={role.id}>{role.name}</Select.Option>
               ))
             }
           </Select>
@@ -128,12 +138,42 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
                 avatar={<Avatar src={item.picture} />}
                 title={<a href="https://ant.design">{item.name}</a>}
               />
-              {item.pending ? (
+              {(item.pending === null) ? (
                 <div>
-                  <Button>
+                  <Button onClick={async () => {
+                    Modal.confirm({
+                      title: `Do you want to approve user ${item.name}?`,
+                      icon: <ExclamationCircleOutlined />,
+                      okText: 'Yes',
+                      okType: 'danger',
+                      cancelText: 'No',
+                      onOk: async () => {
+                        const resp = await userService.approveUser({ id: item.id, approval: true });
+                        if (resp.success) message.success('User Approved');
+                      },
+                    });
+                  }}
+                  >
                     Approve
                   </Button>
-                  <Button>Reject</Button>
+                  {' '}
+                  <Button
+                    onClick={async () => {
+                      Modal.confirm({
+                        title: `Do you want to reject user ${item.name}?`,
+                        icon: <ExclamationCircleOutlined />,
+                        okText: 'Yes',
+                        okType: 'danger',
+                        cancelText: 'No',
+                        onOk: async () => {
+                          const resp = await userService.approveUser({ id: item.id, approval: false });
+                          if (resp.success) message.success('User Rejected');
+                        },
+                      });
+                    }}
+                  >
+                    Reject
+                  </Button>
                 </div>
               ) : <div />}
             </Skeleton>

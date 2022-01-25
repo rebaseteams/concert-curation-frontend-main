@@ -31,7 +31,7 @@ const SuperAdminDashboard = ({ resourcesService, usersService, rolesService }: S
         }}
       >
         <TabPane tab="Users" key="user">
-          <Users userService={usersService} />
+          <Users userService={usersService} roleService={rolesService} />
         </TabPane>
         <TabPane tab="Resources" key="resource">
           <Resources />
