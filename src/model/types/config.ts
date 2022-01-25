@@ -5,6 +5,7 @@ import AuthInterface from '../interfaces/auth';
 import { DocumentsInterface } from '../interfaces/documents';
 import { DocusignInterface } from '../interfaces/docusign';
 import { RolesInterface } from '../interfaces/roles';
+import { ResourcesInterface } from '../interfaces/resources';
 import { TemplatesInterface } from '../interfaces/templates';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
@@ -30,6 +31,7 @@ export interface Config {
     templatesService: TemplatesInterface,
     AuthService: AuthInterface,
     rolesService: RolesInterface,
+    resourceService: ResourcesInterface,
   };
 
   providers: {
