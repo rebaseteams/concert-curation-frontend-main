@@ -9,11 +9,12 @@ import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@a
 import {
   List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch,
 } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
-const list : Array<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}> = [];
+const list : Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>, actions : Array<string>}> = [];
 const resources = [
   {
     name: 'res1',
@@ -24,28 +25,40 @@ const resources = [
     actions: ['ac21', 'ac22', 'ac23'],
   },
 ];
-const Roles = () : JSX.Element => {
-  let loadingRoles = true;
+
+type RolesProps = {
+  rolesService: RolesInterface;
+}
+const Roles = ({ rolesService }: RolesProps) : JSX.Element => {
+  const [loadingRoles, setLoadingRoles] = useState(true);
   const [role, setRole] = useState<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>({ name: '', resource: [], actions: [] });
-  const [listToDisplay] = useState<Array<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>>(list);
+  const [listToDisplay, setListToDisplay] = useState<Array<{id: string, name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>>(list);
   const [actions, setActions] = useState<Array<Array<string>>>([]);
-  const sampleRole = [
-    { permission: true, name: 'res1', actions: 'ac2' },
-    { permission: true, name: 'res2', actions: 'ac22' },
-    { permission: true, name: 'res1', actions: 'ac1' },
-  ];
-  const loadRoles = () => {
-    for (let i = 0; i < 10; i += 1) {
-      list.push({
-        name: 'Role x',
-        resource: sampleRole,
-        actions: ['get', 'view'],
+
+  const loadRoles = async () => {
+    const roles = await rolesService.getRoles(0, 10);
+    if (roles.success) {
+      roles.data.roles.forEach((item) => {
+        list.push({
+          id: item.id,
+          name: item.name,
+          resource: item.resource_actions.actions.map((i) => ({
+            id: item.id,
+            permission: i.permission,
+            name: item.name,
+            actions: i.name,
+          })),
+          actions: item.resource_actions.actions.map((ac) => ac.name),
+        });
       });
+      setListToDisplay(list);
     }
-    loadingRoles = false;
+    setLoadingRoles(false);
   };
 
-  loadRoles();
+  useEffect(() => {
+    loadRoles();
+  }, []);
 
   const validateMessages = {
     required: '${label} is required!',

@@ -31,6 +31,7 @@ import { TemplatesInterface } from './model/interfaces/templates';
 import AuthInterface from './model/interfaces/auth';
 import { ResourcesInterface } from './model/interfaces/resources';
 import { UsersInterface } from './model/interfaces/users';
+import { RolesInterface } from './model/interfaces/roles';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -47,6 +48,7 @@ export interface AppOptions {
     templatesService: TemplatesInterface;
     AuthService: AuthInterface;
     userService: UsersInterface;
+    rolesService: RolesInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -68,6 +70,7 @@ export function createApp(
       AuthService,
       resourceService,
       userService,
+      rolesService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -140,7 +143,7 @@ export function createApp(
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
-                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} />)} />
+                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} rolesService={rolesService} />)} />
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />

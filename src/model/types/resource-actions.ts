@@ -1,4 +1,7 @@
-export type ResourceActions = Array<{
+export type ResourceActions = {
     resourceId : string,
-    actions : Array<string>
-  }>;
+    actions : Array<{
+      name:string,
+      permission:boolean
+    }>
+  };
