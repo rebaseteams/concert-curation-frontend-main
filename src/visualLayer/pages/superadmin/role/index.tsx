@@ -10,6 +10,7 @@ import {
   List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch,
 } from 'antd';
 import { useEffect, useState } from 'react';
+import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
@@ -28,8 +29,9 @@ const resources = [
 
 type RolesProps = {
   rolesService: RolesInterface;
+  resourcesService: ResourcesInterface;
 }
-const Roles = ({ rolesService }: RolesProps) : JSX.Element => {
+const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => {
   const [loadingRoles, setLoadingRoles] = useState(true);
   const [role, setRole] = useState<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>({ name: '', resource: [], actions: [] });
   const [listToDisplay, setListToDisplay] = useState<Array<{id: string, name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>>(list);
@@ -43,7 +45,7 @@ const Roles = ({ rolesService }: RolesProps) : JSX.Element => {
           id: item.id,
           name: item.name,
           resource: item.resource_actions.actions.map((i) => ({
-            id: item.id,
+            id: item.resource_actions.resourceId,
             permission: i.permission,
             name: item.name,
             actions: i.name,
@@ -56,8 +58,14 @@ const Roles = ({ rolesService }: RolesProps) : JSX.Element => {
     setLoadingRoles(false);
   };
 
+  const loadResources = async () => {
+    const fetchedresources = await resourcesService.getResources(0, 10);
+    console.log(fetchedresources);
+  };
+
   useEffect(() => {
     loadRoles();
+    loadResources();
   }, []);
 
   const validateMessages = {

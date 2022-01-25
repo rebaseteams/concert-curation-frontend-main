@@ -11,6 +11,7 @@ import { config as prodConfig } from './config.production';
 // console.log(process.env);
 
 const { services, resources } = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
+
 const {
   artistRecommendation,
   documentsService,
@@ -21,6 +22,7 @@ const {
   AuthService,
   resourceService,
   userService,
+  rolesService,
 } = services;
 
 const {
@@ -39,6 +41,7 @@ const App = createApp(
       AuthService,
       resourceService,
       userService,
+      rolesService,
     },
     resources: {
       AUTH_DOMAIN,
