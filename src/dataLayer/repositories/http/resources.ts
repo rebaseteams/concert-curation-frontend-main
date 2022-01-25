@@ -21,7 +21,7 @@ export default class ResourcesRepo implements ResourcesInterface {
       createResourceData : CreateResourceForm,
     ): Promise<CreateResourceResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      axios.post(`${this.resourcesUri}/`, createResourceData).then((response: any) => {
+      axios.post(`${this.resourcesUri}`, createResourceData).then((response: any) => {
         resolve({
           success: true,
           data: response.data.data,
