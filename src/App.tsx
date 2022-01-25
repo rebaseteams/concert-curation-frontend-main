@@ -30,6 +30,7 @@ import SuperAdminDashboard from './visualLayer/pages/superadmin/dashboard';
 import { TemplatesInterface } from './model/interfaces/templates';
 import AuthInterface from './model/interfaces/auth';
 import { ResourcesInterface } from './model/interfaces/resources';
+import { UsersInterface } from './model/interfaces/users';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -45,6 +46,7 @@ export interface AppOptions {
     resourceService: ResourcesInterface;
     templatesService: TemplatesInterface;
     AuthService: AuthInterface;
+    userService: UsersInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -65,6 +67,7 @@ export function createApp(
       templatesService,
       AuthService,
       resourceService,
+      userService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -137,7 +140,7 @@ export function createApp(
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
-                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} />)} />
+                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} />)} />
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />

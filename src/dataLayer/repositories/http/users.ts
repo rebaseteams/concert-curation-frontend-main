@@ -24,7 +24,7 @@ export default class UsersRepo implements UsersInterface {
       createUserData : CreateUserForm,
     ): Promise<CreateUserResponse> => new Promise((resolve) => {
       axios.post(`${this.usersUri}/`, createUserData).then((response : any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -34,7 +34,7 @@ export default class UsersRepo implements UsersInterface {
       userId: string,
     ): Promise<getUserByIdResponse> => new Promise((resolve) => {
       axios.get(`${this.usersUri}/${userId}`).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -45,7 +45,7 @@ export default class UsersRepo implements UsersInterface {
       limit: number,
     ): Promise<getUsersResponse> => new Promise((resolve) => {
       axios.get(`${this.usersUri}/${skip}/${limit}`).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -57,7 +57,7 @@ export default class UsersRepo implements UsersInterface {
     ): Promise<getPendingUsersResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.get(`${this.usersUri}/pending/${skip}/${limit}`).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -68,7 +68,7 @@ export default class UsersRepo implements UsersInterface {
     ): Promise<approveUserResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.patch(`${this.usersUri}/approval`, approveUserData).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -79,7 +79,7 @@ export default class UsersRepo implements UsersInterface {
     ): Promise<updateUsersRoleResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.patch(`${this.usersUri}/roles`, updateUsersRoleData).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
@@ -90,7 +90,7 @@ export default class UsersRepo implements UsersInterface {
     ): Promise<deleteUserResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.delete(`${this.usersUri}/${userId}`).then((response: any) => {
-        resolve(response.data.data);
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });

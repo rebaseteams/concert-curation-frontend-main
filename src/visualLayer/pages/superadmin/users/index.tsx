@@ -8,45 +8,50 @@ import {
   List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select,
 } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { UsersInterface } from '../../../../model/interfaces/users';
 import CustomModal from '../../../components/CustomModal';
 
-const list : Array<{name : string, picture : string, pending : boolean, roles : Array<string>}> = [];
+const list : Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}> = [];
 const roles : Array<string> = ['role1', 'role2', 'role3'];
 
-const Users = () : JSX.Element => {
-  let loadingUsers = true;
+const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element => {
   let pendingApproval = false;
-  const [listToDisplay, setListToDisplay] = useState<Array<{name : string, picture : string, pending : boolean, roles : Array<string>}>>(list);
-  const [user, setUser] = useState<{user : {name : string, picture : string, pending : boolean, roles : Array<string>}}>({
-    user: {
-      name: '', picture: '', pending: true, roles: [],
-    },
-  });
+  const [form] = Form.useForm();
+  const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
+  const [listToDisplay, setListToDisplay] = useState<Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}>>(list);
+
   const validateMessages = {
     required: '${label} is required!',
   };
 
-  const loadUsers = () => {
-    for (let i = 0; i < 15; i += 1) {
-      list.push({
-        name: 'John Doe',
-        picture: 'https://joeschmoe.io/api/v1/random',
-        pending: Math.random() < 0.5,
-        roles,
+  const loadUsers = async () => {
+    const resp = await userService.getUsers(0, 10);
+    if (resp.success) {
+      const { users } = resp.data;
+      users.forEach((us) => {
+        list.push({
+          id: us.id,
+          name: us.name,
+          picture: 'https://joeschmoe.io/api/v1/random',
+          pending: us.approved,
+          roles: us.roles,
+        });
       });
     }
-    loadingUsers = false;
+    setLoadingUsers(false);
   };
 
-  loadUsers();
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const pendingApprovalChange = (e : CheckboxChangeEvent) => {
     pendingApproval = e.target.checked;
   };
 
   const applyChanges = () => {
-    loadingUsers = true;
+    setLoadingUsers(true);
     if (pendingApproval) {
       const tempList = list.filter((val) => {
         if (val.pending) {
@@ -55,7 +60,7 @@ const Users = () : JSX.Element => {
       });
       setListToDisplay(tempList);
     } else setListToDisplay(list);
-    loadingUsers = false;
+    setLoadingUsers(false);
   };
 
   const onValuesChange = async (changedValues: {name: string, roles: Array<string>}, values: {name: string, actions: Array<string>}) => {
@@ -68,7 +73,7 @@ const Users = () : JSX.Element => {
     'Cancel',
     () => { console.log('save'); },
     <>
-      <Form initialValues={user} onValuesChange={onValuesChange} validateMessages={validateMessages}>
+      <Form form={form} onValuesChange={onValuesChange} validateMessages={validateMessages}>
         <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
@@ -97,15 +102,17 @@ const Users = () : JSX.Element => {
         <div><Button onClick={applyChanges}>Apply</Button></div>
       </div>
       <List
-        loading={loadingUsers}
         itemLayout="horizontal"
         dataSource={listToDisplay}
+        loading={loadingUsers}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button
-                onClick={() => {
-                  setUser({ user: item });
+                onClick={async () => {
+                  const user = await userService.getUserById(item.id);
+                  console.log(user);
+                  form.setFieldsValue({ user: user.data });
                   editRoleModal.showModal();
                 }}
               >

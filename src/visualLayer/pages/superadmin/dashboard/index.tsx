@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import {
   Tabs,
 } from 'antd';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import createResources from '../resource';
+import { UsersInterface } from '../../../../model/interfaces/users';
 import Roles from '../role';
 import Users from '../users';
 
@@ -10,9 +12,10 @@ const { TabPane } = Tabs;
 
 type SuperAdminDashboardProps = {
   resourcesService: ResourcesInterface;
+  usersService: UsersInterface;
 }
 
-const SuperAdminDashboard = ({ resourcesService }: SuperAdminDashboardProps) : JSX.Element => {
+const SuperAdminDashboard = ({ resourcesService, usersService }: SuperAdminDashboardProps) : JSX.Element => {
   const Resources = createResources(resourcesService);
   return (
     <>
@@ -26,7 +29,7 @@ const SuperAdminDashboard = ({ resourcesService }: SuperAdminDashboardProps) : J
         }}
       >
         <TabPane tab="Users" key="user">
-          <Users />
+          <Users userService={usersService} />
         </TabPane>
         <TabPane tab="Resources" key="resource">
           <Resources />
