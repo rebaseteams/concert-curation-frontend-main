@@ -5,6 +5,7 @@ import {
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import createResources from '../resource';
 import { UsersInterface } from '../../../../model/interfaces/users';
+import { RolesInterface } from '../../../../model/interfaces/roles';
 import Roles from '../role';
 import Users from '../users';
 
@@ -13,9 +14,10 @@ const { TabPane } = Tabs;
 type SuperAdminDashboardProps = {
   resourcesService: ResourcesInterface;
   usersService: UsersInterface;
+  rolesService: RolesInterface;
 }
 
-const SuperAdminDashboard = ({ resourcesService, usersService }: SuperAdminDashboardProps) : JSX.Element => {
+const SuperAdminDashboard = ({ resourcesService, usersService, rolesService }: SuperAdminDashboardProps) : JSX.Element => {
   const Resources = createResources(resourcesService);
   return (
     <>
@@ -35,7 +37,7 @@ const SuperAdminDashboard = ({ resourcesService, usersService }: SuperAdminDashb
           <Resources />
         </TabPane>
         <TabPane tab="Roles" key="role">
-          <Roles />
+          <Roles rolesService={rolesService} />
         </TabPane>
       </Tabs>
     </>
