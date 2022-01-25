@@ -19,6 +19,7 @@ const {
   docusignService,
   templatesService,
   AuthService,
+  resourceService,
 } = services;
 
 const {
@@ -35,6 +36,7 @@ const App = createApp(
       docusignService,
       templatesService,
       AuthService,
+      resourceService,
     },
     resources: {
       AUTH_DOMAIN,

@@ -8,28 +8,28 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
   List, Button, Skeleton, Form, Input, Select, Modal,
 } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
-const list : Array<{name : string, actions : Array<string>}> = [];
-
-const Resources = () : JSX.Element => {
-  let loadingResources = true;
+const createResources = (resourceService: ResourcesInterface) => function Resources(): JSX.Element {
+  const [loadingResources, setLoadingRes] = useState(false);
   const [resource, setResource] = useState<{name : string, actions : Array<string>}>({ name: '', actions: [] });
-  const [listToDisplay] = useState<Array<{name : string, actions : Array<string>}>>(list);
+  const [listToDisplay, setListToDisplay] = useState<Array<{name : string, actions : Array<string>}>>();
 
-  const loadResources = () => {
-    for (let i = 0; i < 10; i += 1) {
-      list.push({
-        name: 'Resource x',
-        actions: ['get', 'view'],
-      });
-    }
-    loadingResources = false;
-  };
-
-  loadResources();
+  useEffect(() => {
+    const getResources = async () => {
+      setLoadingRes(true);
+      const response = await resourceService.getResources(0, 4);
+      if (response.success) {
+        const resList: Array<{name : string, actions : Array<string>}> = response.data.resources.map((res) => ({ name: res.name, actions: res.actions }));
+        setListToDisplay(resList);
+      }
+      setLoadingRes(false);
+    };
+    getResources();
+  }, []);
 
   const validateMessages = {
     required: '${label} is required!',
@@ -135,4 +135,4 @@ const Resources = () : JSX.Element => {
   );
 };
 
-export default Resources;
+export default createResources;

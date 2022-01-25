@@ -29,6 +29,7 @@ import { DocusignInterface } from './model/interfaces/docusign';
 import SuperAdminDashboard from './visualLayer/pages/superadmin/dashboard';
 import { TemplatesInterface } from './model/interfaces/templates';
 import AuthInterface from './model/interfaces/auth';
+import { ResourcesInterface } from './model/interfaces/resources';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -41,6 +42,7 @@ export interface AppOptions {
     artistService: ArtistInterface;
     downloadService: DownloadService;
     docusignService: DocusignInterface;
+    resourceService: ResourcesInterface;
     templatesService: TemplatesInterface;
     AuthService: AuthInterface;
   },
@@ -62,6 +64,7 @@ export function createApp(
       docusignService,
       templatesService,
       AuthService,
+      resourceService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -134,7 +137,7 @@ export function createApp(
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
-                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard />)} />
+                <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} />)} />
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
