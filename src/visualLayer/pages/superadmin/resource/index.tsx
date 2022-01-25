@@ -17,11 +17,11 @@ import IconRenderer from '../../../components/IconRenderer';
 const createResources = (resourceService: ResourcesInterface) => function Resources(): JSX.Element {
   const [loadingResources, setLoadingResource] = useState(false);
   const [newResource, setNewResource] = useState<CreateResourceForm>({ name: '', actions: [] });
-  const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>();
+  const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
 
   const getResources = async () => {
     setLoadingResource(true);
-    const response = await resourceService.getResources(0, 10);
+    const response = await resourceService.getResources(0, 100);
     if (response.success) {
       const resList: Array<{name : string, actions : Array<string>, id: string}> = response.data.resources.map((res) => ({ name: res.name, actions: res.actions, id: res.id }));
       setListToDisplay(resList);
@@ -131,6 +131,10 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
         loading={loadingResources}
         itemLayout="horizontal"
         dataSource={listToDisplay}
+        bordered
+        pagination={{
+          pageSize: 6,
+        }}
         renderItem={(item) => (
           <List.Item
             actions={[
