@@ -5,7 +5,7 @@
 // TODO : Replace hardcoded data with API data
 
 import {
-  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select,
+  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select, Modal,
 } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
@@ -20,7 +20,6 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
   const [form] = Form.useForm();
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
   const [listToDisplay, setListToDisplay] = useState<Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}>>(list);
-
   const validateMessages = {
     required: '${label} is required!',
   };
@@ -63,17 +62,21 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
     setLoadingUsers(false);
   };
 
-  const onValuesChange = async (changedValues: {name: string, roles: Array<string>}, values: {name: string, actions: Array<string>}) => {
-    console.log(values);
+  const onFinish = async () => {
+    const { user } = form.getFieldsValue();
+    const resp = await userService.updateUsersRole({ id: user.id, roles: user.roles });
+    if (resp.success) {
+      Modal.success({ content: 'User successfully updated' });
+    }
   };
 
   const editRoleModal = CustomModal(
     'Update Role',
     'Save',
     'Cancel',
-    () => { console.log('save'); },
+    onFinish,
     <>
-      <Form form={form} onValuesChange={onValuesChange} validateMessages={validateMessages}>
+      <Form form={form} validateMessages={validateMessages}>
         <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
@@ -89,6 +92,7 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
             }
           </Select>
         </Form.Item>
+        <Form.Item name={['user', 'id']} rules={[{ required: true }]} />
       </Form>
     </>,
   );
@@ -126,7 +130,9 @@ const Users = ({ userService } : {userService : UsersInterface}) : JSX.Element =
               />
               {item.pending ? (
                 <div>
-                  <Button>Approve</Button>
+                  <Button>
+                    Approve
+                  </Button>
                   <Button>Reject</Button>
                 </div>
               ) : <div />}
