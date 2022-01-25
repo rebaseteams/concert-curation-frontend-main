@@ -64,6 +64,13 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     }
   };
 
+  const onDelete = async (id: string) => {
+    const data = await resourceService.deleteResource(id);
+    console.log(data);
+    if (data.success) message.success('Resource deleted');
+    getResources();
+  };
+
   const createResourceModal = CustomModal(
     'Create Resource',
     'Save',
@@ -95,7 +102,6 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     <>
       <Form form={form} onFinish={onEdit} validateMessages={validateMessages}>
         <Form.Item>
-          <Form.Item name="id" hidden><Input /></Form.Item>
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
@@ -106,6 +112,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
               style={{ width: '100%' }}
             />
           </Form.Item>
+          <Form.Item name="id" required />
         </Form.Item>
       </Form>
     </>,
@@ -140,6 +147,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
                 okText: 'Yes',
                 okType: 'danger',
                 cancelText: 'No',
+                onOk: () => onDelete(item.id),
               })}
               >
                 delete
