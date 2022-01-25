@@ -10,20 +10,20 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
-import { CreateResourceForm } from '../../../../model/types/resources';
+import { CreateResourceForm, NewResourceResponseData } from '../../../../model/types/resources';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
 const createResources = (resourceService: ResourcesInterface) => function Resources(): JSX.Element {
   const [loadingResources, setLoadingResource] = useState(false);
   const [newResource, setNewResource] = useState<CreateResourceForm>({ name: '', actions: [] });
-  const [listToDisplay, setListToDisplay] = useState<Array<CreateResourceForm>>();
+  const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>();
 
   const getResources = async () => {
     setLoadingResource(true);
     const response = await resourceService.getResources(0, 10);
     if (response.success) {
-      const resList: Array<{name : string, actions : Array<string>}> = response.data.resources.map((res) => ({ name: res.name, actions: res.actions }));
+      const resList: Array<{name : string, actions : Array<string>, id: string}> = response.data.resources.map((res) => ({ name: res.name, actions: res.actions, id: res.id }));
       setListToDisplay(resList);
     }
     setLoadingResource(false);
@@ -32,6 +32,8 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
   useEffect(() => {
     getResources();
   }, []);
+
+  const [form] = Form.useForm();
 
   const validateMessages = {
     required: '${label} is required!',
@@ -51,6 +53,14 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     } else {
       const response = await resourceService.createResource(newResource);
       if (response.success) getResources();
+    }
+  };
+
+  const onEdit = async (data: NewResourceResponseData) => {
+    const response = await resourceService.editResource(data);
+    if (response.success) {
+      message.success('Resource Updated Successfully');
+      getResources();
     }
   };
 
@@ -81,10 +91,11 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     'Update Resource',
     'Save',
     'Cancel',
-    () => { console.log('save'); },
+    () => form.submit(),
     <>
-      <Form initialValues={newResource} onValuesChange={onValuesChange} validateMessages={validateMessages}>
+      <Form form={form} onFinish={onEdit} validateMessages={validateMessages}>
         <Form.Item>
+          <Form.Item name="id" hidden><Input /></Form.Item>
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
@@ -117,7 +128,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
           <List.Item
             actions={[
               <Button onClick={() => {
-                setNewResource({ name: item.name, actions: item.actions });
+                form.setFieldsValue({ name: item.name, actions: item.actions, id: item.id });
                 editResourceModal.showModal();
               }}
               >
