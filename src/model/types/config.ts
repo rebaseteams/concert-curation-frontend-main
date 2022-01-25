@@ -7,6 +7,7 @@ import { DocusignInterface } from '../interfaces/docusign';
 import { RolesInterface } from '../interfaces/roles';
 import { ResourcesInterface } from '../interfaces/resources';
 import { TemplatesInterface } from '../interfaces/templates';
+import { UsersInterface } from '../interfaces/users';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -27,6 +28,7 @@ export interface Config {
     artistRecommendation: ArtistRecommendationInterface,
     documentsService: DocumentsInterface,
     artistService: ArtistInterface,
+    userService: UsersInterface,
     docusignService: DocusignInterface
     templatesService: TemplatesInterface,
     AuthService: AuthInterface,

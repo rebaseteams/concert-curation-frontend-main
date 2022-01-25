@@ -20,6 +20,7 @@ const {
   templatesService,
   AuthService,
   resourceService,
+  userService,
 } = services;
 
 const {
@@ -37,6 +38,7 @@ const App = createApp(
       templatesService,
       AuthService,
       resourceService,
+      userService,
     },
     resources: {
       AUTH_DOMAIN,
