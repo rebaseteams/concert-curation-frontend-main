@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-template-curly-in-string */
 import {
-  Button, Form, Input, Modal, Row, Select,
+  Button, Form, Input, notification, Row, Select,
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './signup.scss';
@@ -33,7 +33,7 @@ const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
   const onFinish = async (values: {user : SignUp}) => {
     const { user } = values;
     const resp = await AuthService.signUp(user);
-    if (resp.success) Modal.success({ content: 'Account successfully created. Verify your email.' });
+    if (resp.success) notification.success({ message: 'Account successfully created. Verify your email.' });
   };
 
   return (

@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import {
   BrowserRouter, Link, Route, Routes, Navigate,
 } from 'react-router-dom';
-import { Result, Spin } from 'antd';
+import { notification, Result, Spin } from 'antd';
 
 // importing services
 import extractUserToken from './services/userToken';
@@ -103,6 +103,11 @@ export function createApp(
       setAuth(true);
     }).catch(() => {
       setAuth(true);
+    });
+
+    notification.config({
+      duration: 2,
+      placement: 'bottomRight',
     });
 
     // For GET requests
