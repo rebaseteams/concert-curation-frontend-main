@@ -10,7 +10,7 @@ const CustomModal = (
   cancelText : string,
   okFunc : () => unknown,
   content : JSX.Element,
-) : {modal : JSX.Element, showModal : () => void} => {
+) : {modal : JSX.Element, showModal : () => void, hideModal : () => void} => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const showModal = () => {
@@ -19,7 +19,6 @@ const CustomModal = (
 
   const handleOk = () => {
     okFunc();
-    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -41,6 +40,7 @@ const CustomModal = (
         </Modal>
       </>),
     showModal,
+    hideModal: handleCancel,
   };
 };
 

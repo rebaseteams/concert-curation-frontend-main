@@ -22,6 +22,7 @@ const SuperAdminDashboard = ({ resourcesService, usersService, rolesService }: S
   return (
     <>
       <Tabs
+        destroyInactiveTabPane
         defaultActiveKey="user"
         tabPosition="top"
         centered

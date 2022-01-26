@@ -1,12 +1,13 @@
-/* eslint-disable no-console */
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-len */
 
 // TODO : Replace hardcoded data with API data
 
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
-  List, Button, Skeleton, Form, Input, Select, Modal, message,
+  List, Button, Skeleton, Form, Input, Select, Modal, notification,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
@@ -15,69 +16,72 @@ import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
 const createResources = (resourceService: ResourcesInterface) => function Resources(): JSX.Element {
-  const [loadingResources, setLoadingResource] = useState(false);
-  const [newResource, setNewResource] = useState<CreateResourceForm>({ name: '', actions: [] });
-  const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
+  // #region Constants
 
-  const getResources = async () => {
+  const pageSize = 8;
+  const totalSize = 100;
+  const [pageNo, setPageNo] = useState<number>(1);
+  const [loadingResources, setLoadingResource] = useState(false);
+  const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
+  const [createForm] = Form.useForm();
+  const [editForm] = Form.useForm();
+  const validateMessages = {
+    required: '${label} is required!',
+  };
+
+  // #endregion Constants
+
+  // #region Functions
+
+  const getResources = async (_pageNo : number, _pageSize: number) => {
     setLoadingResource(true);
-    const response = await resourceService.getResources(0, 100);
+    const response = await resourceService.getResources((_pageNo - 1) * _pageSize, _pageSize);
     if (response.success) {
-      const resList: Array<{name : string, actions : Array<string>, id: string}> = response.data.resources.map((res) => ({ name: res.name, actions: res.actions, id: res.id }));
+      const resList: Array<NewResourceResponseData> = response.data.resources.map(
+        (res) => ({ name: res.name, actions: res.actions, id: res.id }),
+      );
       setListToDisplay(resList);
     }
     setLoadingResource(false);
   };
 
-  useEffect(() => {
-    getResources();
-  }, []);
-
-  const [form] = Form.useForm();
-
-  const validateMessages = {
-    required: '${label} is required!',
-  };
-
-  const onValuesChange = async (changedValues: {name: string, actions: Array<string>}, values: {resource: { name: string, actions: Array<string> }}) => {
-    const { name } = values.resource;
-    const actions = values.resource.actions ? values.resource.actions : [];
-    setNewResource({ name, actions });
-  };
-
-  const onSave = async () => {
-    const message1 = newResource.name.length === 0 ? 'Resource name can not be empty' : '';
-    const message2 = newResource.actions.length === 0 ? 'Resource actions can not be empty' : '';
-    if (newResource.name.length === 0 || newResource.actions.length === 0) {
-      message.warning(`${message1} ${message2}`);
-    } else {
-      const response = await resourceService.createResource(newResource);
-      if (response.success) getResources();
-    }
+  const onSave = async (value : {resource : CreateResourceForm}) => {
+    const response = await resourceService.createResource(value.resource);
+    if (response.success) notification.success({ message: 'Resource successfully created' });
+    createResourceModal.hideModal();
   };
 
   const onEdit = async (data: NewResourceResponseData) => {
     const response = await resourceService.editResource(data);
     if (response.success) {
-      message.success('Resource Updated Successfully');
-      getResources();
+      notification.success({ message: 'Resource Updated Successfully' });
+      const list = listToDisplay.map((val) => {
+        if (val.id === data.id) return { id: val.id, name: data.name, actions: data.actions };
+        return val;
+      });
+      setListToDisplay(list);
     }
+    editResourceModal.hideModal();
   };
 
   const onDelete = async (id: string) => {
     const data = await resourceService.deleteResource(id);
-    console.log(data);
-    if (data.success) message.success('Resource deleted');
-    getResources();
+    if (data.success) {
+      notification.success({ message: 'Resource deleted' });
+      getResources(pageNo, pageSize);
+    }
   };
 
+  // #endregion Functions
+
+  // #region Modals
   const createResourceModal = CustomModal(
     'Create Resource',
     'Save',
     'Cancel',
-    onSave,
+    createForm.submit,
     <>
-      <Form onValuesChange={onValuesChange} validateMessages={validateMessages}>
+      <Form form={createForm} onFinish={onSave} validateMessages={validateMessages}>
         <Form.Item>
           <Form.Item name={['resource', 'name']} label="Name" rules={[{ required: true }]}>
             <Input />
@@ -98,9 +102,9 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     'Update Resource',
     'Save',
     'Cancel',
-    () => form.submit(),
+    editForm.submit,
     <>
-      <Form form={form} onFinish={onEdit} validateMessages={validateMessages}>
+      <Form form={editForm} onFinish={onEdit} validateMessages={validateMessages}>
         <Form.Item>
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
@@ -117,6 +121,11 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
       </Form>
     </>,
   );
+  // #endregion Modals
+
+  useEffect(() => {
+    getResources(pageNo, pageSize);
+  }, []);
 
   return (
     <>
@@ -126,6 +135,10 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
         <Button onClick={createResourceModal.showModal}>
           {IconRenderer('add')}
         </Button>
+        {' '}
+        <Button onClick={() => getResources(pageNo, pageSize)}>
+          {IconRenderer('refresh')}
+        </Button>
       </div>
       <List
         loading={loadingResources}
@@ -133,13 +146,20 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
         dataSource={listToDisplay}
         bordered
         pagination={{
-          pageSize: 6,
+          current: pageNo,
+          pageSize,
+          total: totalSize,
+          showSizeChanger: false,
+          onChange: (page, pageS) => {
+            setPageNo(page);
+            getResources(page, pageS);
+          },
         }}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button onClick={() => {
-                form.setFieldsValue({ name: item.name, actions: item.actions, id: item.id });
+                editForm.setFieldsValue({ name: item.name, actions: item.actions, id: item.id });
                 editResourceModal.showModal();
               }}
               >

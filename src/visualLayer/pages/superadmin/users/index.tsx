@@ -1,65 +1,66 @@
-/* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-template-curly-in-string */
-/* eslint-disable max-len */
-
-// TODO : Replace hardcoded data with API data
 
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
-  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select, Modal, message,
+  List, Avatar, Button, Skeleton, Checkbox, Form, Input, Select, Modal, notification, Tag,
 } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useEffect, useState } from 'react';
 import { RolesInterface } from '../../../../model/interfaces/roles';
 import { UsersInterface } from '../../../../model/interfaces/users';
 import CustomModal from '../../../components/CustomModal';
+import IconRenderer from '../../../components/IconRenderer';
 
-const list : Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}> = [];
+type UserType = {
+  id : string,
+  name : string,
+  picture : string,
+  pending : boolean,
+  roles : Array<string>};
 
-const Users = ({ userService, roleService } : {userService : UsersInterface, roleService : RolesInterface}) : JSX.Element => {
-  let pendingApproval = false;
+const Users = ({ userService, roleService } : {
+  userService : UsersInterface,
+  roleService : RolesInterface}) : JSX.Element => {
+  // #region constants
+
+  const [pendingApproval, setPendingApproval] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const pageSize = 8;
+  const totalSize = 100;
+  const [pageNo, setPageNo] = useState<number>(1);
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
-  const [listToDisplay, setListToDisplay] = useState<Array<{id : string, name : string, picture : string, pending : boolean, roles : Array<string>}>>(list);
+  const [listToDisplay, setListToDisplay] = useState<Array<UserType>>([]);
   const [roles, setRoles] = useState<Array<{name : string, id : string}>>([{ name: 'role1', id: '' }, { name: 'role2', id: '' }, { name: 'role3', id: '' }]);
   const validateMessages = {
     required: '${label} is required!',
   };
 
+  // #endregion constants
+
+  // #region functions
+
   const loadRoles = async () => {
-    const resp = await roleService.getRoles(0, 1);
+    const resp = await roleService.getRoles(0, 10);
     if (resp.success) {
       setRoles(resp.data.roles.map((element) => ({ name: element.name, id: element.id })));
-      console.log(resp.data);
     }
   };
 
-  const loadUsers = async () => {
-    const resp = await userService.getUsers(0, 10);
+  const loadUsers = async (_pageNo : number, _pageSize : number) => {
+    const resp = await userService.getUsers((_pageNo - 1) * _pageSize, _pageSize);
     if (resp.success) {
       const { users } = resp.data;
-      users.forEach((us) => {
-        list.push({
-          id: us.id,
-          name: us.name,
-          picture: 'https://joeschmoe.io/api/v1/random',
-          pending: us.approved,
-          roles: us.roles,
-        });
-      });
+      setListToDisplay(users.map((us) => ({
+        id: us.id,
+        name: us.name,
+        picture: 'https://joeschmoe.io/api/v1/random',
+        pending: us.approved,
+        roles: us.roles,
+      })));
     }
-    console.log(list);
     await loadRoles();
     setLoadingUsers(false);
-  };
-
-  useEffect(() => {
-    loadRoles();
-    loadUsers();
-  }, []);
-
-  const pendingApprovalChange = (e : CheckboxChangeEvent) => {
-    pendingApproval = e.target.checked;
   };
 
   const applyChanges = async () => {
@@ -69,24 +70,30 @@ const Users = ({ userService, roleService } : {userService : UsersInterface, rol
       setListToDisplay(resp.data.users.map((user) => ({
         id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles,
       })));
-    } else setListToDisplay(list);
+    } else loadUsers(pageNo, pageSize);
     setLoadingUsers(false);
   };
 
-  const onFinish = async () => {
+  const onEdit = async () => {
     const { user } = form.getFieldsValue();
     const resp = await userService.updateUsersRole({ id: user.id, roles: user.roles });
     if (resp.success) {
-      Modal.success({ content: 'User successfully updated' });
+      notification.success({ message: 'User successfully updated' });
     }
+    editRoleModal.hideModal();
   };
+
+  // #endregion functions
+
+  // #region modals
+
   const editRoleModal = CustomModal(
     'Update Role',
     'Save',
     'Cancel',
-    onFinish,
+    () => form.submit(),
     <>
-      <Form form={form} validateMessages={validateMessages}>
+      <Form form={form} onFinish={onEdit} validateMessages={validateMessages}>
         <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
@@ -107,25 +114,51 @@ const Users = ({ userService, roleService } : {userService : UsersInterface, rol
     </>,
   );
 
+  // #endregion modals
+
+  useEffect(() => {
+    loadRoles();
+    loadUsers(pageNo, pageSize);
+  }, []);
+
   return (
     <>
       {editRoleModal.modal}
       <div>
-        <div>Search : </div>
-        <Checkbox onChange={pendingApprovalChange}>Pending Approval</Checkbox>
-        <div><Button onClick={applyChanges}>Apply</Button></div>
+        <div>Search Criteria : </div>
+        <Checkbox
+          checked={pendingApproval}
+          onChange={() => setPendingApproval(!pendingApproval)}
+        >
+          Pending Approval
+        </Checkbox>
+        <div>
+          <Button onClick={applyChanges}>
+            {IconRenderer('refresh')}
+          </Button>
+        </div>
       </div>
       <List
         itemLayout="horizontal"
         dataSource={listToDisplay}
         loading={loadingUsers}
+        bordered
+        pagination={{
+          current: pageNo,
+          pageSize,
+          total: totalSize,
+          showSizeChanger: false,
+          onChange: (page, pageS) => {
+            setPageNo(page);
+            loadUsers(page, pageS);
+          },
+        }}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button
                 onClick={async () => {
                   const user = await userService.getUserById(item.id);
-                  console.log(user);
                   form.setFieldsValue({ user: user.data });
                   editRoleModal.showModal();
                 }}
@@ -149,7 +182,14 @@ const Users = ({ userService, roleService } : {userService : UsersInterface, rol
                       cancelText: 'No',
                       onOk: async () => {
                         const resp = await userService.approveUser({ id: item.id, approval: true });
-                        if (resp.success) message.success('User Approved');
+                        if (resp.success) {
+                          const list = listToDisplay.map((val) => {
+                            if (val.id === item.id) return { ...item, pending: true };
+                            return val;
+                          });
+                          setListToDisplay(list);
+                          notification.success({ message: 'User Approved' });
+                        }
                       },
                     });
                   }}
@@ -166,8 +206,18 @@ const Users = ({ userService, roleService } : {userService : UsersInterface, rol
                         okType: 'danger',
                         cancelText: 'No',
                         onOk: async () => {
-                          const resp = await userService.approveUser({ id: item.id, approval: false });
-                          if (resp.success) message.success('User Rejected');
+                          const resp = await userService.approveUser({
+                            id: item.id,
+                            approval: false,
+                          });
+                          if (resp.success) {
+                            const list = listToDisplay.map((val) => {
+                              if (val.id === item.id) return { ...item, pending: false };
+                              return val;
+                            });
+                            setListToDisplay(list);
+                            notification.success({ message: 'User Rejected' });
+                          }
                         },
                       });
                     }}
@@ -175,7 +225,15 @@ const Users = ({ userService, roleService } : {userService : UsersInterface, rol
                     Reject
                   </Button>
                 </div>
-              ) : <div />}
+              ) : ((item.pending === false) ? (
+                <Tag color="red" key="rejected">
+                  Rejected
+                </Tag>
+              ) : (
+                <Tag color="green" key="approved">
+                  Approved
+                </Tag>
+              ))}
             </Skeleton>
           </List.Item>
         )}
