@@ -104,7 +104,7 @@ const Users = ({ userService, roleService } : {
           >
             {
               roles.map((role) => (
-                <Select.Option value={role.name} key={role.id}>{role.name}</Select.Option>
+                <Select.Option value={role.id} key={role.id}>{role.name}</Select.Option>
               ))
             }
           </Select>
