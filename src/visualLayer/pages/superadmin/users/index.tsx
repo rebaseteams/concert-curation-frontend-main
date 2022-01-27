@@ -66,7 +66,7 @@ const Users = ({ userService, roleService } : {
   const applyChanges = async () => {
     setLoadingUsers(true);
     if (pendingApproval) {
-      const resp = await userService.getPendingUsers(0, 10);
+      const resp = await userService.getPendingUsers((pageNo - 1) * pageSize, pageSize);
       setListToDisplay(resp.data.users.map((user) => ({
         id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles,
       })));

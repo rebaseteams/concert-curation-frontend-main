@@ -8,7 +8,7 @@
 
 import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import {
-  List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch,
+  List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch, notification,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
@@ -16,104 +16,127 @@ import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
-const list : Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>, actions : Array<string>}> = [];
+type roleList = Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>, actions : Array<string>}>;
 
 type RolesProps = {
   rolesService: RolesInterface;
   resourcesService: ResourcesInterface;
 }
 const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => {
+  // #region constants
+
   const [loadingRoles, setLoadingRoles] = useState(true);
-  const [role, setRole] = useState<{name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>({ name: '', resource: [], actions: [] });
-  const [listToDisplay, setListToDisplay] = useState<Array<{id: string, name : string, resource : Array<{permission : boolean, name : string, actions : string}>, actions : Array<string>}>>(list);
+  const [listToDisplay, setListToDisplay] = useState<roleList>([]);
   const [actions, setActions] = useState<Array<Array<string>>>([]);
   const [resources, setResources] = useState<Array<{id: string, name: string, actions: Array<string>}>>([]);
-
+  const [roleId, setRoleId] = useState<string>('');
   const [createForm] = Form.useForm();
+  const [editForm] = Form.useForm();
+  const pageSize = 8;
+  const totalSize = 100;
+  const [pageNo, setPageNo] = useState<number>(1);
 
-  const loadRoles = async () => {
-    const roles = await rolesService.getRoles(0, 10);
-    console.log(roles);
+  // #endregion constants
+
+  // #region funcitions
+
+  const loadRoles = async (_pageNo : number, _pageSize : number) => {
+    setLoadingRoles(true);
+    const rdata = await loadResources();
+    const roles = await rolesService.getRoles((_pageNo - 1) * _pageSize, _pageSize);
     if (roles.success) {
-      roles.data.roles.forEach((item) => {
-        list.push({
-          id: item.id,
-          name: item.name,
-          resource: [{
-            id: 'dd',
-            permission: true,
-            name: 'dd',
-            actions: 'dd',
-          }],
-          // resource: item.resource_actions.actions.map((i) => ({
-          //   id: item.resource_actions.resourceId,
-          //   permission: i.permission,
-          //   name: item.name,
-          //   actions: i.name,
-          // })),
-          actions: ['ss'],
-        });
-      });
+      const list = roles.data.roles.map((item) => ({
+        id: item.id,
+        name: item.name,
+        resource: item.resource_actions.map((i, index) => ({
+          id: i.resourceId,
+          name: rdata?.find((r) => r.id === i.resourceId)?.name || 'res-name',
+          permission: i.actions[index]?.permission,
+          actions: i.actions[index]?.name,
+        })),
+        actions: ['aa', 'bb'],
+      }));
       setListToDisplay(list);
     }
     setLoadingRoles(false);
   };
 
-  console.log(actions);
-  // console.log(listToDisplay);
-
+  // eslint-disable-next-line consistent-return
   const loadResources = async () => {
-    const fetchedresources = await resourcesService.getResources(0, 10);
-    console.log(fetchedresources);
-    setResources(fetchedresources.data.resources);
+    const resp = await resourcesService.getResources(0, 10);
+    if (resp.success) {
+      setResources(resp.data.resources);
+      return resp.data.resources;
+    }
+    // loadRoles(fetchedresources.data.resources);
   };
 
   useEffect(() => {
-    loadRoles();
-    loadResources();
+    loadRoles(pageNo, pageSize);
   }, []);
 
   const validateMessages = {
     required: '${label} is required!',
   };
 
-  const onValuesChange = async (
-    changedValues: {name: string, actions: Array<string>},
-    values: {name: string, resource : Array<{permission : boolean, name : string, actions : string}>, actions: Array<string>},
-  ) => {
-    console.log(values);
-    setRole(values);
-  };
-
   type formType = {name : string, resource : Array<{permission : boolean, name : string, actions : string}>}
 
-  const onSave = async (value: formType) => {
-    console.log(value);
+  const parseData = (value: formType) => {
     const array = resources.slice().filter((i) => value.resource.some(({ name }) => i.name === name));
-    const newArr = array.map((res) => {
+    return array.map((res) => {
       const resArray = value.resource.filter((i) => i.name === res.name);
       return {
         resourceId: res.id,
         actions: resArray.map((i) => ({
-          name: i.name,
+          name: i.actions,
           permission: i.permission,
         })),
       };
     });
-    rolesService.createRole({
+  };
+
+  const onSave = async (value: formType) => {
+    const parsedData = parseData(value);
+    const resp = await rolesService.createRole({
       name: value.name,
-      resourceActions: newArr,
+      resourceActions: parsedData,
     });
+    if (resp.success) {
+      notification.success({ message: 'Role successfully created' });
+    }
     modal.hideModal();
   };
 
+  const onEdit = async (value: formType) => {
+    const parsedData = parseData(value);
+    const resp = await rolesService.editRole({
+      id: roleId,
+      name: value.name,
+      resourceActions: parsedData,
+    });
+    if (resp.success) {
+      notification.success({ message: 'Role successfully updated' });
+    }
+    editRoleModal.hideModal();
+  };
+
+  const deleteRole = async (id: string) => {
+    const resp = await rolesService.deleteRole(id);
+    if (resp.success) {
+      notification.success({ message: 'Role deleted successfully' });
+    }
+  };
+
+  // #endregion funcitions
+
+  // #region modals
   const modal = CustomModal(
     'Create Role',
     'Save',
     'Cancel',
     createForm.submit,
     <>
-      <Form form={createForm} onFinish={onSave} onValuesChange={onValuesChange} validateMessages={validateMessages}>
+      <Form form={createForm} onFinish={onSave} validateMessages={validateMessages}>
         <Form.Item name={['name']} label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
@@ -135,7 +158,6 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                             ac[key] = element.actions;
                             setActions(ac);
                           }
-                          console.log('element=', element);
                         });
                       }}
                       placeholder="Select Resource"
@@ -159,7 +181,8 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                   </Form.Item>
                   <Form.Item
                     name={[name, 'permission']}
-                    rules={[{ required: true, message: 'Missing resource name' }]}
+                    rules={[{ required: true, message: 'Missing permission' }]}
+                    initialValue
                   >
                     <Switch checkedChildren="allow" unCheckedChildren="deny" defaultChecked />
                   </Form.Item>
@@ -192,13 +215,13 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     'Update Role',
     'Save',
     'Cancel',
-    () => { console.log('save'); },
+    editForm.submit,
     <>
-      <Form initialValues={{ role }} onValuesChange={onValuesChange} validateMessages={validateMessages}>
-        <Form.Item name={['role', 'name']} label="Name" rules={[{ required: true }]}>
+      <Form form={editForm} onFinish={onEdit} validateMessages={validateMessages}>
+        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.List name={['role', 'resource']}>
+        <Form.List name="resource">
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
@@ -232,13 +255,14 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                   >
                     <Select placeholder="Select Actions">
                       {
-                          // actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                          actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
                     </Select>
                   </Form.Item>
                   <Form.Item
                     name={[name, 'permission']}
-                    rules={[{ required: true, message: 'Missing resource name' }]}
+                    rules={[{ required: true, message: 'Missing permission' }]}
+                    initialValue
                   >
                     <Switch checkedChildren="allow" unCheckedChildren="deny" defaultChecked />
                   </Form.Item>
@@ -267,6 +291,8 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     </>,
   );
 
+  // #endregion modals
+
   return (
     <>
       {modal.modal}
@@ -275,18 +301,34 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
         <Button onClick={modal.showModal}>
           {IconRenderer('add')}
         </Button>
+        {' '}
+        <Button onClick={() => loadRoles(pageNo, pageSize)}>
+          {IconRenderer('refresh')}
+        </Button>
       </div>
       <List
         loading={loadingRoles}
         itemLayout="horizontal"
         dataSource={listToDisplay}
+        pagination={{
+          current: pageNo,
+          pageSize,
+          total: totalSize,
+          showSizeChanger: false,
+          onChange: (page, pageS) => {
+            setPageNo(page);
+            loadRoles(page, pageS);
+          },
+        }}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button onClick={() => {
-                setRole({ name: item.name, resource: item.resource, actions: item.actions });
-                const ac: string[][] = [];
-                role.resource.forEach((value) => {
+                editForm.setFieldsValue({ name: item.name, resource: item.resource, actions: item.actions });
+                // setRole({ name: item.name, resource: item.resource, actions: item.actions });
+                setRoleId(item.id);
+                const ac: Array<Array<string>> = [];
+                item.resource.forEach((value) => {
                   resources.forEach((element) => {
                     if (element.name === value.name) {
                       ac.push(element.actions);
@@ -305,6 +347,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                 okText: 'Yes',
                 okType: 'danger',
                 cancelText: 'No',
+                onOk: () => deleteRole(item.id),
               })}
               >
                 delete
