@@ -5,7 +5,7 @@ import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
-import { NewRoleResponseData } from './roles';
+import { NewRoleResponseData, UserRoleType } from './roles';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
 
@@ -212,6 +212,11 @@ export type GetUsersCountResponse = {
   data : {
     count: number
   }
+}
+
+export type getUserRolesResponse = {
+  success: boolean,
+  data: UserRoleType,
 }
 
 // Resource Response

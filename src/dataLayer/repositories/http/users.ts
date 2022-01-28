@@ -10,6 +10,7 @@ import {
   updateUsersRoleResponse,
   deleteUserResponse,
   GetUsersCountResponse,
+  getUserRolesResponse,
 } from '../../../model/types/service-response';
 import {
   ApproveUserForm, CreateUserForm, GetUsersCountQuery, UpdateUsersRoleForm,
@@ -104,10 +105,13 @@ export default class UsersRepo implements UsersInterface {
     ): Promise<GetUsersCountResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.get(`${this.usersUri}/count`, { params: query }).then((response: any) => {
-        resolve({
-          success: true,
-          data: response.data.data,
-        });
+        resolve({ success: true, data: response.data.data });
+      });
+    });
+
+    getUserRoles = async (): Promise<getUserRolesResponse> => new Promise((resolve) => {
+      axios.get(`${this.usersUri}/roles`).then((response: any) => {
+        resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });

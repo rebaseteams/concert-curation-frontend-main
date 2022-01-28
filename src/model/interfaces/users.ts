@@ -5,6 +5,7 @@ import {
   getPendingUsersResponse,
   getUserByIdResponse,
   GetUsersCountResponse,
+  getUserRolesResponse,
   getUsersResponse,
   updateUsersRoleResponse,
 } from '../types/service-response';
@@ -21,5 +22,5 @@ export interface UsersInterface {
     updateUsersRole (updateUsersRoleData: UpdateUsersRoleForm,) : Promise<updateUsersRoleResponse>;
     deleteUser (userId: string,) : Promise<deleteUserResponse>;
     getUsersCount(query: GetUsersCountQuery,) : Promise<GetUsersCountResponse>;
-
+    getUserRoles() : Promise<getUserRolesResponse>;
 }

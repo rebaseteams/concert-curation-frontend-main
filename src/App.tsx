@@ -100,6 +100,9 @@ export function createApp(
     } = useAuth0();
     getAccessTokenSilently().then((token) => {
       localStorage.setItem('token', `Bearer ${token}`);
+      userService.getUserRoles().then((result) => {
+        localStorage.setItem('roles', JSON.stringify(result.data));
+      });
       setAuth(true);
     }).catch(() => {
       setAuth(true);
