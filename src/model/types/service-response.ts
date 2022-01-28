@@ -207,6 +207,13 @@ export type deleteUserResponse = {
   success: boolean,
 }
 
+export type GetUsersCountResponse = {
+  success: boolean,
+  data : {
+    count: number
+  }
+}
+
 // Resource Response
 export type CreateResourceResponse = {
   success: boolean,

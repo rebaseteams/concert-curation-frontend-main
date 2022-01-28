@@ -9,8 +9,11 @@ import {
   approveUserResponse,
   updateUsersRoleResponse,
   deleteUserResponse,
+  GetUsersCountResponse,
 } from '../../../model/types/service-response';
-import { ApproveUserForm, CreateUserForm, UpdateUsersRoleForm } from '../../../model/types/users';
+import {
+  ApproveUserForm, CreateUserForm, GetUsersCountQuery, UpdateUsersRoleForm,
+} from '../../../model/types/users';
 import customErrorHandler from '../../../utils/customErrorHandler';
 
 export default class UsersRepo implements UsersInterface {
@@ -91,6 +94,20 @@ export default class UsersRepo implements UsersInterface {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.delete(`${this.usersUri}/${userId}`).then((response: any) => {
         resolve(response.data);
+      }).catch((err) => {
+        customErrorHandler.axiosErrorHandler(err);
+      });
+    })
+
+    getUsersCount = async (
+      query: GetUsersCountQuery,
+    ): Promise<GetUsersCountResponse> => new Promise((resolve) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      axios.get(`${this.usersUri}/count`, { params: query }).then((response: any) => {
+        resolve({
+          success: true,
+          data: response.data.data,
+        });
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
       });
