@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-console */
 import axios from 'axios';
