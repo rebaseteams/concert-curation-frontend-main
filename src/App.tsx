@@ -146,7 +146,7 @@ export function createApp(
               <Route path="/" element={<HeaderComponent />}>
                 <Route index element={<LandingPage />} />
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
-                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
+                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} rolesService={rolesService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
                 <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} rolesService={rolesService} />)} />
               </Route>
