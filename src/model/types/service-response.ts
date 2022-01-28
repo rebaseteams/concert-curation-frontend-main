@@ -266,3 +266,10 @@ export type DeleteRoleResponse = {
   success: boolean,
   data : any
 }
+
+export type GetRolesCountResponse = {
+  success: boolean,
+  data : {
+    count: number
+  }
+}

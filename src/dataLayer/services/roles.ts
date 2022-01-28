@@ -1,7 +1,12 @@
 import { RolesInterface } from '../../model/interfaces/roles';
 import { CreateRoleForm, EditRoleForm } from '../../model/types/roles';
 import {
-  CreateRoleResponse, DeleteRoleResponse, EditRoleResponse, GetRoleByIdResponse, GetRolesResponse,
+  CreateRoleResponse,
+  DeleteRoleResponse,
+  EditRoleResponse,
+  GetRoleByIdResponse,
+  GetRolesCountResponse,
+  GetRolesResponse,
 } from '../../model/types/service-response';
 
 export default class Roles implements RolesInterface {
@@ -46,6 +51,14 @@ export default class Roles implements RolesInterface {
     deleteRole(RoleId: string): Promise<DeleteRoleResponse> {
       return new Promise((resolve) => {
         this.rolesRepo.deleteRole(RoleId).then((response) => {
+          resolve(response);
+        });
+      });
+    }
+
+    getRolesCount(): Promise<GetRolesCountResponse> {
+      return new Promise((resolve) => {
+        this.rolesRepo.getRolesCount().then((response) => {
           resolve(response);
         });
       });

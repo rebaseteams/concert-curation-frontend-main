@@ -2,7 +2,12 @@ import axios from 'axios';
 import { RolesInterface } from '../../../model/interfaces/roles';
 import { CreateRoleForm, EditRoleForm } from '../../../model/types/roles';
 import {
-  CreateRoleResponse, DeleteRoleResponse, EditRoleResponse, GetRoleByIdResponse, GetRolesResponse,
+  CreateRoleResponse,
+  DeleteRoleResponse,
+  EditRoleResponse,
+  GetRoleByIdResponse,
+  GetRolesCountResponse,
+  GetRolesResponse,
 } from '../../../model/types/service-response';
 import customErrorHandler from '../../../utils/customErrorHandler';
 
@@ -75,6 +80,18 @@ export default class RolesRepo implements RolesInterface {
     ): Promise<DeleteRoleResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.delete(`${this.rolesUri}/${RoleId}`).then((response: any) => {
+        resolve({
+          success: true,
+          data: response.data.data,
+        });
+      }).catch((err) => {
+        customErrorHandler.axiosErrorHandler(err);
+      });
+    })
+
+    getRolesCount = async (): Promise<GetRolesCountResponse> => new Promise((resolve) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      axios.get(`${this.rolesUri}/count`).then((response: any) => {
         resolve({
           success: true,
           data: response.data.data,

@@ -1,6 +1,11 @@
 import { CreateRoleForm, EditRoleForm } from '../types/roles';
 import {
-  CreateRoleResponse, DeleteRoleResponse, EditRoleResponse, GetRoleByIdResponse, GetRolesResponse,
+  CreateRoleResponse,
+  DeleteRoleResponse,
+  EditRoleResponse,
+  GetRoleByIdResponse,
+  GetRolesCountResponse,
+  GetRolesResponse,
 } from '../types/service-response';
 
 export interface RolesInterface{
@@ -9,4 +14,5 @@ export interface RolesInterface{
     getRoles (skip: number, limit: number) : Promise<GetRolesResponse>;
     editRole (editRoleData: EditRoleForm) : Promise<EditRoleResponse>;
     deleteRole (RoleId : string) : Promise<DeleteRoleResponse>;
+    getRolesCount() : Promise<GetRolesCountResponse>;
 }

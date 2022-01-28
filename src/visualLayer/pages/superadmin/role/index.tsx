@@ -33,7 +33,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
   const [createForm] = Form.useForm();
   const [editForm] = Form.useForm();
   const pageSize = 8;
-  const totalSize = 100;
+  const [totalSize, setTotalSize] = useState<number>(8);
   const [pageNo, setPageNo] = useState<number>(1);
 
   // #endregion constants
@@ -43,6 +43,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
   const loadRoles = async (_pageNo : number, _pageSize : number) => {
     setLoadingRoles(true);
     const rdata = await loadResources();
+    await getRolesCount();
     const roles = await rolesService.getRoles((_pageNo - 1) * _pageSize, _pageSize);
     if (roles.success) {
       const list = roles.data.roles.map((item) => ({
@@ -69,6 +70,13 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
       return resp.data.resources;
     }
     // loadRoles(fetchedresources.data.resources);
+  };
+
+  const getRolesCount = async () => {
+    const resp = await rolesService.getRolesCount();
+    if (resp.success) {
+      setTotalSize(resp.data.count);
+    }
   };
 
   useEffect(() => {
