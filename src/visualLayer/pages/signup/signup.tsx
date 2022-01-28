@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-template-curly-in-string */
@@ -6,8 +7,12 @@ import {
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './signup.scss';
+import { useEffect } from 'react';
 import { SignUp } from '../../../model/types/signup';
 import AuthInterface from '../../../model/interfaces/auth';
+import { RolesInterface } from '../../../model/interfaces/roles';
+import { useGetRoles } from '../../../hooks/useGetRoles';
+import { NewRoleResponseData } from '../../../model/types/roles';
 
 const layout = {
   labelCol: { span: 8 },
@@ -23,12 +28,17 @@ const validateMessages = {
 
 type SignUpProps = {
   AuthService: AuthInterface;
+  rolesService: RolesInterface;
 }
 
-const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
-  const {
-    loginWithRedirect,
-  } = useAuth0();
+const Signup = ({ AuthService, rolesService }: SignUpProps) : JSX.Element => {
+  const { loginWithRedirect } = useAuth0();
+
+  const { roles, getRoles } = useGetRoles(rolesService);
+
+  useEffect(() => {
+    getRoles();
+  }, []);
 
   const onFinish = async (values: {user : SignUp}) => {
     const { user } = values;
@@ -49,9 +59,7 @@ const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
           <Select
             placeholder="Select a role"
           >
-            <Select.Option value="admin">Admin</Select.Option>
-            <Select.Option value="branduser">Brand User</Select.Option>
-            <Select.Option value="artist">Artist</Select.Option>
+            {renderRoles(roles)}
           </Select>
         </Form.Item>
         <Form.Item name={['user', 'password']} label="Password" rules={[{ required: true }]}>
@@ -79,5 +87,11 @@ const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
     </div>
   );
 };
+
+function renderRoles(roles: Array<NewRoleResponseData>) {
+  return roles.map((role) => (
+    <Select.Option key={role.id} value={role.id}>{role.name}</Select.Option>
+  ));
+}
 
 export default Signup;
