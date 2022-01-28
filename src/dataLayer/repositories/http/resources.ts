@@ -6,6 +6,7 @@ import {
   DeleteResourceResponse,
   EditResourceResponse,
   GetResourceByIdResponse,
+  GetResourcesCountResponse,
   GetResourcesResponse,
 } from '../../../model/types/service-response';
 import customErrorHandler from '../../../utils/customErrorHandler';
@@ -79,6 +80,18 @@ export default class ResourcesRepo implements ResourcesInterface {
     ): Promise<DeleteResourceResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axios.delete(`${this.resourcesUri}/${ResourceId}`).then((response: any) => {
+        resolve({
+          success: true,
+          data: response.data.data,
+        });
+      }).catch((err) => {
+        customErrorHandler.axiosErrorHandler(err);
+      });
+    })
+
+    getResourcesCount = async (): Promise<GetResourcesCountResponse> => new Promise((resolve) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      axios.get(`${this.resourcesUri}/count`).then((response: any) => {
         resolve({
           success: true,
           data: response.data.data,

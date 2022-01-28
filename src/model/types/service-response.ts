@@ -237,6 +237,13 @@ export type EditResourceResponse = {
   data : any
 }
 
+export type GetResourcesCountResponse = {
+  success: boolean,
+  data : {
+    count: number
+  }
+}
+
 // Roles Response
 export type CreateRoleResponse = {
   success: boolean,

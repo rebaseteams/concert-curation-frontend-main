@@ -5,6 +5,7 @@ import {
   DeleteResourceResponse,
   EditResourceResponse,
   GetResourceByIdResponse,
+  GetResourcesCountResponse,
   GetResourcesResponse,
 } from '../../model/types/service-response';
 
@@ -50,6 +51,14 @@ export default class Resources implements ResourcesInterface {
     deleteResource(ResourceId: string): Promise<DeleteResourceResponse> {
       return new Promise((resolve) => {
         this.resourcesRepo.deleteResource(ResourceId).then((response) => {
+          resolve(response);
+        });
+      });
+    }
+
+    getResourcesCount(): Promise<GetResourcesCountResponse> {
+      return new Promise((resolve) => {
+        this.resourcesRepo.getResourcesCount().then((response) => {
           resolve(response);
         });
       });

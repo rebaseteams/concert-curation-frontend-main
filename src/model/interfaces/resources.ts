@@ -4,6 +4,7 @@ import {
   DeleteResourceResponse,
   EditResourceResponse,
   GetResourceByIdResponse,
+  GetResourcesCountResponse,
   GetResourcesResponse,
 } from '../types/service-response';
 
@@ -13,4 +14,6 @@ export interface ResourcesInterface{
     getResources (skip: number, limit: number) : Promise<GetResourcesResponse>;
     editResource (editResourceData: EditResourceForm) : Promise<EditResourceResponse>;
     deleteResource (ResourceId : string) : Promise<DeleteResourceResponse>;
+    getResourcesCount() : Promise<GetResourcesCountResponse>;
+
 }
