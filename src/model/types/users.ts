@@ -22,3 +22,7 @@ export type UpdateUsersRoleForm = {
     id: string,
     roles: Array<string>,
 }
+
+export type GetUsersCountQuery = {
+    getPending: boolean | undefined,
+}

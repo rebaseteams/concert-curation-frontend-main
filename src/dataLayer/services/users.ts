@@ -5,10 +5,13 @@ import {
   deleteUserResponse,
   getPendingUsersResponse,
   getUserByIdResponse,
+  GetUsersCountResponse,
   getUsersResponse,
   updateUsersRoleResponse,
 } from '../../model/types/service-response';
-import { ApproveUserForm, CreateUserForm, UpdateUsersRoleForm } from '../../model/types/users';
+import {
+  ApproveUserForm, CreateUserForm, GetUsersCountQuery, UpdateUsersRoleForm,
+} from '../../model/types/users';
 
 export default class Users implements UsersInterface {
     private usersRepo: UsersInterface;
@@ -68,6 +71,14 @@ export default class Users implements UsersInterface {
     deleteUser(userId: string): Promise<deleteUserResponse> {
       return new Promise((resolve) => {
         this.usersRepo.deleteUser(userId).then((response) => {
+          resolve(response);
+        });
+      });
+    }
+
+    getUsersCount(query: GetUsersCountQuery): Promise<GetUsersCountResponse> {
+      return new Promise((resolve) => {
+        this.usersRepo.getUsersCount(query).then((response) => {
           resolve(response);
         });
       });

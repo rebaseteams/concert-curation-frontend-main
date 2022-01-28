@@ -27,7 +27,7 @@ const Users = ({ userService, roleService } : {
   const [pendingApproval, setPendingApproval] = useState<boolean>(false);
   const [form] = Form.useForm();
   const pageSize = 8;
-  const totalSize = 100;
+  const [totalSize, setTotalSize] = useState<number>(8);
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
   const [listToDisplay, setListToDisplay] = useState<Array<UserType>>([]);
@@ -60,7 +60,17 @@ const Users = ({ userService, roleService } : {
       })));
     }
     await loadRoles();
+    await getUsersCount();
     setLoadingUsers(false);
+  };
+
+  const getUsersCount = async () => {
+    const resp = await userService.getUsersCount({
+      getPending: pendingApproval === true ? true : undefined,
+    });
+    if (resp.success) {
+      setTotalSize(resp.data.count);
+    }
   };
 
   const applyChanges = async () => {
@@ -70,6 +80,7 @@ const Users = ({ userService, roleService } : {
       setListToDisplay(resp.data.users.map((user) => ({
         id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles,
       })));
+      getUsersCount();
     } else loadUsers(pageNo, pageSize);
     setLoadingUsers(false);
   };
