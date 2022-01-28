@@ -6,6 +6,7 @@ import {
   getPendingUsersResponse,
   getUserByIdResponse,
   GetUsersCountResponse,
+  getUserRolesResponse,
   getUsersResponse,
   updateUsersRoleResponse,
 } from '../../model/types/service-response';
@@ -79,6 +80,14 @@ export default class Users implements UsersInterface {
     getUsersCount(query: GetUsersCountQuery): Promise<GetUsersCountResponse> {
       return new Promise((resolve) => {
         this.usersRepo.getUsersCount(query).then((response) => {
+          resolve(response);
+        });
+      });
+    }
+
+    getUserRoles(): Promise<getUserRolesResponse> {
+      return new Promise((resolve) => {
+        this.usersRepo.getUserRoles().then((response) => {
           resolve(response);
         });
       });
