@@ -19,7 +19,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
   // #region Constants
 
   const pageSize = 8;
-  const totalSize = 100;
+  const [totalSize, setTotalSize] = useState<number>(8);
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingResources, setLoadingResource] = useState(false);
   const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
@@ -35,6 +35,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
 
   const getResources = async (_pageNo : number, _pageSize: number) => {
     setLoadingResource(true);
+    await getResourcesCount();
     const response = await resourceService.getResources((_pageNo - 1) * _pageSize, _pageSize);
     if (response.success) {
       const resList: Array<NewResourceResponseData> = response.data.resources.map(
@@ -43,6 +44,13 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
       setListToDisplay(resList);
     }
     setLoadingResource(false);
+  };
+
+  const getResourcesCount = async () => {
+    const resp = await resourceService.getResourcesCount();
+    if (resp.success) {
+      setTotalSize(resp.data.count);
+    }
   };
 
   const onSave = async (value : {resource : CreateResourceForm}) => {
