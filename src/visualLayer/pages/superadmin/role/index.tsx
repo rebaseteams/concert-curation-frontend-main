@@ -10,13 +10,14 @@ import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@a
 import {
   List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch, notification,
 } from 'antd';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
-type roleList = Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>, actions : Array<string>}>;
+type roleList = Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>}>;
 
 type RolesProps = {
   rolesService: RolesInterface;
@@ -46,17 +47,20 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     await getRolesCount();
     const roles = await rolesService.getRoles((_pageNo - 1) * _pageSize, _pageSize);
     if (roles.success) {
-      const list = roles.data.roles.map((item) => ({
-        id: item.id,
-        name: item.name,
-        resource: item.resource_actions.map((i, index) => ({
-          id: i.resourceId,
-          name: rdata?.find((r) => r.id === i.resourceId)?.name || 'res-name',
-          permission: i.actions[index]?.permission,
-          actions: i.actions[index]?.name,
-        })),
-        actions: ['aa', 'bb'],
-      }));
+      const list = roles.data.roles.map((item) => {
+        const resArr = item.resource_actions.map((o) => o.actions.map((a) => ({
+          id: o.resourceId,
+          name: rdata?.find((r) => r.id === o.resourceId)?.name || 'res-name',
+          permission: a.permission,
+          actions: a.name,
+        })));
+        const oneD = _.flatten(resArr);
+        return {
+          id: item.id,
+          name: item.name,
+          resource: oneD,
+        };
+      });
       setListToDisplay(list);
     }
     setLoadingRoles(false);
@@ -332,7 +336,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
           <List.Item
             actions={[
               <Button onClick={() => {
-                editForm.setFieldsValue({ name: item.name, resource: item.resource, actions: item.actions });
+                editForm.setFieldsValue({ name: item.name, resource: item.resource });
                 // setRole({ name: item.name, resource: item.resource, actions: item.actions });
                 setRoleId(item.id);
                 const ac: Array<Array<string>> = [];
