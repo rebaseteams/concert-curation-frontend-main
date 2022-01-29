@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type FormFields = {
   type: 'input' | 'select' | 'slider' | 'string' | string,
   name: string,
@@ -5,10 +6,11 @@ export type FormFields = {
   multiple: boolean,
   required: boolean,
   message?: string,
-  min?: number,
-  max?: number,
   step?: number,
   placeholder?: string,
-  options?: Array<string>,
-  default?: string | number | Array<string | number>
+  selectOptions?: Array<string>,
+  default?: string | number | Array<string | number> | any
+  sliderRange? : { min: number, max: number },
+  sliderValue? : { min: number, max: number }
+  onChange?: (val: any) => any
 }

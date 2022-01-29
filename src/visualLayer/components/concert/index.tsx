@@ -16,12 +16,28 @@ import { onSubmitFormDataType } from '../../../model/types/concertForm';
 import { QuestionsUI } from '../../../model/types/questions';
 import renderFormFields from '../FormRenderer';
 import { ArtistBudget } from '../../../model/types/concertDataResponse';
+import { FormFields } from '../../../model/types/formRenderer';
 
 const ConcertForm = ({
   setVisible, forms, addNewRecommendation,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
+
+  const onBudgetChange = (event: Array<number>) => {
+    setBudget({ min: event[0], max: event[1] });
+  };
+
+  const form: FormFields[] = myForm.map((f) => {
+    if (f.name === 'artistBudget') {
+      return {
+        ...f,
+        sliderValue: budget,
+        onChange: onBudgetChange,
+      };
+    }
+    return f;
+  });
 
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
@@ -59,9 +75,6 @@ const ConcertForm = ({
     setLoading(false);
   };
 
-  const onBudgetChange = (event: any) => {
-    setBudget({ min: event[0], max: event[1] });
-  };
   return (
     <div className="concert-container">
       <Form
@@ -70,7 +83,7 @@ const ConcertForm = ({
         initialValues={{ size: 1000 }}
         onFinish={onFormSubmit}
       >
-        { myForm && renderFormFields(myForm, budget, onBudgetChange) }
+        { form && renderFormFields(form) }
         { loading && <Button disabled className="submit" htmlType="submit" type="primary">Submiting</Button> }
         { !loading && <Button className="submit" htmlType="submit" type="primary">Submit</Button> }
       </Form>

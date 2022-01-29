@@ -150,7 +150,7 @@ const CollaborationForm = ({
             },
             'text',
           )}
-          {formData && renderFormFields(formData, { min: 33, max: 33 })}
+          {formData && renderFormFields(formData)}
 
           <Form.Item label="">
             <Button

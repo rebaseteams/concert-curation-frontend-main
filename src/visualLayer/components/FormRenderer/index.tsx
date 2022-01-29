@@ -3,7 +3,6 @@ import {
   Form, Input, Select, Slider,
 } from 'antd';
 import { FormFields } from '../../../model/types/formRenderer';
-import { ArtistBudget } from '../../../model/types/artist-budget';
 import IconRenderer from '../IconRenderer';
 
 const renderOptions = (options: Array<string>) => options.map((option: string) => <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>);
@@ -22,7 +21,11 @@ const renderSelect = (field: FormFields): JSX.Element => {
           showSearch
           mode="multiple"
         >
-          { field.options && field.options.length > 0 && renderOptions(field.options) }
+          {
+            field.selectOptions
+            && field.selectOptions.length > 0
+            && renderOptions(field.selectOptions)
+          }
         </Select>
       </Form.Item>
     );
@@ -38,13 +41,17 @@ const renderSelect = (field: FormFields): JSX.Element => {
       <Select
         showSearch
       >
-        { field.options && field.options.length > 0 && renderOptions(field.options) }
+        {
+          field.selectOptions
+          && field.selectOptions.length > 0
+          && renderOptions(field.selectOptions)
+        }
       </Select>
     </Form.Item>
   );
 };
 
-const renderSlider = (field: any, value: { min: number, max: number }, onValueChange: any):
+const renderSlider = (field: FormFields):
 JSX.Element => (
   <Form.Item
     key={`field${field.name}`}
@@ -53,23 +60,23 @@ JSX.Element => (
   >
     <Slider
       range
-      min={field.min}
-      max={field.max}
+      min={field.sliderRange ? field.sliderRange.min : 0}
+      max={field.sliderRange ? field.sliderRange.max : 100}
       step={field.step}
-      onChange={(val) => onValueChange(val)}
+      onChange={field.onChange}
       defaultValue={field.default}
     />
     <span>
       From
       {' '}
-      {value.min}
+      {field.sliderValue ? field.sliderValue.min : '00'}
       $
     </span>
     {'     '}
     <span>
       To
       {' '}
-      {value.max}
+      {field.sliderValue ? field.sliderValue.max : '00'}
       $
     </span>
   </Form.Item>
@@ -101,14 +108,14 @@ export const inputField = (field: TextInputFieldProp, type: InputType): JSX.Elem
 );
 
 // eslint-disable-next-line max-len
-const renderFormFields = (formData: Array<FormFields>, budget: ArtistBudget = { min: 100, max: 200 }, onBudgetChange?: (event: any) => void):
+const renderFormFields = (formData: Array<FormFields>):
 any => formData.map((field: FormFields) => {
   switch (field.type) {
     case 'select':
       return renderSelect(field);
 
     case 'slider':
-      return renderSlider(field, budget, onBudgetChange);
+      return renderSlider(field);
 
     case 'text':
       return inputField(field as TextInputFieldProp, 'text');
