@@ -12,7 +12,7 @@
     "name": "eventType",
     "label": "Which type of event is it?",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Music Concert",
       "Music Listning",
       "Listning Party",
@@ -30,7 +30,7 @@
     "name": "venue",
     "label": "Select Venue",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Delhi",
       "Mumbai",
       "London",
@@ -44,8 +44,7 @@
     "name": "artistBudget",
     "label": "Set budget",
     "type": "slider",
-    "min": 2000,
-    "max": 100000,
+    "sliderRange" : { "min" : 2000, "max" : 100000 },
     "step": 1000,
     "multiple": false,
     "required": true,
@@ -56,7 +55,7 @@
     "name": "sponsorshipType",
     "label": "Type of sponsorship sought",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Brand awareness",
       "Direct sales",
       "Customer Engagement"
@@ -69,7 +68,7 @@
     "name": "wantedBrands",
     "label": "Specific brand you want",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Coca Cola",
       "Pepsi",
       "Mirenda",
@@ -83,7 +82,7 @@
     "name": "unwantedBrands",
     "label": "Brand you don't want",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Coca Cola",
       "Pepsi",
       "Mirenda",
@@ -97,7 +96,7 @@
     "name": "age",
     "label": "Targeted age",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "18-25",
       "26-35",
       "36-60",
@@ -111,7 +110,7 @@
     "name": "gender",
     "label": "Targeted gender",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "male",
       "female"
     ],
@@ -123,7 +122,7 @@
     "name": "genre",
     "label": "Targeted genre",
     "type": "select",
-    "options": [
+    "selectOptions": [
       "Hollywood",
       "Pop",
       "Classic",
