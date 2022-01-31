@@ -3,7 +3,7 @@
 import _ from 'lodash';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const checkResourceAction = (resource : string, action : string, componemt : JSX.Element) => {
+const checkResourceAction = (resource : string, action : string, componemt : JSX.Element) : JSX.Element | null => {
   const item = localStorage.getItem('roles');
   if (item) {
     const rolesData = JSON.parse(item);
