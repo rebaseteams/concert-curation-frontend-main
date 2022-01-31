@@ -8,6 +8,7 @@ import { UsersInterface } from '../../../../model/interfaces/users';
 import { RolesInterface } from '../../../../model/interfaces/roles';
 import Roles from '../role';
 import Users from '../users';
+import checkResourceAction from '../../../../utils/checkResourceAction';
 
 const { TabPane } = Tabs;
 
@@ -31,9 +32,16 @@ const SuperAdminDashboard = ({ resourcesService, usersService, rolesService }: S
           overflow: 'auto',
         }}
       >
-        <TabPane tab="Users" key="user">
-          <Users userService={usersService} roleService={rolesService} />
-        </TabPane>
+        {
+          checkResourceAction(
+            'users',
+            'view',
+            <TabPane tab="Users" key="user">
+              <Users userService={usersService} roleService={rolesService} />
+            </TabPane>,
+          )
+        }
+
         <TabPane tab="Resources" key="resource">
           <Resources />
         </TabPane>
