@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable no-template-curly-in-string */
@@ -8,16 +9,14 @@
 
 import { ExclamationCircleOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import {
-  List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch, notification,
+  List, Button, Skeleton, Form, Input, Select, Modal, Space, Switch, notification, Checkbox,
 } from 'antd';
-import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
-
-type roleList = Array<{id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>}>;
+import { roleList, rolesFieldMapper } from '../../../../utils/roles-field-mapper';
 
 type RolesProps = {
   rolesService: RolesInterface;
@@ -27,7 +26,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
   // #region constants
 
   const [loadingRoles, setLoadingRoles] = useState(true);
-  const [listToDisplay, setListToDisplay] = useState<roleList>([]);
+  const [listToDisplay, setListToDisplay] = useState<Array<roleList>>([]);
   const [actions, setActions] = useState<Array<Array<string>>>([]);
   const [resources, setResources] = useState<Array<{id: string, name: string, actions: Array<string>}>>([]);
   const [roleId, setRoleId] = useState<string>('');
@@ -47,26 +46,12 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     await getRolesCount();
     const roles = await rolesService.getRoles((_pageNo - 1) * _pageSize, _pageSize);
     if (roles.success) {
-      const list = roles.data.roles.map((item) => {
-        const resArr = item.resource_actions.map((o) => o.actions.map((a) => ({
-          id: o.resourceId,
-          name: rdata?.find((r) => r.id === o.resourceId)?.name || 'res-name',
-          permission: a.permission,
-          actions: a.name,
-        })));
-        const oneD = _.flatten(resArr);
-        return {
-          id: item.id,
-          name: item.name,
-          resource: oneD,
-        };
-      });
+      const list = roles.data.roles.map((item) => rolesFieldMapper(rdata, item.resource_actions, item));
       setListToDisplay(list);
     }
     setLoadingRoles(false);
   };
 
-  // eslint-disable-next-line consistent-return
   const loadResources = async () => {
     const resp = await resourcesService.getResources(0, 10);
     if (resp.success) {
@@ -267,16 +252,25 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                   >
                     <Select placeholder="Select Actions">
                       {
-                          actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                          actions[key] && actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
                     </Select>
                   </Form.Item>
                   <Form.Item
                     name={[name, 'permission']}
                     rules={[{ required: true, message: 'Missing permission' }]}
-                    initialValue
+                    initialValue={editForm.getFieldValue('resource')[key].permission || false}
                   >
-                    <Switch checkedChildren="allow" unCheckedChildren="deny" defaultChecked />
+                    {/* <Switch checkedChildren="allow" unCheckedChildren="deny" /> */}
+                    <Checkbox
+                      checked={editForm.getFieldValue('resource')[key].permission}
+                      onChange={() => {
+                        const res = editForm.getFieldValue('resource');
+                        res[key].permission = !res[key].permission;
+                        console.log(res);
+                        editForm.setFieldsValue({ resource: res, name: editForm.getFieldValue('name') });
+                      }}
+                    />
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Space>
@@ -284,7 +278,9 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={() => {
+                  onClick={async () => {
+                    await loadRoles(pageNo, pageSize);
+                    console.log(actions);
                     const ac = [...actions];
                     ac.push([]);
                     setActions(ac);
@@ -335,8 +331,12 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
         renderItem={(item) => (
           <List.Item
             actions={[
-              <Button onClick={() => {
-                editForm.setFieldsValue({ name: item.name, resource: item.resource });
+              <Button onClick={async () => {
+                const response = await rolesService.getRoleById(item.id);
+                if (!response.success) return;
+                const rdata = await loadResources();
+                const dt = rolesFieldMapper(rdata, response.data.resource_actions, item);
+                editForm.setFieldsValue({ name: dt.name, resource: dt.resource });
                 // setRole({ name: item.name, resource: item.resource, actions: item.actions });
                 setRoleId(item.id);
                 const ac: Array<Array<string>> = [];
