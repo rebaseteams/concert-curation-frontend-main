@@ -10,19 +10,18 @@ const Branding = (): JSX.Element => (
     <p>
       Quantified and connected
     </p>
-    <Link className="button-text" to="dashboard">
+    <Link style={{ margin: '10px' }} className="button-text" to="dashboard">
       Dashboard
     </Link>
     {
       checkResourceAction(
         'superadmin dashboard',
         'view',
-        <Link className="button-text" to="superadmin/dashboard">
+        <Link style={{ margin: '10px' }} className="button-text" to="superadmin/dashboard">
           SuperAdmin Dashboard
         </Link>,
       )
     }
-
   </div>
 );
 

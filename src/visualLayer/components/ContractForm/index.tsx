@@ -10,7 +10,6 @@ type DocusignFormProps = {
 const DocusignForm = ({
   sendContract,
 }: DocusignFormProps): JSX.Element => {
-  const hello = '84';
   const [acceptTerm, setAcceptTerm] = useState(false);
   return (
     <>
