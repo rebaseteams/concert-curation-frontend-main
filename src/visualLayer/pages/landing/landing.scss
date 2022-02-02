@@ -67,14 +67,13 @@
 
 .button-text {
   border: 2px solid rgb(143, 141, 255);
-  color: rgb(178, 178, 228);
+  color: rgb(253, 253, 255);
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 
   &:hover {
-    border: 2px solid rgb(61, 58, 248);
+    border: 2px solid rgb(255, 141, 230);
     font-weight: bold;
     color: #EEE;
-    background-color: rgb(2, 18, 90);
   }
 }

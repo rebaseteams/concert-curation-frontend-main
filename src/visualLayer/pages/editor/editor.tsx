@@ -187,9 +187,9 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         title: 'Confirm',
         icon: <ExclamationCircleOutlined />,
         content: 'Changes saved will be final and you cannot edit further!',
-        onOk: () => {
+        onOk: async () => {
           if (submitFormRef.current) {
-            submitForSign(submitFormRef.current);
+            await submitForSign(submitFormRef.current);
           }
         },
       });
