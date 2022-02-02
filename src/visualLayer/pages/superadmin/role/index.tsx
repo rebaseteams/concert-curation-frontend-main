@@ -221,66 +221,69 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
         <Form.List name="resource">
           {(fields, { add, remove }) => (
             <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'name']}
-                    rules={[{ required: true, message: 'Missing resource name' }]}
-                  >
-                    <Select
-                      onChange={(value) => {
-                        resources.forEach((element) => {
-                          if (element.name === value) {
-                            const ac = [...actions];
-                            ac[key] = element.actions;
-                            setActions(ac);
-                          }
-                        });
-                      }}
-                      placeholder="Select Resource"
+              {fields.map(({ key, name, ...restField }) => {
+                const initial = editForm.getFieldValue('resource')[key] ? editForm.getFieldValue('resource')[key].permission : true;
+                return (
+                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'name']}
+                      rules={[{ required: true, message: 'Missing resource name' }]}
                     >
-                      {resources.map((resource) => (
-                        <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'actions']}
-                    rules={[{ required: true, message: 'Missing actions' }]}
-                  >
-                    <Select placeholder="Select Actions">
-                      {
+                      <Select
+                        onChange={(value) => {
+                          resources.forEach((element) => {
+                            if (element.name === value) {
+                              const ac = [...actions];
+                              ac[key] = element.actions;
+                              setActions(ac);
+                            }
+                          });
+                        }}
+                        placeholder="Select Resource"
+                      >
+                        {resources.map((resource) => (
+                          <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'actions']}
+                      rules={[{ required: true, message: 'Missing actions' }]}
+                    >
+                      <Select placeholder="Select Actions">
+                        {
                           actions[key] && actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
-                    </Select>
-                  </Form.Item>
-                  <Form.Item
-                    name={[name, 'permission']}
-                    rules={[{ required: true, message: 'Missing permission' }]}
-                    initialValue={editForm.getFieldValue('resource')[key].permission || false}
-                  >
-                    {/* <Switch checkedChildren="allow" unCheckedChildren="deny" /> */}
-                    <Checkbox
-                      checked={editForm.getFieldValue('resource')[key].permission}
-                      onChange={() => {
-                        const res = editForm.getFieldValue('resource');
-                        res[key].permission = !res[key].permission;
-                        console.log(res);
-                        editForm.setFieldsValue({ resource: res, name: editForm.getFieldValue('name') });
-                      }}
-                    />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
-              ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      name={[name, 'permission']}
+                      rules={[{ required: true, message: 'Missing permission' }]}
+                    >
+                      <Checkbox
+                        checked={initial}
+                        onChange={() => {
+                          const res = editForm.getFieldValue('resource');
+                          if (!res[key]) {
+                            res[key] = { permission: !initial };
+                          }
+                          res[key].permission = !res[key].permission;
+                          editForm.setFieldsValue({ resource: res, name: editForm.getFieldValue('name') });
+                        }}
+                      >
+                        { initial ? 'Allow' : 'Deny' }
+                      </Checkbox>
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                );
+              })}
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={async () => {
-                    await loadRoles(pageNo, pageSize);
-                    console.log(actions);
+                  onClick={() => {
                     const ac = [...actions];
                     ac.push([]);
                     setActions(ac);
