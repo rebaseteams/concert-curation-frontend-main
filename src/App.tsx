@@ -98,11 +98,10 @@ export function createApp(
     const {
       getAccessTokenSilently, isAuthenticated,
     } = useAuth0();
-    getAccessTokenSilently().then((token) => {
+    getAccessTokenSilently().then(async (token) => {
       localStorage.setItem('token', `Bearer ${token}`);
-      userService.getUserRoles().then((result) => {
-        localStorage.setItem('roles', JSON.stringify(result.data));
-      });
+      const result = await userService.getUserRoles();
+      if (result.success) localStorage.setItem('roles', JSON.stringify(result.data));
       setAuth(true);
     }).catch(() => {
       setAuth(true);

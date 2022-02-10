@@ -21,6 +21,11 @@ export function useGetDocuments(documentsService: DocumentsInterface): GetDocume
     if (documentsResponse.error) {
       setError({ status: documentsResponse.status, message: documentsResponse.message });
     } else if (documentsResponse.data && documentsResponse.data.data) {
+      // TODO: update getdocuuments endpoint to return mode in document and remove this hardcoding
+      documentsResponse.data.data = documentsResponse.data.data.map((d) => ({
+        ...d,
+        mode: d.mode ? d.mode : 'sign',
+      }));
       setDocuments(documentsResponse.data.data);
     }
     setLoadingForDocuments(false);

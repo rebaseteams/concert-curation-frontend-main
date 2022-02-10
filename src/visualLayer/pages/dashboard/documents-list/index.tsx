@@ -7,6 +7,7 @@ import {
   Empty,
   Modal,
   message,
+  Tag,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -73,6 +74,17 @@ export function createRenderDocuments({
           key: 'date',
         },
         {
+          title: 'Status',
+          dataIndex: 'mode',
+          key: 'mode',
+          render: (mode: string) => {
+            if (mode === 'edit') return <Tag color="gray">editing</Tag>;
+            if (mode === 'sign') return <Tag color="green">signed</Tag>;
+            if (mode === 'submit') return <Tag color="blue">submitted</Tag>;
+            return <Tag color="white">--</Tag>;
+          },
+        },
+        {
           title: 'Action',
           key: 'action',
           dataIndex: 'action',
@@ -102,6 +114,7 @@ export function createRenderDocuments({
         key: string;
         documentName: string;
         date: string;
+        mode: string;
         action: string;
       };
 
@@ -110,6 +123,7 @@ export function createRenderDocuments({
           key: doc.id,
           documentName: doc.name,
           date: doc.createdOn.split('T')[0],
+          mode: doc.mode,
           action: doc.id,
         }));
         return (
