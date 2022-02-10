@@ -1,5 +1,5 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
@@ -74,7 +74,11 @@ export function createHeaderComponent(): () => JSX.Element | null {
           <Button
             style={{ marginLeft: '10px' }}
             type="primary"
-            onClick={() => logout()}
+            onClick={() => {
+              logout({ returnTo: window.location.origin });
+              localStorage.removeItem('roles');
+              localStorage.removeItem('token');
+            }}
           >
             Log out
           </Button>
