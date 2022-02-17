@@ -1,8 +1,15 @@
+import { CompareData } from '@rebaseitlabs/compare-data';
+import { sampledata } from './testData';
+import { metadata } from './testMetaData';
+
 const createCompareComponent = ():
     () => JSX.Element => {
   const ComparePage = (): JSX.Element => (
     <div>
-      compare page
+      <CompareData
+        metaData={metadata}
+        data={sampledata}
+      />
     </div>
   );
 
