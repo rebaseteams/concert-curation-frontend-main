@@ -7,6 +7,7 @@ import {
 import { notification, Result, Spin } from 'antd';
 
 // importing services
+import { CompareData } from '@rebaseitlabs/compare-data';
 import extractUserToken from './services/userToken';
 
 // importing components
@@ -33,6 +34,7 @@ import { ResourcesInterface } from './model/interfaces/resources';
 import { UsersInterface } from './model/interfaces/users';
 import { RolesInterface } from './model/interfaces/roles';
 import createCompareComponent from './visualLayer/pages/compare';
+import * as functionMappper from './visualLayer/pages/compare/functionMapper';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -88,7 +90,10 @@ export function createApp(
   const RecommendationPage = createRecommendationPage({
     downloadService, artistRecommendation, documentsService,
   });
-  const CompareComponent = createCompareComponent();
+  const compareService = new CompareData(functionMappper);
+  const CompareComponent = createCompareComponent({
+    compareService,
+  });
 
   const EditorPage = createEditorPage({
     documentsService,

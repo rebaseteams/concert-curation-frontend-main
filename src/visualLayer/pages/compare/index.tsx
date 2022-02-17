@@ -2,18 +2,15 @@ import { CompareData } from '@rebaseitlabs/compare-data';
 import { sampledata } from './testData';
 import { metadata } from './testMetaData';
 
-const createCompareComponent = ():
-    () => JSX.Element => {
+const createArtistPage = ({
+  compareService,
+}: {compareService: CompareData}):
+  () => JSX.Element => {
   const ComparePage = (): JSX.Element => (
-    <div>
-      <CompareData
-        metaData={metadata}
-        data={sampledata}
-      />
-    </div>
+    compareService.compare(metadata, sampledata)
   );
 
   return ComparePage;
 };
 
-export default createCompareComponent;
+export default createArtistPage;
