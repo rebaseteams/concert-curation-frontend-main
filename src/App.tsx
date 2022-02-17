@@ -32,6 +32,7 @@ import AuthInterface from './model/interfaces/auth';
 import { ResourcesInterface } from './model/interfaces/resources';
 import { UsersInterface } from './model/interfaces/users';
 import { RolesInterface } from './model/interfaces/roles';
+import createCompareComponent from './visualLayer/pages/compare';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -87,6 +88,7 @@ export function createApp(
   const RecommendationPage = createRecommendationPage({
     downloadService, artistRecommendation, documentsService,
   });
+  const CompareComponent = createCompareComponent();
 
   const EditorPage = createEditorPage({
     documentsService,
@@ -147,6 +149,7 @@ export function createApp(
             <Routes>
               <Route path="/" element={<HeaderComponent />}>
                 <Route index element={<LandingPage />} />
+                <Route path="/compare" element={authenticate(<CompareComponent />)} />
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} rolesService={rolesService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
