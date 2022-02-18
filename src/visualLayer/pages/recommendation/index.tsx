@@ -366,7 +366,7 @@ export function createRecommendationPage({
           }}
           visible={documentsModal}
           footer={false}
-          width={350}
+          width={450}
         >
           { documents.length > 0
             ? renderDocumentList(documents)
