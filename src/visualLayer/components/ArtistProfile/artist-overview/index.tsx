@@ -89,10 +89,16 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
           <Col md={{ span: 12 }} xs={{ span: 24 }} key={`${video.title}${video.views}`}>
             <div className="row-flex m-5">
               <div>
-                <img width={200} height={120} src={video.tumbnail} alt={video.title} />
+                <iframe
+                  title={video.title}
+                  style={{ border: '0.5px solid #595' }}
+                  width="100%"
+                  src={video.url}
+                  allowFullScreen
+                />
               </div>
               <div className="column-flex m-2">
-                <Title level={3}>{video.title}</Title>
+                <Title level={4}>{video.title}</Title>
                 <Text>
                   Views
                   {' '}
@@ -103,10 +109,10 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
                   {' '}
                   {video.channelName}
                 </Text>
-                <Text>
+                <Text italic>
                   Subscribers
                   {' '}
-                  {video.subscribers}
+                  <span>{video.subscribers}</span>
                 </Text>
               </div>
             </div>
