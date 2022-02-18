@@ -7,7 +7,6 @@ import {
   Empty,
   Modal,
   message,
-  Tag,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,6 +18,7 @@ import IconRenderer from '../../../components/IconRenderer';
 import CollaborationForm from '../../../components/CollaborationForm/collaborationForm';
 import { TemplatesInterface } from '../../../../model/interfaces/templates';
 import { DocumentsInterface } from '../../../../model/interfaces/documents';
+import { renderDocumentModeTab } from '../../../components/DocumentMode';
 
 export type CreateRenderDocumentsProps = {
   getDocument: GetDocument;
@@ -77,12 +77,7 @@ export function createRenderDocuments({
           title: 'Status',
           dataIndex: 'mode',
           key: 'mode',
-          render: (mode: string) => {
-            if (mode === 'edit') return <Tag color="gray">editing</Tag>;
-            if (mode === 'sign') return <Tag color="green">signed</Tag>;
-            if (mode === 'submit') return <Tag color="blue">submitted</Tag>;
-            return <Tag color="white">--</Tag>;
-          },
+          render: (mode: string) => renderDocumentModeTab(mode),
         },
         {
           title: 'Action',
