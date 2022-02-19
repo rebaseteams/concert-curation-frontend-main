@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { RolesInterface } from '../model/interfaces/roles';
-import { NewRoleResponseData } from '../model/types/roles';
+import { RoleResponseData } from '../model/types/roles';
 
 export type GetRoles = {
-  roles: Array<NewRoleResponseData>;
+  roles: Array<RoleResponseData>;
   getRoles: () => void;
 }
 
 export function useGetRoles(rolesService: RolesInterface): GetRoles {
-  const [roles, setRoles] = useState<Array<NewRoleResponseData>>([]);
+  const [roles, setRoles] = useState<Array<RoleResponseData>>([]);
 
   const getRoles = async () => {
     // TODO: Should first get the count of roles and use that as limit

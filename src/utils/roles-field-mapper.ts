@@ -10,7 +10,10 @@ type Item = {
 
 export type roleList = {id: string, name : string, resource : Array<{id: string, permission : boolean, name : string, actions : string}>};
 
-export function rolesFieldMapper(rdata: NewResourceResponseData[] | undefined, resource: ResourceActions, item: Item): roleList {
+export function rolesFieldMapper(
+  rdata: NewResourceResponseData[] | undefined,
+  resource: ResourceActions, item: Item,
+): roleList {
   const resArr = resource.map((o) => o.actions.map((a) => ({
     id: o.resourceId,
     name: rdata?.find((r) => r.id === o.resourceId)?.name || 'res-name',

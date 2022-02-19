@@ -5,7 +5,7 @@ import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
-import { NewRoleResponseData, UserRoleType } from './roles';
+import { NewRoleResponseData, RoleResponseData, UserRoleType } from './roles';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
 
@@ -272,7 +272,7 @@ export type GetRoleByIdResponse = {
 export type GetRolesResponse = {
   success: boolean,
   data: {
-    roles: Array<NewRoleResponseData>
+    roles: Array<RoleResponseData>
   }
 }
 

@@ -7,11 +7,18 @@ const checkResourceAction = (resource : string, action : string, componemt : JSX
   const item = localStorage.getItem('roles');
   if (item) {
     const rolesData = JSON.parse(item);
-    const threeD = rolesData.roles.map((res: any) => res.resource.map((i: any) => i.actions.map((a: any) => ({
-      resource: i.name,
-      action: a.name,
-      permission: a.permission,
-    }))));
+    const threeD = rolesData.roles.map(
+      (res: any) => res.resources.map(
+        (i: any) => i.actions.map(
+          (a: any) => ({
+            resource: i.name,
+            action: a.name,
+            permission: a.permission,
+          }),
+        ),
+      ),
+    );
+
     const twoD = _.flatten(threeD);
     const oneD = _.flatten(twoD);
     const filter = oneD.filter((o: any) => o.resource === resource && o.action === action);

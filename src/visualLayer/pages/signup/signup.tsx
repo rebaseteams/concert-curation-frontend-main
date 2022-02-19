@@ -12,7 +12,7 @@ import { SignUp } from '../../../model/types/signup';
 import AuthInterface from '../../../model/interfaces/auth';
 import { RolesInterface } from '../../../model/interfaces/roles';
 import { useGetRoles } from '../../../hooks/useGetRoles';
-import { NewRoleResponseData } from '../../../model/types/roles';
+import { RoleResponseData } from '../../../model/types/roles';
 
 const layout = {
   labelCol: { span: 8 },
@@ -88,7 +88,7 @@ const Signup = ({ AuthService, rolesService }: SignUpProps) : JSX.Element => {
   );
 };
 
-function renderRoles(roles: Array<NewRoleResponseData>) {
+function renderRoles(roles: Array<RoleResponseData>) {
   return roles.map((role) => (
     <Select.Option key={role.id} value={role.id}>{role.name}</Select.Option>
   ));
