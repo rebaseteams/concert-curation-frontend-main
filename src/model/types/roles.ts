@@ -18,6 +18,13 @@ export type NewRoleResponseData = {
     resource_actions: ResourceActions,
   }
 
+export type RoleResponseData = {
+    id: string,
+    name: string,
+    // eslint-disable-next-line camelcase
+    resources: ResourceActions,
+  }
+
 export type Action = {
     name: string;
     permission: boolean;

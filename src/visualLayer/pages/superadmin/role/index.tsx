@@ -46,7 +46,9 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     await getRolesCount();
     const roles = await rolesService.getRoles((_pageNo - 1) * _pageSize, _pageSize);
     if (roles.success) {
-      const list = roles.data.roles.map((item) => rolesFieldMapper(rdata, item.resource_actions, item));
+      const list = roles.data.roles.map(
+        (role) => rolesFieldMapper(rdata, role.resources, role),
+      );
       setListToDisplay(list);
     }
     setLoadingRoles(false);
