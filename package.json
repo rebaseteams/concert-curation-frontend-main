@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "cross-env BROWSER=none react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts --max_old_space_size=8192 build",
     "test": "react-scripts test --detectOpenHandles",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/** -c .eslintrc.json --ext ts,tsx",
