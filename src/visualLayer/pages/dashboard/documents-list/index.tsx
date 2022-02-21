@@ -6,9 +6,8 @@ import {
   Space,
   Empty,
   Modal,
-  message,
 } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { GetDocument } from '../../../../hooks/useGetDocuments';
@@ -39,26 +38,18 @@ export function createRenderDocuments({
       loadingForDocuments, documents, getDocuments, error,
     } = getDocument;
 
-    const { deleteDocument, notification, loadingForDeleteDocument } = useDeleteDocument;
+    const { deleteDocument, loadingForDeleteDocument } = useDeleteDocument;
+
+    const deleteDoc = async (id: string) => {
+      const status: boolean = await deleteDocument(id);
+      if (status) getDocuments();
+    };
 
     if (error) {
       return (
         <Result status={500} title={error.status} subTitle={error.message} />
       );
     }
-
-    useEffect(() => {
-      if (notification) {
-        if (notification.status === 'success') {
-          message.success(notification.message);
-        }
-        if (notification.status === 'error') {
-          message.error(notification.message);
-        }
-
-        getDocuments();
-      }
-    }, [notification?.status]);
 
     const renderDocuments = (document: Array<Documents>): JSX.Element => {
       const columns = [
@@ -93,7 +84,7 @@ export function createRenderDocuments({
                     title: 'Delete document',
                     content: 'Are you sure?',
                     okText: 'Yes',
-                    onOk: () => deleteDocument(documentId),
+                    onOk: () => deleteDoc(documentId),
                     cancelText: 'No',
                   });
                 }}
@@ -132,8 +123,6 @@ export function createRenderDocuments({
         return <Empty />;
       }
     };
-
-    useEffect(() => (undefined), [notification]);
 
     return (
       <>
