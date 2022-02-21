@@ -53,17 +53,17 @@ const mapper = {
 
 // ---Functions for data mapping of Demographic data---
 // Stack Bar Chart Mapper starts
-export const DemographicsStackAgeGetter = (chartObj: cotype, data: any) => demographicsStackGetter(data, chartObj, 'age');
-export const DemographicsStackGenderGetter = (chartObj: cotype, data: any) => demographicsStackGetter(data, chartObj, 'gender');
-export const DemographicsStackIncomeGetter = (chartObj: cotype, data: any) => demographicsStackGetter(data, chartObj, 'income');
+export const DemographicsStackAgeGetter = (chartObj: cotype, data: Array<any>): any => demographicsStackGetter(data, chartObj, 'age');
+export const DemographicsStackGenderGetter = (chartObj: cotype, data: Array<any>): any => demographicsStackGetter(data, chartObj, 'gender');
+export const DemographicsStackIncomeGetter = (chartObj: cotype, data: Array<any>): any => demographicsStackGetter(data, chartObj, 'income');
 
-export const FollowersSpotifyGetter = (chartObj: cotype, data: any) => followesGetter(data, chartObj, 'spotify');
-export const FollowersTwitterGetter = (chartObj: cotype, data: any) => followesGetter(data, chartObj, 'twitter');
-export const FollowersYoutubeGetter = (chartObj: cotype, data: any) => followesGetter(data, chartObj, 'youtube');
+export const FollowersSpotifyGetter = (chartObj: cotype, data: Array<any>): any => followesGetter(data, chartObj, 'spotify');
+export const FollowersTwitterGetter = (chartObj: cotype, data: Array<any>): any => followesGetter(data, chartObj, 'twitter');
+export const FollowersYoutubeGetter = (chartObj: cotype, data: Array<any>): any => followesGetter(data, chartObj, 'youtube');
 
-export const EducationGetter = (chartObj: cotype, data: any) => educationPersonalityGetter(data, chartObj, 'education');
+export const EducationGetter = (chartObj: cotype, data: Array<any>): any => educationPersonalityGetter(data, chartObj, 'education');
 
-export const RadialPersonalityTraitsGetter = (chartObj: cotype, data: any) => radialEducationPersonalityGetter(data, chartObj, 'personality_traits');
+export const RadialPersonalityTraitsGetter = (chartObj: cotype, data: Array<any>): any => radialEducationPersonalityGetter(data, chartObj, 'personality_traits');
 
 function demographicsStackGetter(data: any, chartObj: cotype, prop: string) {
   const result: StackBarChartData = {
