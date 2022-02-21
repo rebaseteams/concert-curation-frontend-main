@@ -25,7 +25,7 @@ import Users from './dataLayer/services/users';
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
 
-const server = 'http://localhost:4000';
+const server = 'http://localhost:4000/cc-bff';
 
 export const config: Config = {
   mode: 'development',
