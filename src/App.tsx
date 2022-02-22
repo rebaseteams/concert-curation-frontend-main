@@ -35,6 +35,7 @@ import { UsersInterface } from './model/interfaces/users';
 import { RolesInterface } from './model/interfaces/roles';
 import createCompareComponent from './visualLayer/pages/compare';
 import * as functionMappper from './visualLayer/pages/compare/functionMapper';
+import { ActionsInterface } from './model/interfaces/actions';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -52,6 +53,7 @@ export interface AppOptions {
     AuthService: AuthInterface;
     userService: UsersInterface;
     rolesService: RolesInterface;
+    actionsService: ActionsInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -74,6 +76,7 @@ export function createApp(
       resourceService,
       userService,
       rolesService,
+      actionsService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -107,8 +110,10 @@ export function createApp(
     } = useAuth0();
     getAccessTokenSilently().then(async (token) => {
       localStorage.setItem('token', `Bearer ${token}`);
-      const result = await userService.getUserRoles();
-      if (result.success) localStorage.setItem('roles', JSON.stringify(result.data));
+      const roles = await userService.getUserRoles();
+      const actions = await actionsService.getActions();
+      if (actions.success) localStorage.setItem('actions', JSON.stringify(actions.data.actions));
+      if (roles.success) localStorage.setItem('roles', JSON.stringify(roles.data));
       setAuth(true);
     }).catch(() => {
       setAuth(true);

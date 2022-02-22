@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
-import { CreateResourceForm, NewResourceResponseData } from '../../../../model/types/resources';
+import { ActionsData, CreateResourceForm, NewResourceResponseData } from '../../../../model/types/resources';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
@@ -20,6 +20,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
 
   const pageSize = 8;
   const [totalSize, setTotalSize] = useState<number>(8);
+  const actions: Array<ActionsData> = (JSON.parse(localStorage.getItem('actions') || '[]'));
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingResources, setLoadingResource] = useState(false);
   const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
@@ -119,10 +120,22 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
           </Form.Item>
           <Form.Item name="actions" label="Actions" rules={[{ required: true }]}>
             <Select
-              mode="tags"
+              mode="multiple"
               placeholder="Please select"
               style={{ width: '100%' }}
-            />
+            >
+              {
+                actions.map((a) => (
+                  <Select.Option
+                    value={a.id}
+                    key={a.id}
+                    name={a.id}
+                  >
+                    {a.name}
+                  </Select.Option>
+                ))
+              }
+            </Select>
           </Form.Item>
           <Form.Item name="id" required />
         </Form.Item>
@@ -167,7 +180,9 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
           <List.Item
             actions={[
               <Button onClick={() => {
-                editForm.setFieldsValue({ name: item.name, actions: item.actions, id: item.id });
+                editForm.setFieldsValue({
+                  name: item.name, actions: item.actions.map((a) => a.name), id: item.id,
+                });
                 editResourceModal.showModal();
               }}
               >

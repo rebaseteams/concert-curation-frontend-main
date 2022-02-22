@@ -8,6 +8,7 @@ import { RolesInterface } from '../interfaces/roles';
 import { ResourcesInterface } from '../interfaces/resources';
 import { TemplatesInterface } from '../interfaces/templates';
 import { UsersInterface } from '../interfaces/users';
+import { ActionsInterface } from '../interfaces/actions';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -34,6 +35,7 @@ export interface Config {
     AuthService: AuthInterface,
     rolesService: RolesInterface,
     resourceService: ResourcesInterface,
+    actionsService: ActionsInterface,
   };
 
   providers: {

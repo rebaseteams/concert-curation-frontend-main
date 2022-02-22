@@ -1,5 +1,6 @@
 export type ResourceActions = Array<{
-    resourceId : string,
+    id : string,
+    name : string,
     actions : Array<{
       name:string,
       permission:boolean

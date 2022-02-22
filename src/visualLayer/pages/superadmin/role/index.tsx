@@ -28,7 +28,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
   const [loadingRoles, setLoadingRoles] = useState(true);
   const [listToDisplay, setListToDisplay] = useState<Array<roleList>>([]);
   const [actions, setActions] = useState<Array<Array<string>>>([]);
-  const [resources, setResources] = useState<Array<{id: string, name: string, actions: Array<string>}>>([]);
+  const [resources, setResources] = useState<Array<{id: string, name: string, actions: Array<{ id: string, name: string }>}>>([]);
   const [roleId, setRoleId] = useState<string>('');
   const [createForm] = Form.useForm();
   const [editForm] = Form.useForm();
@@ -85,7 +85,8 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
     return array.map((res) => {
       const resArray = value.resource.filter((i) => i.name === res.name);
       return {
-        resourceId: res.id,
+        id: res.id,
+        name: res.name,
         actions: resArray.map((i) => ({
           name: i.actions,
           permission: i.permission,
@@ -154,7 +155,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                         resources.forEach((element) => {
                           if (element.name === value) {
                             const ac = [...actions];
-                            ac[key] = element.actions;
+                            ac[key] = element.actions.map((a) => a.name);
                             setActions(ac);
                           }
                         });
@@ -237,7 +238,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                           resources.forEach((element) => {
                             if (element.name === value) {
                               const ac = [...actions];
-                              ac[key] = element.actions;
+                              ac[key] = element.actions.map((a) => a.name);
                               setActions(ac);
                             }
                           });
@@ -340,7 +341,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                 const response = await rolesService.getRoleById(item.id);
                 if (!response.success) return;
                 const rdata = await loadResources();
-                const dt = rolesFieldMapper(rdata, response.data.resource_actions, item);
+                const dt = rolesFieldMapper(rdata, response.data.resources, item);
                 editForm.setFieldsValue({ name: dt.name, resource: dt.resource });
                 // setRole({ name: item.name, resource: item.resource, actions: item.actions });
                 setRoleId(item.id);
@@ -348,7 +349,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                 item.resource.forEach((value) => {
                   resources.forEach((element) => {
                     if (element.name === value.name) {
-                      ac.push(element.actions);
+                      ac.push(element.actions.map((a) => a.name));
                     }
                   });
                 });

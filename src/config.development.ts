@@ -21,6 +21,8 @@ import Resources from './dataLayer/services/resources';
 import ResourcesRepo from './dataLayer/repositories/http/resources';
 import UsersRepo from './dataLayer/repositories/http/users';
 import Users from './dataLayer/services/users';
+import Actions from './dataLayer/services/actions';
+import ActionsHttpRep from './dataLayer/repositories/http/actions';
 
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
@@ -48,6 +50,7 @@ export const config: Config = {
     rolesService: new Roles(new RolesRepo(server)),
     resourceService: new Resources(new ResourcesRepo(server)),
     userService: new Users(new UsersRepo(server)),
+    actionsService: new Actions(new ActionsHttpRep(`${server}/actions`)),
   },
   providers: {
   },
