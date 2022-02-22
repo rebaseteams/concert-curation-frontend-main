@@ -25,7 +25,7 @@ import UsersRepo from './dataLayer/repositories/http/users';
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
 
-const server = 'https://myconcert.rebaseitlabs.in/api/cc-bff';
+const server = 'https://concertcuartor.rebaseitlabs.in/cc-bff';
 export const config: Config = {
   mode: 'production',
   resources: {
