@@ -257,7 +257,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                     >
                       <Select placeholder="Select Actions">
                         {
-                          actions[key] && actions[key].map((action, index) => (<Select.Option key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                          actions[key] && actions[key].map((action, index) => (<Select.Option value={actions[key][index]} key={actions[key][index]}>{actions[key][index]}</Select.Option>))
                       }
                       </Select>
                     </Form.Item>
