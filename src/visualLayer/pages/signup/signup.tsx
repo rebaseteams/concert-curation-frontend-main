@@ -7,12 +7,10 @@ import {
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './signup.scss';
-import { useEffect } from 'react';
 import { SignUp } from '../../../model/types/signup';
 import AuthInterface from '../../../model/interfaces/auth';
-import { RolesInterface } from '../../../model/interfaces/roles';
-import { useGetRoles } from '../../../hooks/useGetRoles';
 import { RoleResponseData } from '../../../model/types/roles';
+import { getSsd } from '../../../utils/systemSpecificDataManager';
 
 const layout = {
   labelCol: { span: 8 },
@@ -28,17 +26,12 @@ const validateMessages = {
 
 type SignUpProps = {
   AuthService: AuthInterface;
-  rolesService: RolesInterface;
 }
 
-const Signup = ({ AuthService, rolesService }: SignUpProps) : JSX.Element => {
+const Signup = ({ AuthService }: SignUpProps) : JSX.Element => {
   const { loginWithRedirect } = useAuth0();
 
-  const { roles, getRoles } = useGetRoles(rolesService);
-
-  useEffect(() => {
-    getRoles();
-  }, []);
+  const roles = getSsd('allRoles') || [];
 
   const onFinish = async (values: {user : SignUp}) => {
     const { user } = values;

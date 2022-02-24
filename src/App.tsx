@@ -36,6 +36,7 @@ import { RolesInterface } from './model/interfaces/roles';
 import createCompareComponent from './visualLayer/pages/compare';
 import * as functionMappper from './visualLayer/pages/compare/functionMapper';
 import { ActionsInterface } from './model/interfaces/actions';
+import { setSsd } from './utils/systemSpecificDataManager';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -111,9 +112,13 @@ export function createApp(
     getAccessTokenSilently().then(async (token) => {
       localStorage.setItem('token', `Bearer ${token}`);
       const roles = await userService.getUserRoles();
+      if (roles.success) setSsd('roles', roles.data);
+
       const actions = await actionsService.getActions();
-      if (actions.success) localStorage.setItem('actions', JSON.stringify(actions.data.actions));
-      if (roles.success) localStorage.setItem('roles', JSON.stringify(roles.data));
+      if (actions.success) setSsd('actions', actions.data.actions);
+
+      const allRoles = await rolesService.getRoles(0, 200);
+      if (allRoles.success) setSsd('allRoles', allRoles.data.roles);
       setAuth(true);
     }).catch(() => {
       setAuth(true);
@@ -161,7 +166,7 @@ export function createApp(
                 <Route index element={<LandingPage />} />
                 <Route path="/compare" element={authenticate(<CompareComponent />)} />
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
-                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} rolesService={rolesService} />} />
+                <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
                 <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} rolesService={rolesService} />)} />
               </Route>

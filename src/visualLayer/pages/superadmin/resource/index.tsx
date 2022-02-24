@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ResourcesInterface } from '../../../../model/interfaces/resources';
 import { ActionsData, CreateResourceForm, NewResourceResponseData } from '../../../../model/types/resources';
+import { getSsd } from '../../../../utils/systemSpecificDataManager';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 
@@ -20,7 +21,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
 
   const pageSize = 8;
   const [totalSize, setTotalSize] = useState<number>(8);
-  const actions: Array<ActionsData> = (JSON.parse(localStorage.getItem('actions') || '[]'));
+  const actions: Array<ActionsData> = getSsd('actions') || [];
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingResources, setLoadingResource] = useState(false);
   const [listToDisplay, setListToDisplay] = useState<Array<NewResourceResponseData>>([]);
