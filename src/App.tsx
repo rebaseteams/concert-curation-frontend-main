@@ -36,7 +36,8 @@ import { RolesInterface } from './model/interfaces/roles';
 import createCompareComponent from './visualLayer/pages/compare';
 import * as functionMappper from './visualLayer/pages/compare/functionMapper';
 import { ActionsInterface } from './model/interfaces/actions';
-import { setSsd } from './utils/systemSpecificDataManager';
+import { getSsd, setSsd } from './utils/systemSpecificDataManager';
+import { systemSpecificDataGetter } from './utils/systemSpecificDataGetter';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -110,15 +111,18 @@ export function createApp(
       getAccessTokenSilently, isAuthenticated,
     } = useAuth0();
     getAccessTokenSilently().then(async (token) => {
+      const expirationDuration = 60 * 60 * 1000; // one hour
+      const checkExpirationDuration = 60 * 1000; // one Minute
       localStorage.setItem('token', `Bearer ${token}`);
-      const roles = await userService.getUserRoles();
-      if (roles.success) setSsd('roles', roles.data);
-
-      const actions = await actionsService.getActions();
-      if (actions.success) setSsd('actions', actions.data.actions);
-
-      const allRoles = await rolesService.getRoles(0, 200);
-      if (allRoles.success) setSsd('allRoles', allRoles.data.roles);
+      await systemSpecificDataGetter(userService, actionsService, rolesService);
+      setSsd('expireIn', Date.now() + expirationDuration);
+      window.setInterval(() => {
+        const expireIn = Number(getSsd('expireIn')) || 1;
+        if (Date.now() > expireIn) {
+          systemSpecificDataGetter(userService, actionsService, rolesService);
+          setSsd('expireIn', Date.now() + expirationDuration);
+        }
+      }, checkExpirationDuration);
       setAuth(true);
     }).catch(() => {
       setAuth(true);
