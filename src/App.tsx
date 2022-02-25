@@ -110,6 +110,9 @@ export function createApp(
     const {
       getAccessTokenSilently, isAuthenticated,
     } = useAuth0();
+    rolesService.getRoles(0, 200).then((data) => {
+      setSsd('allRoles', data.data.roles);
+    });
     getAccessTokenSilently().then(async (token) => {
       const expirationDuration = 60 * 60 * 1000; // one hour
       const checkExpirationDuration = 60 * 1000; // one Minute
