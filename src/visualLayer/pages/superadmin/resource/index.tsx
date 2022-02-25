@@ -101,7 +101,19 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
               mode="tags"
               placeholder="Please select"
               style={{ width: '100%' }}
-            />
+            >
+              {
+                actions.map((a) => (
+                  <Select.Option
+                    value={a.id}
+                    key={a.id}
+                    name={a.id}
+                  >
+                    {a.name}
+                  </Select.Option>
+                ))
+              }
+            </Select>
           </Form.Item>
         </Form.Item>
       </Form>
