@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { useAuth0 } from '@auth0/auth0-react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Auth0User } from '../model/types/auth0User';
@@ -129,9 +130,8 @@ describe('InMemoryAuthContext0Provider', () => {
       let token: string;
       await act(async () => {
         token = await result.current.getAccessTokenWithPopup();
+        await assertValidToken(tokenService, token, user);
       });
-
-      await assertValidToken(tokenService, token, user);
     });
   });
 
@@ -154,9 +154,8 @@ describe('InMemoryAuthContext0Provider', () => {
       let token: string;
       await act(async () => {
         token = await result.current.getAccessTokenSilently();
+        await assertValidToken(tokenService, token, user);
       });
-
-      await assertValidToken(tokenService, token, user);
     });
   });
 });
