@@ -7,7 +7,6 @@ import { TokenService } from '../services/token.service';
 export interface InMemoryAuth0ProviderProps {
  children: ReactNode;
  user: Auth0User;
- error?: Error;
  tokenService: TokenService;
 }
 
