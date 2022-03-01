@@ -23,6 +23,8 @@ import UsersRepo from './dataLayer/repositories/http/users';
 import Users from './dataLayer/services/users';
 import Actions from './dataLayer/services/actions';
 import ActionsHttpRep from './dataLayer/repositories/http/actions';
+import Venues from './dataLayer/services/venues';
+import VenuesRepo from './dataLayer/repositories/http/venues';
 
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
@@ -51,6 +53,7 @@ export const config: Config = {
     resourceService: new Resources(new ResourcesRepo(server)),
     userService: new Users(new UsersRepo(server)),
     actionsService: new Actions(new ActionsHttpRep(`${server}/actions`)),
+    venuesService: new Venues(new VenuesRepo(server)),
   },
   providers: {
   },
