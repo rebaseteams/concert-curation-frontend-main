@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/button-has-type */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Form,
   Button,
@@ -23,10 +23,27 @@ const ConcertForm = ({
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
+  const [venues, setVenues] = useState<Array<string>>([]);
 
   const onBudgetChange = (event: Array<number>) => {
     setBudget({ min: event[0], max: event[1] });
   };
+
+  const getVenueList = async () => {
+    try {
+      const resp = await venuesService.getAllVenues();
+      if (resp.success) {
+        const venueNames = resp.data.venues.map((v) => v.name);
+        setVenues(venueNames);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getVenueList();
+  }, []);
 
   const form: FormFields[] = myForm.map((f) => {
     if (f.name === 'artistBudget') {
@@ -34,6 +51,12 @@ const ConcertForm = ({
         ...f,
         sliderValue: budget,
         onChange: onBudgetChange,
+      };
+    }
+    if (f.name === 'venue') {
+      return {
+        ...f,
+        selectOptions: venues,
       };
     }
     return f;
