@@ -8,6 +8,7 @@ import { NewResourceResponseData } from './resources';
 import { NewRoleResponseData, RoleResponseData, UserRoleType } from './roles';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
+import { NewVenueResponseData } from './venue';
 
 // Recommendations Response
 export type GetAllRecommendationsResponse = {
@@ -290,5 +291,18 @@ export type GetRolesCountResponse = {
   success: boolean,
   data : {
     count: number
+  }
+}
+
+// venue response
+export type GetVenueByIdResponse = {
+  success: boolean,
+  data: NewVenueResponseData
+}
+
+export type GetVenueResponse = {
+  success: boolean,
+  data: {
+    venues : Array<NewVenueResponseData>
   }
 }
