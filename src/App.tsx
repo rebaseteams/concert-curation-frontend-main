@@ -38,6 +38,7 @@ import * as functionMappper from './visualLayer/pages/compare/functionMapper';
 import { ActionsInterface } from './model/interfaces/actions';
 import { getSsd, setSsd } from './utils/systemSpecificDataManager';
 import { systemSpecificDataGetter } from './utils/systemSpecificDataGetter';
+import { VenuesInterface } from './model/interfaces/venues';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -56,6 +57,7 @@ export interface AppOptions {
     userService: UsersInterface;
     rolesService: RolesInterface;
     actionsService: ActionsInterface;
+    venuesService: VenuesInterface
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -79,6 +81,7 @@ export function createApp(
       userService,
       rolesService,
       actionsService,
+      venuesService,
     },
     resources: {
       AUTH_DOMAIN,

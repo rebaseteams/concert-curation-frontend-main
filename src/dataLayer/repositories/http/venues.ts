@@ -43,7 +43,7 @@ export default class VenuesRepo implements VenuesInterface {
 
     getAllVenues = async (): Promise<GetVenueResponse> => new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      axios.get(`${this.venuesUri}/count`).then((response: any) => {
+      axios.get(`${this.venuesUri}/`).then((response: any) => {
         resolve({
           success: true,
           data: response.data.data,
