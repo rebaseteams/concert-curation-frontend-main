@@ -5,16 +5,18 @@ import {
 import ConcertForm from '../concert';
 import { ConcertCreationResponse, QuestionsUI } from '../../../model/types/questions';
 import { AddRecommendationResponse } from '../../../model/types/service-response';
+import { VenuesInterface } from '../../../model/interfaces/venues';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   displayFormModal: boolean;
   forms: Array<ConcertCreationResponse>;
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
+  venuesService: VenuesInterface
 }
 
 const CurateConcertModal = ({
-  setDisplayFormModal, displayFormModal, forms, addNewRecommendation,
+  setDisplayFormModal, displayFormModal, forms, addNewRecommendation, venuesService,
 }: CurateConcertModalProp): JSX.Element => (
   <Modal
     title="Choose your prefrences"
@@ -43,6 +45,7 @@ const CurateConcertModal = ({
       setVisible={setDisplayFormModal}
       forms={forms}
       addNewRecommendation={addNewRecommendation}
+      venuesService={venuesService}
     />
   </Modal>
 );

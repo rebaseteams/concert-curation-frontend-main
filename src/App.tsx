@@ -91,7 +91,9 @@ export function createApp(
 ): () => JSX.Element | null {
   const HeaderComponent = createHeaderComponent();
   const DashboardComponent = createDashboardComponent(
-    { artistRecommendation, documentsService, templatesService },
+    {
+      artistRecommendation, documentsService, templatesService, venuesService,
+    },
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });
 
