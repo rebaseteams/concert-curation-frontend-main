@@ -39,6 +39,7 @@ import { ActionsInterface } from './model/interfaces/actions';
 import { getSsd, setSsd } from './utils/systemSpecificDataManager';
 import { systemSpecificDataGetter } from './utils/systemSpecificDataGetter';
 import { VenuesInterface } from './model/interfaces/venues';
+import { EventsTypeInterface } from './model/interfaces/eventsType';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -57,7 +58,8 @@ export interface AppOptions {
     userService: UsersInterface;
     rolesService: RolesInterface;
     actionsService: ActionsInterface;
-    venuesService: VenuesInterface
+    venuesService: VenuesInterface;
+    eventsTypeService: EventsTypeInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
@@ -82,6 +84,7 @@ export function createApp(
       rolesService,
       actionsService,
       venuesService,
+      eventsTypeService,
     },
     resources: {
       AUTH_DOMAIN,
