@@ -10,6 +10,7 @@ import { TemplatesInterface } from '../interfaces/templates';
 import { UsersInterface } from '../interfaces/users';
 import { ActionsInterface } from '../interfaces/actions';
 import { VenuesInterface } from '../interfaces/venues';
+import { EventsTypeInterface } from '../interfaces/eventsType';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -38,6 +39,7 @@ export interface Config {
     resourceService: ResourcesInterface,
     actionsService: ActionsInterface,
     venuesService: VenuesInterface,
+    eventsTypeService: EventsTypeInterface,
   };
 
   providers: {

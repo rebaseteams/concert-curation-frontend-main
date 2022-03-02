@@ -25,6 +25,7 @@ const {
   rolesService,
   actionsService,
   venuesService,
+  eventsTypeService,
 } = services;
 
 const {
@@ -46,6 +47,7 @@ const App = createApp(
       rolesService,
       actionsService,
       venuesService,
+      eventsTypeService,
     },
     resources: {
       AUTH_DOMAIN,
