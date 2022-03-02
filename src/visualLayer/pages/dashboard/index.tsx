@@ -21,6 +21,7 @@ import { DocumentsInterface } from '../../../model/interfaces/documents';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 import { TemplatesInterface } from '../../../model/interfaces/templates';
 import { VenuesInterface } from '../../../model/interfaces/venues';
+import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -31,7 +32,8 @@ export interface CreateDashboardComponentProps {
   artistRecommendation: ArtistRecommendationInterface;
   useGetDocuments?: UseGetDocuments;
   documentsService: DocumentsInterface;
-  venuesService: VenuesInterface
+  venuesService: VenuesInterface;
+  eventsTypeService: EventsTypeInterface;
 }
 
 export function createDashboardComponent({
@@ -41,6 +43,7 @@ export function createDashboardComponent({
   useGetDocuments = defaultUseGetDocuments,
   documentsService,
   venuesService,
+  eventsTypeService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
     const ConcertList = createRenderConcerts({
@@ -48,6 +51,7 @@ export function createDashboardComponent({
       deleteRecommendation: artistRecommendation.deleteRecommendation,
       addNewRecommendation: artistRecommendation.addNewRecommendation,
       venuesService,
+      eventsTypeService,
     });
     const DocumentsList = createRenderDocuments(
       {
