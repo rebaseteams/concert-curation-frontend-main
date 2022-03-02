@@ -24,6 +24,7 @@ const ConcertForm = ({
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
   const [venues, setVenues] = useState<Array<string>>([]);
+  const [eventsType, setEventsType] = useState<Array<string>>([]);
 
   const onBudgetChange = (event: Array<number>) => {
     setBudget({ min: event[0], max: event[1] });
@@ -41,8 +42,21 @@ const ConcertForm = ({
       console.log(error);
     }
   };
+  const getEventsTypeList = async () => {
+    try {
+      const resp = await eventsTypeService.getAll();
+      if (resp.success) {
+        const eventsTypeNames = resp.data.eventsType.map((et) => et.name);
+        setEventsType(eventsTypeNames);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getVenueList();
+    getEventsTypeList();
   }, []);
 
   const form: FormFields[] = myForm.map((f) => {
@@ -57,6 +71,12 @@ const ConcertForm = ({
       return {
         ...f,
         selectOptions: venues,
+      };
+    }
+    if (f.name === 'eventType') {
+      return {
+        ...f,
+        selectOptions: eventsType,
       };
     }
     return f;
