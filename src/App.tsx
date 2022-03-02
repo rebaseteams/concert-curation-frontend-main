@@ -95,7 +95,7 @@ export function createApp(
   const HeaderComponent = createHeaderComponent();
   const DashboardComponent = createDashboardComponent(
     {
-      artistRecommendation, documentsService, templatesService, venuesService,
+      artistRecommendation, documentsService, templatesService, venuesService, eventsTypeService,
     },
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });

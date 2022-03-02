@@ -19,7 +19,7 @@ import { ArtistBudget } from '../../../model/types/concertDataResponse';
 import { FormFields } from '../../../model/types/formRenderer';
 
 const ConcertForm = ({
-  setVisible, forms, addNewRecommendation, venuesService,
+  setVisible, forms, addNewRecommendation, venuesService, eventsTypeService,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);

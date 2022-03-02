@@ -1,6 +1,7 @@
 import { Button, Result, Tooltip } from 'antd';
 import { useState } from 'react';
 import { GetConcert } from '../../../../hooks/useGetConcerts';
+import { EventsTypeInterface } from '../../../../model/interfaces/eventsType';
 import { VenuesInterface } from '../../../../model/interfaces/venues';
 import { QuestionsUI } from '../../../../model/types/questions';
 import { AddRecommendationResponse, DeleteRecommendationResponse } from '../../../../model/types/service-response';
@@ -12,7 +13,8 @@ export type CreateRenderChartProps = {
   getConcert: GetConcert;
   deleteRecommendation: (id: string) => Promise<DeleteRecommendationResponse>;
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
-  venuesService: VenuesInterface
+  venuesService: VenuesInterface;
+  eventsTypeService: EventsTypeInterface;
 };
 
 export function createRenderConcerts({
@@ -20,6 +22,7 @@ export function createRenderConcerts({
   deleteRecommendation,
   addNewRecommendation,
   venuesService,
+  eventsTypeService,
 }: CreateRenderChartProps): () => JSX.Element | null {
   return function ConcertList(): JSX.Element | null {
     const {
@@ -41,6 +44,7 @@ export function createRenderConcerts({
           forms={forms}
           addNewRecommendation={addNewRecommendation}
           venuesService={venuesService}
+          eventsTypeService={eventsTypeService}
         />
         <div className="row-flex width-md">
           <h4 className="text-size-3" style={{ marginRight: '20px' }}>
