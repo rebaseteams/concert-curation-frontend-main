@@ -3,6 +3,7 @@ import { ArtistNew } from './artist';
 import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
+import { NewEventsTypeResponseData } from './eventsType';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
 import { NewRoleResponseData, RoleResponseData, UserRoleType } from './roles';
@@ -304,5 +305,18 @@ export type GetVenueResponse = {
   success: boolean,
   data: {
     venues : Array<NewVenueResponseData>
+  }
+}
+
+// events type response
+export type GetEventsTypeByIdResponse = {
+  success: boolean,
+  data: NewEventsTypeResponseData
+}
+
+export type GetEventsTypeResponse = {
+  success: boolean,
+  data: {
+    eventsType : Array<NewEventsTypeResponseData>
   }
 }
