@@ -13,3 +13,8 @@ export type AdvancedSearchProps = {
   }
 
 export type FilterOptions = Array<CategoryObject>
+
+export type OptionType={
+    label: JSX.Element;
+    value: string;
+}

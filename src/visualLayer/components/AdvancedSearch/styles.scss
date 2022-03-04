@@ -1,0 +1,24 @@
+.advanced-search-box{
+    width: 600px;
+    margin-right: 20px;
+}
+
+.search-button-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+.search-button{
+    width: 100%;
+}
+
+.search-button-internal-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}

@@ -1,0 +1,48 @@
+
+
+.tags-and-input-container{
+    display: flex;
+    align-items: center;
+}   
+
+.search-icon{
+    margin-right: 10px;
+}
+
+.option-default-icon{
+    margin-right: 10px;
+}
+
+.tags-container{
+    display:inline-flex;
+    padding: 3px 10px 3px 10px ;
+    margin-left: 6px;
+    border: 1px solid #777;
+    align-items: center;
+    justify-content: space-around;
+    white-space: nowrap;
+}
+
+.tags-close-icon{
+    margin-left: 6px;
+}
+
+.select-container-main{
+    overflow: auto;
+    max-height: 300px;
+}
+
+.grid-view-options-container{
+    display: flex;
+    margin-bottom: 15px;
+    margin-top: 6px;
+}
+
+.list-view-options-container{
+    margin-bottom: 15px;
+    margin-top: 6px;
+}
+
+.option-button-container{
+    padding-right: 8px;
+}
