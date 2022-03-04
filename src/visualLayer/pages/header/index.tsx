@@ -3,28 +3,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
-  Button, Layout, Input, notification,
+  Button, Layout,
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './header.scss';
 import cuttimelogo from './cuttime.png';
 import IconRenderer from '../../components/IconRenderer';
+import AdvancedSearch from '../../components/AdvancedSearch';
+import { FilterOptions } from '../../components/AdvancedSearch/types';
 // import { UseAuth0 } from '../../../model/types/auth0User';
 
 const { Header } = Layout;
-const { Search } = Input;
 
 // export interface CreateHeaderComponentProps {
 //   useAuth0: UseAuth0;
 // }
 
 export function createHeaderComponent(): () => JSX.Element | null {
-  const onSearch = (value: string) => {
-    notification.info({
-      message: `Searching ${value}`,
-      placement: 'bottomRight',
-    });
-  };
+  const filterOptions:FilterOptions = [
+    {
+      category: 'Artist',
+      subcategories: ['Genre', 'Gender', 'Personality'],
+    },
+    {
+      category: 'Brands',
+      subcategories: ['b1', 'b2', 'b3'],
+    },
+    {
+      category: 'Venue Location',
+    },
+
+  ];
 
   return function HeaderComponent() {
     const {
@@ -52,16 +61,8 @@ export function createHeaderComponent(): () => JSX.Element | null {
 
     const renderPrivate = () => (
       <div id="extra" className="row-flex justify-between align-center">
-        <Search
-          placeholder="search"
-          allowClear
-          onSearch={onSearch}
-          style={{
-            background: '#444',
-            color: '#FFF',
-            width: 354,
-            marginRight: '70px',
-          }}
+        <AdvancedSearch
+          filterOptions={filterOptions}
         />
         {IconRenderer('waving_hand')}
         <span className="my-3 text-size-4">
