@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { CloseOutlined, HistoryOutlined, SearchOutlined } from '@ant-design/icons';
 import {
-  Button, Input, Modal,
+  Button, Card, Input, Modal,
 } from 'antd';
 import _ from 'lodash';
 import {
@@ -183,15 +183,17 @@ const SearchPopup = ({
                   {
                     item.options.map((o: any) => (
                       <div className="option-button-container">
-                        <Button
+                        <Card
                           className="option-button"
+                          bordered={item.viewOption === 'grid'}
+                          hoverable
+                          bodyStyle={{ padding: '8px' }}
                           style={{
                             width: '100%',
                             backgroundColor: `${activeOption?.type}-${activeOption?.value}` === `${o.type}-${o.value}` ? '#1890ff' : '',
                             color: `${activeOption?.type}-${activeOption?.value}` === `${o.type}-${o.value}` ? '#fff' : '',
                             textAlign: 'left',
                           }}
-                          type={item.viewOption === 'grid' ? 'default' : 'text'}
                           onClick={() => handleOptionClick({ type: o.type, value: o.value })}
                           onMouseEnter={() => setActiveOption({
                             type: o.type,
@@ -200,7 +202,7 @@ const SearchPopup = ({
                           onMouseLeave={() => setActiveOption(undefined)}
                         >
                           <div>
-                            {(o.type === metaTypes.results || o.type === metaTypes.subcategory) && (
+                            {o.type === metaTypes.subcategory && (
                               <SearchOutlined className="option-default-icon" />
                             )}
                             {o.type === metaTypes.recent && (
@@ -208,7 +210,7 @@ const SearchPopup = ({
                             )}
                             {o.label}
                           </div>
-                        </Button>
+                        </Card>
                       </div>
                     ))
                 }
