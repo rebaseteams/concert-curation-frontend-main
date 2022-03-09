@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import {
+  Avatar,
   Button, notification,
 } from 'antd';
 import { useEffect, useState } from 'react';
@@ -12,6 +13,8 @@ import {
 import './styles.scss';
 import SearchPopup from './popup';
 import { metaTypes } from './utils';
+import ResultRenderer from './renderer/resultRenderer';
+import { sampleData } from './sampleData';
 
 const AdvancedSearch = ({
   filterOptions,
@@ -132,16 +135,23 @@ const AdvancedSearch = ({
   const handleSearch = (value: string) => {
     setSearchQuery(value);
     if (value) {
-      const defaultSearch = {
-        type: metaTypes.results,
+      const defaultSearch = ResultRenderer(
         value,
-        label: <>{value}</>,
-      };
-      const rData: OptionType[] = [];
-      rData.push(defaultSearch);
+        metaTypes.results,
+        '',
+        'search for this query',
+      );
+      const fData = sampleData.filter((i) => (
+        i.heading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+        || i.subHeading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      ));
+      const rData = fData.map((d) => ResultRenderer(
+        d.heading, metaTypes.results, d.image, d.subHeading,
+      ));
+      rData.unshift(defaultSearch);
       setOptions([{
         label: '',
-        options: [defaultSearch],
+        options: rData,
       }]);
     } else if (category && (subcategory || subcategories.length === 0)) {
       setSelectOptions('', []);
