@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { CloseOutlined, HistoryOutlined, SearchOutlined } from '@ant-design/icons';
@@ -31,6 +33,7 @@ const SearchPopup = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<Array<any>>([]);
   const [activeOption, setActiveOption] = useState<{type: string, value: string}>();
+  const [change, setChange] = useState<number>(1);
 
   const orderedOptionKeys = () => {
     const twoD = options.map((o) => o.options.map((i: any) => ({
@@ -78,24 +81,36 @@ const SearchPopup = ({
     }
     if (e.code === 'ArrowDown') {
       const opts = orderedOptionKeys();
-      if (!activeOption) {
-        setActiveOption(opts[0]);
-      } else {
-        const activeOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption.type}-${activeOption.value}`);
-        setActiveOption(
-          opts.length - 1 === activeOptionIndex ? opts[0] : opts[activeOptionIndex + 1],
-        );
+      const previouslyActiveOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption?.type}-${activeOption?.value}`);
+      const activeOptionIndex = (previouslyActiveOptionIndex === opts.length - 1 || previouslyActiveOptionIndex === -1)
+        ? 0
+        : previouslyActiveOptionIndex + 1;
+      const requestedOption = opts[activeOptionIndex];
+      setActiveOption(requestedOption);
+      const act = document.getElementById(`${requestedOption?.type}-${requestedOption?.value}`);
+      const dv = document.getElementById('select-container-main');
+      if (dv && act) {
+        const parts = Math.floor(dv?.offsetHeight / act?.offsetHeight);
+        // console.log('parts', parts);
+        setChange((change >= parts || previouslyActiveOptionIndex === opts.length - 1) ? parts : change + 1);
+        if (change === parts || previouslyActiveOptionIndex === opts.length - 1) {
+          dv.scrollTop = (activeOptionIndex + 1) * act.offsetHeight - dv.offsetHeight;
+        }
       }
     }
     if (e.code === 'ArrowUp') {
       const opts = orderedOptionKeys();
-      if (!activeOption) {
-        setActiveOption(opts[opts.length - 1]);
-      } else {
-        const activeOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption.type}-${activeOption.value}`);
-        setActiveOption(
-          activeOptionIndex === 0 ? opts[opts.length - 1] : opts[activeOptionIndex - 1],
-        );
+      const previouslyActiveOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption?.type}-${activeOption?.value}`);
+      const activeOptionIndex = (previouslyActiveOptionIndex === 0 || previouslyActiveOptionIndex === -1)
+        ? opts.length - 1
+        : previouslyActiveOptionIndex - 1;
+      const requestedOption = opts[activeOptionIndex];
+      setActiveOption(requestedOption);
+      const act = document.getElementById(`${requestedOption?.type}-${requestedOption?.value}`);
+      const dv = document.getElementById('select-container-main');
+      setChange((change <= 1 || previouslyActiveOptionIndex === 0) ? 1 : change - 1);
+      if (dv && act && (change === 1 || previouslyActiveOptionIndex === 0)) {
+        act.scrollIntoView();
       }
     }
   };
@@ -104,7 +119,6 @@ const SearchPopup = ({
     const newTags = [...selectedTags, { value: o.value, type: o.type }];
     setSelectedTags(newTags);
     setSearchQuery('');
-    // onTagChange(newTags);
   };
 
   useEffect(() => {
@@ -173,17 +187,24 @@ const SearchPopup = ({
         top: '5px',
       }}
     >
-      <div className="select-container-main">
+      <div
+        className="select-container-main"
+        id="select-container-main"
+      >
 
         {
-            options.map((item) => (
-              <div>
+            options.map((item, index:number) => (
+              <div key={index}>
                 {item.label}
                 <div className={item.viewOption === 'grid' ? 'grid-view-options-container' : 'list-view-options-container'}>
                   {
-                    item.options.map((o: any) => (
-                      <div className="option-button-container">
+                    item.options.map((o: any, i: number) => (
+                      <div
+                        key={i}
+                        className="option-button-container"
+                      >
                         <Card
+                          id={`${o.type}-${o.value}`}
                           className="option-button"
                           bordered={item.viewOption === 'grid'}
                           hoverable
