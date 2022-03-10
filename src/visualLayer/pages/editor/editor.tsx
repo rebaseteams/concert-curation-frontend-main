@@ -360,7 +360,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
             }}
           />
           )}
-          { documentMode === 'sign' && renderSignedPdf(signedPdf || '') }
+          { documentMode === 'sign' && signedPdf && renderSignedPdf(signedPdf) }
         </div>
 
         <Modal
