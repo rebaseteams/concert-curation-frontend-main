@@ -2,6 +2,7 @@ import {
   Layout,
   Tabs,
 } from 'antd';
+import { useSearchParams } from 'react-router-dom';
 
 import { createRenderConcerts } from './concerts-list';
 import { createRenderDocuments } from './documents-list';
@@ -46,6 +47,13 @@ export function createDashboardComponent({
   eventsTypeService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
+    const [searchParam, setSearchPram] = useSearchParams();
+    let selectedTab = searchParam.get('view');
+    if (!selectedTab) {
+      selectedTab = 'concerts';
+      setSearchPram('view=concerts');
+    }
+
     const ConcertList = createRenderConcerts({
       getConcert: useGetConcerts(artistRecommendation),
       deleteRecommendation: artistRecommendation.deleteRecommendation,
@@ -65,7 +73,7 @@ export function createDashboardComponent({
     return (
       <Content style={{ height: '88vh', overflowY: 'auto', marginTop: '10px' }}>
 
-        <Tabs centered>
+        <Tabs defaultActiveKey={selectedTab} centered onTabClick={(a) => setSearchPram(`view=${a}`)}>
           <TabPane tab="Concerts" key="concerts">
             <ConcertList />
           </TabPane>
