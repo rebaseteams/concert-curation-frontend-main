@@ -223,7 +223,6 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       );
     };
 
-    
     const updateDocument = async () => {
       if (contractInfo && contractInfo.envelopeId) {
         setLoading(true);
@@ -317,7 +316,12 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           onBack={() => redirectBack()}
           title={documentName}
           subTitle={`created on ${createdOn}`}
-          extra={renderHeaderExtra()}
+          extra={(
+            <div className="row-flex align-center">
+              {renderHeaderExtra()}
+              <Button type="text" onClick={() => navigate('/dashboard?view=documents')}>X</Button>
+            </div>
+          )}
         />
         <div
           style={{
@@ -376,7 +380,6 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
             </FormItem>
           </Form>
         </Modal>
-
         <Modal
           title="Please fill this form"
           visible={docusignModal}
