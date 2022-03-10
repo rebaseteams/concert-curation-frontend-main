@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable arrow-body-style */
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -21,7 +22,8 @@ import { DocusignFormData } from '../../../model/types/docusign/docusignForm';
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 import IconRenderer from '../../components/IconRenderer';
 import { DocumentContractData, DocumentModes } from '../../../model/types/service-response';
-import downloadSignedPdf from './downloadSignedPdf';
+import { renderSignedPdf } from './components/signedPdf';
+import { downloadSignedPdf, getSignedPdf } from './downloadSignedPdf';
 
 type EditorPageProp = {
   documentsService: DocumentsInterface
@@ -46,6 +48,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
     const submitFormRef = useRef<DocusignFormData>();
     const [contractInfo, setContractInfo] = useState<DocumentContractData>();
     const htmlDownloadService = new HtmlDownloadService();
+    const [signedPdf, setSignedPdf] = useState<string | null>(null);
 
     const downloadPdf = () => {
       const root: HTMLIFrameElement = document.getElementById('editor_ifr') as HTMLIFrameElement;
@@ -71,6 +74,10 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
         }
         // setCreatedOn(response.data.data.createdOn.split('T')[0]);
         setDocumentId(response.data.data.id);
+        if (response.data.data.mode === 'sign') {
+          const pdf = await getSignedPdf(response.data.data.contract.envelopeId, docusignService);
+          setSignedPdf(pdf);
+        }
         return true;
       }
       return false;
@@ -216,6 +223,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
       );
     };
 
+    
     const updateDocument = async () => {
       if (contractInfo && contractInfo.envelopeId) {
         setLoading(true);
@@ -300,7 +308,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
           </div>
         );
       }
-      return <Empty />;
+      return <div className="row-flex justify-center align-center"><Spin /></div>;
     };
     return (
       <div>
@@ -317,6 +325,7 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
             margin: 'auto',
           }}
         >
+          { (documentMode === 'submit' || documentMode === 'edit') && (
           <Editor
           // eslint-disable-next-line no-return-assign
             onInit={(evt, editor) => {
@@ -346,6 +355,8 @@ export const createEditorPage = ({ documentsService, docusignService }: EditorPa
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             }}
           />
+          )}
+          { documentMode === 'sign' && renderSignedPdf(signedPdf || '') }
         </div>
 
         <Modal

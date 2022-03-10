@@ -1,7 +1,7 @@
 import { DocusignInterface } from '../../../model/interfaces/docusign';
 
-const downloadSignedPdf = async (envelopeId: string, docusignService: DocusignInterface):
-Promise<boolean> => {
+export async function downloadSignedPdf(envelopeId: string, docusignService: DocusignInterface):
+Promise<boolean> {
   const response = await docusignService.getSignedPdf(envelopeId);
   if (response.error && response.data && !response.data.success) {
     return false;
@@ -18,6 +18,18 @@ Promise<boolean> => {
     return true;
   }
   return false;
-};
+}
 
-export default downloadSignedPdf;
+export async function getSignedPdf(envelopeId: string, docusignService: DocusignInterface):
+Promise<string | null> {
+  const response = await docusignService.getSignedPdf(envelopeId);
+  if (response.error && response.data && !response.data.success) {
+    return null;
+  }
+  if (response.data && response.data.data) {
+    const pdfBase64 = response.data.data;
+    const linkSource = `data:application/pdf;base64,${pdfBase64}`;
+    return linkSource;
+  }
+  return null;
+}
