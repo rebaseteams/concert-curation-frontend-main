@@ -176,7 +176,9 @@ const AdvancedSearch = ({
         >
           <div className="search-button-internal-div">
             Search in Concert Curation
-            <SearchOutlined />
+            <SearchOutlined
+              data-testid="search-icon-in-search-button"
+            />
           </div>
 
         </Button>
