@@ -170,6 +170,7 @@ const AdvancedSearch = ({
     <div className="advanced-search-box">
       <div className="search-button-container">
         <Button
+          data-testid="search-button"
           className="search-button"
           onClick={() => setIsSearchModalOpen(true)}
         >
