@@ -175,6 +175,7 @@ const SearchPopup = ({
   return (
 
     <Modal
+      data-testid="search-popup-modal"
       visible={isModalOpen}
       onCancel={() => setIsModalOpen(false)}
       mask={false}
