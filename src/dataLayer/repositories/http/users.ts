@@ -114,6 +114,7 @@ export default class UsersRepo implements UsersInterface {
         resolve(response.data);
       }).catch((err) => {
         customErrorHandler.axiosErrorHandler(err);
+        resolve({ success: false, data: err.response.data });
       });
     })
 }

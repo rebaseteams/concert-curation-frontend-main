@@ -40,6 +40,7 @@ import { getSsd, setSsd } from './utils/systemSpecificDataManager';
 import { systemSpecificDataGetter } from './utils/systemSpecificDataGetter';
 import { VenuesInterface } from './model/interfaces/venues';
 import { EventsTypeInterface } from './model/interfaces/eventsType';
+import createProfilePage from './visualLayer/pages/profile';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -113,6 +114,8 @@ export function createApp(
     docusignService,
   });
 
+  const ProfilePage = createProfilePage();
+
   return function App(): JSX.Element | null {
     const [auth, setAuth] = useState(false);
     const {
@@ -168,7 +171,9 @@ export function createApp(
     );
 
     const authenticate = (comp : JSX.Element) : JSX.Element => {
-      const toReturn = isAuthenticated ? comp : <Navigate to="/signup" />;
+      const unapproved = getSsd('unapproved');
+      // eslint-disable-next-line no-nested-ternary
+      const toReturn = isAuthenticated ? unapproved ? <Navigate to="/profile" /> : comp : <Navigate to="/signup" />;
       return toReturn;
     };
 
@@ -184,6 +189,7 @@ export function createApp(
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
                 <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} rolesService={rolesService} />)} />
+                <Route path="profile" element={isAuthenticated ? <ProfilePage /> : <Navigate to="/" />} />
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />

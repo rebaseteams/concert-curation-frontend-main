@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-type SsdKeys = 'actions' | 'allRoles' | 'roles' | 'expireIn'
+type SsdKeys = 'actions' | 'allRoles' | 'roles' | 'expireIn' | 'unapproved';
 
 export function setSsd(name: SsdKeys, value: any): void {
   const ssv = localStorage.getItem('ssv');
