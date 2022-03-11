@@ -7,6 +7,7 @@ const axiosErrorHandler = (err : {message : string, response : { data : { messag
     notification.error(
       {
         message: `Request Failed with status code : ${err.response.status}`,
+        key: String(err.response.status),
         description: err.response.data.message,
       },
     );
@@ -14,6 +15,7 @@ const axiosErrorHandler = (err : {message : string, response : { data : { messag
     notification.error(
       {
         message: 'Error while sending request',
+        key: err.message,
         description: err.message,
       },
     );
