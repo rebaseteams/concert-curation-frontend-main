@@ -132,14 +132,24 @@ const SearchPopup = ({
   const header = (
     <div className="tags-and-input-container">
       {
-            selectedTags.length === 0 && <SearchOutlined className="search-icon" />
+            selectedTags.length === 0 && (
+            <SearchOutlined
+              data-testid="search-icon-near-input"
+              className="search-icon"
+            />
+            )
         }
       {
-          selectedTags.map((t) => (
-            <div className="tags-container">
+          selectedTags.map((t, ind) => (
+            <div
+              data-testid="selected-tags-near-input"
+              key={ind}
+              className="tags-container"
+            >
 
               {t.value}
               <CloseOutlined
+                data-testid="selected-tags-close-icon-near-input"
                 className="tags-close-icon"
                 onClick={() => setSelectedTags(selectedTags.filter((i) => i.value !== t.value))}
               />
@@ -148,6 +158,7 @@ const SearchPopup = ({
       }
 
       <Input
+        data-testid="search-query-input"
         ref={searchInputRef}
         bordered={false}
         placeholder="Search for Artists, Brands, Venue locations"
@@ -159,6 +170,7 @@ const SearchPopup = ({
           searchQuery
           && (
           <Button
+            data-testid="clear-button-near-input"
             type="text"
             onClick={() => {
               setSearchQuery('');
@@ -169,7 +181,10 @@ const SearchPopup = ({
           </Button>
           )
       }
-      <CloseOutlined onClick={() => setIsModalOpen(false)} />
+      <CloseOutlined
+        data-testid="top-right-close-icon"
+        onClick={() => setIsModalOpen(false)}
+      />
     </div>
   );
   return (
