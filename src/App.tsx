@@ -88,6 +88,7 @@ export function createApp(
       actionsService,
       venuesService,
       eventsTypeService,
+      advancedSearchService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -95,7 +96,7 @@ export function createApp(
   }
    : AppOptions,
 ): () => JSX.Element | null {
-  const HeaderComponent = createHeaderComponent();
+  const HeaderComponent = createHeaderComponent({ advancedSearchService });
   const DashboardComponent = createDashboardComponent(
     {
       artistRecommendation, documentsService, templatesService, venuesService, eventsTypeService,
