@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AdvancedSearchResponseData } from './advancedSearch';
 import { ArtistNew } from './artist';
 import { ArtistRecommendation } from './artist-recommendation';
 import { CreateCollaborationResponseData } from './collaborationForm';
@@ -319,4 +320,10 @@ export type GetEventsTypeResponse = {
   data: {
     eventsType : Array<NewEventsTypeResponseData>
   }
+}
+
+// search response
+export type AdvancedSearchResponse = {
+  success: boolean,
+  data: AdvancedSearchResponseData
 }
