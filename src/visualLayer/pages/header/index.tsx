@@ -11,15 +11,19 @@ import cuttimelogo from './cuttime.png';
 import IconRenderer from '../../components/IconRenderer';
 import AdvancedSearch from '../../components/AdvancedSearch';
 import { FilterOptions } from '../../components/AdvancedSearch/types';
+import AdvancedSearchInterface from '../../../model/interfaces/advancedSearch';
 // import { UseAuth0 } from '../../../model/types/auth0User';
 
 const { Header } = Layout;
 
-// export interface CreateHeaderComponentProps {
-//   useAuth0: UseAuth0;
-// }
+type HeaderComponentProps ={
+  advancedSearchService: AdvancedSearchInterface;
+}
 
-export function createHeaderComponent(): () => JSX.Element | null {
+export function createHeaderComponent({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  advancedSearchService,
+}: HeaderComponentProps): () => JSX.Element | null {
   const filterOptions:FilterOptions = [
     {
       category: 'Artist',
