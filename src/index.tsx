@@ -26,6 +26,7 @@ const {
   actionsService,
   venuesService,
   eventsTypeService,
+  advancedSearchService,
 } = services;
 
 const {
@@ -48,6 +49,7 @@ const App = createApp(
       actionsService,
       venuesService,
       eventsTypeService,
+      advancedSearchService,
     },
     resources: {
       AUTH_DOMAIN,

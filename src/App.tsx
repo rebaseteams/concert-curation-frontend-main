@@ -41,6 +41,7 @@ import { systemSpecificDataGetter } from './utils/systemSpecificDataGetter';
 import { VenuesInterface } from './model/interfaces/venues';
 import { EventsTypeInterface } from './model/interfaces/eventsType';
 import createProfilePage from './visualLayer/pages/profile';
+import AdvancedSearchInterface from './model/interfaces/advancedSearch';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -61,6 +62,7 @@ export interface AppOptions {
     actionsService: ActionsInterface;
     venuesService: VenuesInterface;
     eventsTypeService: EventsTypeInterface;
+    advancedSearchService: AdvancedSearchInterface;
   },
   resources: {
     AUTH_DOMAIN: string;
