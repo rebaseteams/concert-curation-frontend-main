@@ -11,6 +11,7 @@ import { UsersInterface } from '../interfaces/users';
 import { ActionsInterface } from '../interfaces/actions';
 import { VenuesInterface } from '../interfaces/venues';
 import { EventsTypeInterface } from '../interfaces/eventsType';
+import AdvancedSearchInterface from '../interfaces/advancedSearch';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -40,6 +41,7 @@ export interface Config {
     actionsService: ActionsInterface,
     venuesService: VenuesInterface,
     eventsTypeService: EventsTypeInterface,
+    advancedSearchService: AdvancedSearchInterface,
   };
 
   providers: {

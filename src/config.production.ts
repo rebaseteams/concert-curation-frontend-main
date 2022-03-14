@@ -27,6 +27,8 @@ import Venues from './dataLayer/services/venues';
 import VenuesRepo from './dataLayer/repositories/http/venues';
 import EventsType from './dataLayer/services/eventsType';
 import EventsTypeRepo from './dataLayer/repositories/http/eventsType';
+import AdvacedSearchRepo from './dataLayer/repositories/http/advancedSearch';
+import AdvancedSearch from './dataLayer/services/advancedSearch';
 
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
@@ -56,6 +58,7 @@ export const config: Config = {
     actionsService: new Actions(new ActionsHttpRep(`${server}/actions`)),
     venuesService: new Venues(new VenuesRepo(server)),
     eventsTypeService: new EventsType(new EventsTypeRepo(server)),
+    advancedSearchService: new AdvancedSearch(new AdvacedSearchRepo(server)),
 
   },
   providers: {
