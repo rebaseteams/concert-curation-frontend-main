@@ -66,7 +66,9 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
     if (response.success) {
       notification.success({ message: 'Resource Updated Successfully' });
       const list = listToDisplay.map((val) => {
-        if (val.id === data.id) return { id: val.id, name: data.name, actions: data.actions };
+        if (val.id === response.data.resource.id) {
+          return { id: val.id, name: data.name, actions: response.data.resource.actions };
+        }
         return val;
       });
       setListToDisplay(list);
@@ -194,7 +196,7 @@ const createResources = (resourceService: ResourcesInterface) => function Resour
             actions={[
               <Button onClick={() => {
                 editForm.setFieldsValue({
-                  name: item.name, actions: item.actions.map((a) => a.name), id: item.id,
+                  name: item.name, actions: item.actions.map((a) => a.id), id: item.id,
                 });
                 editResourceModal.showModal();
               }}

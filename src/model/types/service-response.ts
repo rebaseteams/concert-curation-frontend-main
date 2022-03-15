@@ -7,7 +7,9 @@ import { Documents } from './document/addDocument';
 import { NewEventsTypeResponseData } from './eventsType';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
-import { NewRoleResponseData, RoleResponseData, UserRoleType } from './roles';
+import {
+  NewRoleResponseData, Resource, RoleResponseData, UserRoleType,
+} from './roles';
 import { TemplateResponse, Templates } from './templates';
 import { NewUserResponseData } from './users';
 import { NewVenueResponseData } from './venue';
@@ -249,7 +251,7 @@ export type DeleteResourceResponse = {
 
 export type EditResourceResponse = {
   success: boolean,
-  data : any
+  data : { resource: Resource }
 }
 
 export type GetResourcesCountResponse = {
