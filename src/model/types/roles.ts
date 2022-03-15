@@ -27,7 +27,7 @@ export type RoleResponseData = {
 
 export type Action = {
     name: string;
-    permission: boolean;
+    id: string;
   }
 
 export type Resource = {
