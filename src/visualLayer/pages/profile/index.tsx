@@ -1,8 +1,16 @@
 /* eslint-disable arrow-body-style */
 
+import './index.scss';
+
 const createProfilePage = () => {
   return function ProfilePage(): JSX.Element {
-    return <div style={{ margin: 'auto' }}>Profile page</div>;
+    return (
+      <div className="container">
+        <div>
+          <h3>profile Page</h3>
+        </div>
+      </div>
+    );
   };
 };
 
