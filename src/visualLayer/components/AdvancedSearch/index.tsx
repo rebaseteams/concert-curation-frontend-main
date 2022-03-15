@@ -18,6 +18,9 @@ import { sampleData } from './sampleData';
 
 const AdvancedSearch = ({
   filterOptions,
+  onSearching,
+  searchResults,
+  onResultSelect,
 }: AdvancedSearchProps): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -141,6 +144,14 @@ const AdvancedSearch = ({
         '',
         'search for this query',
       );
+      if (onSearching) {
+        onSearching({
+          category,
+          subcategory,
+          query: value,
+        });
+      }
+
       const fData = sampleData.filter((i) => (
         i.heading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
         || i.subHeading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
