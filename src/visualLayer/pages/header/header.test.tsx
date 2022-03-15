@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createHeaderComponent } from '.';
 import { Auth0User } from '../../../model/types/auth0User';
 import { createUseAuth0Mock } from '../../../../test/mocks/use-auth0.mock';
+import AdvancedSearchInterface from '../../../model/interfaces/advancedSearch';
 
 function setup({
   user = {
@@ -23,7 +24,9 @@ function setup({
   if (isAuthenticated) {
     useAuth0.user = user;
   }
-  const HeaderComponent = createHeaderComponent({ useAuth0 });
+  const HeaderComponent = createHeaderComponent({
+    advancedSearchService: {} as AdvancedSearchInterface,
+  });
 
   return {
     HeaderComponent,

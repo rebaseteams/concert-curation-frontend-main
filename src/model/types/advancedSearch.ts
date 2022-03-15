@@ -4,11 +4,11 @@ export type AdvancedSearchQuery = {
     query: string;
 }
 
-export type AdvancedSearchResponseData = {
+export type AdvancedSearchResponseData = Array<{
     id: string;
     image: string;
     title: string;
     description: string;
     type: string;
     destinationUrl: string;
-}
+}>
