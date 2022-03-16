@@ -29,6 +29,7 @@ const SuperAdminDashboard = ({ resourcesService, usersService, rolesService }: S
         style={{
           height: '88vh',
           overflow: 'auto',
+          padding: '0px 20px',
         }}
       >
         <TabPane tab="Users" key="user">

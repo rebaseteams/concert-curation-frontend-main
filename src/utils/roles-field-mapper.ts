@@ -16,9 +16,9 @@ export function rolesFieldMapper(
 ): roleList {
   const resArr = resource.map((o) => o.actions.map((a) => ({
     id: o.id,
-    name: rdata?.find((r) => r.id === o.id)?.name || 'res-name',
+    name: rdata?.find((r) => r.id === o.id)?.id || 'res-name',
     permission: a.permission,
-    actions: a.name,
+    actions: a.id,
   })));
   const oneD = _.flatten(resArr);
   return {

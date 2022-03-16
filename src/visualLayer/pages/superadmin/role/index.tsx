@@ -17,6 +17,7 @@ import { RolesInterface } from '../../../../model/interfaces/roles';
 import CustomModal from '../../../components/CustomModal';
 import IconRenderer from '../../../components/IconRenderer';
 import { roleList, rolesFieldMapper } from '../../../../utils/roles-field-mapper';
+import { Action } from '../../../../model/types/roles';
 
 type RolesProps = {
   rolesService: RolesInterface;
@@ -27,7 +28,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
 
   const [loadingRoles, setLoadingRoles] = useState(true);
   const [listToDisplay, setListToDisplay] = useState<Array<roleList>>([]);
-  const [actions, setActions] = useState<Array<Array<string>>>([]);
+  const [actions, setActions] = useState<Array<Array<Action>>>([]);
   const [resources, setResources] = useState<Array<{id: string, name: string, actions: Array<{ id: string, name: string }>}>>([]);
   const [roleId, setRoleId] = useState<string>('');
   const [createForm] = Form.useForm();
@@ -81,14 +82,14 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
   type formType = {name : string, resource : Array<{permission : boolean, name : string, actions : string}>}
 
   const parseData = (value: formType) => {
-    const array = resources.slice().filter((i) => value.resource.some(({ name }) => i.name === name));
+    const array = resources.slice().filter((i) => value.resource.some(({ name }) => i.id === name));
     return array.map((res) => {
-      const resArray = value.resource.filter((i) => i.name === res.name);
+      const resArray = value.resource.filter((i) => i.name === res.id);
       return {
         id: res.id,
         name: res.name,
         actions: resArray.map((i) => ({
-          name: i.actions,
+          id: i.actions,
           permission: i.permission,
         })),
       };
@@ -153,9 +154,9 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                     <Select
                       onChange={(value) => {
                         resources.forEach((element) => {
-                          if (element.name === value) {
+                          if (element.id === value) {
                             const ac = [...actions];
-                            ac[key] = element.actions.map((a) => a.name);
+                            ac[key] = element.actions.map((a) => a);
                             setActions(ac);
                           }
                         });
@@ -163,11 +164,13 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                       placeholder="Select Resource"
                     >
                       {resources.map((resource) => (
-                        <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
+                        <Select.Option value={resource.id} key={resource.id}>{resource.name}</Select.Option>
                       ))}
                     </Select>
                   </Form.Item>
+
                   <Form.Item name={[name, 'id']} required />
+
                   <Form.Item
                     {...restField}
                     name={[name, 'actions']}
@@ -175,10 +178,11 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                   >
                     <Select placeholder="Select Actions">
                       {
-                          actions[key].map((action, index) => (<Select.Option value={actions[key][index]} key={actions[key][index]}>{actions[key][index]}</Select.Option>))
+                        actions[key] && actions[key].map((action, index) => (<Select.Option value={actions[key][index].id} key={actions[key][index].id}>{actions[key][index].name}</Select.Option>))
                       }
                     </Select>
                   </Form.Item>
+
                   <Form.Item
                     name={[name, 'permission']}
                     rules={[{ required: true, message: 'Missing permission' }]}
@@ -236,9 +240,9 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                       <Select
                         onChange={(value) => {
                           resources.forEach((element) => {
-                            if (element.name === value) {
+                            if (element.id === value) {
                               const ac = [...actions];
-                              ac[key] = element.actions.map((a) => a.name);
+                              ac[key] = element.actions;
                               setActions(ac);
                             }
                           });
@@ -246,7 +250,7 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                         placeholder="Select Resource"
                       >
                         {resources.map((resource) => (
-                          <Select.Option value={resource.name} key={resource.name}>{resource.name}</Select.Option>
+                          <Select.Option value={resource.id} key={resource.id}>{resource.name}</Select.Option>
                         ))}
                       </Select>
                     </Form.Item>
@@ -257,8 +261,8 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                     >
                       <Select placeholder="Select Actions">
                         {
-                          actions[key] && actions[key].map((action, index) => (<Select.Option value={actions[key][index]} key={actions[key][index]}>{actions[key][index]}</Select.Option>))
-                      }
+                          actions[key] && actions[key].map((action, index) => (<Select.Option value={actions[key][index].id} key={actions[key][index].id}>{actions[key][index].name}</Select.Option>))
+                        }
                       </Select>
                     </Form.Item>
                     <Form.Item
@@ -345,11 +349,11 @@ const Roles = ({ rolesService, resourcesService }: RolesProps) : JSX.Element => 
                 editForm.setFieldsValue({ name: dt.name, resource: dt.resource });
                 // setRole({ name: item.name, resource: item.resource, actions: item.actions });
                 setRoleId(item.id);
-                const ac: Array<Array<string>> = [];
+                const ac: Array<Array<Action>> = [];
                 item.resource.forEach((value) => {
                   resources.forEach((element) => {
-                    if (element.name === value.name) {
-                      ac.push(element.actions.map((a) => a.name));
+                    if (element.id === value.id) {
+                      ac.push(element.actions);
                     }
                   });
                 });
