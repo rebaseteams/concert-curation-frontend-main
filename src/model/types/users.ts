@@ -10,7 +10,7 @@ export type NewUserResponseData = {
     name: string,
     email: string,
     approved: boolean,
-    roles: Array<string>,
+    roles: Array<{ id: string, name: string }>,
 }
 
 export type ApproveUserForm = {

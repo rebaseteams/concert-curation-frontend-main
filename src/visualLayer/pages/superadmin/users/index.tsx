@@ -17,7 +17,7 @@ type UserType = {
   name : string,
   picture : string,
   pending : boolean,
-  roles : Array<string>};
+  roles : Array<{ id: string, name: string }>};
 
 const Users = ({ userService, roleService } : {
   userService : UsersInterface,
@@ -31,7 +31,7 @@ const Users = ({ userService, roleService } : {
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
   const [listToDisplay, setListToDisplay] = useState<Array<UserType>>([]);
-  const [roles, setRoles] = useState<Array<{name : string, id : string}>>([{ name: 'role1', id: '' }, { name: 'role2', id: '' }, { name: 'role3', id: '' }]);
+  const [roles, setRoles] = useState<Array<{name : string, id : string}>>([]);
   const validateMessages = {
     required: '${label} is required!',
   };
@@ -87,7 +87,10 @@ const Users = ({ userService, roleService } : {
 
   const onEdit = async () => {
     const { user } = form.getFieldsValue();
-    const resp = await userService.updateUsersRole({ id: user.id, roles: user.roles });
+    const resp = await userService.updateUsersRole({
+      id: user.id,
+      roles: user.roles,
+    });
     if (resp.success) {
       notification.success({ message: 'User successfully updated' });
     }
@@ -115,7 +118,9 @@ const Users = ({ userService, roleService } : {
           >
             {
               roles.map((role) => (
-                <Select.Option value={role.id} key={role.id}>{role.name}</Select.Option>
+                <Select.Option name={role.id} value={role.id} key={role.id}>
+                  {role.name}
+                </Select.Option>
               ))
             }
           </Select>
@@ -170,7 +175,11 @@ const Users = ({ userService, roleService } : {
               <Button
                 onClick={async () => {
                   const user = await userService.getUserById(item.id);
-                  form.setFieldsValue({ user: user.data });
+                  const formData = {
+                    ...user.data,
+                    roles: user.data.roles.map((r) => (r.id)),
+                  };
+                  form.setFieldsValue({ user: formData });
                   editRoleModal.showModal();
                 }}
               >
