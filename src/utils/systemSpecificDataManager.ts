@@ -3,22 +3,22 @@
 type SsdKeys = 'actions' | 'allRoles' | 'roles' | 'expireIn' | 'unapproved';
 
 export function setSsd(name: SsdKeys, value: any): void {
-  const ssv = localStorage.getItem('ssv');
-  const ssvObj = ssv ? JSON.parse(ssv) : {};
-  ssvObj[name] = value;
-  localStorage.setItem('ssv', JSON.stringify(ssvObj));
+  const ssd = localStorage.getItem('ssd');
+  const ssdObj = ssd ? JSON.parse(ssd) : {};
+  ssdObj[name] = value;
+  localStorage.setItem('ssd', JSON.stringify(ssdObj));
 }
 
 export function getSsd(name: SsdKeys): any {
-  const ssv = localStorage.getItem('ssv');
-  const ssvObj = ssv ? JSON.parse(ssv) : {};
-  if (ssvObj[name]) return ssvObj[name];
+  const ssd = localStorage.getItem('ssd');
+  const ssdObj = ssd ? JSON.parse(ssd) : {};
+  if (ssdObj[name]) return ssdObj[name];
   return null;
 }
 
 export function removeSsd(name: SsdKeys): void {
-  const ssv = localStorage.getItem('ssv');
-  const ssvObj = ssv ? JSON.parse(ssv) : {};
-  if (ssvObj[name]) delete ssvObj[name];
-  localStorage.setItem('ssv', JSON.stringify(ssvObj));
+  const ssd = localStorage.getItem('ssd');
+  const ssdObj = ssd ? JSON.parse(ssd) : {};
+  if (ssdObj[name]) delete ssdObj[name];
+  localStorage.setItem('ssd', JSON.stringify(ssdObj));
 }

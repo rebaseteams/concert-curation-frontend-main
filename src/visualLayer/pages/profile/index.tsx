@@ -5,7 +5,7 @@ import './index.scss';
 const createProfilePage = () => {
   return function ProfilePage(): JSX.Element {
     return (
-      <div className="container">
+      <div className="page-container">
         <div>
           <h3>profile Page</h3>
         </div>
