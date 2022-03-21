@@ -14,7 +14,6 @@ import './styles.scss';
 import SearchPopup from './popup';
 import { metaTypes } from './utils';
 import ResultRenderer from './renderer/resultRenderer';
-import { sampleData } from './sampleData';
 
 const AdvancedSearch = ({
   filterOptions,
@@ -137,6 +136,13 @@ const AdvancedSearch = ({
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
+    if (onSearching) {
+      onSearching({
+        category,
+        subcategory,
+        query: value,
+      });
+    }
     if (value) {
       const defaultSearch = ResultRenderer(
         value,
@@ -144,22 +150,10 @@ const AdvancedSearch = ({
         '',
         'search for this query',
       );
-      if (onSearching) {
-        onSearching({
-          category,
-          subcategory,
-          query: value,
-        });
-      }
-
-      const fData = sampleData.filter((i) => (
-        i.heading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-        || i.subHeading.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      const rData = searchResults.map((sr) => ResultRenderer(
+        sr.title, metaTypes.results, sr.image, sr.description,
       ));
-      const rData = fData.map((d) => ResultRenderer(
-        d.heading, metaTypes.results, d.image, d.subHeading,
-      ));
-      rData.unshift(defaultSearch);
+      rData?.unshift(defaultSearch);
       setOptions([{
         label: '',
         options: rData,
@@ -176,6 +170,25 @@ const AdvancedSearch = ({
   useEffect(() => {
     setSelectOptions(metaTypes.category, []);
   }, []);
+
+  useEffect(() => {
+    if (searchQuery) {
+      const defaultSearch = ResultRenderer(
+        searchQuery,
+        metaTypes.results,
+        '',
+        'search for this query',
+      );
+      const rData = searchResults?.map((sr) => ResultRenderer(
+        sr.title, metaTypes.results, sr.image, sr.description,
+      ));
+      rData?.unshift(defaultSearch);
+      setOptions([{
+        label: '',
+        options: rData,
+      }]);
+    }
+  }, [searchResults]);
 
   return (
     <div className="advanced-search-box">

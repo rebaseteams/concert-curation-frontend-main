@@ -327,5 +327,7 @@ export type GetEventsTypeResponse = {
 // search response
 export type AdvancedSearchResponse = {
   success: boolean,
-  data: AdvancedSearchResponseData
+  data: {
+    results: AdvancedSearchResponseData
+  }
 }

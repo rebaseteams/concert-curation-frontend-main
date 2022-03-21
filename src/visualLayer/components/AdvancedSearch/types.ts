@@ -14,7 +14,7 @@ export type CategoryObject = {
 export type AdvancedSearchProps = {
     filterOptions: Array<CategoryObject>
     onSearching?: Function;
-    searchResults?: AdvancedSearchResponseData;
+    searchResults: AdvancedSearchResponseData;
     onResultSelect?: Function;
   }
 

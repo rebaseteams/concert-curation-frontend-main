@@ -20,26 +20,26 @@ describe('AdvancedSearch', () => {
     });
   });
   it('Should render AdvancedSearch component', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     expect(screen.getByText('Search in Concert Curation')).toBeInTheDocument();
     expect(screen.getByTestId('search-icon-in-search-button')).toBeInTheDocument();
   });
 
   it.skip('Should change border color on hover', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.mouseUp(screen.getByTestId('search-button'));
     // to figure which property changes border color in antd
     expect(screen.getByTestId('search-button')).toHaveStyle('border: red');
   });
 
   it('Should open search popup', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     expect(screen.getByTestId('search-popup-modal')).toBeInTheDocument();
   });
 
   it('Should close search popup when close icon is clicked', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.click(screen.getByTestId('top-right-close-icon'));
     setTimeout(() => {
@@ -48,7 +48,7 @@ describe('AdvancedSearch', () => {
   });
 
   it('should have all required componnts', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     expect(screen.getByTestId('top-right-close-icon')).toBeInTheDocument();
     expect(screen.getByTestId('search-icon-near-input')).toBeInTheDocument();
@@ -56,21 +56,21 @@ describe('AdvancedSearch', () => {
   });
 
   it('should show crear button when query is typed', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'a' } });
     expect(screen.getByTestId('clear-button-near-input')).toBeInTheDocument();
   });
 
   it('should show types query as in result', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     expect(screen.getByText('abc')).toBeInTheDocument();
   });
 
   it('should add a tag when option selected selected', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('abc'));
@@ -78,7 +78,7 @@ describe('AdvancedSearch', () => {
   });
 
   it('should remove tad when clickes close icon on tag', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('abc'));
@@ -87,7 +87,7 @@ describe('AdvancedSearch', () => {
   });
 
   it('should remove search icon when tag is selected', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     fireEvent.click(screen.getByText('abc'));
@@ -95,7 +95,7 @@ describe('AdvancedSearch', () => {
   });
 
   it('should clear query when clear button is clicked', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     fireEvent.click(screen.getByTestId('clear-button-near-input'));
@@ -103,7 +103,7 @@ describe('AdvancedSearch', () => {
   });
 
   it('should not show clear button when query string is removed', () => {
-    render(<AdvancedSearch filterOptions={[]} />);
+    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
     fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: '' } });
