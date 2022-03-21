@@ -43,10 +43,10 @@ export function createHeaderComponent({
     const [searchResults, setSearchResults] = useState<AdvancedSearchResponseData>([]);
 
     const handleSearching = async (q: AdvancedSearchQuery) => {
+      if (!q.query) return setSearchResults([]);
       const resp = await advancedSearchService.get(q);
-      if (resp.success) {
-        setSearchResults(resp.data);
-      }
+      if (!resp.success) return setSearchResults([]);
+      return setSearchResults(resp.data.results);
     };
     const handleResultSelect = () => {
       // console.log('result selected');
