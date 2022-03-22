@@ -77,11 +77,10 @@ describe('AdvancedSearch', () => {
     expect(screen.getByTestId('selected-tags-near-input')).toBeInTheDocument();
   });
 
-  it('should remove tad when clickes close icon on tag', () => {
-    render(<AdvancedSearch filterOptions={[]} searchResults={[]} />);
+  it('should remove tag when clickes close icon on tag', () => {
+    render(<AdvancedSearch filterOptions={[{ category: 'Artist' }]} searchResults={[]} />);
     fireEvent.click(screen.getByTestId('search-button'));
-    fireEvent.change(screen.getByTestId('search-query-input'), { target: { value: 'abc' } });
-    fireEvent.click(screen.getByText('abc'));
+    fireEvent.click(screen.getByText('Artist'));
     fireEvent.click(screen.getByTestId('selected-tags-close-icon-near-input'));
     expect(screen.queryByTestId('selected-tags-near-input')).not.toBeInTheDocument();
   });
