@@ -26,6 +26,8 @@ export function createHeaderComponent({
   advancedSearchService,
 }: HeaderComponentProps): () => JSX.Element | null {
   return function HeaderComponent() {
+    const navigate = useNavigate();
+
     const filterOptions:FilterOptions = [
       {
         category: 'Artist',
@@ -58,9 +60,13 @@ export function createHeaderComponent({
         });
       }
       if (resp.data.results.length === 1) {
+        const redirectPage = resp.data.results[0].destinationUrl;
+        if (redirectPage) {
+          navigate(redirectPage);
+        }
         return notification.info({
-          message: `Redirecting to dastination ${resp.data.results[0].destinationUrl}`,
-          duration: 5,
+          message: 'Redirecting',
+          duration: 2,
         });
       }
       return notification.info({
@@ -72,7 +78,6 @@ export function createHeaderComponent({
     const {
       isAuthenticated, user, logout, loginWithRedirect, isLoading,
     } = useAuth0();
-    const navigate = useNavigate();
     const renderPublic = () => (
       <div className="row-flex justify-between align-center">
         <Button
