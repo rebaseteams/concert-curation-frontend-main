@@ -2,8 +2,9 @@ import { AdvancedSearchResponseData } from '../../../model/types/advancedSearch'
 
 /* eslint-disable @typescript-eslint/ban-types */
 export type ValueObject = {
-    type: string,
-    value: string,
+    id: string
+    type: string
+    value: string
   }
 
 export type CategoryObject = {

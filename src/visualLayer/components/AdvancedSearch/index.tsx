@@ -31,6 +31,7 @@ const AdvancedSearch = ({
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const renderItem = (title: string, type: string) => ({
+    id: `${type}-${title}`,
     type,
     value: title,
     label: <>{title}</>,
@@ -145,13 +146,14 @@ const AdvancedSearch = ({
     }
     if (value) {
       const defaultSearch = ResultRenderer(
+        'default-value-search-id',
         value,
         metaTypes.results,
         '',
         'search for this query',
       );
       const rData = searchResults.map((sr) => ResultRenderer(
-        sr.title, metaTypes.results, sr.image, sr.description,
+        sr.id, sr.title, metaTypes.results, sr.image, sr.description,
       ));
       rData?.unshift(defaultSearch);
       setOptions([{
@@ -174,13 +176,14 @@ const AdvancedSearch = ({
   useEffect(() => {
     if (searchQuery) {
       const defaultSearch = ResultRenderer(
+        'default-value-search-id',
         searchQuery,
         metaTypes.results,
         '',
         'search for this query',
       );
       const rData = searchResults?.map((sr) => ResultRenderer(
-        sr.title, metaTypes.results, sr.image, sr.description,
+        sr.id, sr.title, metaTypes.results, sr.image, sr.description,
       ));
       rData?.unshift(defaultSearch);
       setOptions([{

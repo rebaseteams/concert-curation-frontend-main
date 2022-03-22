@@ -32,11 +32,12 @@ const SearchPopup = ({
 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<Array<any>>([]);
-  const [activeOption, setActiveOption] = useState<{type: string, value: string}>();
+  const [activeOption, setActiveOption] = useState<{id: string, type: string, value: string}>();
   const [change, setChange] = useState<number>(1);
 
   const orderedOptionKeys = () => {
     const twoD = options.map((o) => o.options.map((i: any) => ({
+      id: i.id,
       type: i.type,
       value: i.value,
     })));
@@ -49,6 +50,7 @@ const SearchPopup = ({
     handleSearch(e.target.value);
     if (e.target.value) {
       setActiveOption({
+        id: 'default-value-search-id',
         type: metaTypes.results,
         value: e.target.value,
       });
@@ -66,6 +68,7 @@ const SearchPopup = ({
       setSelectedTags([
         ...selectedTags,
         {
+          id: 'default-value-search-id',
           type: metaTypes.results,
           value: searchQuery,
         },
@@ -81,7 +84,7 @@ const SearchPopup = ({
     }
     if (e.code === 'ArrowDown') {
       const opts = orderedOptionKeys();
-      const previouslyActiveOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption?.type}-${activeOption?.value}`);
+      const previouslyActiveOptionIndex = opts.findIndex((i) => i.id === activeOption?.id);
       const activeOptionIndex = (previouslyActiveOptionIndex === opts.length - 1 || previouslyActiveOptionIndex === -1)
         ? 0
         : previouslyActiveOptionIndex + 1;
@@ -100,7 +103,7 @@ const SearchPopup = ({
     }
     if (e.code === 'ArrowUp') {
       const opts = orderedOptionKeys();
-      const previouslyActiveOptionIndex = opts.findIndex((i) => `${i.type}-${i.value}` === `${activeOption?.type}-${activeOption?.value}`);
+      const previouslyActiveOptionIndex = opts.findIndex((i) => i.id === activeOption?.id);
       const activeOptionIndex = (previouslyActiveOptionIndex === 0 || previouslyActiveOptionIndex === -1)
         ? opts.length - 1
         : previouslyActiveOptionIndex - 1;
@@ -116,7 +119,7 @@ const SearchPopup = ({
   };
 
   const handleOptionClick = (o: ValueObject) => {
-    const newTags = [...selectedTags, { value: o.value, type: o.type }];
+    const newTags = [...selectedTags, { id: o.id, value: o.value, type: o.type }];
     setSelectedTags(newTags);
     setSearchQuery('');
   };
@@ -151,7 +154,7 @@ const SearchPopup = ({
               <CloseOutlined
                 data-testid="selected-tags-close-icon-near-input"
                 className="tags-close-icon"
-                onClick={() => setSelectedTags(selectedTags.filter((i) => i.value !== t.value))}
+                onClick={() => setSelectedTags(selectedTags.filter((i) => i.id !== t.id))}
               />
             </div>
           ))
@@ -231,8 +234,9 @@ const SearchPopup = ({
                             color: `${activeOption?.type}-${activeOption?.value}` === `${o.type}-${o.value}` ? '#fff' : '',
                             textAlign: 'left',
                           }}
-                          onClick={() => handleOptionClick({ type: o.type, value: o.value })}
+                          onClick={() => handleOptionClick({ id: o.id, type: o.type, value: o.value })}
                           onMouseEnter={() => setActiveOption({
+                            id: o.id,
                             type: o.type,
                             value: o.value,
                           })}
