@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import {
-  Avatar,
-  Button, notification,
+  Button,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
@@ -128,10 +127,15 @@ const AdvancedSearch = ({
 
     if (hasResults) {
       const resultObj = valueArray.find((i) => i.type === metaTypes.results) as ValueObject;
-      notification.info({
-        message: `searched for \n category- ${category}, \n subcategory- ${subcategory}, \n query- ${resultObj.value}`,
-        duration: 5,
-      });
+      if (onResultSelect) {
+        onResultSelect({
+          category,
+          subcategory,
+          query: resultObj.value,
+        });
+      }
+      setIsSearchModalOpen(false);
+      setSelectOptions(metaTypes.category, []);
     }
   };
 

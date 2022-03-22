@@ -132,6 +132,11 @@ const SearchPopup = ({
     searchInputRef?.current?.focus();
   });
 
+  useEffect(() => {
+    setSelectedTags([]);
+    setSearchQuery('');
+  }, [isModalOpen]);
+
   const header = (
     <div className="tags-and-input-container">
       {

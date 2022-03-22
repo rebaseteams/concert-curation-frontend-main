@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
-  Button, Layout,
+  Button, Layout, notification,
 } from 'antd';
 import { useAuth0 } from '@auth0/auth0-react';
 import './header.scss';
@@ -32,7 +32,7 @@ export function createHeaderComponent({
         subcategories: ['Genre', 'Gender', 'Personality'],
       },
       {
-        category: 'Brands',
+        category: 'Brand',
         subcategories: ['b1', 'b2', 'b3'],
       },
       {
@@ -48,8 +48,25 @@ export function createHeaderComponent({
       if (!resp.success) return setSearchResults([]);
       return setSearchResults(resp.data.results);
     };
-    const handleResultSelect = () => {
-      // console.log('result selected');
+    const handleResultSelect = async (query: AdvancedSearchQuery) => {
+      const resp = await advancedSearchService.get(query);
+      if (!resp.success) return null;
+      if (resp.data.results.length === 0) {
+        return notification.info({
+          message: `nothing found for ${query.query}`,
+          duration: 3,
+        });
+      }
+      if (resp.data.results.length === 1) {
+        return notification.info({
+          message: `Redirecting to dastination ${resp.data.results[0].destinationUrl}`,
+          duration: 5,
+        });
+      }
+      return notification.info({
+        message: 'Redirecting to search results page',
+        duration: 3,
+      });
     };
 
     const {
