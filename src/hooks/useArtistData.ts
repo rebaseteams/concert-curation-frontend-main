@@ -25,7 +25,7 @@ const useArtistData = (artistService: ArtistInterface): ArtistData => {
 
   useEffect(() => {
     getArtistData();
-  }, []);
+  }, [id]);
 
   return {
     artist,
