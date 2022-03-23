@@ -81,19 +81,19 @@ JSX.Element => (
       step={field.step}
       onChange={field.onChange}
       defaultValue={field.default}
+      tipFormatter={(value) => `$${value}`}
     />
     <span>
       From
       {' '}
-      {field.sliderValue ? field.sliderValue.min : '00'}
       $
+      {field.sliderValue ? field.sliderValue.min : '00'}
     </span>
     {'     '}
     <span>
       To
-      {' '}
-      {field.sliderValue ? field.sliderValue.max : '00'}
       $
+      {field.sliderValue ? field.sliderValue.max : '00'}
     </span>
   </Form.Item>
 );
