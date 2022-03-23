@@ -27,6 +27,8 @@ const ConcertForm = ({
   const [venues, setVenues] = useState<Array<{id: string, name: string}>>([]);
   const [eventsType, setEventsType] = useState<Array<{id: string, name: string}>>([]);
   const [allBrands, setAllBrands] = useState<Array<{id: string, name: string}>>([]);
+  const [wantedBrands, setWantedBrands] = useState<Array<string>>([]);
+  const [unWantedBrands, setUnWantedBrands] = useState<Array<string>>([]);
 
   const onBudgetChange = (event: Array<number>) => {
     setBudget({ min: event[0], max: event[1] });
@@ -105,17 +107,26 @@ const ConcertForm = ({
     if (f.name === 'wantedBrands') {
       return {
         ...f,
-        selectOptionsWithValue: allBrands,
+        selectOptionsWithValue: allBrands.filter((l) => !unWantedBrands.includes(l.id)),
       };
     }
     if (f.name === 'unwantedBrands') {
       return {
         ...f,
-        selectOptionsWithValue: allBrands,
+        selectOptionsWithValue: allBrands.filter((l) => !wantedBrands.includes(l.id)),
       };
     }
     return f;
   });
+
+  const handleFieldChange = (field: any) => {
+    if (field[0].name[0] === 'wantedBrands') {
+      setWantedBrands(field[0].value);
+    }
+    if (field[0].name[0] === 'unwantedBrands') {
+      setUnWantedBrands(field[0].value);
+    }
+  };
 
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
@@ -160,6 +171,7 @@ const ConcertForm = ({
         layout="vertical"
         initialValues={{ size: 1000 }}
         onFinish={onFormSubmit}
+        onFieldsChange={handleFieldChange}
       >
         { form && renderFormFields(form) }
         { loading && <Button disabled className="submit" htmlType="submit" type="primary">Submiting</Button> }
