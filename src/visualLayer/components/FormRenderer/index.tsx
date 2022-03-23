@@ -7,7 +7,7 @@ import { FormFields } from '../../../model/types/formRenderer';
 import IconRenderer from '../IconRenderer';
 
 const renderOptions = (options: Array<string>) => options.map((option: string) => <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>);
-const renderValueOptions = (options: Array<{id: string, name: string}>) => options.map((item) => <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>);
+const renderValueOptions = (options: Array<{id: string, name: string}>) => options.map((item) => <Select.Option key={item.name} value={item.id}>{item.name}</Select.Option>);
 
 const renderSelect = (field: FormFields): JSX.Element => {
   if (field.multiple) {
@@ -22,6 +22,8 @@ const renderSelect = (field: FormFields): JSX.Element => {
         <Select
           showSearch
           mode="multiple"
+          filterOption={(input, option) => (field.selectOptionsWithValue ? option?.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            : (option?.value as string).toLowerCase().indexOf(input.toLowerCase()) >= 0)}
         >
           {
             field.selectOptions
@@ -47,6 +49,8 @@ const renderSelect = (field: FormFields): JSX.Element => {
     >
       <Select
         showSearch
+        filterOption={(input, option) => (field.selectOptionsWithValue ? option?.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          : (option?.value as string).toLowerCase().indexOf(input.toLowerCase()) >= 0)}
       >
         {
           field.selectOptions
