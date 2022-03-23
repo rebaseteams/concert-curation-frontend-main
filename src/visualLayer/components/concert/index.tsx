@@ -26,6 +26,7 @@ const ConcertForm = ({
   const [loading, setLoading] = useState(false);
   const [venues, setVenues] = useState<Array<{id: string, name: string}>>([]);
   const [eventsType, setEventsType] = useState<Array<{id: string, name: string}>>([]);
+  const [allBrands, setAllBrands] = useState<Array<{id: string, name: string}>>([]);
 
   const onBudgetChange = (event: Array<number>) => {
     setBudget({ min: event[0], max: event[1] });
@@ -39,8 +40,10 @@ const ConcertForm = ({
         setVenues(venueOptions);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
+      notification.error({
+        message: 'Error',
+        description: 'Cannot fetch venue list',
+      });
     }
   };
   const getEventsTypeList = async () => {
@@ -52,13 +55,31 @@ const ConcertForm = ({
         setEventsType(eventsTypeOptions);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
+      notification.error({
+        message: 'Error',
+        description: 'Cannot fetch events type list',
+      });
+    }
+  };
+  const getAllBrandsList = async () => {
+    try {
+      const resp = await brandsService.getAll();
+      if (resp.success) {
+        // eslint-disable-next-line max-len
+        const brandsOptions = resp.data.brands.map((b) => ({ id: b.id, name: b.name }));
+        setAllBrands(brandsOptions);
+      }
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Cannot fetch brands list',
+      });
     }
   };
   useEffect(() => {
     getVenueList();
     getEventsTypeList();
+    getAllBrandsList();
   }, []);
 
   const form: FormFields[] = myForm.map((f) => {
@@ -79,6 +100,18 @@ const ConcertForm = ({
       return {
         ...f,
         selectOptionsWithValue: eventsType,
+      };
+    }
+    if (f.name === 'wantedBrands') {
+      return {
+        ...f,
+        selectOptionsWithValue: allBrands,
+      };
+    }
+    if (f.name === 'unwantedBrands') {
+      return {
+        ...f,
+        selectOptionsWithValue: allBrands,
       };
     }
     return f;
