@@ -1,5 +1,6 @@
 /* eslint-disable semi */
 /* eslint-disable @typescript-eslint/no-extra-semi */
+import { RecommendtionValidation } from '../types/artist-recommendation';
 import { PatchRequest } from '../types/patch-request';
 import { QuestionsUI } from '../types/questions';
 import {
@@ -8,6 +9,7 @@ import {
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
   PatchRecommendationResponse,
+  ValidateRecommendationFieldsResponse,
 } from '../types/service-response';
 
 export interface ArtistRecommendationInterface {
@@ -16,4 +18,6 @@ export interface ArtistRecommendationInterface {
   getRecommendation(recommendationId : string): Promise<GetRecommendationResponse>;
   discardArtist(data : PatchRequest): Promise<PatchRecommendationResponse>;
   deleteRecommendation(recommendationId : string): Promise<DeleteRecommendationResponse>;
+  // eslint-disable-next-line max-len
+  validateRecommendationFields(fields: RecommendtionValidation): Promise<ValidateRecommendationFieldsResponse>;
 };

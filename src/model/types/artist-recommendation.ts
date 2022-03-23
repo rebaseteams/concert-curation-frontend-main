@@ -36,3 +36,7 @@ export type ArtistRecommendation = {
   documents: Array<string>;
   lastChangedUserId: string;
 };
+
+export type RecommendtionValidation = {
+  eventName: string;
+};

@@ -1,4 +1,5 @@
 import { ArtistRecommendationInterface } from '../../model/interfaces/artistRecommendation';
+import { RecommendtionValidation } from '../../model/types/artist-recommendation';
 import { PatchRequest } from '../../model/types/patch-request';
 import { QuestionsUI } from '../../model/types/questions';
 import {
@@ -7,6 +8,7 @@ import {
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
   PatchRecommendationResponse,
+  ValidateRecommendationFieldsResponse,
 } from '../../model/types/service-response';
 
 export default class ArtistRecommendation implements ArtistRecommendationInterface {
@@ -15,6 +17,13 @@ export default class ArtistRecommendation implements ArtistRecommendationInterfa
     constructor(artistRecommendationRepo : ArtistRecommendationInterface) {
       this.artistRecommendationRepo = artistRecommendationRepo;
     }
+
+    validateRecommendationFields = async (fields: RecommendtionValidation):
+    Promise<ValidateRecommendationFieldsResponse> => new Promise((resolve) => {
+      this.artistRecommendationRepo.validateRecommendationFields(fields).then(((response) => {
+        resolve(response);
+      }));
+    });
 
     addNewRecommendation = async (concertData : QuestionsUI):
       Promise<AddRecommendationResponse> => new Promise((resolve) => {

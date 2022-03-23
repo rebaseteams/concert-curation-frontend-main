@@ -2,6 +2,7 @@
 import axios from 'axios';
 import * as _ from 'lodash';
 import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
+import { RecommendtionValidation } from '../../../model/types/artist-recommendation';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
@@ -11,7 +12,9 @@ import {
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
   PatchRecommendationResponse,
+  ValidateRecommendationFieldsResponse,
 } from '../../../model/types/service-response';
+import customErrorHandler from '../../../utils/customErrorHandler';
 
 // TODO: This should not be directly referenced
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
@@ -99,6 +102,19 @@ export default class ArtistRecommendationRepo implements ArtistRecommendationInt
       resolve({ error: false, data: val.data, message: 'ok' });
     }).catch((err: CatchError) => {
       resolve({ error: true, status: err.status, message: err.message });
+    });
+  });
+
+  validateRecommendationFields = async (fields: RecommendtionValidation):
+  Promise<ValidateRecommendationFieldsResponse> => new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    axios.get(`${this.server}/artists/recommendations/validate`, { params: fields }).then((response: any) => {
+      resolve({
+        success: true,
+        data: response.data.data,
+      });
+    }).catch((err) => {
+      customErrorHandler.axiosErrorHandler(err);
     });
   });
 }
