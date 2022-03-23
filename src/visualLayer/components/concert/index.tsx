@@ -23,8 +23,8 @@ const ConcertForm = ({
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
-  const [venues, setVenues] = useState<Array<string>>([]);
-  const [eventsType, setEventsType] = useState<Array<string>>([]);
+  const [venues, setVenues] = useState<Array<{id: string, name: string}>>([]);
+  const [eventsType, setEventsType] = useState<Array<{id: string, name: string}>>([]);
 
   const onBudgetChange = (event: Array<number>) => {
     setBudget({ min: event[0], max: event[1] });
@@ -34,8 +34,8 @@ const ConcertForm = ({
     try {
       const resp = await venuesService.getAllVenues();
       if (resp.success) {
-        const venueNames = resp.data.venues.map((v) => v.name);
-        setVenues(venueNames);
+        const venueOptions = resp.data.venues.map((v) => ({ id: v.id, name: `${v.name}, ${v.city}` }));
+        setVenues(venueOptions);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -46,8 +46,9 @@ const ConcertForm = ({
     try {
       const resp = await eventsTypeService.getAll();
       if (resp.success) {
-        const eventsTypeNames = resp.data.eventsType.map((et) => et.name);
-        setEventsType(eventsTypeNames);
+        // eslint-disable-next-line max-len
+        const eventsTypeOptions = resp.data.eventsType.map((et) => ({ id: et.id, name: et.name }));
+        setEventsType(eventsTypeOptions);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -70,13 +71,13 @@ const ConcertForm = ({
     if (f.name === 'venue') {
       return {
         ...f,
-        selectOptions: venues,
+        selectOptionsWithValue: venues,
       };
     }
     if (f.name === 'eventType') {
       return {
         ...f,
-        selectOptions: eventsType,
+        selectOptionsWithValue: eventsType,
       };
     }
     return f;
