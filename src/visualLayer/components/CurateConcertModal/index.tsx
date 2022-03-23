@@ -4,16 +4,19 @@ import {
 
 import ConcertForm from '../concert';
 import { ConcertCreationResponse, QuestionsUI } from '../../../model/types/questions';
-import { AddRecommendationResponse } from '../../../model/types/service-response';
+import { AddRecommendationResponse, ValidateRecommendationFieldsResponse } from '../../../model/types/service-response';
 import { VenuesInterface } from '../../../model/interfaces/venues';
 import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
 import { BrandsInterface } from '../../../model/interfaces/brands';
+import { RecommendtionValidation } from '../../../model/types/artist-recommendation';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   displayFormModal: boolean;
   forms: Array<ConcertCreationResponse>;
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
+  validateRecommendationFields(fields: RecommendtionValidation)
+  : Promise<ValidateRecommendationFieldsResponse>;
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface;
@@ -24,6 +27,7 @@ const CurateConcertModal = ({
   displayFormModal,
   forms,
   addNewRecommendation,
+  validateRecommendationFields,
   venuesService,
   eventsTypeService,
   brandsService,
@@ -55,6 +59,7 @@ const CurateConcertModal = ({
       setVisible={setDisplayFormModal}
       forms={forms}
       addNewRecommendation={addNewRecommendation}
+      validateRecommendationFields={validateRecommendationFields}
       venuesService={venuesService}
       eventsTypeService={eventsTypeService}
       brandsService={brandsService}
