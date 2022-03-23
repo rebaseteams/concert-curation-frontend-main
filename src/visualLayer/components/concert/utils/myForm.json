@@ -82,9 +82,10 @@
     "type": "select",
     "selectOptions": [
       "male",
-      "female"
+      "female",
+      "both"
     ],
-    "multiple": true,
+    "multiple": false,
     "required": true,
     "message": "Please select targeted gender"
   },
