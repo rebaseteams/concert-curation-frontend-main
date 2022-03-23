@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Form, Input, Select, Slider,
@@ -6,6 +7,7 @@ import { FormFields } from '../../../model/types/formRenderer';
 import IconRenderer from '../IconRenderer';
 
 const renderOptions = (options: Array<string>) => options.map((option: string) => <Select.Option key={`option${option}`} value={option}>{option}</Select.Option>);
+const renderValueOptions = (options: Array<{id: string, name: string}>) => options.map((item) => <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>);
 
 const renderSelect = (field: FormFields): JSX.Element => {
   if (field.multiple) {
@@ -26,6 +28,11 @@ const renderSelect = (field: FormFields): JSX.Element => {
             && field.selectOptions.length > 0
             && renderOptions(field.selectOptions)
           }
+          {
+            field.selectOptionsWithValue
+            && field.selectOptionsWithValue.length > 0
+            && renderValueOptions(field.selectOptionsWithValue)
+          }
         </Select>
       </Form.Item>
     );
@@ -45,6 +52,11 @@ const renderSelect = (field: FormFields): JSX.Element => {
           field.selectOptions
           && field.selectOptions.length > 0
           && renderOptions(field.selectOptions)
+        }
+        {
+          field.selectOptionsWithValue
+          && field.selectOptionsWithValue.length > 0
+          && renderValueOptions(field.selectOptionsWithValue)
         }
       </Select>
     </Form.Item>

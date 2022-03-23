@@ -12,16 +12,6 @@
     "name": "eventType",
     "label": "Which type of event is it?",
     "type": "select",
-    "selectOptions": [
-      "Music Concert",
-      "Music Listning",
-      "Listning Party",
-      "Community center",
-      "Colleges and Universities",
-      "Corporate events",
-      "Stadium",
-      "Concert hall"
-    ],
     "multiple": false,
     "required": true,
     "message": "Please select event type"
@@ -30,12 +20,6 @@
     "name": "venue",
     "label": "Select Venue",
     "type": "select",
-    "selectOptions": [
-      "Delhi",
-      "Mumbai",
-      "London",
-      "San On"
-    ],
     "multiple": true,
     "required": true,
     "message": "Please select any one venue"
