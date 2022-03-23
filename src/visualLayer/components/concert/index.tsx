@@ -20,7 +20,14 @@ import { FormFields } from '../../../model/types/formRenderer';
 
 const ConcertForm = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setVisible, forms, addNewRecommendation, venuesService, eventsTypeService, brandsService,
+  setVisible,
+  forms,
+  addNewRecommendation,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  validateRecommendationFields,
+  venuesService,
+  eventsTypeService,
+  brandsService,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);

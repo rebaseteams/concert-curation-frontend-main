@@ -4,8 +4,9 @@ import { GetConcert } from '../../../../hooks/useGetConcerts';
 import { BrandsInterface } from '../../../../model/interfaces/brands';
 import { EventsTypeInterface } from '../../../../model/interfaces/eventsType';
 import { VenuesInterface } from '../../../../model/interfaces/venues';
+import { RecommendtionValidation } from '../../../../model/types/artist-recommendation';
 import { QuestionsUI } from '../../../../model/types/questions';
-import { AddRecommendationResponse, DeleteRecommendationResponse } from '../../../../model/types/service-response';
+import { AddRecommendationResponse, DeleteRecommendationResponse, ValidateRecommendationFieldsResponse } from '../../../../model/types/service-response';
 import { ConcertsTable } from '../../../components/ConcertsTable';
 import CurateConcertModal from '../../../components/CurateConcertModal';
 import IconRenderer from '../../../components/IconRenderer';
@@ -14,15 +15,19 @@ export type CreateRenderChartProps = {
   getConcert: GetConcert;
   deleteRecommendation: (id: string) => Promise<DeleteRecommendationResponse>;
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
+  validateRecommendationFields(fields: RecommendtionValidation)
+  : Promise<ValidateRecommendationFieldsResponse>;
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface,
+
 };
 
 export function createRenderConcerts({
   getConcert,
   deleteRecommendation,
   addNewRecommendation,
+  validateRecommendationFields,
   venuesService,
   eventsTypeService,
   brandsService,
@@ -46,6 +51,7 @@ export function createRenderConcerts({
           displayFormModal={displayFormModal}
           forms={forms}
           addNewRecommendation={addNewRecommendation}
+          validateRecommendationFields={validateRecommendationFields}
           venuesService={venuesService}
           eventsTypeService={eventsTypeService}
           brandsService={brandsService}

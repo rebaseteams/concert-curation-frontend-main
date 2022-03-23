@@ -62,6 +62,7 @@ export function createDashboardComponent({
       getConcert: useGetConcerts(artistRecommendation),
       deleteRecommendation: artistRecommendation.deleteRecommendation,
       addNewRecommendation: artistRecommendation.addNewRecommendation,
+      validateRecommendationFields: artistRecommendation.validateRecommendationFields,
       venuesService,
       eventsTypeService,
       brandsService,
