@@ -1,6 +1,7 @@
 import { Button, Result, Tooltip } from 'antd';
 import { useState } from 'react';
 import { GetConcert } from '../../../../hooks/useGetConcerts';
+import { BrandsInterface } from '../../../../model/interfaces/brands';
 import { EventsTypeInterface } from '../../../../model/interfaces/eventsType';
 import { VenuesInterface } from '../../../../model/interfaces/venues';
 import { QuestionsUI } from '../../../../model/types/questions';
@@ -15,6 +16,7 @@ export type CreateRenderChartProps = {
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
+  brandsService: BrandsInterface,
 };
 
 export function createRenderConcerts({
@@ -23,6 +25,7 @@ export function createRenderConcerts({
   addNewRecommendation,
   venuesService,
   eventsTypeService,
+  brandsService,
 }: CreateRenderChartProps): () => JSX.Element | null {
   return function ConcertList(): JSX.Element | null {
     const {
@@ -45,6 +48,7 @@ export function createRenderConcerts({
           addNewRecommendation={addNewRecommendation}
           venuesService={venuesService}
           eventsTypeService={eventsTypeService}
+          brandsService={brandsService}
         />
         <div className="row-flex width-md">
           <h4 className="text-size-3" style={{ marginRight: '20px' }}>
