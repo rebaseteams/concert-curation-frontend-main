@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 
+import { BrandsInterface } from '../../../model/interfaces/brands';
 import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
 import { VenuesInterface } from '../../../model/interfaces/venues';
 import { QuestionsUI } from '../../../model/types/questions';
@@ -12,4 +13,5 @@ export interface ConcertFormProp {
   addNewRecommendation(concertData : QuestionsUI): Promise<AddRecommendationResponse>;
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
+  brandsService: BrandsInterface;
 }

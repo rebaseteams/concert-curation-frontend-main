@@ -92,6 +92,7 @@ export function createApp(
       venuesService,
       eventsTypeService,
       advancedSearchService,
+      brandsService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -102,7 +103,12 @@ export function createApp(
   const HeaderComponent = createHeaderComponent({ advancedSearchService });
   const DashboardComponent = createDashboardComponent(
     {
-      artistRecommendation, documentsService, templatesService, venuesService, eventsTypeService,
+      artistRecommendation,
+      documentsService,
+      templatesService,
+      venuesService,
+      eventsTypeService,
+      brandsService,
     },
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });
