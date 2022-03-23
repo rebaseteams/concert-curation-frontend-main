@@ -340,3 +340,11 @@ export type AdvancedSearchResponse = {
     results: AdvancedSearchResponseData
   }
 }
+
+// validateRecommendationFields response
+export type ValidateRecommendationFieldsResponse = {
+  success: boolean,
+  data: {
+    nameAvailable: boolean
+  }
+}

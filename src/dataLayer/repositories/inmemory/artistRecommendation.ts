@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { ArtistRecommendationInterface } from '../../../model/interfaces/artistRecommendation';
+import { RecommendtionValidation } from '../../../model/types/artist-recommendation';
 import { PatchRequest } from '../../../model/types/patch-request';
 import { QuestionsUI } from '../../../model/types/questions';
 import {
@@ -8,10 +9,17 @@ import {
   GetAllRecommendationsResponse,
   GetRecommendationResponse,
   PatchRecommendationResponse,
+  ValidateRecommendationFieldsResponse,
 } from '../../../model/types/service-response';
 import allConcertMockData, { addRecommendationMockData, getRecommendationMockData, patchRecommendationMockData } from './mockData/allConcertMockData';
 
 export default class ArtistRecommendationRepo implements ArtistRecommendationInterface {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  validateRecommendationFields = async (fields: RecommendtionValidation):
+  Promise<ValidateRecommendationFieldsResponse> => {
+    throw new Error('Method not implemented.');
+  }
+
   addNewRecommendation = async (concertData : QuestionsUI): Promise<AddRecommendationResponse> => {
     console.log('add new recommendation', concertData);
     return new Promise((resolve) => {
