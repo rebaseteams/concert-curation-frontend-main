@@ -2,6 +2,7 @@
 import { AdvancedSearchResponseData } from './advancedSearch';
 import { ArtistNew } from './artist';
 import { ArtistRecommendation } from './artist-recommendation';
+import { AllBrandsList } from './brands';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { NewEventsTypeResponseData } from './eventsType';
@@ -321,6 +322,14 @@ export type GetEventsTypeResponse = {
   success: boolean,
   data: {
     eventsType : Array<NewEventsTypeResponseData>
+  }
+}
+
+// brands response
+export type GetAllBrandsListResponse = {
+  success: boolean,
+  data: {
+    brands : Array<AllBrandsList>
   }
 }
 
