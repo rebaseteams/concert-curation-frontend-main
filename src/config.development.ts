@@ -29,6 +29,8 @@ import EventsTypeRepo from './dataLayer/repositories/http/eventsType';
 import EventsType from './dataLayer/services/eventsType';
 import AdvacedSearchRepo from './dataLayer/repositories/http/advancedSearch';
 import AdvancedSearch from './dataLayer/services/advancedSearch';
+import Brands from './dataLayer/services/brands';
+import BrandsRepo from './dataLayer/repositories/http/brands';
 
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
@@ -60,6 +62,7 @@ export const config: Config = {
     venuesService: new Venues(new VenuesRepo(server)),
     eventsTypeService: new EventsType(new EventsTypeRepo(server)),
     advancedSearchService: new AdvancedSearch(new AdvacedSearchRepo(server)),
+    brandsService: new Brands(new BrandsRepo(server)),
 
   },
   providers: {
