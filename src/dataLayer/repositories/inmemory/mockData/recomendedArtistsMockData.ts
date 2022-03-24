@@ -25,7 +25,7 @@ export const recommendedArtistsMockData: ArtistRecommendation = {
     }],
     targetAudience: {
       ageGroup: ['26-35', '36-60'],
-      gender: ['female', 'both'],
+      gender: 'female',
       genre: [{
         genreId: '8734',
         genreName: 'Bollywood',

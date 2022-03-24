@@ -3,7 +3,7 @@ export type onSubmitFormDataType = {
   artistBudget: undefined;
   concertName: string;
   eventType: string;
-  gender: Array<string>;
+  gender: 'male' | 'female' | 'both';
   genre: Array<string>;
   sponsorshipType: string;
   unwantedBrands: Array<string>;

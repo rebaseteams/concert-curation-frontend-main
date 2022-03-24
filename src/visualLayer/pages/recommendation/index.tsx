@@ -162,7 +162,7 @@ export function createRecommendationPage({
     const renderDiscardedArtists = () => {
       if (discardedArtists.length > 0) {
         return discardedArtists.map((discarded) => (
-          <div className="row-flex my-2">
+          <div key={discarded.artistId} className="row-flex my-2">
             <img width={25} src={discarded.artistImage} alt={discarded.artistName} />
             <h4 className="mx-3">{discarded.artistName}</h4>
           </div>
@@ -259,7 +259,7 @@ export function createRecommendationPage({
                 <div>
                   <h2>Selected Venues</h2>
                   {' '}
-                  { concertData.venue.map((v: string) => <h3>{v}</h3>) }
+                  { concertData.venue.map((v: string) => <h3 key={v}>{v}</h3>) }
                 </div>
               )}
               color="#0029"
