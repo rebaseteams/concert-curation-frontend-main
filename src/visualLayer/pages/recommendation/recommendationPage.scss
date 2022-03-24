@@ -49,7 +49,6 @@ $line-color: #474744;
 }
 
 .recommendation-page-body {
-  height: 95%;
   background-color: #000;
   overflow: auto;
   padding: 10px 30px;
@@ -86,9 +85,21 @@ $line-color: #474744;
 
 
 // Screen breakpoint max-width 1650px
+@media  screen and (min-width: 1651px) {
+  .container {
+      transform: scale(0.9);
+  }
+  .recommendation-page-body {
+      height: 92vh;
+  }
+}
+
 @media  screen and (max-width: 1650px) {
     .container {
         transform: scale(0.8);
+    }
+    .recommendation-page-body {
+      height: 91vh;
     }
 }
 
@@ -97,12 +108,18 @@ $line-color: #474744;
   .container {
       transform: scale(0.7);
   }
+  .recommendation-page-body {
+    height: 91vh;
+  }
 }
 
 // Screen breakpoint max-width 1350px
 @media  screen and (max-width: 1350px) {
   .container {
       transform: scale(0.65);
+  }
+  .recommendation-page-body {
+    height: 92vh;
   }
 }
 
@@ -111,12 +128,18 @@ $line-color: #474744;
   .container {
       transform: scale(0.6);
   }
+  .recommendation-page-body {
+    height: 92vh;
+  }
 }
 
 // Screen breakpoint max-width 1150px
 @media  screen and (max-width: 1150px) {
   .container {
       transform: scale(0.5);
+  }
+  .recommendation-page-body {
+    height: 90vh;
   }
 }
 
@@ -125,12 +148,18 @@ $line-color: #474744;
   .container {
       transform: scale(0.9);
   }
+  .recommendation-page-body {
+    height: 89vh;
+  }
 }
 
 // Screen breakpoint max-width 850px
 @media  screen and (max-width: 850px) {
   .container {
       transform: scale(0.8);
+  }
+  .recommendation-page-body {
+    height: 89vh;
   }
 }
 
