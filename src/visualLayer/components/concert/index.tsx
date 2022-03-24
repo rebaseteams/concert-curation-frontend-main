@@ -19,11 +19,9 @@ import { ArtistBudget } from '../../../model/types/concertDataResponse';
 import { FormFields } from '../../../model/types/formRenderer';
 
 const ConcertForm = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setVisible,
   forms,
   addNewRecommendation,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   validateRecommendationFields,
   venuesService,
   eventsTypeService,
@@ -85,6 +83,25 @@ const ConcertForm = ({
       });
     }
   };
+  const validateEventName = async (eventName: string) => {
+    try {
+      const resp = await validateRecommendationFields({ eventName: eventName.trim() });
+      if (!resp.success) return false;
+      return resp.data.nameAvailable;
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Cannot validate event name',
+      });
+      return false;
+    }
+  };
+  const eventNameValidator = (rule: any, value: any, callback: any) => {
+    validateEventName(value).then((res) => {
+      if (!value || res) return callback();
+      return callback('Name already taken');
+    });
+  };
   useEffect(() => {
     getVenueList();
     getEventsTypeList();
@@ -92,6 +109,12 @@ const ConcertForm = ({
   }, []);
 
   const form: FormFields[] = myForm.map((f) => {
+    if (f.name === 'concertName') {
+      return {
+        ...f,
+        validator: eventNameValidator,
+      };
+    }
     if (f.name === 'artistBudget') {
       return {
         ...f,
