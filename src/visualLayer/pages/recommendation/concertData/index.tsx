@@ -35,7 +35,7 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
         </Col>
         <Col span={24} className="information">
           <h4>Gender</h4>
-          {concertData.targetAudience.gender.map((gender) => (<span key={gender}>{`${gender.toLocaleUpperCase()}, `}</span>))}
+          <span>{concertData.targetAudience.gender}</span>
         </Col>
         <Col span={24} className="information">
           <h4>Genre</h4>
