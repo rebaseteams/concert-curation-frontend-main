@@ -105,6 +105,7 @@ export type TextInputFieldProp = {
   message: string,
   placeholder: string,
   default? : string,
+  validator?: ()=>any
 }
 
 type InputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
@@ -113,7 +114,7 @@ export const inputField = (field: TextInputFieldProp, type: InputType): JSX.Elem
     key={field.name}
     label={field.label}
     name={field.name}
-    rules={[{ required: field.required, message: field.message }]}
+    rules={[{ required: field.required, message: field.message }, { validator: field.validator }]}
   >
     <Input
       prefix={IconRenderer(field.name)}

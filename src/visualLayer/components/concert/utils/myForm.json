@@ -3,9 +3,9 @@
     "name": "concertName",
     "label": "Event Name",
     "type": "text",
-    "placeholder": "Enter form name",
+    "placeholder": "Enter event's name",
     "required": true,
-    "message": "Please select event type",
+    "message": "Please enter event's name",
     "multiple": false
   },
   {

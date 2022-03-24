@@ -18,6 +18,7 @@ export interface ArtistRecommendationInterface {
   getRecommendation(recommendationId : string): Promise<GetRecommendationResponse>;
   discardArtist(data : PatchRequest): Promise<PatchRecommendationResponse>;
   deleteRecommendation(recommendationId : string): Promise<DeleteRecommendationResponse>;
-  // eslint-disable-next-line max-len
-  validateRecommendationFields(fields: RecommendtionValidation): Promise<ValidateRecommendationFieldsResponse>;
+  validateRecommendationFields(
+    fields: RecommendtionValidation
+  ): Promise<ValidateRecommendationFieldsResponse>;
 };
