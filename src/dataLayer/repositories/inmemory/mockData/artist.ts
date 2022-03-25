@@ -106,6 +106,23 @@ export const artistMockDataNew: ArtistNew = {
       },
     ],
   },
+  latestYoutubeRelease: [
+    {
+      tumbnail: 'https://www.designyoutube.com/img/michael-jackson.jpg',
+      title: 'Youtube video 1',
+      url: 'https://www.youtube.com/embed/YdxdpRZgfT4',
+      channelName: 'Michael Jackson Fans',
+      views: 8198,
+      subscribers: 38299,
+    },
+    {
+      tumbnail: 'https://i.ytimg.com/vi/pAyKJAtDNCw/maxresdefault.jpg',
+      title: 'Youtube video 2',
+      url: 'https://www.youtube.com/embed/plYAc5pT-PY',
+      channelName: 'Michael Jackson Fans',
+      views: 17921,
+      subscribers: 74256,
+    }],
 };
 
 export const artistMockData: Artist = {
