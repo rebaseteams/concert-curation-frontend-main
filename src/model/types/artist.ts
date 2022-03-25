@@ -30,6 +30,13 @@ export type ArtistNew = {
       followers: number,
     }
   >,
+  brandAffinity: {
+    xAxisData: Array<string>;
+    yAxisData: Array<{
+      name: string;
+      data: Array<{ xAxis: string, yAxis: number }>;
+    }>;
+  }
 }
 
 export type Artist = {

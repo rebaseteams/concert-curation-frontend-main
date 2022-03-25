@@ -65,7 +65,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
       <Row style={{ margin: '20px 0px' }}>
         <Col span={14}>
           <Line
-            data={brandAffinity}
+            data={artist.brandAffinity}
             xLables={['Affinity over brands']}
             strokeWidth={2}
             background="#000"
