@@ -36,7 +36,14 @@ export type ArtistNew = {
       name: string;
       data: Array<{ xAxis: string, yAxis: number }>;
     }>;
-  }
+  },
+  popularityOverTime: {
+    xAxisData: Array<string>;
+    yAxisData: Array<{
+      name: string;
+      data: Array<{ xAxis: string, yAxis: number }>;
+    }>;
+  },
 }
 
 export type Artist = {
