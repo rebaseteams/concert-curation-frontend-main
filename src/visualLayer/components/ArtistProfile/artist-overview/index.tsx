@@ -6,7 +6,6 @@ import millify from 'millify';
 import latestRelease from '../../../../dataLayer/repositories/inmemory/mockData/latestReleaseVideosa';
 import { ArtistNew } from '../../../../model/types/artist';
 import Line from '../../Chart/lineChart';
-import brandAffinity from '../../../../dataLayer/repositories/inmemory/mockData/brandAffinity';
 
 const { Text, Title } = Typography;
 
@@ -76,7 +75,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
         </Col>
         <Col span={10}>
           <Line
-            data={brandAffinity}
+            data={artist.popularityOverTime}
             xLables={['Popularity']}
             strokeWidth={2}
             background="#000"
