@@ -44,6 +44,14 @@ export type ArtistNew = {
       data: Array<{ xAxis: string, yAxis: number }>;
     }>;
   },
+  latestYoutubeRelease: Array<{
+    tumbnail: string,
+    title: string,
+    channelName: string,
+    views: number,
+    url: string,
+    subscribers: number,
+  }>
 }
 
 export type Artist = {

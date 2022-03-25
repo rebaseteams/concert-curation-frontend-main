@@ -3,7 +3,6 @@ import {
 } from 'antd';
 import * as _ from 'lodash';
 import millify from 'millify';
-import latestRelease from '../../../../dataLayer/repositories/inmemory/mockData/latestReleaseVideosa';
 import { ArtistNew } from '../../../../model/types/artist';
 import Line from '../../Chart/lineChart';
 
@@ -87,7 +86,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
 
       <Title className="mx-5" level={2}>Latest Release</Title>
       <Row>
-        { _.map(latestRelease, (video) => (
+        { _.map(artist.latestYoutubeRelease, (video) => (
           <Col md={{ span: 12 }} xs={{ span: 24 }} key={`${video.title}${video.views}`}>
             <div className="row-flex m-5">
               <div>
