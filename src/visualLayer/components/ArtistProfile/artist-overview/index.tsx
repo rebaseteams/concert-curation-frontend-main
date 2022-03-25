@@ -19,7 +19,10 @@ const mediaColors: any = {
 };
 
 const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
-  const totalFollowers: string = millify(_.sumBy(artist.mediaHandles, 'followers'));
+  const totalFollowers: number = _.sumBy(artist.mediaHandles, 'followers');
+  const progressPercent = totalFollowers >= 5000000
+    ? 100
+    : Math.round((totalFollowers * 100) / 5000000);
   return (
     <div className="artist-profile-overview">
       <div className="row-flex justify-between align-center fan-container">
@@ -33,8 +36,8 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
             strokeWidth={10}
             strokeColor="#3FF"
             type="circle"
-            percent={75}
-            format={() => `${totalFollowers}`}
+            percent={progressPercent}
+            format={() => `${millify(totalFollowers)}`}
           />
         </div>
         <Row style={{ width: '700px', height: '100%' }}>
