@@ -66,7 +66,7 @@ const createArtistProfile = ({
               </div>
             </TabPane>
             <TabPane tab="Insights" key="insights-tab">
-              <ArtistInsights />
+              <ArtistInsights artist={artist} />
             </TabPane>
             <TabPane tab="Tour Details" key="tour-tab">
               <ArtistToursView />

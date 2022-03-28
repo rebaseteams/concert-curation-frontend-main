@@ -51,7 +51,26 @@ export type ArtistNew = {
     views: number,
     url: string,
     subscribers: number,
-  }>
+  }>,
+  youtubeInsights: {
+    channel: {
+      id: string;
+      subscribersCount: number;
+      viewsCount: number;
+      videosCount: number;
+      avgViewsCount: number;
+      avgLikesCount: number;
+      engagementRatio: number;
+    },
+    videos: Array<{
+      playlistId: string;
+      songCount: number;
+      viewsCount: number;
+      likesCount: number;
+      dislikeCount: number;
+      commentsCount: number;
+    }>
+  }
 }
 
 export type Artist = {
