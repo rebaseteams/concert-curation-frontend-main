@@ -160,7 +160,13 @@ const ConcertForm = ({
 
   const onFormSubmit = async (values: onSubmitFormDataType) => {
     setLoading(true);
-    const result: QuestionsUI = createConcertFormData(values, budget);
+    const mappingData = {
+      budget,
+      allBrands,
+      venues,
+      eventsType,
+    };
+    const result: QuestionsUI = createConcertFormData(values, mappingData);
     const response = await addNewRecommendation(result);
     if (response.error) {
       setLoading(false);
