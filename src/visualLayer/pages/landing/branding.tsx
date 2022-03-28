@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import checkResource from '../../../utils/checkResourceAction';
 
 const Branding = (): JSX.Element => (
   <div className="height-100 column-flex justify-center align-center first-sec">
@@ -12,9 +13,13 @@ const Branding = (): JSX.Element => (
     <Link style={{ margin: '10px' }} className="button-text" to="dashboard">
       Dashboard
     </Link>
-    <Link style={{ margin: '10px' }} className="button-text" to="superadmin/dashboard">
-      SuperAdmin Dashboard
-    </Link>
+    { checkResource('superadmin dashboard',
+      'view',
+      (
+        <Link style={{ margin: '10px' }} className="button-text" to="superadmin/dashboard">
+          SuperAdmin Dashboard
+        </Link>
+      )) }
   </div>
 );
 
