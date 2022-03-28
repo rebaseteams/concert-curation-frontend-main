@@ -17,6 +17,7 @@ type UserType = {
   name : string,
   picture : string,
   pending : boolean,
+  email : string,
   roles : Array<{ id: string, name: string }>};
 
 const Users = ({ userService, roleService } : {
@@ -57,6 +58,7 @@ const Users = ({ userService, roleService } : {
         picture: 'https://joeschmoe.io/api/v1/random',
         pending: us.approved,
         roles: us.roles,
+        email: us.email,
       })));
     }
     await loadRoles();
@@ -78,7 +80,7 @@ const Users = ({ userService, roleService } : {
     if (pendingApproval) {
       const resp = await userService.getPendingUsers((pageNo - 1) * pageSize, pageSize);
       setListToDisplay(resp.data.users.map((user) => ({
-        id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles,
+        id: user.id, name: user.name, picture: 'https://joeschmoe.io/api/v1/random', pending: user.approved, roles: user.roles, email: user.email,
       })));
       getUsersCount();
     } else loadUsers(pageNo, pageSize);
@@ -190,6 +192,7 @@ const Users = ({ userService, roleService } : {
               <List.Item.Meta
                 avatar={<Avatar src={item.picture} />}
                 title={<a href="https://ant.design">{item.name}</a>}
+                description={item.email}
               />
               {(item.pending === null) ? (
                 <div>
