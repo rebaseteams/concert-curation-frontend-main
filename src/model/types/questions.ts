@@ -21,12 +21,12 @@ export type Questions = {
 export type QuestionsUI = {
         userId: string;
         concertName: string;
-        eventType: {id: string, name: string;}
-        venue: Array<{id: string, name: string;}>;
+        eventType: string;
+        venue: string[];
         artistBudget:{'min': number, 'max':number};
         sponsorshipType :string;
-        wantedBrands: Array<{id: string, name: string;}>;
-        unwantedBrands: Array<{id: string, name: string;}>;
+        wantedBrands: Array<string>;
+        unwantedBrands: Array<string>;
         targetAudience: TargetAudience;
         whatSellsMost: WhatSellsMost;
 }
