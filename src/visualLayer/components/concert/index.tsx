@@ -162,9 +162,6 @@ const ConcertForm = ({
     setLoading(true);
     const mappingData = {
       budget,
-      allBrands,
-      venues,
-      eventsType,
     };
     const result: QuestionsUI = createConcertFormData(values, mappingData);
     const response = await addNewRecommendation(result);
