@@ -259,7 +259,7 @@ export function createRecommendationPage({
                 <div>
                   <h2>Selected Venues</h2>
                   {' '}
-                  { concertData.venue.map((v: string) => <h3 key={v}>{v}</h3>) }
+                  { concertData.venue.map((v) => <h3 key={v.id}>{v.name}</h3>) }
                 </div>
               )}
               color="#0029"
@@ -271,11 +271,11 @@ export function createRecommendationPage({
               </Tag>
             </Tooltip>
             <Tooltip
-              title={`Event type: ${concertData.eventType}`}
+              title={`Event type: ${concertData.eventType.name}`}
               color="magenta"
             >
               <Tag color="magenta">
-                <span className="text-size-4">{concertData.eventType}</span>
+                <span className="text-size-4">{concertData.eventType.name}</span>
               </Tag>
             </Tooltip>
             <Tooltip

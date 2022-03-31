@@ -19,15 +19,15 @@ const ConcertData = ({ data }: ConcertDataProp): JSX.Element => {
           <span className="material-icons">
             location_on
           </span>
-          {concertData.venue.map((venue) => (<span key={venue}>{`${venue}, `}</span>))}
+          {concertData.venue.map((venue) => (<span key={venue.id}>{`${venue.name}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Wanted Brands</h4>
-          {concertData.wantedBrands.map((value) => (<span key={value.brandId}>{`${value.brandName}, `}</span>))}
+          {concertData.wantedBrands.map((value) => (<span key={value.id}>{`${value.name}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Unwanted Brands</h4>
-          {concertData.unwantedBrands.map((value) => (<span key={value.brandId}>{`${value.brandName}, `}</span>))}
+          {concertData.unwantedBrands.map((value) => (<span key={value.id}>{`${value.name}, `}</span>))}
         </Col>
         <Col span={24} className="information">
           <h4>Age group</h4>
