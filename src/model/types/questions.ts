@@ -1,5 +1,8 @@
 import { ArtistBudget } from './artist-budget';
-import { Brand } from './brand';
+import { NewBrandResponse } from './brand';
+import { NewEventsTypeResponseData } from './eventsType';
+import { NewVenueResponseData } from './venue';
+
 import { TargetAudience } from './target-audience';
 import { WhatSellsMost } from './what-sells-most';
 
@@ -7,12 +10,12 @@ export type Questions = {
         id: string;
         userId: string;
         concertName: string;
-        eventType: string;
-        venue: Array<string>;
+        eventType: NewEventsTypeResponseData;
+        venue: Array<NewVenueResponseData>;
         artistBudget: ArtistBudget;
         sponsorshipType: string,
-        wantedBrands: Array<Brand>;
-        unwantedBrands: Array<Brand>;
+        wantedBrands: Array<NewBrandResponse>;
+        unwantedBrands: Array<NewBrandResponse>;
         targetAudience: TargetAudience;
         whatSellsMost: WhatSellsMost;
         dateCreated: string;
