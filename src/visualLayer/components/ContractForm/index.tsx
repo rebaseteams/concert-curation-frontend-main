@@ -23,6 +23,12 @@ const DocusignForm = ({
         <Form.Item name="emailSubject" label="Email Subject" required>
           <Input type="text" placeholder="Please enter Subject to be sent in email" />
         </Form.Item>
+        <Form.Item name="signerEmail" label="Signer Email" required>
+          <Input type="email" placeholder="Enter email of Signer" />
+        </Form.Item>
+        <Form.Item name="signerName" label="Signer Name" required>
+          <Input type="text" placeholder="Name of Signer" />
+        </Form.Item>
         <Form.Item name="ccEmail" label="CC Email" required>
           <Input type="email" placeholder="Enter email for carbon copy" />
         </Form.Item>
