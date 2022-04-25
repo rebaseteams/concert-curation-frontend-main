@@ -13,6 +13,7 @@ import { VenuesInterface } from '../interfaces/venues';
 import { EventsTypeInterface } from '../interfaces/eventsType';
 import AdvancedSearchInterface from '../interfaces/advancedSearch';
 import { BrandsInterface } from '../interfaces/brands';
+import { GenresInterface } from '../interfaces/genres';
 
 export type Provider = (props: { children: JSX.Element }) => JSX.Element;
 
@@ -44,6 +45,7 @@ export interface Config {
     eventsTypeService: EventsTypeInterface,
     advancedSearchService: AdvancedSearchInterface,
     brandsService: BrandsInterface,
+    genresService: GenresInterface,
   };
 
   providers: {

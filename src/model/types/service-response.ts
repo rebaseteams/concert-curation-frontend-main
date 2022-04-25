@@ -6,6 +6,7 @@ import { AllBrandsList } from './brands';
 import { CreateCollaborationResponseData } from './collaborationForm';
 import { Documents } from './document/addDocument';
 import { NewEventsTypeResponseData } from './eventsType';
+import { AllGenresList } from './genre';
 import { ConcertCreationResponse } from './questions';
 import { NewResourceResponseData } from './resources';
 import {
@@ -333,6 +334,13 @@ export type GetAllBrandsListResponse = {
   }
 }
 
+// genres response
+export type GetAllGenresListResponse = {
+  success: boolean,
+  data: {
+    genres : Array<AllGenresList>
+  }
+}
 // search response
 export type AdvancedSearchResponse = {
   success: boolean,
