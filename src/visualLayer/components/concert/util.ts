@@ -2,6 +2,7 @@
 
 import { BrandsInterface } from '../../../model/interfaces/brands';
 import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
+import { GenresInterface } from '../../../model/interfaces/genres';
 import { VenuesInterface } from '../../../model/interfaces/venues';
 import { RecommendtionValidation } from '../../../model/types/artist-recommendation';
 import { QuestionsUI } from '../../../model/types/questions';
@@ -17,4 +18,5 @@ export interface ConcertFormProp {
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface;
+  genresService: GenresInterface,
 }

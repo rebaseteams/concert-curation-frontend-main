@@ -9,6 +9,7 @@ import { VenuesInterface } from '../../../model/interfaces/venues';
 import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
 import { BrandsInterface } from '../../../model/interfaces/brands';
 import { RecommendtionValidation } from '../../../model/types/artist-recommendation';
+import { GenresInterface } from '../../../model/interfaces/genres';
 
 interface CurateConcertModalProp {
   setDisplayFormModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,8 @@ interface CurateConcertModalProp {
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface;
+  genresService: GenresInterface,
+
 }
 
 const CurateConcertModal = ({
@@ -31,6 +34,7 @@ const CurateConcertModal = ({
   venuesService,
   eventsTypeService,
   brandsService,
+  genresService,
 }: CurateConcertModalProp): JSX.Element => (
   <Modal
     title="Choose your prefrences"
@@ -63,6 +67,7 @@ const CurateConcertModal = ({
       venuesService={venuesService}
       eventsTypeService={eventsTypeService}
       brandsService={brandsService}
+      genresService={genresService}
     />
   </Modal>
 );

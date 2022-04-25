@@ -6,7 +6,11 @@ type MappingData = {
   budget: {
     min: number;
     max: number;
-  }
+  },
+  allGenres: Array<{
+    id: string;
+    name: string;
+  }>
 }
 const createConcertFormData = (
   values: onSubmitFormDataType, mappingData: MappingData,
@@ -18,9 +22,9 @@ const createConcertFormData = (
   targetAudience: {
     ageGroup: values.age,
     gender: values.gender,
-    genre: values.genre.map((genre: string) => ({
-      genreId: '886863',
-      genreName: genre,
+    genre: mappingData.allGenres.filter((g) => values.genre.includes(g.id)).map((gen) => ({
+      genreId: gen.id,
+      genreName: gen.name,
     })),
   },
   whatSellsMost: {

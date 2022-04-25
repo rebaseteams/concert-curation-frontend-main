@@ -26,12 +26,14 @@ const ConcertForm = ({
   venuesService,
   eventsTypeService,
   brandsService,
+  genresService,
 } : ConcertFormProp): JSX.Element => {
   const [budget, setBudget] = useState<ArtistBudget>({ min: 20000, max: 50000 });
   const [loading, setLoading] = useState(false);
   const [venues, setVenues] = useState<Array<{id: string, name: string}>>([]);
   const [eventsType, setEventsType] = useState<Array<{id: string, name: string}>>([]);
   const [allBrands, setAllBrands] = useState<Array<{id: string, name: string}>>([]);
+  const [allGenres, setAllGenres] = useState<Array<{id: string, name: string}>>([]);
   const [wantedBrands, setWantedBrands] = useState<Array<string>>([]);
   const [unWantedBrands, setUnWantedBrands] = useState<Array<string>>([]);
 
@@ -83,6 +85,20 @@ const ConcertForm = ({
       });
     }
   };
+  const getAllGenresList = async () => {
+    try {
+      const resp = await genresService.getAll();
+      if (resp.success) {
+        const genreOptions = resp.data.genres.map((g) => ({ id: g.id, name: g.name }));
+        setAllGenres(genreOptions);
+      }
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Cannot fetch genre list',
+      });
+    }
+  };
   const validateEventName = async (eventName: string) => {
     try {
       const resp = await validateRecommendationFields({ eventName: eventName.trim() });
@@ -106,6 +122,7 @@ const ConcertForm = ({
     getVenueList();
     getEventsTypeList();
     getAllBrandsList();
+    getAllGenresList();
   }, []);
 
   const form: FormFields[] = myForm.map((f) => {
@@ -146,6 +163,12 @@ const ConcertForm = ({
         selectOptionsWithValue: allBrands.filter((l) => !wantedBrands.includes(l.id)),
       };
     }
+    if (f.name === 'genre') {
+      return {
+        ...f,
+        selectOptionsWithValue: allGenres,
+      };
+    }
     return f;
   });
 
@@ -162,6 +185,7 @@ const ConcertForm = ({
     setLoading(true);
     const mappingData = {
       budget,
+      allGenres,
     };
     const result: QuestionsUI = createConcertFormData(values, mappingData);
     const response = await addNewRecommendation(result);
