@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GetConcert } from '../../../../hooks/useGetConcerts';
 import { BrandsInterface } from '../../../../model/interfaces/brands';
 import { EventsTypeInterface } from '../../../../model/interfaces/eventsType';
+import { GenresInterface } from '../../../../model/interfaces/genres';
 import { VenuesInterface } from '../../../../model/interfaces/venues';
 import { RecommendtionValidation } from '../../../../model/types/artist-recommendation';
 import { QuestionsUI } from '../../../../model/types/questions';
@@ -20,6 +21,7 @@ export type CreateRenderChartProps = {
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface,
+  genresService: GenresInterface,
 
 };
 
@@ -31,6 +33,7 @@ export function createRenderConcerts({
   venuesService,
   eventsTypeService,
   brandsService,
+  genresService,
 }: CreateRenderChartProps): () => JSX.Element | null {
   return function ConcertList(): JSX.Element | null {
     const {
@@ -55,6 +58,7 @@ export function createRenderConcerts({
           venuesService={venuesService}
           eventsTypeService={eventsTypeService}
           brandsService={brandsService}
+          genresService={genresService}
         />
         <div className="row-flex width-md">
           <h4 className="text-size-3" style={{ marginRight: '20px' }}>

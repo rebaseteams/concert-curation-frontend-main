@@ -95,6 +95,7 @@ export function createApp(
       eventsTypeService,
       advancedSearchService,
       brandsService,
+      genresService,
     },
     resources: {
       AUTH_DOMAIN,
@@ -111,6 +112,7 @@ export function createApp(
       venuesService,
       eventsTypeService,
       brandsService,
+      genresService,
     },
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });

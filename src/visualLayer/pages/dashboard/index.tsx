@@ -24,6 +24,7 @@ import { TemplatesInterface } from '../../../model/interfaces/templates';
 import { VenuesInterface } from '../../../model/interfaces/venues';
 import { EventsTypeInterface } from '../../../model/interfaces/eventsType';
 import { BrandsInterface } from '../../../model/interfaces/brands';
+import { GenresInterface } from '../../../model/interfaces/genres';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -37,6 +38,7 @@ export interface CreateDashboardComponentProps {
   venuesService: VenuesInterface;
   eventsTypeService: EventsTypeInterface;
   brandsService: BrandsInterface,
+  genresService: GenresInterface,
 
 }
 
@@ -49,6 +51,7 @@ export function createDashboardComponent({
   venuesService,
   eventsTypeService,
   brandsService,
+  genresService,
 }: CreateDashboardComponentProps): () => JSX.Element | null {
   return function DashboardComponent() {
     const [searchParam, setSearchPram] = useSearchParams();
@@ -66,6 +69,7 @@ export function createDashboardComponent({
       venuesService,
       eventsTypeService,
       brandsService,
+      genresService,
     });
     const DocumentsList = createRenderDocuments(
       {

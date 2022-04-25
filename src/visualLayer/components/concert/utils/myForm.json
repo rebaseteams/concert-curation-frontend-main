@@ -93,14 +93,6 @@
     "name": "genre",
     "label": "Targeted genre",
     "type": "select",
-    "selectOptions": [
-      "Hollywood",
-      "Pop",
-      "Classic",
-      "Rock",
-      "DJ",
-      "Traditional"
-    ],
     "multiple": true,
     "required": true,
     "message": "Please targeted genre type"
