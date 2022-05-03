@@ -37,7 +37,7 @@ import GenresRepo from './dataLayer/repositories/http/genres';
 // const tokenService = new UnsignedTokenService();
 const scopes = ['GET:artists/recommendations', 'POST:artists/recommendations', 'DELETE:artists/recommendations'];
 
-const server = 'https://concertcuartor.rebaseitlabs.in/cc-bff';
+const server = 'https://live-api.cuttime.fm/cc-bff';
 export const config: Config = {
   mode: 'production',
   resources: {
