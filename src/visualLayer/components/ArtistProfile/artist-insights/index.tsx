@@ -33,7 +33,7 @@ const ArtistInsights = ({ artist }: {artist: ArtistNew}): JSX.Element => {
             <div>
               <PieChart
                 type="donut"
-                data={[{ label: 'Male', value: 86 }, { label: 'Female', value: 14 }]}
+                data={[{ name: 'Male', value: 86 }, { name: 'Female', value: 14 }]}
                 colors={['red', 'green', 'aqua']}
                 classes=""
                 XLables={['Audience gender']}

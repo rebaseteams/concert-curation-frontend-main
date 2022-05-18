@@ -1,0 +1,46 @@
+.brand-profile-container {
+  .brand-profile-heading {
+    width: 100%;
+    height: 250px;
+    background-position: center;
+    background-clip: fit;
+    position: relative;
+  
+    .back-button {
+      position: absolute;
+      color: #000;
+      text-shadow: 1px 1px 5px #FFF;
+    }
+
+    .brand-logo {
+      position: absolute;
+      top: 125px;
+      left: 20px;
+      border-radius: 50%;
+      z-index: 400;
+    }
+  
+    .brand-name {
+      position: absolute;
+      top: 200px;
+      left: 250px;
+      color: rgb(5, 5, 27);
+      text-size-adjust: auto;
+      text-shadow: 1px 1px 3px #FFF, 2px 2px 15px #FFF, 3px 3px 42px rgb(255, 255, 255);
+    }
+  }
+
+  .brand-profile-body{
+    max-width: 90%;
+    margin: auto;x
+    .artist-profile-overview {
+      margin: 50px auto;
+      .fan-container {
+        .fan-circle {
+          width: fit-content;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

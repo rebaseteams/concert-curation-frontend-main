@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 
 import { ArtistRecommendation } from '../../../../model/types/artist-recommendation';
+import { brandMockDataNew } from './brands';
 
 /* eslint-disable import/prefer-default-export */
 export const recommendedArtistsMockData: ArtistRecommendation = {
@@ -41,22 +42,10 @@ export const recommendedArtistsMockData: ArtistRecommendation = {
     artistBudget: { min: 20000, max: 50000 },
     sponsorshipType: 'Direct sales',
     wantedBrands: [
-      {
-        id: '9870cd65-845e-43da-8d04-c2268922db3e',
-        name: 'Puma',
-        logo: 'https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1488031588/ojishq9u9hknccjtypqf.png',
-        website: 'http://us.puma.com/',
-        contact: '18002695',
-      },
+      brandMockDataNew,
     ],
     unwantedBrands: [
-      {
-        id: '9870cd65-845e-43da-8d04-c2268922db3e',
-        name: 'Puma',
-        logo: 'https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1488031588/ojishq9u9hknccjtypqf.png',
-        website: 'http://us.puma.com/',
-        contact: '18002695',
-      },
+      brandMockDataNew,
     ],
     targetAudience: {
       ageGroup: ['26-35', '36-60'],

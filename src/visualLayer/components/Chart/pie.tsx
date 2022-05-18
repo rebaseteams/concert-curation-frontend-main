@@ -18,7 +18,7 @@ import _ from 'lodash';
 interface PieChartProps {
     type: any;
     data: {
-        label: string;
+        name: string;
         value: number;
     }[];
     colors: string[];
@@ -65,7 +65,7 @@ const PieChart = ({
 
   useEffect(() => {
     const values = _.map(data, 'value');
-    const labels = _.map(data, 'label');
+    const labels = _.map(data, 'name');
     setDonutValues(values);
 
     colors = colors.slice(2, colors.length - 1);

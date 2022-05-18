@@ -24,6 +24,7 @@ import { ArtistRecommendationInterface } from './model/interfaces/artistRecommen
 import { DocumentsInterface } from './model/interfaces/documents';
 import ArtistInterface from './model/interfaces/artist';
 import createArtistPage from './visualLayer/pages/artists/artist';
+import createBrandPage from './visualLayer/pages/brands/brand';
 import { DownloadService } from './services/download.service';
 import LandingPage from './visualLayer/pages/landing';
 import { DocusignInterface } from './model/interfaces/docusign';
@@ -117,6 +118,8 @@ export function createApp(
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });
 
+  const BrandPage = createBrandPage(brandsService);
+
   const RecommendationPage = createRecommendationPage({
     downloadService, artistRecommendation, documentsService,
   });
@@ -204,6 +207,7 @@ export function createApp(
                 <Route path="/dashboard" element={authenticate(<DashboardComponent />)} />
                 <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup AuthService={AuthService} />} />
                 <Route path="/artist/:id" element={authenticate(<ArtistPage />)} />
+                <Route path="/brand/:id" element={authenticate(<BrandPage />)} />
                 <Route path="/superadmin/dashboard" element={authenticate(<SuperAdminDashboard resourcesService={resourceService} usersService={userService} rolesService={rolesService} />)} />
                 <Route path="/profile" element={isAuthenticated ? <ProfilePage /> : <Navigate to="/" />} />
               </Route>
