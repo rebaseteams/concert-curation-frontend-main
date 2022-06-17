@@ -118,7 +118,7 @@ export function createApp(
   );
   const ArtistPage = createArtistPage({ artistService, documentsService, templatesService });
 
-  const BrandPage = createBrandPage(brandsService);
+  const BrandPage = createBrandPage({ brandService: brandsService });
 
   const RecommendationPage = createRecommendationPage({
     downloadService, artistRecommendation, documentsService,
