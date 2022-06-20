@@ -43,10 +43,13 @@ export const config: Config = {
   mode: 'development',
   resources: {
     SERVER: server,
-    AUTH_DOMAIN: 'https://dev-yga6eln3.us.auth0.com',
-    AUTH_CLIENT_ID: 'oVngjMIrVInLZTxwFv9k64FS4cQ34d5V',
+    AUTH_DOMAIN: 'https://dev-bnfcgcth.us.auth0.com',
+    AUTH_CLIENT_ID: 'B7hdgDYvx7fyGktJJxxidg9qg0Xvbq0s',
     AUTH_CONNECTION: 'Username-Password-Authentication',
-    AUTH_AUDIENCE: 'concertcuration.dev.api',
+    // AUTH_AUDIENCE: 'concertcuration.dev.api',
+    // This config allows request originating from the locally running cuttime service
+    //  connect above Auth0 instance
+    AUTH_AUDIENCE: 'http://localhost:4000',
     AUTH_SCOPE: scopes.join(' '),
   },
   services: {
