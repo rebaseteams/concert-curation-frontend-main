@@ -152,6 +152,7 @@ export const artistMockDataNew: ArtistNew = {
       },
     ],
   },
+  misc: null,
 };
 
 export const artistMockData: Artist = {

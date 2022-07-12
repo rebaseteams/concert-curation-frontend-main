@@ -70,7 +70,9 @@ export type ArtistNew = {
       dislikeCount: number;
       commentsCount: number;
     }>
-  }
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  misc: any
 }
 
 export type Artist = {
