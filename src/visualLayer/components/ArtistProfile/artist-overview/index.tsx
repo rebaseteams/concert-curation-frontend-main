@@ -7,6 +7,7 @@ import { ArtistNew } from '../../../../model/types/artist';
 import Line from '../../Chart/lineChart';
 import ArtistGraphs from '../artist-graphs';
 import { metaData } from '../artist-graphs/metaData';
+import { mockData } from '../artist-graphs/mockData';
 
 const { Text, Title } = Typography;
 
@@ -86,7 +87,7 @@ const ArtistOverview = ({ artist }: {artist: ArtistNew}): JSX.Element => {
         </Col>
       </Row>
 
-      <ArtistGraphs data={artist.misc} metaData={metaData} />
+      <ArtistGraphs data={mockData} metaData={metaData} />
 
       <Title className="mx-5" level={2}>Latest Release</Title>
       <Row>
