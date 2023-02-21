@@ -45,6 +45,7 @@ import createProfilePage from './visualLayer/pages/profile';
 import AdvancedSearchInterface from './model/interfaces/advancedSearch';
 import { BrandsInterface } from './model/interfaces/brands';
 import { GenresInterface } from './model/interfaces/genres';
+import { createHeader } from './v2/components/header';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -196,6 +197,8 @@ export function createApp(
       return toReturn;
     };
 
+    const HeaderV2 = createHeader();
+
     return (
       auth
         ? (
@@ -213,6 +216,9 @@ export function createApp(
               </Route>
               <Route path="/recommendations/:recommendationId" element={authenticate(<RecommendationPage />)} />
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
+              <Route path="/v2" element={<HeaderV2 />}>
+                <Route index element={<div>Landing page</div>} />
+              </Route>
               <Route
                 path="/*"
                 element={(
