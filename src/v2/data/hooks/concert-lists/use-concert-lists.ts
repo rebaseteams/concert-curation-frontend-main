@@ -7,6 +7,6 @@ export type UseConcerts = UseResources<ConcertType, ConcertFilter>;
 
 export function createUseConcerts(): UseConcerts {
   return createUseResources<ConcertType, ConcertFilter, ConcertInterface>(
-    { useService: useConcertService }
-  )
+    { useService: useConcertService },
+  );
 }
