@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import { UseConcerts } from '../../../data/hooks/concert-lists/use-concert-lists';
@@ -25,6 +26,8 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
           to: '$50,000',
         },
         genres: ['Electropop', 'Electronica', 'Electro house', 'some more', 'some more crap'],
+        sponsershipType: 'Customer engagement',
+        targetedGender: 'All genders',
       });
     }
 
@@ -87,7 +90,9 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
                   {
                     concerts?.map((c) => (
                       <div className="basis-1/3 p-2" key={c.id}>
-                        <Card card={c} />
+                        <Link to={`/v2/concerts/${c.id}`}>
+                          <Card card={c} />
+                        </Link>
                       </div>
                     ))
                   }

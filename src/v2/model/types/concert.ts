@@ -9,6 +9,8 @@ export type ConcertType = {
         to: string;
     };
     genres: Array<string>;
+    targetedGender: string;
+    sponsershipType: string;
 }
 
 export type ConcertFilter = {
