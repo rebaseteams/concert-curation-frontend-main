@@ -1,17 +1,18 @@
-import { useState } from "react";
-import { BaseResourceType, FilterType, SimpleResourceInterface } from "../../../model/interfaces/generics";
-
+import { useState } from 'react';
+import { BaseResourceType, FilterType, SimpleResourceInterface } from '../../../model/interfaces/generics';
 
 export type UseResources<T, U> = () => {
   data?: Array<T>;
   getAll: (filter?: U) => void;
   getAllSync: (filter?: U, o?: Options) => Promise<T[]>;
+  setSync: (s: T) => Promise<T>;
+  getSync: (id: string) => Promise<T>;
   loading: boolean;
 }
 
 type Options = {
   enableLoading?: boolean, enableResource?: boolean
-} 
+}
 
 export interface UseGetAllResources<V> {
   useService: () => V;
@@ -31,23 +32,44 @@ export function createUseResources<
       setLoading(true);
       const r = await resourceAdminService.getAll({
         getAll: true,
-        ...filter
+        ...filter,
       } as unknown as U) as T[];
       setResources(r);
       setLoading(false);
-    }
+    };
+
+    const getSync = async (id: string) => {
+      const c = await resourceAdminService.get(id);
+
+      return c;
+    };
+
+    const setSync = async (c: T) => {
+      const res = await resourceAdminService.set(c);
+
+      return res;
+    };
 
     // pass options to disable state change inside this hook
+    // eslint-disable-next-line
     const getAllSync = async (filter?: any, options?: Options) => {
-      const {enableLoading, enableResource} = options || {enableLoading: true, enableResource: true}
-      enableLoading && setLoading(true);
-      const c = await resourceAdminService.getAll({ 
+      const { enableLoading, enableResource } = options
+        || { enableLoading: true, enableResource: true };
+      if (enableLoading) {
+        setLoading(true);
+      }
+      const c = await resourceAdminService.getAll({
         getAll: true,
-        ...filter }) as T[];
-      enableResource && setResources(c);
-      enableLoading && setLoading(false);
+        ...filter,
+      }) as T[];
+      if (enableResource) {
+        setResources(c);
+      }
+      if (enableLoading) {
+        setLoading(false);
+      }
       return c;
-    }
+    };
 
     // useEffect(() => { apiCall(); }, []);
 
@@ -57,7 +79,9 @@ export function createUseResources<
         apiCall(filter);
       },
       getAllSync,
-      loading
+      getSync: (id: string) => getSync(id),
+      setSync: (c: T) => setSync(c),
+      loading,
     };
   };
 }

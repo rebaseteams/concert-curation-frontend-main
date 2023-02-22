@@ -1,8 +1,9 @@
-import { ConcertInterface } from "../../../../model/interfaces/concert";
-import { ConcertFilter, ConcertType } from "../../../../model/types/concert";
-
+// eslint-disable class-methods-use-this
+import { ConcertInterface } from '../../../../model/interfaces/concert';
+import { ConcertFilter, ConcertType } from '../../../../model/types/concert';
 
 export class InMemConcertRepo implements ConcertInterface {
+  // eslint-disable-next-line
   async getAll(f?: ConcertFilter | undefined): Promise<ConcertType[]> {
     const data = localStorage.getItem('concert-list');
     return JSON.parse(data || '[]') as Array<ConcertType>;
@@ -12,15 +13,15 @@ export class InMemConcertRepo implements ConcertInterface {
     const data = localStorage.getItem('concert-list');
     const res = JSON.parse(data || '[]') as Array<ConcertType>;
 
-    return res.find(x => x.id === id) || {} as ConcertType
+    return res.find((x) => x.id === id) || {} as ConcertType;
   }
 
   async set(a: ConcertType): Promise<ConcertType> {
     const data = localStorage.getItem('concert-list');
     const res = JSON.parse(data || '[]') as Array<ConcertType>;
 
-    if (res.find(x => x.id === a.id)) {
-      res.splice(res.findIndex(x => x.id === a.id), 1);
+    if (res.find((x) => x.id === a.id)) {
+      res.splice(res.findIndex((x) => x.id === a.id), 1);
     }
 
     res.push(a);
@@ -33,8 +34,8 @@ export class InMemConcertRepo implements ConcertInterface {
     const data = localStorage.getItem('concert-list');
     const res = JSON.parse(data || '[]') as Array<ConcertType>;
 
-    if (res.find(x => x.id === id)) {
-      res.splice(res.findIndex(x => x.id === id), 1);
+    if (res.find((x) => x.id === id)) {
+      res.splice(res.findIndex((x) => x.id === id), 1);
     }
 
     localStorage.setItem('concert-list', JSON.stringify(res));
