@@ -23,7 +23,7 @@ export function createArtistCard(): ({ card }: { card: ArtistRecommendation }) =
           </div>
           <div className="ml-2 text-lg my-auto text-black flex-grow">{card.name}</div>
           <div className="text-sm my-auto text-gray-700 flex-none italic">
-            {card.matchItemCount}
+            {card.matchItems?.length}
             {' '}
             items matching
           </div>
