@@ -2,7 +2,7 @@
 
 export function createConcertList(): () => JSX.Element {
   return function ConcertList(): JSX.Element {
-    return <div className="text-black">
+    return <div className="text-black bg-neutral-100">
       <div className="flex py-4 px-4">
         <div className="flex-grow">
           <div className="text-2xl">Concerts</div>
@@ -34,6 +34,17 @@ export function createConcertList(): () => JSX.Element {
           <div className="bg-white text-black text-md bold border border-black rounded-xl p-1">+ Add Concert</div>
         </div>
 
+      </div>
+
+      <div id="no-concerts-available" className="flex flex-col my-8">
+        <div className="mx-auto text-center">
+          <div className="text-md bold">No concerts available</div>
+          <div className="text-xs">Its time to create your concert now</div>
+          <button className="bg-sky-500 border rounded-full p-2 text-white my-2">+ Add Concert</button>
+        </div>
+        <div className="mx-auto">
+          <img src="/concert-list-bg.png" alt="concert-list" />
+        </div>
       </div>
     </div>
   }
