@@ -11,6 +11,18 @@ export type ConcertType = {
     genres: Array<string>;
     targetedGender: string;
     sponsershipType: string;
+    recommendedArtists: Array<ArtistRecommendation>;
+    preferredBrands: Array<string>;
+    notPreferredBrands: Array<string>;
+    targetedAge: Array<string>;
+}
+
+export type ArtistRecommendation = {
+    id: string;
+    name: string;
+    url: string;
+    matchPercent: number;
+    matchItemCount: number;
 }
 
 export type ConcertFilter = {

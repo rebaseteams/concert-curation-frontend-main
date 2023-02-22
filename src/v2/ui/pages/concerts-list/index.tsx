@@ -28,6 +28,46 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
         genres: ['Electropop', 'Electronica', 'Electro house', 'some more', 'some more crap'],
         sponsershipType: 'Customer engagement',
         targetedGender: 'All genders',
+        targetedAge: ['18 - 25', '26 - 35'],
+        preferredBrands: ['Adidas', 'American Idol'],
+        notPreferredBrands: ['Walmart'],
+        recommendedArtists: [
+          {
+            id: '1',
+            name: 'Megadeth',
+            url: '/artist/1.png',
+            matchItemCount: 8,
+            matchPercent: 56,
+          },
+          {
+            id: '2',
+            name: 'Bob Dylan',
+            url: '/artist/2.png',
+            matchItemCount: 7,
+            matchPercent: 48,
+          },
+          {
+            id: '3',
+            name: 'Bruce Springster',
+            url: '/artist/3.png',
+            matchItemCount: 6,
+            matchPercent: 40,
+          },
+          {
+            id: '4',
+            name: 'David Grey',
+            url: '/artist/4.png',
+            matchItemCount: 5,
+            matchPercent: 38,
+          },
+          {
+            id: '5',
+            name: 'Surma Metal Storm',
+            url: '/artist/5.png',
+            matchItemCount: 5,
+            matchPercent: 38,
+          },
+        ],
       });
     }
 

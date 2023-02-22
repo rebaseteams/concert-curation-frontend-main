@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-// import { v4 as uuid } from 'uuid';
 import moment from 'moment';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UseConcerts } from '../../../data/hooks/concert-lists/use-concert-lists';
 import { ConcertType } from '../../../model/types/concert';
-import { createConcertCard } from '../../components/concert-card';
+import { createArtistCard } from '../../components/artist-card';
 
 export function createConcertDetails(): (props: { useConcerts: UseConcerts }) => JSX.Element {
-  const Card = createConcertCard();
+  const Card = createArtistCard();
   return function ConcertDetails({ useConcerts }: { useConcerts: UseConcerts }): JSX.Element {
     const { id } = useParams();
-    const { data: concerts, getSync: getConcert } = useConcerts();
+    const { getSync: getConcert } = useConcerts();
     const [concert, setConcert] = useState<ConcertType>({} as ConcertType);
     const [hidden, setHidden] = useState<boolean>(false);
 
@@ -32,9 +31,11 @@ export function createConcertDetails(): (props: { useConcerts: UseConcerts }) =>
       <div className="text-black bg-neutral-100">
         <div className="flex py-4 px-4 border-b border-gray-200">
           <div className="flex-none mt-2 mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
+            <Link to="/v2/concerts">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
+            </Link>
           </div>
           <div className="flex-grow">
             <div className="text-lg bold">{concert.name}</div>
@@ -187,33 +188,15 @@ export function createConcertDetails(): (props: { useConcerts: UseConcerts }) =>
           </div>
         </div>
         <div className="py-4 px-4 bg-white">
-          {
-            !concerts || concerts.length === 0 ? (
-              <div id="no-concerts-available" className="flex flex-col my-8">
-                <div className="mx-auto text-center">
-                  <div className="text-md bold">No concerts available</div>
-                  <div className="text-xs">Its time to create your concert now</div>
-                  <button type="button" className="bg-sky-500 border rounded-full p-2 text-white my-2">+ Add Concert</button>
+          <div className="flex flex-wrap">
+            {
+              concert.recommendedArtists?.map((c) => (
+                <div className="basis-1/3 p-2" key={c.id}>
+                  <Card card={c} />
                 </div>
-                <div className="mx-auto">
-                  <img src="/concert-list-bg.png" alt="concert-list" />
-                </div>
-              </div>
-            )
-            // eslint-disable-next-line
-              :
-              (
-                <div className="flex flex-wrap">
-                  {
-                    concerts?.map((c) => (
-                      <div className="basis-1/3 p-2" key={c.id}>
-                        <Card card={c} />
-                      </div>
-                    ))
-                  }
-                </div>
-              )
-          }
+              ))
+            }
+          </div>
         </div>
       </div>
     );
