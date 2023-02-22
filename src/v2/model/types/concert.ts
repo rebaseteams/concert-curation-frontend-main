@@ -22,7 +22,7 @@ export type ArtistRecommendation = {
     name: string;
     url: string;
     matchPercent: number;
-    matchItemCount: number;
+    matchItems: Array<string>;
 }
 
 export type ConcertFilter = {

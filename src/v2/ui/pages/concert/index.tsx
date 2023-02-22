@@ -4,14 +4,19 @@ import { Link, useParams } from 'react-router-dom';
 import { UseConcerts } from '../../../data/hooks/concert-lists/use-concert-lists';
 import { ConcertType } from '../../../model/types/concert';
 import { createArtistCard } from '../../components/artist-card';
+import { Switch, SwitchMode } from '../../components/library/switch';
+import { createArtistGrid } from '../../components/artist-grid';
 
 export function createConcertDetails(): (props: { useConcerts: UseConcerts }) => JSX.Element {
   const Card = createArtistCard();
+  const ArtistGrid = createArtistGrid();
+
   return function ConcertDetails({ useConcerts }: { useConcerts: UseConcerts }): JSX.Element {
     const { id } = useParams();
     const { getSync: getConcert } = useConcerts();
     const [concert, setConcert] = useState<ConcertType>({} as ConcertType);
     const [hidden, setHidden] = useState<boolean>(false);
+    const [listMode, setListMode] = useState<SwitchMode>('left');
 
     function toggle() {
       if (hidden) {
@@ -190,24 +195,31 @@ export function createConcertDetails(): (props: { useConcerts: UseConcerts }) =>
         <div className="py-4 px-4 bg-white">
           <div className="flex">
             <div className="flex-grow ml-4">
-              <div className="text-sm bold">
+              <div className="text-lg bold">
                 Our top 5 recommendation
               </div>
-              <div className="text-xs">
+              <div className="text-sm">
                 that matches your need
               </div>
             </div>
             <div className="flex-none">
-              Switch
+              <Switch toggle={() => setListMode(listMode === 'left' ? 'right' : 'left')} mode={listMode} />
             </div>
           </div>
-          <div className="flex flex-wrap">
+          <div>
             {
-              concert.recommendedArtists?.map((c) => (
-                <div className="basis-1/3 p-2" key={c.id}>
-                  <Card card={c} />
+              listMode === 'left' ? (
+                <div className="flex flex-wrap">
+                  {
+                    concert.recommendedArtists?.map((c) => (
+                      <div className="basis-1/3 p-2" key={c.id}>
+                        <Card card={c} />
+                      </div>
+                    ))
+                  }
                 </div>
-              ))
+              )
+                : <ArtistGrid list={concert.recommendedArtists} />
             }
           </div>
         </div>
