@@ -47,6 +47,7 @@ import { BrandsInterface } from './model/interfaces/brands';
 import { GenresInterface } from './model/interfaces/genres';
 import { createHeader } from './v2/ui/components/header';
 import { createConcertList } from './v2/ui/pages/concerts-list';
+import { createConcertDetails } from './v2/ui/pages/concert';
 import { createUseConcerts, UseConcerts } from './v2/data/hooks/concert-lists/use-concert-lists';
 
 // TODO: temparary hack to insure we have user id when application loads
@@ -201,6 +202,7 @@ export function createApp(
 
     const HeaderV2 = createHeader();
     const ConcertList = createConcertList();
+    const ConcertDetails = createConcertDetails();
     const useConcerts: UseConcerts = createUseConcerts();
 
     return (
@@ -223,6 +225,7 @@ export function createApp(
               <Route path="/v2" element={<HeaderV2 />}>
                 <Route index element={<div>Landing page</div>} />
                 <Route path="/v2/concerts" element={<ConcertList useConcerts={useConcerts} />} />
+                <Route path="/v2/concerts/:id" element={<ConcertDetails useConcerts={useConcerts} />} />
               </Route>
               <Route
                 path="/*"
