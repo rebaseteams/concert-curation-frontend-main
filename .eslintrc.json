@@ -37,7 +37,8 @@
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
         "react/react-in-jsx-scope": "off",
         "import/prefer-default-export": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "jsx-a11y/click-events-have-key-events": "off"
     },
     "settings": {
         "import/resolver": {

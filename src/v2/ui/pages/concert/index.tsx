@@ -188,6 +188,19 @@ export function createConcertDetails(): (props: { useConcerts: UseConcerts }) =>
           </div>
         </div>
         <div className="py-4 px-4 bg-white">
+          <div className="flex">
+            <div className="flex-grow ml-4">
+              <div className="text-sm bold">
+                Our top 5 recommendation
+              </div>
+              <div className="text-xs">
+                that matches your need
+              </div>
+            </div>
+            <div className="flex-none">
+              Switch
+            </div>
+          </div>
           <div className="flex flex-wrap">
             {
               concert.recommendedArtists?.map((c) => (
