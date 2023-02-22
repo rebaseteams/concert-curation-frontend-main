@@ -1,12 +1,21 @@
+import { useEffect } from "react";
+import { UseConcerts } from "../../../data/hooks/concert-lists/use-concert-lists"
 
 
-export function createConcertList(): () => JSX.Element {
-  return function ConcertList(): JSX.Element {
+export function createConcertList(): (props: { useConcerts: UseConcerts }) => JSX.Element {
+  return function ConcertList({ useConcerts }: { useConcerts: UseConcerts }): JSX.Element {
+    
+    const { data: concerts, getAll: getAllConcerts } = useConcerts();
+
+    useEffect(() => {
+      getAllConcerts();
+    }, []);
+    
     return <div className="text-black bg-neutral-100">
       <div className="flex py-4 px-4">
         <div className="flex-grow">
           <div className="text-2xl">Concerts</div>
-          <div className="text-xs">0 concerts available</div>
+          <div className="text-xs">{concerts?.length || 0} concerts available</div>
         </div>
         <div className="flex-none mx-3 text-xs my-auto">
           <div className="my-auto">
@@ -36,16 +45,18 @@ export function createConcertList(): () => JSX.Element {
 
       </div>
 
-      <div id="no-concerts-available" className="flex flex-col my-8">
-        <div className="mx-auto text-center">
-          <div className="text-md bold">No concerts available</div>
-          <div className="text-xs">Its time to create your concert now</div>
-          <button className="bg-sky-500 border rounded-full p-2 text-white my-2">+ Add Concert</button>
-        </div>
-        <div className="mx-auto">
-          <img src="/concert-list-bg.png" alt="concert-list" />
-        </div>
-      </div>
+      {
+        concerts?.length === 0 ? <div id="no-concerts-available" className="flex flex-col my-8">
+          <div className="mx-auto text-center">
+            <div className="text-md bold">No concerts available</div>
+            <div className="text-xs">Its time to create your concert now</div>
+            <button className="bg-sky-500 border rounded-full p-2 text-white my-2">+ Add Concert</button>
+          </div>
+          <div className="mx-auto">
+            <img src="/concert-list-bg.png" alt="concert-list" />
+          </div>
+        </div>: null
+      }
     </div>
   }
 }

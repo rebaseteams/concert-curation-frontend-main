@@ -45,8 +45,9 @@ import createProfilePage from './visualLayer/pages/profile';
 import AdvancedSearchInterface from './model/interfaces/advancedSearch';
 import { BrandsInterface } from './model/interfaces/brands';
 import { GenresInterface } from './model/interfaces/genres';
-import { createHeader } from './v2/components/header';
-import { createConcertList } from './v2/components/pages/concerts-list';
+import { createHeader } from './v2/ui/components/header';
+import { createConcertList } from './v2/ui/pages/concerts-list';
+import { createUseConcerts, UseConcerts } from './v2/data/hooks/concert-lists/use-concert-lists';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -200,6 +201,7 @@ export function createApp(
 
     const HeaderV2 = createHeader();
     const ConcertList = createConcertList();
+    const useConcerts: UseConcerts = createUseConcerts();
 
     return (
       auth
@@ -220,7 +222,7 @@ export function createApp(
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
               <Route path="/v2" element={<HeaderV2 />}>
                 <Route index element={<div>Landing page</div>} />
-                <Route path="/v2/concerts" element={<ConcertList />} />
+                <Route path="/v2/concerts" element={<ConcertList useConcerts={useConcerts} />} />
               </Route>
               <Route
                 path="/*"
