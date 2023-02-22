@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import { UseConcerts } from '../../../data/hooks/concert-lists/use-concert-lists';
+import { createConcertCard } from '../../components/concert-card';
 
 export function createConcertList(): (props: { useConcerts: UseConcerts }) => JSX.Element {
+  const Card = createConcertCard();
   return function ConcertList({ useConcerts }: { useConcerts: UseConcerts }): JSX.Element {
     const { data: concerts, getAll: getAllConcerts, setSync: setConcert } = useConcerts();
 
@@ -12,7 +14,7 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
     }, []);
 
     async function addConcert() {
-      const res = await setConcert({
+      await setConcert({
         id: uuid(),
         name: 'Testing Concert curation',
         date: moment().utc().format(),
@@ -22,9 +24,8 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
           from: '$20,000',
           to: '$50,000',
         },
-        genres: ['Electropop', 'Electronica', 'Electro house'],
+        genres: ['Electropop', 'Electronica', 'Electro house', 'some more', 'some more crap'],
       });
-      console.log(res);
     }
 
     return (
@@ -65,21 +66,35 @@ export function createConcertList(): (props: { useConcerts: UseConcerts }) => JS
           </div>
 
         </div>
-
-        {
-        concerts?.length === 0 ? (
-          <div id="no-concerts-available" className="flex flex-col my-8">
-            <div className="mx-auto text-center">
-              <div className="text-md bold">No concerts available</div>
-              <div className="text-xs">Its time to create your concert now</div>
-              <button type="button" className="bg-sky-500 border rounded-full p-2 text-white my-2" onClick={addConcert}>+ Add Concert</button>
-            </div>
-            <div className="mx-auto">
-              <img src="/concert-list-bg.png" alt="concert-list" />
-            </div>
-          </div>
-        ) : null
-      }
+        <div className="py-4 px-4">
+          {
+            !concerts || concerts.length === 0 ? (
+              <div id="no-concerts-available" className="flex flex-col my-8">
+                <div className="mx-auto text-center">
+                  <div className="text-md bold">No concerts available</div>
+                  <div className="text-xs">Its time to create your concert now</div>
+                  <button type="button" className="bg-sky-500 border rounded-full p-2 text-white my-2" onClick={addConcert}>+ Add Concert</button>
+                </div>
+                <div className="mx-auto">
+                  <img src="/concert-list-bg.png" alt="concert-list" />
+                </div>
+              </div>
+            )
+            // eslint-disable-next-line
+              :
+              (
+                <div className="flex flex-wrap">
+                  {
+                    concerts?.map((c) => (
+                      <div className="basis-1/3 p-2" key={c.id}>
+                        <Card card={c} />
+                      </div>
+                    ))
+                  }
+                </div>
+              )
+          }
+        </div>
       </div>
     );
   };
