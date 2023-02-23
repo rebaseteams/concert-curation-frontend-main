@@ -4,9 +4,12 @@ import { useParams } from 'react-router-dom';
 import { UseArtists } from '../../../data/hooks/artist-lists/use-artist-lists';
 import { ArtistDetailsType } from '../../../model/types/artist';
 import { createArtistOverview } from '../../components/artist-overview';
+import { createArtistContact } from '../../components/artist-contact';
 
 export function createArtistDetails(): (props: { useArtists: UseArtists }) => JSX.Element {
   const ArtistOverview = createArtistOverview();
+  const ArtistContact = createArtistContact();
+
   return function ArtistDetails({ useArtists }: { useArtists: UseArtists }): JSX.Element {
     const { id } = useParams();
     const { getSync: getArtistById } = useArtists();
@@ -147,7 +150,7 @@ export function createArtistDetails(): (props: { useArtists: UseArtists }) => JS
           currentTab === 'tour-details' ? <div>Tour Details Tab</div> : null
         }
         {
-          currentTab === 'contact' ? <div>Contact Tab</div> : null
+          currentTab === 'contact' ? <div><ArtistContact artist={artist} /></div> : null
         }
       </div>
     );
