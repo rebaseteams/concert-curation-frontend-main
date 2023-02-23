@@ -45,7 +45,7 @@ import createProfilePage from './visualLayer/pages/profile';
 import AdvancedSearchInterface from './model/interfaces/advancedSearch';
 import { BrandsInterface } from './model/interfaces/brands';
 import { GenresInterface } from './model/interfaces/genres';
-import { createHeader } from './v2/ui/components/header';
+import { createHeader } from './v2/ui/components/header-footer';
 import { createConcertList } from './v2/ui/pages/concerts-list';
 import { createConcertDetails } from './v2/ui/pages/concert';
 import { createUseConcerts, UseConcerts } from './v2/data/hooks/concert-lists/use-concert-lists';
