@@ -1,13 +1,17 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { UseArtists } from '../../../data/hooks/artist-lists/use-artist-lists';
 import { ArtistDetailsType } from '../../../model/types/artist';
+import { createArtistOverview } from '../../components/artist-overview';
 
 export function createArtistDetails(): (props: { useArtists: UseArtists }) => JSX.Element {
+  const ArtistOverview = createArtistOverview();
   return function ArtistDetails({ useArtists }: { useArtists: UseArtists }): JSX.Element {
     const { id } = useParams();
     const { getSync: getArtistById } = useArtists();
     const [artist, setArtist] = useState<ArtistDetailsType>({} as ArtistDetailsType);
+    const [currentTab, setCurrentTab] = useState<string>('overview');
 
     useEffect(() => {
       if (id) {
@@ -17,6 +21,12 @@ export function createArtistDetails(): (props: { useArtists: UseArtists }) => JS
           });
       }
     }, [id]);
+
+    function setTab(value: string) {
+      if (currentTab !== value) {
+        setCurrentTab(value);
+      }
+    }
 
     return (
       <div className="text-black bg-neutral-100">
@@ -118,6 +128,27 @@ export function createArtistDetails(): (props: { useArtists: UseArtists }) => JS
             </div>
           </div>
         </div>
+
+        <div className="p-4">
+          <div className="flex text-xs bold border-b border-gray-200">
+            <div onClick={() => { setTab('overview'); }} className={`${currentTab === 'overview' ? 'text-blue-500 border-b border-blue-500' : ''} py-2 mx-2 cursor`}>Overview</div>
+            <div onClick={() => { setTab('insights'); }} className={`${currentTab === 'insights' ? 'text-blue-500 border-b border-blue-500' : ''} py-2 mx-2 cursor`}>Insights</div>
+            <div onClick={() => { setTab('tour-details'); }} className={`${currentTab === 'tour-details' ? 'text-blue-500 border-b border-blue-500' : ''} py-2 mx-2 cursor`}>Tour Details</div>
+            <div onClick={() => { setTab('contact'); }} className={`${currentTab === 'contact' ? 'text-blue-500 border-b border-blue-500' : ''} py-2 mx-2 cursor`}>Contact</div>
+          </div>
+        </div>
+        {
+          currentTab === 'overview' ? <div><ArtistOverview id={artist.id} /></div> : null
+        }
+        {
+          currentTab === 'insights' ? <div>Insights Tab</div> : null
+        }
+        {
+          currentTab === 'tour-details' ? <div>Tour Details Tab</div> : null
+        }
+        {
+          currentTab === 'contact' ? <div>Contact Tab</div> : null
+        }
       </div>
     );
   };
