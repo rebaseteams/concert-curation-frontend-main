@@ -51,6 +51,7 @@ import { createConcertDetails } from './v2/ui/pages/concert';
 import { createUseConcerts, UseConcerts } from './v2/data/hooks/concert-lists/use-concert-lists';
 import { createArtistDetails } from './v2/ui/pages/artist';
 import { createUseArtists, UseArtists } from './v2/data/hooks/artist-lists/use-artist-lists';
+import { createNotDesigned } from './v2/ui/components/not-designed';
 
 // TODO: temparary hack to insure we have user id when application loads
 // In future we will remove this when we have JWD tocken
@@ -208,6 +209,7 @@ export function createApp(
     const ArtistDetails = createArtistDetails();
     const useConcerts: UseConcerts = createUseConcerts();
     const useArtists: UseArtists = createUseArtists();
+    const NotDesigned = createNotDesigned();
 
     return (
       auth
@@ -228,9 +230,13 @@ export function createApp(
               <Route path="/editor/:id" element={authenticate(<EditorPage />)} />
               <Route path="/v2" element={<HeaderV2 />}>
                 <Route index element={<div>Landing page</div>} />
+                <Route path="/v2/my-page" element={<NotDesigned name="My Page" />} />
                 <Route path="/v2/concerts" element={<ConcertList useConcerts={useConcerts} />} />
                 <Route path="/v2/concerts/:id" element={<ConcertDetails useConcerts={useConcerts} />} />
                 <Route path="/v2/artists/:id" element={<ArtistDetails useArtists={useArtists} />} />
+                <Route path="/v2/brands" element={<NotDesigned name="Brands" />} />
+                <Route path="/v2/about-us" element={<NotDesigned name="About Us" />} />
+                <Route path="/v2/contact" element={<NotDesigned name="Contact" />} />
               </Route>
               <Route
                 path="/*"
