@@ -1,21 +1,34 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import './style.scss';
 
 export function createHeader(): () =>JSX.Element {
+  const links = [
+    { id: 'my-page', name: 'My page', link: '/v2/my-page' },
+    { id: 'concerts', name: 'Concerts', link: '/v2/concerts' },
+    { id: 'artists', name: 'Artists', link: '/v2/artists/1' },
+    { id: 'brands', name: 'Brands', link: '/v2/brands' },
+    { id: 'about-us', name: 'About us', link: '/v2/about-us' },
+    { id: 'contact', name: 'Contact', link: '/v2/contact' },
+  ];
+
   return function Header(): JSX.Element {
+    const location = useLocation();
+
     return (
       <div className="bg-white">
-        <div className="bg-slate-900 px-4 py-1 text-white flex">
+        <div className="bg-slate-900 px-4 text-white flex">
           <div className="w-10 flex-none"><img alt="cuttime-logo" src="/cuttime.png" /></div>
           <div className="flex-grow mt-auto">
             <div className="flex text-white">
-              <div className="mx-4 pb-1">My page</div>
-              <div className="text-cyan-500 bold mx-4 pb-1 border-b-2 border-cyan-500">Concerts</div>
-              <div className="mx-4 pb-1">Artists</div>
-              <div className="mx-4 pb-1">Brands</div>
-              <div className="mx-4 pb-1">Plans</div>
-              <div className="mx-4 pb-1">About us</div>
-              <div className="mx-4 pb-1">Contact</div>
+              {
+                links.map((nav) => (
+                  <Link to={nav.link} className="text-white hover:text-cyan-500">
+                    <div className={`${location.pathname.startsWith(nav.link) ? 'text-cyan-500 bold border-b-4 border-cyan-500 ' : ''} mx-4 pb-1 hover:text-cyan-500 hover:border-b-2 hover:border-cyan-500`}>
+                      { nav.name }
+                    </div>
+                  </Link>
+                ))
+              }
             </div>
           </div>
           <div className="flex-none my-auto">

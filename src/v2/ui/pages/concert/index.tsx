@@ -15,7 +15,7 @@ export function createConcertDetails(): (props: { useConcerts: UseConcerts }) =>
     const { id } = useParams();
     const { getSync: getConcert } = useConcerts();
     const [concert, setConcert] = useState<ConcertType>({} as ConcertType);
-    const [hidden, setHidden] = useState<boolean>(false);
+    const [hidden, setHidden] = useState<boolean>(true);
     const [listMode, setListMode] = useState<SwitchMode>('left');
 
     function toggle() {
